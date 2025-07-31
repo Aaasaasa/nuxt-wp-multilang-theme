@@ -6,3 +6,8 @@ output
 *.log
 .env
 .DS_Store
+
+# Verstecke sensible API-Dateien
+*.ts
+!*.d.ts
+!index.ts

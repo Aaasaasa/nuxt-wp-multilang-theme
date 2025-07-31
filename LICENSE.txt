@@ -1,0 +1,5 @@
+Copyright (c) 2025 Aleksandar Stajić.  
+Alle Rechte vorbehalten.
+
+Dieses Repository dient ausschließlich zur Demonstration.  
+Die Nutzung, Vervielfältigung, Verbreitung oder Veränderung des Quellcodes ist ohne ausdrückliche schriftliche Genehmigung nicht gestattet.

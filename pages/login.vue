@@ -1,7 +1,8 @@
+
 <template>
   <div class="max-w-md mx-auto mt-10 bg-white dark:bg-gray-800 p-6 rounded shadow">
     <h1 class="text-xl font-semibold mb-4">Login</h1>
-    <form @submit.prevent="login">
+    <form @submit.prevent="handleLogin">
       <label class="block mb-2">Benutzername
         <input v-model="username" class="w-full mt-1 px-3 py-2 border rounded" required>
       </label>
@@ -15,11 +16,16 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useAuth } from '#auth';
 const username = ref('');
 const password = ref('');
+const { signIn } = useAuth();
 
-const login = () => {
-  // Login Logik oder Weiterleitung zur Auth-API folgt später
-  console.log('Login:', username.value, password.value);
+const handleLogin = async () => {
+  await signIn('credentials', {
+    username: username.value,
+    password: password.value,
+    callbackUrl: '/admin'
+  });
 };
 </script>
