@@ -1,3 +1,4 @@
+
 export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
@@ -12,6 +13,7 @@ export default defineNuxtConfig({
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
+      prefix: process.env.DB_PREFIX
     },
     public: {
       apiBase: process.env.API_BASE_URL || 'http://localhost:8000/wp-json/wp/v2'
@@ -45,11 +47,24 @@ export default defineNuxtConfig({
       credentials: {
         authorize: async (credentials) => {
           const config = useRuntimeConfig();
-          if (
-            credentials.username === 'admin' &&
-            credentials.password === config.apiSecret
-          ) {
-            return { id: 1, name: 'Admin', role: 'admin' }
+          const mysql = await import('mysql2/promise');
+          const connection = await mysql.createConnection({
+            host: config.db.host,
+            user: config.db.user,
+            password: config.db.password,
+            database: config.db.database
+          });
+          const [rows] = await connection.execute(
+            `SELECT ID, user_login, user_email FROM ${config.db.prefix || 'wp_'}users WHERE user_login = ? AND user_pass = MD5(?)`,
+            [credentials.username, credentials.password]
+          );
+          if (rows.length > 0) {
+            return {
+              id: rows[0].ID,
+              name: rows[0].user_login,
+              email: rows[0].user_email,
+              role: 'admin'
+            }
           }
           return null;
         }

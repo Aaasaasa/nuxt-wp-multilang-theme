@@ -1,31 +1,27 @@
-import { defineNuxtPlugin } from '#app';
-import mysql from 'mysql2/promise'; // Verwende die Promise-basierte Version
 
-// Konfiguration für die Datenbankverbindung
+import { defineNuxtPlugin } from '#app';
+import mysql from 'mysql2/promise';
+
 const dbConfig = {
-  host: 'dein-datenbank-host', // z.B. 'localhost'
-  user: 'dein-datenbank-benutzer', // z.B. 'root'
+  host: 'dein-datenbank-host',
+  user: 'dein-datenbank-benutzer',
   password: 'dein-datenbank-passwort',
   database: 'dein-datenbank-name'
 };
 
 export default defineNuxtPlugin(async (nuxtApp) => {
-  // Erstelle eine Verbindung zur Datenbank
   const connection = await mysql.createConnection(dbConfig);
 
   const auth = {
     async login(userCredentials) {
       const { username, password } = userCredentials;
       try {
-        // Überprüfe die Benutzeranmeldeinformationen in der wp_users-Tabelle
         const [rows] = await connection.execute(
           'SELECT * FROM wp_users WHERE user_login = ? AND user_pass = MD5(?)',
           [username, password]
         );
 
         if (rows.length > 0) {
-          // Benutzer erfolgreich authentifiziert
-          // Hier kannst du das Token oder die Benutzerdaten speichern
           console.log('Login erfolgreich:', rows[0]);
         } else {
           console.error('Ungültige Anmeldeinformationen');
@@ -35,16 +31,12 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       }
     },
     logout() {
-      // Logik zum Abmelden (z.B. Token löschen)
       console.log('Benutzer abgemeldet');
     },
     isAuthenticated() {
-      // Logik zur Überprüfung, ob der Benutzer authentifiziert ist
-      // Hier kannst du z.B. den Status des Tokens überprüfen
-      return false; // Beispielwert
+      return false;
     }
   };
 
   nuxtApp.provide('auth', auth);
 });
-
