@@ -1,3 +1,7 @@
+import { defineNuxtConfig } from 'nuxt/config';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default defineNuxtConfig({
   modules: [
@@ -15,9 +19,7 @@ export default defineNuxtConfig({
       database: process.env.DB_NAME,
       prefix: process.env.DB_PREFIX
     },
-    public: {
-      apiBase: process.env.API_BASE_URL || 'http://localhost:8000/wp-json/wp/v2'
-    }
+    public: {}
   },
   app: {
     head: {
@@ -46,26 +48,40 @@ export default defineNuxtConfig({
     providers: {
       credentials: {
         authorize: async (credentials) => {
-          const config = useRuntimeConfig();
           const mysql = await import('mysql2/promise');
+          const dotenv = await import('dotenv');
+          dotenv.config();
+
           const connection = await mysql.createConnection({
-            host: config.db.host,
-            user: config.db.user,
-            password: config.db.password,
-            database: config.db.database
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME
           });
+
           const [rows] = await connection.execute(
-            `SELECT ID, user_login, user_email FROM ${config.db.prefix || 'wp_'}users WHERE user_login = ? AND user_pass = MD5(?)`,
+            `SELECT ID, user_login, user_email, user_registered FROM ${process.env.DB_PREFIX || 'wp_'}users WHERE user_login = ? AND user_pass = MD5(?)`,
             [credentials.username, credentials.password]
           );
+
           if (rows.length > 0) {
+            const [roles] = await connection.execute(
+              `SELECT meta_value FROM ${process.env.DB_PREFIX || 'wp_'}usermeta WHERE user_id = ? AND meta_key = ?`,
+              [rows[0].ID, `${process.env.DB_PREFIX || 'wp_'}capabilities`]
+            );
+
+            const roleData = roles.length > 0 ? JSON.parse(roles[0].meta_value) : {};
+            const role = Object.keys(roleData)[0] || 'subscriber';
+
             return {
               id: rows[0].ID,
               name: rows[0].user_login,
               email: rows[0].user_email,
-              role: 'admin'
-            }
+              registered: rows[0].user_registered,
+              role
+            };
           }
+
           return null;
         }
       }

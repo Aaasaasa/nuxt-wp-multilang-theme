@@ -16,10 +16,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useAuth } from '#auth';
 const username = ref('');
 const password = ref('');
-const { signIn } = useAuth();
+const { signIn, status, data } = useAuth();
+const { $auth } = useNuxtApp();
 
 const handleLogin = async () => {
   await signIn('credentials', {
