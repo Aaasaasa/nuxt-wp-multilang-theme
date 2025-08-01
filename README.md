@@ -2,9 +2,9 @@
 
 Dies ist ein modernes, konfigurierbares Nuxt 3 Frontend mit:
 
-- 🌐 Mehrsprachigkeit (Deutsch, Englisch, Српски)
+- 🌐 Mehrsprachigkeit (Deutsch, Englisch...)
 - 🎨 Dark-/Light-Modus + Theme-Switcher
-- 📦 Headless WordPress-API-Anbindung
+- 📦 WordPress DB
 - 🧩 TailwindCSS, Alpine.js
 - 🔐 Loginbereich für Kunden/Admins
 

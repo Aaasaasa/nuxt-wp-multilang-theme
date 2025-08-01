@@ -1,10 +1,8 @@
-// Datei: tailwind.config.js
 module.exports = {
   content: [
     './components/**/*.{vue,js}',
-    './layouts/**/*.vue',
-    './pages/**/*.vue',
-    './composables/**/*.{js,ts}',
+    './layouts/**/*.{vue,js}',
+    './pages/**/*.{vue,js}',
     './plugins/**/*.{js,ts}',
     './app.vue',
     './nuxt.config.{js,ts}'
@@ -12,18 +10,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondary)',
-        background: 'var(--color-background)',
-        surface: 'var(--color-surface)',
-        muted: 'var(--color-muted)',
-        accent: 'var(--color-accent)'
-      },
-      fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui']
+        primary: 'var(--tw-color-primary)'
       }
     }
   },
-  darkMode: 'class', // oder 'media' wenn du automatisch wechseln willst
   plugins: []
-}
+};

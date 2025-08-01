@@ -1,1 +1,7 @@
-{"compilerOptions": {"baseUrl": ".", "paths": {"#auth": [".nuxt/auth.d.ts"]}}}
+{"compilerOptions": 
+{
+    "baseUrl": ".",
+    "types": ["@types/node"],
+    "paths": {"#auth": [".nuxt/auth.d.ts"]}
+    }
+}

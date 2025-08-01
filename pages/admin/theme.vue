@@ -13,7 +13,7 @@
           <option value="dark">Dark</option>
         </select>
       </div>
-      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Speichern</button>
+      <button type="submit" class="px-4 py-2 bg-primary text-white rounded hover:opacity-90">Speichern</button>
     </form>
   </div>
 </template>
@@ -28,7 +28,10 @@ const settings = ref({
 
 onMounted(async () => {
   const res = await $fetch('/api/db/theme');
-  if (res) settings.value = res;
+  if (res) {
+    settings.value = res;
+    document.documentElement.style.setProperty('--tw-color-primary', res.primary_color);
+  }
 });
 
 async function saveSettings() {
@@ -36,6 +39,7 @@ async function saveSettings() {
     method: 'POST',
     body: settings.value
   });
+  document.documentElement.style.setProperty('--tw-color-primary', settings.value.primary_color);
   alert('Gespeichert');
 }
 </script>
