@@ -1,4 +1,0 @@
-# Verstecke sensible API-Dateien
-*.ts
-!*.d.ts
-!index.ts

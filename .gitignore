@@ -1,13 +1,60 @@
-
-node_modules
-dist
+# Nuxt dev/build outputs
+.output
+.data
 .nuxt
-output
-*.log
-.env
-.DS_Store
+.nitro
+.cache
+dist
 
-# Verstecke sensible API-Dateien
-*.ts
-!*.d.ts
-!index.ts
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Testing
+coverage
+.nyc_output
+playwright-report
+test-results
+
+# Build
+dist
+build
+
+# Docker
+volumes/
+
+# Misc
+.DS_Store
+Thumbs.db
+
+# Local env files
+.fleet

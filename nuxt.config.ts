@@ -1,90 +1,146 @@
-import { defineNuxtConfig } from 'nuxt/config';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  devtools: { enabled: true },
   modules: [
-    '@nuxtjs/tailwindcss',
+    '@nuxt/ui',
+    '@nuxt/eslint',
     '@nuxtjs/i18n',
-    '@sidebase/nuxt-auth'
+    '@nuxtjs/seo',
+    '@nuxt/image',
+    '@nuxt/test-utils/module',
+    '@prisma/nuxt',
+    'nuxt-security',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+    'nuxt-auth-utils'
   ],
-  css: ['~/assets/css/main.css'],
-  runtimeConfig: {
-    apiSecret: process.env.API_SECRET,
-    db: {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      prefix: process.env.DB_PREFIX
-    },
-    public: {}
-  },
+
+  // App Configuration
   app: {
     head: {
-      title: 'Stajic Web',
+      htmlAttrs: {
+        lang: 'fr'
+      },
       meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-      ]
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'format-detection', content: 'telephone=no' }
+      ],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
     }
   },
+
+  // I18n Configuration
   i18n: {
     locales: [
-      { code: 'de', language: 'de-DE', file: 'de.json', name: 'Deutsch' },
-      { code: 'en', language: 'en-US', file: 'en.json', name: 'English' },
-      { code: 'sr', language: 'sr-RS', file: 'sr.json', name: 'Српски / Srpski' }
+      {
+        code: 'en',
+        name: 'English',
+        files: ['en/common.json', 'en/seo.json'],
+        language: 'en-US',
+        flag: 'i-openmoji:flag-united-states'
+      },
+      {
+        code: 'fr',
+        name: 'Français',
+        files: ['fr/common.json', 'fr/seo.json'],
+        language: 'fr-FR',
+        flag: 'i-openmoji:flag-france'
+      }
     ],
-    lazy: true,
-    langDir: 'lang/',
-    defaultLocale: 'de'
+    defaultLocale: 'fr',
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root'
+    }
   },
-  auth: {
-    origin: process.env.AUTH_ORIGIN || 'http://localhost:3000',
-    enableGlobalAppMiddleware: true,
-    session: {
-      strategy: 'jwt'
-    },
-    providers: {
-      credentials: {
-        authorize: async (credentials) => {
-          const mysql = await import('mysql2/promise');
-          const dotenv = await import('dotenv');
-          dotenv.config();
 
-          const connection = await mysql.createConnection({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME
-          });
+  css: ['/assets/css/main.css'],
 
-          const [rows] = await connection.execute(
-            `SELECT ID, user_login, user_email, user_registered FROM ${process.env.DB_PREFIX || 'wp_'}users WHERE user_login = ? AND user_pass = MD5(?)`,
-            [credentials.username, credentials.password]
-          );
+  imports: {
+    dirs: ['../shared/**', 'composables/**'],
+    imports: [{ name: 'z', from: 'zod' }]
+  },
 
-          if (rows.length > 0) {
-            const [roles] = await connection.execute(
-              `SELECT meta_value FROM ${process.env.DB_PREFIX || 'wp_'}usermeta WHERE user_id = ? AND meta_key = ?`,
-              [rows[0].ID, `${process.env.DB_PREFIX || 'wp_'}capabilities`]
-            );
+  nitro: {
+    imports: {
+      dirs: ['shared/**', 'server/constants/**', 'server/services/**']
+    }
+  },
 
-            const roleData = roles.length > 0 ? JSON.parse(roles[0].meta_value) : {};
-            const role = Object.keys(roleData)[0] || 'subscriber';
-
-            return {
-              id: rows[0].ID,
-              name: rows[0].user_login,
-              email: rows[0].user_email,
-              registered: rows[0].user_registered,
-              role
-            };
-          }
-
-          return null;
-        }
+  vite: {
+    resolve: {
+      alias: {
+        '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js'
       }
     }
-  }
-});
+  },
+
+  // Security Configuration
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        'base-uri': ['\'self\''],
+        'font-src': ['\'self\'', 'https:', 'data:'],
+        'form-action': ['\'self\''],
+        'frame-ancestors': ['\'none\''],
+        'img-src': ['\'self\'', 'data:', 'https:'],
+        'object-src': ['\'none\''],
+        'script-src': ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\''],
+        'style-src': ['\'self\'', 'https:', '\'unsafe-inline\''],
+        'upgrade-insecure-requests': true
+      },
+      crossOriginEmbedderPolicy:
+        process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+      referrerPolicy: 'no-referrer',
+      strictTransportSecurity: {
+        maxAge: 31536000,
+        includeSubdomains: true
+      },
+      xContentTypeOptions: 'nosniff',
+      xFrameOptions: 'DENY',
+      xXSSProtection: '1; mode=block'
+    },
+
+    corsHandler: {
+      origin:
+        process.env.NODE_ENV === 'development'
+          ? ['http://localhost:3000', 'http://127.0.0.1:3000']
+          : process.env.CORS_ORIGIN?.split(','),
+      methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+      credentials: true
+    },
+
+    rateLimiter: {
+      tokensPerInterval: 150,
+      interval: 300000,
+      throwError: true
+    },
+
+    hidePoweredBy: true
+  },
+
+  routeRules: {
+    '/api/**': {
+      headers: {
+        'Access-Control-Max-Age': '86400'
+      }
+    }
+  },
+
+  // SEO Configuration
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    defaultLocale: 'fr'
+  },
+
+  seo: {
+    meta: {
+      twitterCard: 'summary_large_image'
+    }
+  },
+
+  compatibilityDate: '2025-07-16'
+})

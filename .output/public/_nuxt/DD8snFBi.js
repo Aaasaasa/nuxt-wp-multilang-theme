@@ -1,1 +1,0 @@
-import{_ as n,c as s,a as t,o as a}from"./BG5T5eFL.js";const o={};function c(l,e){return a(),s("div",null,e[0]||(e[0]=[t("h1",{class:"text-3xl font-bold"},"Willkommen auf Stajic Web",-1),t("p",{class:"mt-4 text-lg"},"Diese Seite lädt ihr Menü und Theme dynamisch.",-1)]))}const i=n(o,[["render",c]]);export{i as default};

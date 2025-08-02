@@ -1,7 +1,3 @@
-{"compilerOptions": 
 {
-    "baseUrl": ".",
-    "types": ["@types/node"],
-    "paths": {"#auth": [".nuxt/auth.d.ts"]}
-    }
+  "extends": "./.nuxt/tsconfig.json"
 }

@@ -1,21 +1,173 @@
-# Nuxt WP Multilang Theme
+# Nuxt Boilerplate
 
-Dies ist ein modernes, konfigurierbares Nuxt 3 Frontend mit:
+A modern **Nuxt 4** production-ready boilerplate with TypeScript, Nuxt UI, Prisma, and PostgreSQL.
 
-- 🌐 Mehrsprachigkeit (Deutsch, Englisch...)
-- 🎨 Dark-/Light-Modus + Theme-Switcher
-- 📦 WordPress DB
-- 🧩 TailwindCSS, Alpine.js
-- 🔐 Loginbereich für Kunden/Admins
+![Screenshot](./public/screenshot.png)
 
-⚠️ Dieses Projekt dient ausschließlich zu Demonstrationszwecken.  
-Die kommerzielle oder technische Nutzung ist ohne ausdrückliche schriftliche Genehmigung untersagt.
+## 🚀 Features
 
+- **🔧 Nuxt 4** with Vue 3 Composition API and TypeScript
+- **🎨 Nuxt UI** components with Tailwind CSS
+- **🗄️ Prisma ORM** with PostgreSQL and Docker setup
+- **🌍 Internationalization** (French/English) with auto-detection
+- **📚 API Documentation** with OpenAPI/Swagger (dev-only)
+- **🛡️ Security** hardening with CORS, CSP, and rate limiting
+- **🧪 Testing** with Vitest (unit) and Playwright (E2E)
+- **✨ Code Quality** with ESLint, Prettier, and Husky hooks
+- **🐳 Docker** support for easy deployment
 
-npm install -g pm2
-pm2 start .output/server/index.mjs --name stajic-nuxt
-pm2 save
-pm2 startup
+## ⚡ Quick Start
 
+### Prerequisites
 
-© 2025 Aleksandar Stajić. Alle Rechte vorbehalten.
+- Node.js ≥ 22.0.0
+- npm ≥ 10.0.0
+- Docker (for PostgreSQL)
+
+### Setup
+
+1. **Clone and install**
+
+   ```bash
+   git clone <repository-url> my-project
+   cd my-project
+   ./rename-project.sh my-awesome-project  # Optional: Rename project
+   npm install
+   cp .env.example .env
+   ```
+
+2. **Start database**
+
+   ```bash
+   docker compose up -d          # Start PostgreSQL
+   npx prisma migrate dev        # Run database migrations
+   ```
+
+3. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+### 🌐 Access Points
+
+- **Application**: http://localhost:3000
+- **API Documentation**: http://localhost:3000/api/docs/ui
+- **Database Admin**: http://localhost:5555 (Prisma Studio)
+
+The app includes a simple **Posts** example to demonstrate the full stack.
+
+## 🛠️ Development Commands
+
+### Development
+
+```bash
+npm run dev                   # Start development server
+npm run build                 # Build for production
+npm run preview               # Preview production build
+npm run lint                  # Run ESLint + Prettier
+```
+
+### Testing
+
+```bash
+npm run test                  # Run all tests (unit + E2E)
+npm run test:unit             # Run unit tests only
+npm run test:e2e              # Run E2E tests only
+npm run test:unit:coverage    # Run tests with coverage
+```
+
+### Database
+
+```bash
+docker compose up -d          # Start PostgreSQL + Adminer
+npx prisma migrate dev        # Create and run migration
+npx prisma studio             # Open Prisma Studio
+npx prisma db push            # Push schema changes (dev)
+```
+
+### Deployment
+
+```bash
+npm run tag:patch             # Version bump + deploy (patch)
+npm run tag:minor             # Version bump + deploy (minor)
+npm run tag:major             # Version bump + deploy (major)
+```
+
+## 📁 Project Structure
+
+```
+├── app/                      # Main Nuxt application
+│   ├── components/           # Vue components (auto-imported)
+│   ├── composables/          # Vue composables (auto-imported)
+│   ├── pages/                # File-based routing
+│   └── layouts/              # Layout components
+├── shared/                   # Shared utilities (auto-imported)
+│   ├── models/               # TypeScript type definitions
+│   ├── types/                # API and shared types
+│   └── utils/                # Utility functions
+├── server/                   # Server-side code
+│   ├── api/                  # API routes (auto-mapped)
+│   ├── middleware/           # Server middleware
+│   └── utils/                # Server utilities
+├── lib/                      # Core libraries (Prisma, Swagger)
+├── prisma/                   # Database schema and migrations
+├── tests/                    # Unit and E2E tests
+└── i18n/                     # Internationalization files
+```
+
+## 🔧 Tech Stack
+
+- **Frontend**: Nuxt 4, Vue 3 Composition API, TypeScript
+- **UI**: Nuxt UI, Tailwind CSS, Headless UI
+- **Backend**: Nitro, H3, OpenAPI/Swagger
+- **Database**: PostgreSQL, Prisma ORM v6
+- **Security**: nuxt-security (CORS, CSP, HSTS, rate limiting)
+- **Testing**: Vitest (unit), Playwright (E2E, multi-browser)
+- **Quality**: ESLint, Prettier, Husky, Conventional Commits
+- **DevOps**: Docker, GitHub Actions, Docker Registry
+
+## 🎛️ Configuration & Customization
+
+### Environment Setup
+
+- **Development**: Uses `localhost` origins, relaxed CSP
+- **Production**: Requires `CORS_ORIGIN` env var, strict security headers
+
+### Rename Project
+
+```bash
+./rename-project.sh my-awesome-project
+```
+
+### Remove Example Code
+
+1. Delete `shared/models/post.ts`
+2. Delete `server/api/posts/` directory
+3. Remove Post model from `prisma/schema.prisma`
+4. Run `npx prisma migrate dev` to apply changes
+
+### Security Configuration
+
+The boilerplate includes production-ready security:
+
+- **CORS**: Configurable origins per environment
+- **CSP**: Content Security Policy with Nuxt-optimized directives
+- **Headers**: X-Frame-Options, HSTS, X-Content-Type-Options
+- **Rate Limiting**: 150 requests per 5-minute window
+
+## 📚 Resources & Documentation
+
+- **[Nuxt 4 Documentation](https://nuxt.com/)** - Framework documentation
+- **[Nuxt UI Components](https://ui.nuxt.com/)** - UI component library
+- **[Prisma Documentation](https://www.prisma.io/docs)** - Database ORM
+
+## 🤝 Contributing
+
+1. Follow conventional commit format
+2. Run tests before submitting: `npm test`
+3. Ensure code quality: `npm run lint`
+4. Update documentation if needed
+
+---
+
+**Built with ❤️ using Nuxt 4**
