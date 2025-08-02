@@ -9,7 +9,7 @@ A modern **Nuxt 4** production-ready boilerplate with TypeScript, Nuxt UI, Prism
 - **🔧 Nuxt 4** with Vue 3 Composition API and TypeScript
 - **🎨 Nuxt UI** components with Tailwind CSS
 - **🗄️ Prisma ORM** with PostgreSQL and Docker setup
-- **🌍 Internationalization** (French/English) with auto-detection
+- **🌍 Internationalization** (French/English/German/Србски) with auto-detection
 - **📚 API Documentation** with OpenAPI/Swagger (dev-only)
 - **🛡️ Security** hardening with CORS, CSP, and rate limiting
 - **🧪 Testing** with Vitest (unit) and Playwright (E2E)

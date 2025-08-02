@@ -60,8 +60,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            ghcr.io/${{ env.REPO_OWNER_LOWER }}/nuxt-boilerplate:${{ env.TAG_NAME }}
-            ghcr.io/${{ env.REPO_OWNER_LOWER }}/nuxt-boilerplate:latest
+            ghcr.io/${{ env.REPO_OWNER_LOWER }}/nuxt-multilang-theme-develop:${{ env.TAG_NAME }}
+            ghcr.io/${{ env.REPO_OWNER_LOWER }}/nuxt-multilang-theme-develop:latest
 
       # Step 7: Create GitHub Release with changelog
       - name: Create GitHub Release
@@ -99,25 +99,25 @@ jobs:
             echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
             echo "📥 Pulling the latest Docker image..."
-            docker pull ghcr.io/${{ env.REPO_OWNER_LOWER }}/nuxt-boilerplate:latest
+            docker pull ghcr.io/${{ env.REPO_OWNER_LOWER }}/nuxt-multilang-theme-develop:latest
 
             echo "🛑 Stopping and removing the existing container..."
-            docker stop nuxt-boilerplate || true
-            docker rm nuxt-boilerplate || true
+            docker stop nuxt-multilang-theme-develop || true
+            docker rm nuxt-multilang-theme-develop || true
 
             echo "🔄 Running database migrations..."
             docker run --rm \
-              --network nuxt-boilerplate_webnet \
-              --env-file ~/nuxt-boilerplate/.env \
-              ghcr.io/${{ env.REPO_OWNER_LOWER }}/nuxt-boilerplate:latest \
+              --network nuxt-multilang-theme-develop_webnet \
+              --env-file ~/nuxt-multilang-theme-develop/.env \
+              ghcr.io/${{ env.REPO_OWNER_LOWER }}/nuxt-multilang-theme-develop:latest \
               npx prisma migrate deploy
 
             echo "🚀 Starting the new container..."
             docker run -d \
-              --name nuxt-boilerplate \
+              --name nuxt-multilang-theme-develop \
               --restart unless-stopped \
-              --network nuxt-boilerplate_webnet \
-              --env-file ~/nuxt-boilerplate/.env \
-              ghcr.io/${{ env.REPO_OWNER_LOWER }}/nuxt-boilerplate:latest
+              --network nuxt-multilang-theme-develop_webnet \
+              --env-file ~/nuxt-multilang-theme-develop/.env \
+              ghcr.io/${{ env.REPO_OWNER_LOWER }}/nuxt-multilang-theme-develop:latest
 
             echo "✅ Deployment completed successfully!"
