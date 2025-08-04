@@ -1,0 +1,13 @@
+// Beispiel-Nutzung in API
+// server/api/db/dual-source.ts
+import { db } from '@/server/utils/dbClients'
+
+export default defineEventHandler(async () => {
+  const [wpPosts] = await db.mysql.execute('SELECT * FROM wp_posts WHERE post_status = "publish"')
+  const pgResult = await db.postgres.query('SELECT * FROM posts WHERE published = true')
+
+  return {
+    wordpress: wpPosts,
+    internal: pgResult.rows
+  }
+})

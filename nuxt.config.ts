@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: {
-        lang: 'fr'
+        lang: 'de'
       },
       meta: [
         { charset: 'utf-8' },
@@ -46,9 +46,23 @@ export default defineNuxtConfig({
         files: ['fr/common.json', 'fr/seo.json'],
         language: 'fr-FR',
         flag: 'i-openmoji:flag-france'
+      },
+      {
+        code: 'de',
+        name: 'Deutsch',
+        files: ['de/common.json', 'de/seo.json'],
+        language: 'de-DE',
+        flag: 'i-openmoji:flag-germany'
+      },
+      {
+        code: 'sr',
+        name: 'Србски',
+        files: ['sr/common.json', 'sr/seo.json'],
+        language: 'sr-SR',
+        flag: 'i-openmoji:flag-serbia'
       }
     ],
-    defaultLocale: 'fr',
+    defaultLocale: 'de',
     strategy: 'prefix_except_default',
     detectBrowserLanguage: {
       useCookie: true,
@@ -82,14 +96,14 @@ export default defineNuxtConfig({
   security: {
     headers: {
       contentSecurityPolicy: {
-        'base-uri': ['\'self\''],
-        'font-src': ['\'self\'', 'https:', 'data:'],
-        'form-action': ['\'self\''],
-        'frame-ancestors': ['\'none\''],
-        'img-src': ['\'self\'', 'data:', 'https:'],
-        'object-src': ['\'none\''],
-        'script-src': ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\''],
-        'style-src': ['\'self\'', 'https:', '\'unsafe-inline\''],
+        'base-uri': ["'self'"],
+        'font-src': ["'self'", 'https:', 'data:'],
+        'form-action': ["'self'"],
+        'frame-ancestors': ["'none'"],
+        'img-src': ["'self'", 'data:', 'https:'],
+        'object-src': ["'none'"],
+        'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        'style-src': ["'self'", 'https:', "'unsafe-inline'"],
         'upgrade-insecure-requests': true
       },
       crossOriginEmbedderPolicy:

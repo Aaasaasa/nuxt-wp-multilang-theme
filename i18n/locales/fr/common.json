@@ -8,7 +8,7 @@
   },
   "app": {
     "description": "Un point de départ simple et efficace",
-    "footer": "Réalisé par William Fontaine",
+    "footer": "Réalisé par Aleksandar Stajic",
     "name": "Nuxt Boilerplate"
   },
   "error": {

@@ -38,15 +38,34 @@ A modern **Nuxt 4** production-ready boilerplate with TypeScript, Nuxt UI, Prism
 
 2. **Start database**
 
-   ```bash
-   docker compose up -d          # Start PostgreSQL
-   npx prisma migrate dev        # Run database migrations
-   ```
+```bash
+docker compose up -d          # Start PostgreSQL
+npx prisma migrate dev        # Run database migrations
 
-3. **Run development server**
-   ```bash
-   npm run dev
-   ```
+// Example for Prisma generation:
+// prisma generate --schema=prisma/schema-postgres.prisma
+// prisma generate --schema=prisma/schema-mysql.prisma
+// prisma generate --schema=prisma/schema-mongo.prisma
+// Prisma Client for MongoDB, MySQL, and PostgreSQL
+// is automatically generated if the corresponding schemas exist.
+// Database connection environment variables should be defined in the .env file.
+npx prisma db push            # Push schema changes (development)
+npx prisma studio             # Open Prisma Studio (http://localhost:5555)
+npx prisma generate           # Generate Prisma Client
+npx prisma migrate reset       # Reset database (use with caution)
+npx prisma migrate deploy      # Deploy migrations to production
+npx prisma db seed            # Seed database with initial data (if applicable)
+npx prisma introspect         # Introspect existing database schema
+npx prisma format             # Format Prisma schema
+npx prisma validate           # Validate Prisma schema
+npx prisma version            # Check Prisma version
+```
+
+> Note: Ensure PostgreSQL is running on `localhost:5432` or update `.env` accordingly. 3. **Run development server**
+
+```bash
+npm run dev
+```
 
 ### 🌐 Access Points
 
@@ -167,6 +186,63 @@ The boilerplate includes production-ready security:
 2. Run tests before submitting: `npm test`
 3. Ensure code quality: `npm run lint`
 4. Update documentation if needed
+
+## Commit Roules Husky
+
+This project uses [Husky](https://typicode.github.io/husky/#/) to enforce commit message conventions. The commit messages must follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+To ensure your commit messages are valid, you can use the following format:
+
+```<type>(<scope>): <subject>
+[optional body]
+[optional footer]
+```
+
+Where:
+
+- `<type>`: The type of change (e.g., feat, fix, docs, chore, style, refactor, ci, test, revert, perf, vercel)
+- `<scope>`: The scope of the change (optional)
+- `<subject>`: A brief description of the change
+- `[optional body]`: A more detailed description of the change (optional)
+- `[optional footer]`: Any additional information, such as breaking changes or issues closed (optional)  
+  You can also use the following commit types:
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation changes
+- `chore`: Maintenance tasks (e.g., build, CI, dependencies)
+- `style`: Changes that do not affect the meaning of the code (e.g., formatting, missing semicolons)
+- `refactor`: Code changes that neither fix a bug nor add a feature
+- `ci`: Changes to CI configuration files and scripts
+- `test`: Adding missing tests or correcting existing tests
+- `revert`: Reverts a previous commit
+- `perf`: A code change that improves performance
+- `vercel`: Changes related to Vercel deployment
+
+Overwriting the commit message rules is not allowed. If you try to commit a message that does not follow the rules, you will see an error message and your commit will be rejected.
+
+# Commitlint Configuration
+
+export default {
+extends: ['@commitlint/config-conventional'],
+rules: {
+'type-enum': [
+2,
+'always',
+[
+'feat',
+'fix',
+'docs',
+'chore',
+'style',
+'refactor',
+'ci',
+'test',
+'revert',
+'perf',
+'vercel',
+],
+],
+},
+};
 
 ---
 
