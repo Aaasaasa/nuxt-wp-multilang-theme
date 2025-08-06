@@ -1,9 +1,11 @@
-// server/utils/dbClients.ts
-// import { PrismaClient as PgPrismaClient } from '@prisma/postgres-client'
-import { PrismaPg  as PgPrismaClient } from '@prisma/adapter-pg'
+import { PrismaClient as PgPrismaClient } from '@prisma/postgres-client'
 import { PrismaClient as MySqlPrismaClient } from '@prisma/mysql-client'
 import { PrismaClient as MongoPrismaClient } from '@prisma/mongodb-client'
 import { createClient as createRedisClient } from 'redis'
+
+
+
+// import { createClient as createRedisClient } from 'redis'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -20,9 +22,9 @@ export const db = {
 }
 
 // Beispiel für Prisma-Generierung:
-// prisma generate --schema=prisma/schema-postgres.prisma
-// prisma generate --schema=prisma/schema-mysql.prisma
-// prisma generate --schema=prisma/schema-mongo.prisma
+// npx prisma generate --schema=prisma/schema-postgres.prisma
+// npx prisma generate --schema=prisma/schema-mysql.prisma
+// npx prisma generate --schema=prisma/schema-mongo.prisma
 // Prisma-Client für MongoDB, MySQL und PostgreSQL
 // wird automatisch generiert, wenn die entsprechenden Schemas vorhanden sind.
 // Die Umgebungsvariablen für die Datenbankverbindungen sollten in der .env-Datei definiert sein.

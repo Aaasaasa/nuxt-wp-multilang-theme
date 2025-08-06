@@ -1,5 +1,5 @@
 // Initialize database and collections
-db = db.getSiblingDB('${MONGO_DB}')
+const db = db.getSiblingDB('${MONGO_DB}')
 
 // Create application user with least privileges
 db.createUser({
