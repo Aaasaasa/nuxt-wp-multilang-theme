@@ -17,6 +17,8 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
+    "env:check": "sh -c '[ -f .env ] || (echo \"ERROR: Missing .env file\" && exit 1)'",
+    "env:copy": "cp .env.example .env",
     "lint": "npm run lint:prettier && npm run lint:eslint",
     "lint:eslint": "eslint . --fix --ignore-pattern volumes/",
     "lint:prettier": "prettier --write --list-different .",

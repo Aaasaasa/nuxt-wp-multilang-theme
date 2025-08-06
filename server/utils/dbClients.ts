@@ -1,5 +1,6 @@
 // server/utils/dbClients.ts
-import { PrismaClient as PgPrismaClient } from '@prisma/postgres-client'
+// import { PrismaClient as PgPrismaClient } from '@prisma/postgres-client'
+import { PrismaPg  as PgPrismaClient } from '@prisma/adapter-pg'
 import { PrismaClient as MySqlPrismaClient } from '@prisma/mysql-client'
 import { PrismaClient as MongoPrismaClient } from '@prisma/mongodb-client'
 import { createClient as createRedisClient } from 'redis'

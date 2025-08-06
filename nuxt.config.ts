@@ -96,14 +96,14 @@ export default defineNuxtConfig({
   security: {
     headers: {
       contentSecurityPolicy: {
-        'base-uri': ["'self'"],
-        'font-src': ["'self'", 'https:', 'data:'],
-        'form-action': ["'self'"],
-        'frame-ancestors': ["'none'"],
-        'img-src': ["'self'", 'data:', 'https:'],
-        'object-src': ["'none'"],
-        'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-        'style-src': ["'self'", 'https:', "'unsafe-inline'"],
+        'base-uri': ['\'self\''],
+        'font-src': ['\'self\'', 'https:', 'data:'],
+        'form-action': ['\'self\''],
+        'frame-ancestors': ['\'none\''],
+        'img-src': ['\'self\'', 'data:', 'https:'],
+        'object-src': ['\'none\''],
+        'script-src': ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\''],
+        'style-src': ['\'self\'', 'https:', '\'unsafe-inline\''],
         'upgrade-insecure-requests': true
       },
       crossOriginEmbedderPolicy:

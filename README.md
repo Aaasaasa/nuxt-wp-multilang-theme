@@ -1,4 +1,4 @@
-# Nuxt Boilerplate
+# Nuxt Boilerplate - still not working version - in development
 
 A modern **Nuxt 4** production-ready boilerplate with TypeScript, Nuxt UI, Prisma, and PostgreSQL.
 
