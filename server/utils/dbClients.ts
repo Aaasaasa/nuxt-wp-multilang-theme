@@ -1,9 +1,9 @@
 import dotenv from 'dotenv'
-dotenv.config()
 
 import { PrismaClient } from '@prisma/client'
 import mysql from 'mysql2/promise'
 import { createClient as createRedisClient } from 'redis'
+dotenv.config()
 
 // --- PostgreSQL via Prisma (stable) ---
 export const pg = new PrismaClient()

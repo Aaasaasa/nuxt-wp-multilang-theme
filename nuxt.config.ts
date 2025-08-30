@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from 'node:url'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
@@ -14,12 +16,16 @@ export default defineNuxtConfig({
     'pinia-plugin-persistedstate/nuxt',
     'nuxt-auth-utils'
   ],
+  alias: {
+    '@': fileURLToPath(new URL('.', import.meta.url)),
+    '~': fileURLToPath(new URL('.', import.meta.url))
+  },
 
   // App Configuration
   app: {
     head: {
       htmlAttrs: {
-        lang: 'de'
+        lang: 'de',
       },
       meta: [
         { charset: 'utf-8' },

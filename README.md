@@ -2,7 +2,7 @@
 
 A modern **Nuxt 4** production-ready boilerplate with TypeScript, Nuxt UI, Prisma, and PostgreSQL.
 
-![Screenshot](./public/screenshot.png)
+![Screenshot](./ public/screenshot.png)
 
 ## 🚀 Features
 
