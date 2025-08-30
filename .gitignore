@@ -61,3 +61,6 @@ Thumbs.db
 
 *.secret
 docker-volumes/**/data/
+
+# prisma
+prisma/generated
