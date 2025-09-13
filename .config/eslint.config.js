@@ -1,4 +1,4 @@
-import withNuxt from './.nuxt/eslint.config.mjs'
+import withNuxt from '../.nuxt/eslint.config.mjs'
 
 export default withNuxt({
   rules: {
@@ -17,3 +17,10 @@ export default withNuxt({
     '@typescript-eslint/no-explicit-any': 'off'
   }
 })
+
+/* recommendation of ChatGPT AI:
+
+import withNuxt from "@nuxt/eslint-config/flat";
+export default withNuxt();
+
+*/

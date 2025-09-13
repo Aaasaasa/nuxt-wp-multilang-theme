@@ -16,7 +16,7 @@ import { z } from 'zod'
 /**
  * Complete User entity (matches database schema)
  */
-export interface User {
+export interface Employer {
   id: number
   email: string
   password: string

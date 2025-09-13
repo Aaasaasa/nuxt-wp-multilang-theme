@@ -5,6 +5,8 @@
  * organized in logical sections for maintainability.
  */
 
+//export interface Post { id: string; title: string; slug: string; body: string; }
+
 import { z } from 'zod'
 
 // =============================================================================
@@ -17,6 +19,7 @@ import { z } from 'zod'
 export interface Post {
   id: number
   title: string
+  slug: string
   content: string | null
   authorId: number
   createdAt: string
