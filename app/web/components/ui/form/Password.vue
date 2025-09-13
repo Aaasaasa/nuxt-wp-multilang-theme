@@ -7,7 +7,10 @@
     @update:model-value="$emit('update:modelValue', $event)"
   >
     <template #leading>
-      <UIcon name="i-lucide:lock" class="size-6" />
+      <UIcon
+        name="i-lucide:lock"
+        class="size-6"
+      />
     </template>
 
     <template #trailing>

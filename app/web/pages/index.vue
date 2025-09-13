@@ -8,7 +8,7 @@
     >
       <!-- Background Pattern -->
       <div class="absolute inset-0 opacity-10">
-        <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
       </div>
 
       <div class="relative py-20 text-center">
@@ -16,7 +16,10 @@
           <div
             class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-8"
           >
-            <UIcon name="i-lucide-sparkles" class="w-4 h-4 mr-2" />
+            <UIcon
+              name="i-lucide-sparkles"
+              class="w-4 h-4 mr-2"
+            />
             <span class="text-sm font-medium">{{ t('hero.modernInterface') }}</span>
           </div>
 
@@ -90,18 +93,28 @@
                 class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
               >
                 <div class="flex items-center gap-2">
-                  <UIcon name="i-lucide-file-text" class="w-4 h-4 text-gray-500" />
+                  <UIcon
+                    name="i-lucide-file-text"
+                    class="w-4 h-4 text-gray-500"
+                  />
                   <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ t('stats.totalPosts') }}
                   </span>
                 </div>
-                <UBadge :label="posts?.length.toString()" variant="soft" size="lg" />
+                <UBadge
+                  :label="posts?.length.toString()"
+                  variant="soft"
+                  size="lg"
+                />
               </div>
               <div
                 class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
               >
                 <div class="flex items-center gap-2">
-                  <UIcon name="i-lucide-columns" class="w-4 h-4 text-gray-500" />
+                  <UIcon
+                    name="i-lucide-columns"
+                    class="w-4 h-4 text-gray-500"
+                  />
                   <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
                     {{ t('preferences.displayMode.label') }}
                   </span>
@@ -118,7 +131,10 @@
         </div>
 
         <!-- Enhanced Posts Content -->
-        <div ref="postsRef" class="xl:col-span-3">
+        <div
+          ref="postsRef"
+          class="xl:col-span-3"
+        >
           <!-- Enhanced Posts Header -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
             <div>
@@ -155,7 +171,10 @@
           </div>
 
           <!-- Enhanced Empty State -->
-          <div v-else class="text-center py-20">
+          <div
+            v-else
+            class="text-center py-20"
+          >
             <UIcon
               name="i-lucide-file-plus"
               class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-6"

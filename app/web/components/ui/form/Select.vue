@@ -1,5 +1,10 @@
 <template>
-  <UFormField :label="label" :name="name" :ui="{ label: 'text-white' }" :required="required">
+  <UFormField
+    :label="label"
+    :name="name"
+    :ui="{ label: 'text-white' }"
+    :required="required"
+  >
     <USelectMenu
       :model-value="modelValue || null"
       :items="items"
@@ -18,14 +23,23 @@
       @update:model-value="$emit('update:modelValue', $event)"
     >
       <template #default="{ modelValue: selectedValue }">
-        <div v-if="selectedValue" class="flex items-center gap-2 h-6">
+        <div
+          v-if="selectedValue"
+          class="flex items-center gap-2 h-6"
+        >
           {{ selectedValue.label }}
         </div>
-        <span v-else class="text-neutral-400 h-6 text-base">
+        <span
+          v-else
+          class="text-neutral-400 h-6 text-base"
+        >
           {{ placeholder || t(`form.post.${name}.placeholder`) }}
         </span>
       </template>
-      <template v-if="$slots.leading" #leading>
+      <template
+        v-if="$slots.leading"
+        #leading
+      >
         <slot name="leading" />
       </template>
     </USelectMenu>

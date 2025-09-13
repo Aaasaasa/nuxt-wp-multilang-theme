@@ -12,10 +12,19 @@
         {{ error?.statusCode === 404 ? t('error.404.message') : t('error.generic.message') }}
       </p>
       <div class="flex gap-4 justify-center">
-        <UButton color="neutral" variant="soft" icon="i-lucide:arrow-left" @click="goBack">
+        <UButton
+          color="neutral"
+          variant="soft"
+          icon="i-lucide:arrow-left"
+          @click="goBack"
+        >
           {{ t('error.actions.back') }}
         </UButton>
-        <UButton color="primary" icon="i-lucide:home" @click="goHome">
+        <UButton
+          color="primary"
+          icon="i-lucide:home"
+          @click="goHome"
+        >
           {{ t('error.actions.home') }}
         </UButton>
       </div>

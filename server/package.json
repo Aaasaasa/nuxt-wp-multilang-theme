@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "nitro dev",
-    "build": "nitro build"
+    "build": "nitro build",
+    "lint": "eslint . --ext .js,.ts,.vue"
   },
   "dependencies": {
     "nitropack": "^2.12.6",

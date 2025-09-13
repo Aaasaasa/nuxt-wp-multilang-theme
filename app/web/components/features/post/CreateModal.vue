@@ -17,7 +17,12 @@
     />
 
     <template #body>
-      <UForm ref="form" :state="state" :schema="schema" @submit="onSubmit">
+      <UForm
+        ref="form"
+        :state="state"
+        :schema="schema"
+        @submit="onSubmit"
+      >
         <div class="space-y-6">
           <UiFormInput
             v-model="state.title"
@@ -42,24 +47,37 @@
             <div class="flex items-center justify-between text-sm">
               <div class="flex items-center gap-4">
                 <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                  <UIcon name="i-lucide-type" class="w-4 h-4" />
+                  <UIcon
+                    name="i-lucide-type"
+                    class="w-4 h-4"
+                  />
                   <span>{{
                     t('postForm.analytics.characterCount', { count: state.content.length })
                   }}</span>
                 </div>
                 <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                  <UIcon name="i-lucide-book-open" class="w-4 h-4" />
+                  <UIcon
+                    name="i-lucide-book-open"
+                    class="w-4 h-4"
+                  />
                   <span>{{ t('postForm.analytics.wordCount', { count: wordCount }) }}</span>
                 </div>
                 <div
                   v-if="readingTime > 0"
                   class="flex items-center gap-1 text-gray-500 dark:text-gray-400"
                 >
-                  <UIcon name="i-lucide-clock" class="w-4 h-4" />
+                  <UIcon
+                    name="i-lucide-clock"
+                    class="w-4 h-4"
+                  />
                   <span>{{ t('postForm.analytics.readingTime', { count: readingTime }) }}</span>
                 </div>
               </div>
-              <UBadge :label="getBadgeLabel()" :color="getBadgeColor()" variant="soft" />
+              <UBadge
+                :label="getBadgeLabel()"
+                :color="getBadgeColor()"
+                variant="soft"
+              />
             </div>
           </div>
         </div>
@@ -69,7 +87,10 @@
     <template #footer>
       <div class="flex flex-col w-full">
         <div class="flex items-center gap-2">
-          <UIcon name="i-lucide-info" class="w-4 h-4 text-gray-400" />
+          <UIcon
+            name="i-lucide-info"
+            class="w-4 h-4 text-gray-400"
+          />
           <span class="text-xs text-gray-500 dark:text-gray-400">
             {{
               isEditing

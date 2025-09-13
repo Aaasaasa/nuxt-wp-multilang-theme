@@ -1,10 +1,19 @@
 <template>
   <ClientOnly>
     <UDropdownMenu :items="languageItems">
-      <UButton color="neutral" variant="ghost" :icon="currentLocaleIcon" />
+      <UButton
+        color="neutral"
+        variant="ghost"
+        :icon="currentLocaleIcon"
+      />
     </UDropdownMenu>
     <template #fallback>
-      <UButton color="neutral" variant="ghost" icon="i-lucide:languages" disabled />
+      <UButton
+        color="neutral"
+        variant="ghost"
+        icon="i-lucide:languages"
+        disabled
+      />
     </template>
   </ClientOnly>
 </template>

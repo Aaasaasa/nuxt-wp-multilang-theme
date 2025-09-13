@@ -1,5 +1,9 @@
 <template>
-  <UFormField :label="label" :name="name" :required="required">
+  <UFormField
+    :label="label"
+    :name="name"
+    :required="required"
+  >
     <UInput
       :model-value="modelValue"
       :type="type"
@@ -10,10 +14,16 @@
       size="xl"
       @update:model-value="$emit('update:modelValue', $event)"
     >
-      <template v-if="$slots.leading" #leading>
+      <template
+        v-if="$slots.leading"
+        #leading
+      >
         <slot name="leading" />
       </template>
-      <template v-if="$slots.trailing" #trailing>
+      <template
+        v-if="$slots.trailing"
+        #trailing
+      >
         <slot name="trailing" />
       </template>
     </UInput>

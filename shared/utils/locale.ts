@@ -11,3 +11,7 @@ export const getIsoLocale = (locale: string): string => {
 
   return localeMap[locale] || 'en_US'
 }
+
+
+export const locales = ["en", "de", "fr", "sr"] as const;
+export type Locale = typeof locales[number];

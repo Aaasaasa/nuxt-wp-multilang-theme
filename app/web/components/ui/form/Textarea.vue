@@ -1,5 +1,9 @@
 <template>
-  <UFormField :label="label" :name="name" :required="required">
+  <UFormField
+    :label="label"
+    :name="name"
+    :required="required"
+  >
     <UTextarea
       :model-value="modelValue"
       color="primary"

@@ -8,7 +8,10 @@
     <template #footer>
       <div class="flex flex-col w-full">
         <div class="flex items-center gap-2">
-          <UIcon name="i-lucide-info" class="w-4 h-4 text-gray-400" />
+          <UIcon
+            name="i-lucide-info"
+            class="w-4 h-4 text-gray-400"
+          />
           <span class="text-xs text-gray-500 dark:text-gray-400">
             {{ t('postForm.actions.delete.info') }}
           </span>

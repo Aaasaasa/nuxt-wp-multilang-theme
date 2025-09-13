@@ -13,7 +13,8 @@
   "scripts": {
     "dev": "nuxt dev",
     "postinstall": "nuxt prepare",
-    "build": "nuxt build"
+    "build": "nuxt build",
+    "lint": "eslint . --ext .js,.ts,.vue"
   },
   "dependencies": {
     "nuxt": "^4.1.1",

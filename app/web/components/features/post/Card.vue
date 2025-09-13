@@ -48,11 +48,20 @@
       >
         <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
           <div class="flex items-center gap-2">
-            <UIcon name="i-lucide-calendar" class="w-4 h-4" />
+            <UIcon
+              name="i-lucide-calendar"
+              class="w-4 h-4"
+            />
             <span>{{ formatDate(post.createdAt) }}</span>
           </div>
-          <div v-if="post.updatedAt !== post.createdAt" class="flex items-center gap-2">
-            <UIcon name="i-lucide-pencil" class="w-4 h-4" />
+          <div
+            v-if="post.updatedAt !== post.createdAt"
+            class="flex items-center gap-2"
+          >
+            <UIcon
+              name="i-lucide-pencil"
+              class="w-4 h-4"
+            />
             <span>{{ formatDate(post.updatedAt) }}</span>
           </div>
         </div>

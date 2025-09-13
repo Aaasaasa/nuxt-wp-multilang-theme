@@ -12,7 +12,8 @@
   },
   "scripts": {
     "dev": "nuxt dev",
-    "build": "nuxt build"
+    "build": "nuxt build",
+    "lint": "eslint . --ext .js,.ts,.vue"
   },
   "dependencies": {
     "nuxt": "^4.1.1",
