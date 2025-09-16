@@ -71,7 +71,8 @@ export const useSeo = (pageKey?: string, options?: SeoOptions) => {
     ogImage: options?.ogImage,
     ogSiteName: t('seo.site.name'),
     ogType: 'website',
-    ogLocale: getIsoLocale(locale.value),
+    // ogLocale: getIsoLocale(locale.value),
+    ogLocale: locale.value,
     twitterCard: 'summary_large_image'
   })
 

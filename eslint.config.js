@@ -37,6 +37,9 @@ export default [
       // "@typescript-eslint/no-explicit-any": "warn", // nur Warnung statt Error
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+      "vue/multi-word-component-names": ["error", {
+        "ignores": ["index", "[...slug]", "[slug]"]
+      }],
       "no-empty": "off",
       "no-console": "off",
       "no-undef": "off",

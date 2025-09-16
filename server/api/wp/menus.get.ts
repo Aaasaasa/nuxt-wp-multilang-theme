@@ -1,4 +1,4 @@
-import { getWpMenu } from '~/server/api/lib/wp'
+import { getWpMenu } from '~/lib/wp'
 import { getOrSet } from '~/lib/cache'
 
 export default defineEventHandler(async (event) => {

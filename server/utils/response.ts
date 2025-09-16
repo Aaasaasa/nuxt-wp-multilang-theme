@@ -1,4 +1,4 @@
-import type { ApiResponse } from '@@/shared/types/api'
+import type { ApiResponse } from '@/shared/types/api'
 
 /**
  * Create a standard API response

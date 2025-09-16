@@ -31,7 +31,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5432:5432"
+      - "5432:5433" # change to 5433 to avoid conflict with local postgres
     volumes:
       - ../../.docker/postgres/data:/var/lib/postgresql/data
       - ../../dumps/init_postgres.sql:/docker-entrypoint-initdb.d/00-init.sql

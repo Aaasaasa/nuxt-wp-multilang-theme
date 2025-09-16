@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "NodeNext",
+    "types": ["@nuxt/types"],
+    "paths": {
+      "@/*": ["./*"],
+      "~~/*": ["../../shared/*"]
+    }
+  },
+  "ignoreDeprecations": "5.0",
+  "skipLibCheck": true,
+  "exclude": ["node_modules", ".output", "dist"],
+  "include": [
+    "**/*.ts",
+    "**/*.vue",
+    "nuxt.config.ts",
+    "app.vue"
+  ]
+}

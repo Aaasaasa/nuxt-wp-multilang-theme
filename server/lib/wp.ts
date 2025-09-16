@@ -1,4 +1,4 @@
-import { wp } from '@/server/utils/dbClients'
+import { wp } from '~/utils/dbClients'
 
 const P = process.env.MYSQL_PREFIX || 'wp_'
 
@@ -22,7 +22,7 @@ export async function getWpPosts(limit = 10, lang?: string) {
  */
 export async function getWpMenu(menuSlug: string) {
   const sql = `
-    SELECT 
+    SELECT
       t.term_id, t.name AS menu_name, t.slug AS menu_slug,
       p.ID AS item_id, p.post_title AS item_title,
       pm_obj.meta_value AS object_id,

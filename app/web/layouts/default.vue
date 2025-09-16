@@ -1,3 +1,4 @@
+<!-- layouts/default.vue -->
 <template>
   <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
     <header
@@ -30,6 +31,14 @@
 </template>
 
 <script lang="ts" setup>
+import AppSidebar from '~/components/AppSidebar.vue'
+import AppHeader from '~/components/AppHeader.vue'
+import AppFooter from '~/components/AppFooter.vue'
+import LayoutThemeSwitcher from '~/components/layout/ThemeSwitcher.vue'
+import LayoutLanguageSwitcher from '~/components/layout/LanguageSwitcher.vue'
+import { useI18n, useLocalePath } from '#imports'
+import { useHead } from '@unhead/vue'
+
 const localePath = useLocalePath()
 const { t } = useI18n()
 
@@ -41,3 +50,34 @@ useHead({
   ]
 })
 </script>
+
+
+<!--
+
+<script setup lang="ts">
+
+</script>
+
+<template>
+  <div class="grid grid-cols-[auto_1fr] min-h-screen">
+    <AppSidebar />
+    <div class="flex flex-col">
+      <AppHeader />
+      <main class="p-0">
+        <slot />
+      </main>
+    </div>
+  </div>
+</template>
+
+
+
+<template>
+<div>
+<AppHeader />
+<main class="container"><slot /></main>
+<AppFooter />
+</div>
+</template>
+
+-->

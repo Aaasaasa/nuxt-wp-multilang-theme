@@ -1,4 +1,5 @@
-FROM node:22-alpine
+FROM node:24-alpine
+
 
 WORKDIR /app
 
@@ -8,10 +9,11 @@ RUN apk add --no-cache bash openssl
 # Dependencies installieren
 COPY package.json package-lock.json turbo.json ./
 COPY app/web/package.json ./apps/web/
+COPY app/admin/package.json ./apps/admin/
 COPY server/package.json ./server/
 COPY shared/package.json ./shared/
 
-RUN npm ci
+RUN npm install
 
 # Projekt wird im Dev-Modus gemountet → kein Copy . .
 EXPOSE 3000
