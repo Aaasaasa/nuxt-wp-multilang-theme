@@ -3,11 +3,20 @@
   "compilerOptions": {
     "baseUrl": ".",
     "module": "NodeNext",
-    "types": ["@nuxt/types"],
+    "types": [
+      "vue",
+      "node",
+      "nuxt",
+      "nuxt/schema",
+      "@nuxt/types"
+    ],
     "paths": {
       "@/*": ["./*"],
       "~~/*": ["../../shared/*"]
     }
+  },
+  "vueCompilerOptions": {
+    "target": 3
   },
   "ignoreDeprecations": "5.0",
   "skipLibCheck": true,
@@ -15,6 +24,7 @@
   "include": [
     "**/*.ts",
     "**/*.vue",
+    ".nuxt",
     "nuxt.config.ts",
     "app.vue"
   ]

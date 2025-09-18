@@ -20,11 +20,13 @@ console.log('Loaded components:', Object.keys(import.meta.glob('/**/*.{vue,ts}',
 </script>
 
 <template>
-  <div :class="{ 'dark': isDark }" class="bg-background text-foreground min-h-screen">
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <UApp :class="{ 'dark': isDark }" class="bg-background text-foreground min-h-screen">
+    <div >
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </div>
+  </UApp>
 </template>
 
 <style>

@@ -1,7 +1,7 @@
 /* asseets/tailwind.css */
 @import "tw-animate-css";
 @import "tailwindcss";
-@source "~/components";
+@import "@nuxt/ui";
 @import "@fontsource/inter/latin.css";
 
 @custom-variant dark (&:is(.dark *));
