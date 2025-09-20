@@ -3,13 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "module": "NodeNext",
-    "types": [
-      "vue",
-      "node",
-      "nuxt",
-      "nuxt/schema",
-      "@nuxt/types"
-    ],
+    "types": ["nuxt/schema", "node"],  // reicht völlig, vue/nuxt wird automatisch aufgelöst
     "paths": {
       "@/*": ["./*"],
       "~~/*": ["../../shared/*"]
@@ -18,7 +12,6 @@
   "vueCompilerOptions": {
     "target": 3
   },
-  "ignoreDeprecations": "5.0",
   "skipLibCheck": true,
   "exclude": ["node_modules", ".output", "dist"],
   "include": [

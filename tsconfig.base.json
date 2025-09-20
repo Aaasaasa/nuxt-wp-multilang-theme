@@ -16,8 +16,13 @@
     "paths": {
       "~~/*": ["shared/*"]
     },
-    "ignoreDeprecations": "6.0",
-    "types": []
+    "types": ["node"],   // optional global, oder leer lassen
+    "references": [
+    { "path": "./app/admin/tsconfig.ts" },
+    { "path": "./app/web/tsconfig.ts" },
+    { "path": "./server/tsconfig.ts" },
+    { "path": "./shared/tsconfig.ts" }
+  ]
   },
   "exclude": [
     "node_modules",

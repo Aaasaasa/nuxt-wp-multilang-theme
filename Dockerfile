@@ -13,10 +13,10 @@ COPY app/admin/package.json ./apps/admin/
 COPY server/package.json ./server/
 COPY shared/package.json ./shared/
 
-RUN npm install
+RUN pnpm install
 
 # Projekt wird im Dev-Modus gemountet → kein Copy . .
 EXPOSE 3000
 EXPOSE 4000
 
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev"]

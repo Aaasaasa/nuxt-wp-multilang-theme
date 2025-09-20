@@ -3,10 +3,12 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 @import "@fontsource/inter/latin.css";
+/*
+@plugin "@tailwindcss/typography";
 @source "../../content";
 
 @custom-variant dark (&:is(.dark *));
-
+*/
 /* assets/css/tailwind.css */
 /* @tailwind base;
 @tailwind components;

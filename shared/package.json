@@ -4,19 +4,30 @@
   "private": true,
   "type": "module",
   "main": "index.ts",
-  "exports": { ".": "./index.ts" },
+  "exports": {
+    ".": "./index.ts",
+    "./middleware/*": "./middleware/*.ts",
+    "./lib/*": "./lib/*.ts"
+  },
   "scripts": {
-    "lint": "eslint . --ext .js,.ts,.vue --fix",
-    "build": "echo \"shared build (no-op)\""
+    "lint": "eslint . --fix",
+    "format": "prettier --write .",
+    "build": "echo 'Shared build (no-op)'",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev --name shared-migration",
+    "db:convert": "node scripts/convert-db.js",
+    "db:setup": "pnpm db:generate && pnpm db:migrate",
+    "postinstall": "pnpm db:generate && echo 'Shared postinstall complete'"
   },
   "dependencies": {
+    "@prisma/client": "^5.21.1",
+    "ioredis": "^5.4.1",
     "clsx": "^2.1.1",
     "zod": "^4.0.14",
     "class-variance-authority": "^0.7.1"
   },
   "devDependencies": {
-    "typescript": "^5.9.2",
-    "@types/node": "^24.1.0",
-    "eslint": "^9.35.0"
+    "prisma": "^5.21.1",
+    "prettier": "^3.3.3"
   }
 }
