@@ -1,4 +1,3 @@
-// eslint.config.js
 import js from "@eslint/js"
 import tseslint from "@typescript-eslint/eslint-plugin"
 import parser from "@typescript-eslint/parser"
@@ -6,10 +5,7 @@ import vue from "eslint-plugin-vue"
 import nuxt from "eslint-plugin-nuxt"
 
 export default [
-
-
-  js.configs.recommended,
-  // ⬅️ Root ignore blok — ESLint ga prepoznaje odmah
+  // ⬅️ prvo poseban blok za ignores
   {
     ignores: [
       "node_modules/**",
@@ -17,12 +13,11 @@ export default [
       ".nitro/**",
       "dist/**",
       "coverage/**",
-      ".docker/**",
-      ".output/**",
-      ".turbo/**",
-      "app/assets/**"
+      ".docker/**"
     ]
   },
+
+  js.configs.recommended,
 
   {
     files: ["**/*.{js,ts,vue}"],
@@ -50,9 +45,7 @@ export default [
       // 🔧 Vue/Nuxt rules
       "vue/multi-word-component-names": [
         "error",
-        { ignores: ["index", "[...slug]", "[slug]",
-          ".docker/**"
-        ] }
+        { ignores: ["index", "[...slug]", "[slug]"] }
       ],
 
       // 🔧 General rules
