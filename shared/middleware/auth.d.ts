@@ -1,4 +1,5 @@
 // shared/middleware/auth.ts
+/*
 import { defineNuxtRouteMiddleware, navigateTo, useNuxtApp } from 'nuxt/app';
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
@@ -27,3 +28,18 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }
   }
 });
+*/
+
+export function sharedAuthGuard(to: any, from: any) {
+  const user = useState('authUser', () => null)
+
+  if (!user.value && to.path !== '/login') {
+    return navigateTo('/login')
+  }
+  if (user.value && to.path === '/login') {
+    return navigateTo('/')
+  }
+}
+
+
+

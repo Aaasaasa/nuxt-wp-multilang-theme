@@ -1,6 +1,7 @@
 /* asseets/tailwind.css */
 @import "tw-animate-css";
 @import "tailwindcss";
+@import "tailwindcss/utilities";
 @import "@nuxt/ui";
 @import "@fontsource/inter/latin.css";
 /*

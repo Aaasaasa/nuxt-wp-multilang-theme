@@ -1,13 +1,14 @@
 // app/web/nuxt.config.ts
-
-/*
-ovo sada radi:
+/* ovo sada radi:
 import { helper } from "#shared/utils"
 import { User } from "@local/shared/models/user"
-
 */
-import { defineNuxtConfig } from 'nuxt/config';
-import { fileURLToPath } from 'node:url';
+import { defineNuxtConfig } from 'nuxt/config'
+// import { fileURLToPath } from 'node:url'
+// import { dirname } from 'node:path'
+// import { resolve } from 'node:path'
+
+// const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineNuxtConfig({
   typescript: {
@@ -17,54 +18,15 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/image',
     '@nuxtjs/i18n',
-    '@nuxtjs/seo',
     '@pinia/nuxt',
-    'nuxt-auth-utils'
+    'pinia-plugin-persistedstate/nuxt',
+    'nuxt-security' // ➝ security moduli za prod
   ],
-  alias: {
-    '~': fileURLToPath(new URL('.', import.meta.url)),
-    '~~': fileURLToPath(new URL('../../shared', import.meta.url))
-  },
-  app: {
-    head: {
-      htmlAttrs: { lang: 'de' },
-      meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'format-detection', content: 'telephone=no' }
-      ],
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
-    }
-  },
-  i18n: {
-    locales: [
-      { code: 'en', name: 'English', files: ['en/common.json', 'en/seo.json'], language: 'en-US', flag: 'i-openmoji:flag-united-states' },
-      { code: 'fr', name: 'Français', files: ['fr/common.json', 'fr/seo.json'], language: 'fr-FR', flag: 'i-openmoji:flag-france' },
-      { code: 'de', name: 'Deutsch', files: ['de/common.json', 'de/seo.json'], language: 'de-DE', flag: 'i-openmoji:flag-germany' },
-      { code: 'sr', name: 'Србски', files: ['sr/common.json', 'sr/seo.json'], language: 'sr-SR', flag: 'i-openmoji:flag-serbia' },
-      { code: 'ru', name: 'Russia', files: ['ru/common.json', 'ru/seo.json'], language: 'ru-RU', flag: 'i-openmoji:flag-russia' },
-      { code: 'es', name: 'Español', files: ['es/common.json', 'es/seo.json'], language: 'es-ES', flag: 'i-openmoji:flag-spain' },
-      { code: 'it', name: 'Italy', files: ['it/common.json', 'it/seo.json'], language: 'it-IT', flag: 'i-openmoji:flag-italy' }
-    ],
-    langDir: 'i18n/',
-    defaultLocale: 'de',
-    strategy: 'prefix_except_default',
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root'
-    }
-  },
   css: ['~/assets/css/tailwind.css'],
-  components: [
-    {
-      path: '~/components',
-      extensions: ['vue'],
-      pathPrefix: false
-    }
-  ],
+  components: [{ path: '~/components', extensions: ['vue'], pathPrefix: false }],
   postcss: {
     plugins: {
+      // tailwindcss: {},
       '@tailwindcss/postcss': {},
       autoprefixer: {}
     }
@@ -72,39 +34,60 @@ export default defineNuxtConfig({
   ui: {
     icons: ['lucide', 'openmoji']
   },
+  i18n: {
+    locales: [
+      { code: 'en', name: 'English', files: ['en/common.json', 'en/seo.json'] },
+      { code: 'de', name: 'Deutsch', files: ['de/common.json', 'de/seo.json'] },
+      { code: 'sr', name: 'Србски', files: ['sr/common.json', 'sr/seo.json'] }
+    ],
+    defaultLocale: 'de',
+    strategy: 'prefix_except_default'
+  },
+  alias: {
+    // '#shared': resolve(__dirname, '../../shared')
+    // '#shared': fileURLToPath(new URL('../../shared', import.meta.url))
+    // '#shared': fileURLToPath(new URL('../../shared', import.meta.url))
+  },
   vite: {
-    plugins: [tsconfigPaths()],
-    esbuild: {
-      target: 'esnext' // Ensure modern ES module support
-    }
+    plugins: [
+      require('vite-tsconfig-paths').default()
+    ]
   },
   security: {
     headers: {
       contentSecurityPolicy: {
-        'base-uri': ["'self'"],
-        'font-src': ["'self'", 'https:', 'data:'],
-        'form-action': ["'self'"],
+        'default-src': ["'self'"],
         'img-src': ["'self'", 'data:', 'https:'],
-        'script-src': ["'self'", "'unsafe-inline'"],
-        'style-src': ["'self'", 'https:', "'unsafe-inline'"],
-        'upgrade-insecure-requests': true
+        'style-src': ["'self'", "'unsafe-inline'"],
+        'script-src': ["'self'"],
+        'font-src': ["'self'", 'data:'],
+        'object-src': ["'none'"],
+        'frame-ancestors': ["'none'"],
+        'base-uri': ["'self'"],
+        'form-action': ["'self'"]
       },
-      referrerPolicy: 'strict-origin-when-cross-origin',
+      xFrameOptions: 'DENY',
       xContentTypeOptions: 'nosniff',
-      xFrameOptions: 'SAMEORIGIN',
-      xXSSProtection: '1; mode=block'
+      referrerPolicy: 'no-referrer',
+      strictTransportSecurity: { maxAge: 31536000, includeSubdomains: true, preload: true }
     },
     corsHandler: {
       origin: process.env.NODE_ENV === 'development'
-        ? ['http://localhost:3000', 'http://127.0.0.1:3000']
-        : process.env.CORS_ORIGIN?.split(','),
-      methods: ['GET', 'HEAD', 'POST'],
+        ? ['http://localhost:3300']
+        : [process.env.ADMIN_URL].filter(Boolean),
       credentials: true
     },
-    rateLimiter: { tokensPerInterval: 200, interval: 300000, throwError: true },
+    rateLimiter: {
+      tokensPerInterval: 100,
+      interval: 300000, // 5 min
+      throwError: true
+    },
+    requestSizeLimiter: { maxRequestSizeInBytes: 2_000_000, maxUploadFileRequestInBytes: 8_000_000 },
     hidePoweredBy: true
   },
-  site: { url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000', defaultLocale: 'de' },
-  seo: { meta: { twitterCard: 'summary_large_image' } },
+  routeRules: {
+    '/api/**': { cors: true, headers: { 'Access-Control-Max-Age': '86400' } },
+    // '/admin/**': { middleware: ['auth'] }
+  },
   compatibilityDate: '2025-09-13'
-});
+})

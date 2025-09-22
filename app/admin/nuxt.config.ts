@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url'
 // app/admin/nuxt.config.ts
 
 import { defineNuxtConfig } from 'nuxt/config'
+// import { fileURLToPath } from 'node:url'
 
 export default defineNuxtConfig({
   typescript: {
@@ -28,7 +29,8 @@ export default defineNuxtConfig({
   components: [{ path: '~/components', extensions: ['vue'], pathPrefix: false }],
   postcss: {
     plugins: {
-      tailwindcss: {},
+      // tailwindcss: {},
+      '@tailwindcss/postcss': {},
       autoprefixer: {}
     }
   },
@@ -43,6 +45,14 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'de',
     strategy: 'prefix_except_default'
+  },
+  alias: {
+    // '#shared': fileURLToPath(new URL('../../shared', import.meta.url))
+  },
+  vite: {
+    plugins: [
+      require('vite-tsconfig-paths').default()
+    ]
   },
   security: {
     headers: {
@@ -78,7 +88,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/api/**': { cors: true, headers: { 'Access-Control-Max-Age': '86400' } },
-    '/admin/**': { middleware: ['auth'] }
+    // '/admin/**': { middleware: ['auth'] }
   },
   compatibilityDate: '2025-09-13'
 })
