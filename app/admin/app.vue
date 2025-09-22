@@ -4,6 +4,9 @@ import { onErrorCaptured } from 'vue'
 import { useState } from '#imports'
 
 
+// import { useState } from '#imports'
+
+
 onErrorCaptured((err) => {
   console.error('[UI Error]', err)
   return true
@@ -15,7 +18,7 @@ watch(isDark, (val) => {
   document.documentElement.classList.toggle('dark', val)
 })
 
-console.log('Loaded components:', Object.keys(import.meta.glob('/**/*.{vue,ts}', { eager: true })))
+console.log('Loaded components: skipping dynamic import because CommonJS build does not support import.meta');
 
 </script>
 

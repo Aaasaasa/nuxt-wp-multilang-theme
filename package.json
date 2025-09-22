@@ -1,61 +1,41 @@
 {
-  "name": "nuxt-multilang-theme-develop",
+  "name": "web",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
-  "workspaces": [
-    "app/*",
-    "server",
-    "shared"
-  ],
-  "version": "0.0.1",
   "author": "Aleksandar Stajic",
   "license": "MIT",
   "scripts": {
-    "dev:web": "turbo run dev --filter=web",
-    "dev:admin": "turbo run dev --filter=admin",
-    "dev:server": "turbo run dev --filter=server",
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "preview": "turbo run preview",
-    "lint": "turbo run lint",
-    "test": "vitest run",
-    "postinstall": "turbo run postinstall || true",
-    "prepare": "husky install",
-    "clean:root": "rm -rf node_modules pnpm-lock.yaml .turbo .nuxt .output dist",
-    "clean:workspaces": "rm -rf app/*/node_modules app/*/.nuxt app/*/.output app/*/.turbo server/node_modules shared/node_modules",
-    "clean:cache": "pnpm store prune",
-    "clean": "pnpm run clean:root && pnpm run clean:workspaces && pnpm run clean:cache",
-    "reinstall": "pnpm run clean && pnpm install && pnpm run postinstall",
-    "bootstrap": "pnpm run reinstall"
+    "dev": "nuxt dev --port 3000",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "lint": "eslint . --fix",
+    "format": "prettier --write .",
+    "postinstall": "echo 'Web postinstall complete'"
   },
   "dependencies": {
-    "nuxt": "^4.1.1",
-    "@nuxtjs/i18n": "^10.0.3",
-    "@nuxt/ui": "^3.3.0",
-    "@nuxt/image": "^1.11.0",
-    "@nuxtjs/seo": "^3.1.0",
-    "@pinia/nuxt": "^0.11.2",
-    "pinia": "^3.0.3",
-    "nuxt-auth-utils": "^0.5.22",
-    "nuxt-security": "^2.3.0"
+    "@iconify-json/lucide": "^1.2.60",
+    "@iconify-json/openmoji": "^1.2.15",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.544.0",
+    "pinia-plugin-persistedstate": "^4.4.1",
+    "tailwind-merge": "^3.0.2",
+    "tw-animate-css": "^1.3.8",
+    "zod": "^4.0.14"
   },
   "devDependencies": {
-    "@eslint/js": "^9.13.0",
-    "@nuxt/test-utils": "^3.14.0",
-    "eslint": "^9.13.0",
-    "eslint-plugin-nuxt": "^4.0.0",
-    "eslint-plugin-vue": "^10.4.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.1.6",
-    "turbo": "^2.5.6",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.8.1",
-    "vite-tsconfig-paths": "^5.0.1",
-    "vitest": "^2.1.3"
+    "@fontsource/inter": "^5.2.6",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@tailwindcss/typography": "^0.5.17",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "prettier": "^3.3.3",
+    "tailwindcss": "^4.1.13",
+    "tailwindcss-animate": "^1.0.7"
   },
   "engines": {
     "node": ">=22.19.0",
     "pnpm": ">=9.0.0"
-  },
-  "packageManager": "pnpm@9.12.3"
+  }
 }

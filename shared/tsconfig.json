@@ -4,5 +4,5 @@
     "module": "NodeNext",
     "baseUrl": "."
   },
-  "include": ["*", "src"]
+  "include": ["*", "src", "middleware/auth.d.ts"]
 }
