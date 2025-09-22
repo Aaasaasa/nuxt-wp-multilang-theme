@@ -1,4 +1,11 @@
 // app/web/nuxt.config.ts
+
+/*
+ovo sada radi:
+import { helper } from "#shared/utils"
+import { User } from "@local/shared/models/user"
+
+*/
 import { defineNuxtConfig } from 'nuxt/config';
 import { fileURLToPath } from 'node:url';
 

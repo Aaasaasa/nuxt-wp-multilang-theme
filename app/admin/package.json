@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "description": "Nuxt 4 admin panel sa TailwindCSS i shared modulima",
+  "objasnjenjenje": "Imports subpath za shared, koristi u kodu: import { helper } from '#shared/utils'",
+  "objasnjenjenje_dva": "import { locales } from '#shared/utils/locale.ts'",
+  "imports": {
+    "#shared/*": "../../shared/*"
+  },
   "author": "Aleksandar Stajic",
   "license": "MIT",
   "scripts": {
@@ -14,12 +20,19 @@
     "postinstall": "echo 'Admin postinstall complete'"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.60",
-    "@iconify-json/openmoji": "^1.2.9",
+    "nuxt": "^4.1.2",
+    "@nuxt/ui": "^3.3.4",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "vue": "^3.5.21",
+    "vue-router": "^4.5.1",
+    "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate": "^4.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-vue-next": "^0.544.0",
-    "pinia-plugin-persistedstate": "^4.4.1"
+    "@iconify-json/lucide": "^1.2.68",
+    "@iconify-json/openmoji": "^1.2.15",
+    "@local/shared": "workspace:*"
   },
   "devDependencies": {
     "@fontsource/inter": "^5.2.6",
@@ -30,10 +43,15 @@
     "prettier": "^3.3.3",
     "tailwindcss": "^4.1.13",
     "tailwindcss-animate": "^1.0.7",
-    "tw-animate-css": "^1.3.8"
+    "tw-animate-css": "^1.3.8",
+    "eslint": "^9.36.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.3",
+    "@vue/test-utils": "^2.4.5"
   },
   "engines": {
     "node": ">=22.19.0",
     "pnpm": ">=9.0.0"
   }
 }
+

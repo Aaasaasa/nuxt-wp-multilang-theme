@@ -7,6 +7,7 @@
 dist
 .docker
 data
+.turbo
 
 # Node dependencies
 node_modules

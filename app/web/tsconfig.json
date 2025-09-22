@@ -1,13 +1,19 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "module": "NodeNext",
+  "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "~~/*": ["../../shared/*"]
+      "#shared/*": ["../../shared/*"],
+      "@local/shared/*": ["../../shared/*"]
     }
   },
-  "exclude": ["node_modules", "dist"],
-  "include": ["*", "nuxt.config.ts", "app.vue"]
+  "include": [
+    "**/*.ts",
+    "**/*.vue",
+    ".nuxt",
+    "nuxt.config.ts",
+    "app.vue"
+  ],
+  "exclude": ["node_modules", "dist", ".output"]
 }

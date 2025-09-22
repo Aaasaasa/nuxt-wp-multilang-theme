@@ -1,8 +1,12 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "module": "NodeNext",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@local/shared/*": ["./*"]
+    },
+    "types": ["node"]
   },
-  "include": ["*", "src", "middleware/auth.d.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

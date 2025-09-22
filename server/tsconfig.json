@@ -1,21 +1,11 @@
 {
   "extends": "../tsconfig.base.json",
-  "module": "NodeNext",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "types": [],
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"],
-      "~~/*": ["../shared/*"]
-    }
+    "outDir": "dist",
+    "types": ["node"],
+    "moduleResolution": "Bundler"
   },
-  "exclude": ["node_modules", "dist"],
-  "include": ["src", "prisma", "index.ts"]
+  "include": ["src/**/*.ts", "prisma/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

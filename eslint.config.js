@@ -1,12 +1,11 @@
 import js from "@eslint/js"
-import tseslint from "typescript-eslint"
+import tseslint from "@typescript-eslint/eslint-plugin"
+import parser from "@typescript-eslint/parser"
 import vue from "eslint-plugin-vue"
+import nuxt from "eslint-plugin-nuxt"
 
 export default [
   js.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...vue.configs["flat/recommended"],
-
   {
     files: ["**/*.{js,ts,vue}"],
     ignores: [
@@ -14,22 +13,38 @@ export default [
       ".nuxt/**",
       "dist/**",
       "coverage/**",
-      "prisma/generated/**"
-    ],
+      ".docker/**"],
     languageOptions: {
+      parser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module"
       }
     },
+    plugins: {
+      "@typescript-eslint": tseslint,
+      vue,
+      nuxt
+    },
     rules: {
-      "@typescript-eslint/no-explicit-any": "warn",
-      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      // 🔧 TypeScript rules
+      "no-unused-vars": "off", // isključi core rule
+      "@typescript-eslint/no-unused-vars": [
+        "warn", // ⚠️ samo warning, nikad error
+        { argsIgnorePattern: "^_" }
+      ],
+      "@typescript-eslint/no-explicit-any": "off",
+
+      // 🔧 Vue/Nuxt rules
       "vue/multi-word-component-names": [
         "error",
         { ignores: ["index", "[...slug]", "[slug]"] }
-      ]
-    }
-  },
-]
+      ],
 
+      // 🔧 General rules (opušteno u dev fazi)
+      "no-empty": "off",
+      "no-console": "off",
+      "no-undef": "off"
+    }
+  }
+]

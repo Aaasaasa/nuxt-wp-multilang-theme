@@ -1,6 +1,6 @@
 {
   "name": "@local/shared",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "main": "index.ts",
@@ -13,21 +13,22 @@
     "lint": "eslint . --fix",
     "format": "prettier --write .",
     "build": "echo 'Shared build (no-op)'",
-    "db:generate": "prisma generate",
+    "db:generate": "prisma generate --schema=../prisma/schema.prisma",
     "db:migrate": "prisma migrate dev --name shared-migration",
     "db:convert": "node scripts/convert-db.js",
-    "db:setup": "pnpm db:generate && pnpm db:migrate",
-    "postinstall": "pnpm db:generate && echo 'Shared postinstall complete'"
+    "db:setup": "pnpm db:generate && pnpm db:migrate"
   },
   "dependencies": {
-    "@prisma/client": "^5.21.1",
+    "@prisma/client": "^6.0.0",
     "ioredis": "^5.4.1",
     "clsx": "^2.1.1",
-    "zod": "^4.0.14",
+    "zod": "^3.23.8",
     "class-variance-authority": "^0.7.1"
   },
   "devDependencies": {
-    "prisma": "^5.21.1",
-    "prettier": "^3.3.3"
+    "prisma": "^6.0.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
   }
 }
+

@@ -1,39 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
     "allowJs": true,
     "strict": true,
-    "esModuleInterop": true,
     "skipLibCheck": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
+    "noEmit": true,
     "baseUrl": ".",
-    "outDir": "./dist",
     "paths": {
-      "~~/*": ["shared/*"]
-    },
-    "types": ["node"],   // optional global, oder leer lassen
-    "references": [
-    { "path": "./app/admin/tsconfig.ts" },
-    { "path": "./app/web/tsconfig.ts" },
-    { "path": "./server/tsconfig.ts" },
-    { "path": "./shared/tsconfig.ts" }
-  ]
+      "@local/shared/*": ["shared/*"]
+    }
   },
-  "exclude": [
-    "node_modules",
-    "**/.output",
-    "**/.nuxt",
-    "**/dist",
-    "**/.turbo"
-  ],
-  "include": [
-    "app",
-    "server",
-    "shared"
-  ]
+  "include": ["app/*", "server", "shared"],
+  "exclude": ["node_modules", "dist", ".output", ".nuxt", ".turbo"]
 }
+
