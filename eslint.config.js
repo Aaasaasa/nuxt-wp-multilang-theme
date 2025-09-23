@@ -73,10 +73,12 @@ export default [
       "no-undef": "off",
 
       // 🔧 Prettier
-      "prettier/prettier": "warn"
-    }
+      "prettier/prettier": "warn",
+      //disable semicolon off
+      semi: ["off"],
+    },
   },
 
   // 📌 Isključi ESLint rules koje Prettier već pokriva
-  prettierConfig
+  prettierConfig,
 ]
