@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url'
 // app/admin/nuxt.config.ts
 
 import { defineNuxtConfig } from "nuxt/config";
-// import { fileURLToPath } from 'node:url'
+import { fileURLToPath } from "node:url";
 
 export default defineNuxtConfig({
   typescript: {
@@ -41,15 +41,56 @@ export default defineNuxtConfig({
   },
   i18n: {
     locales: [
-      { code: "en", name: "English", files: ["en/common.json", "en/seo.json"] },
-      { code: "de", name: "Deutsch", files: ["de/common.json", "de/seo.json"] },
-      { code: "sr", name: "Србски", files: ["sr/common.json", "sr/seo.json"] },
+      {
+        code: "de",
+        name: "Deutsch",
+        files: ["de/common.json", "de/seo.json"],
+        language: "de-DE",
+        flag: "i-openmoji:flag-germany",
+      },
+      {
+        code: "en",
+        name: "English",
+        files: ["en/common.json", "en/seo.json"],
+        language: "en-US",
+        flag: "i-openmoji:flag-united-states",
+      },
+      {
+        code: "sr",
+        name: "Србски",
+        files: ["sr/common.json", "sr/seo.json"],
+        language: "sr-SR",
+        flag: "i-openmoji:flag-serbia",
+      },
+      {
+        code: "ru",
+        name: "Russia",
+        files: ["ru/common.json", "ru/seo.json"],
+        language: "ru-RU",
+        flag: "i-openmoji:flag-russia",
+      },
+      {
+        code: "es",
+        name: "Español",
+        files: ["es/common.json", "es/seo.json"],
+        language: "es-ES",
+        flag: "i-openmoji:flag-spain",
+      },
+      {
+        code: "it",
+        name: "Italy",
+        files: ["it/common.json", "it/seo.json"],
+        language: "it-IT",
+        flag: "i-openmoji:flag-italy",
+      },
     ],
     defaultLocale: "de",
     strategy: "prefix_except_default",
   },
+  // '#shared': fileURLToPath(new URL('../../shared', import.meta.url))
   alias: {
-    // '#shared': fileURLToPath(new URL('../../shared', import.meta.url))
+    "~": fileURLToPath(new URL(".", import.meta.url)),
+    "#shared": fileURLToPath(new URL("../../shared", import.meta.url)),
   },
   vite: {
     plugins: [require("vite-tsconfig-paths").default()],

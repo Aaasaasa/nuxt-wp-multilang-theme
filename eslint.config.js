@@ -24,8 +24,8 @@ export default [
       "coverage/**",
       ".docker/**",
       ".output/**",
-      ".turbo/**"
-    ]
+      ".turbo/**",
+    ],
   },
 
   // 📌 Pravila za kod

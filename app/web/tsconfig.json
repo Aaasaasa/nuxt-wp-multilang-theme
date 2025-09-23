@@ -9,11 +9,12 @@
     }
   },
   "include": [
+    ".",
     "**/*.ts",
     "**/*.vue",
     ".nuxt",
     "nuxt.config.ts",
     "app.vue"
   ],
-  "exclude": ["node_modules", "dist", ".output"]
+  "exclude": ["node_modules", "dist", ".docker", ".output", ".nuxt", ".turbo"]
 }
