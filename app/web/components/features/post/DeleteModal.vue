@@ -8,12 +8,9 @@
     <template #footer>
       <div class="flex flex-col w-full">
         <div class="flex items-center gap-2">
-          <UIcon
-            name="i-lucide-info"
-            class="w-4 h-4 text-gray-400"
-          />
+          <UIcon name="i-lucide-info" class="w-4 h-4 text-gray-400" />
           <span class="text-xs text-gray-500 dark:text-gray-400">
-            {{ t('postForm.actions.delete.info') }}
+            {{ t("postForm.actions.delete.info") }}
           </span>
         </div>
         <div class="flex gap-3 self-end mt-4">
@@ -42,38 +39,38 @@
 </template>
 
 <script setup lang="ts">
-const { t } = useI18n()
+const { t } = useI18n();
 
 interface Props {
-  post?: Post
+  post?: Post;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  post: undefined
-})
+  post: undefined,
+});
 
-const emit = defineEmits(['close'])
-const open = defineModel<boolean>('open', { required: true })
-const loading = ref(false)
+const emit = defineEmits(["close"]);
+const open = defineModel<boolean>("open", { required: true });
+const loading = ref(false);
 
 const handleDelete = async () => {
-  if (!props.post) return
-  loading.value = true
+  if (!props.post) return;
+  loading.value = true;
   try {
-    await $fetch(`/api/posts/${props.post.id}`, { method: 'DELETE' })
+    await $fetch(`/api/posts/${props.post.id}`, { method: "DELETE" });
     useNotifications().success({
-      title: t('postForm.actions.delete.success.title'),
-      message: t('postForm.actions.delete.success.message')
-    })
-    emit('close', { success: true })
-    open.value = false
+      title: t("postForm.actions.delete.success.title"),
+      message: t("postForm.actions.delete.success.message"),
+    });
+    emit("close", { success: true });
+    open.value = false;
   } catch {
     useNotifications().error({
-      title: t('postForm.actions.delete.error.title'),
-      message: t('postForm.actions.delete.error.message')
-    })
+      title: t("postForm.actions.delete.error.title"),
+      message: t("postForm.actions.delete.error.message"),
+    });
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 </script>

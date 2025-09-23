@@ -7,7 +7,7 @@ import { db } from "~/utils/dbClients";
 export async function getOrSet<T>(
   key: string,
   ttlSec: number,
-  fetcher: () => Promise<T>
+  fetcher: () => Promise<T>,
 ): Promise<T> {
   // Wenn Redis gar nicht aktiv ist → direkt DB/API aufrufen
   if (!db.redis) {

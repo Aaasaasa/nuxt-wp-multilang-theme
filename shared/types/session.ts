@@ -1,1 +1,4 @@
-export interface Session { userId: string; role: "user" | "admin"; }
+export interface Session {
+  userId: string;
+  role: "user" | "admin";
+}

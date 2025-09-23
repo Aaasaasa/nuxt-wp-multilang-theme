@@ -25,16 +25,16 @@
 export default defineEventHandler(async (event) => {
   try {
     // User is already authenticated by middleware and available in context
-    const user = event.context.user
+    const user = event.context.user;
 
-    const { id } = await validateParams(event, idSchema)
+    const { id } = await validateParams(event, idSchema);
 
     // Delete post using service (includes ownership check)
-    await deletePost(id, user.id)
+    await deletePost(id, user.id);
 
-    return createDeletedResponse()
+    return createDeletedResponse();
   } catch (error: any) {
-    if (error.statusCode) throw error
-    throw serverError('Failed to delete post')
+    if (error.statusCode) throw error;
+    throw serverError("Failed to delete post");
   }
-})
+});

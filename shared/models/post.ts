@@ -7,7 +7,7 @@
 
 //export interface Post { id: string; title: string; slug: string; body: string; }
 
-import { z } from 'zod'
+import { z } from "zod";
 
 // =============================================================================
 // DATABASE ENTITY
@@ -17,20 +17,20 @@ import { z } from 'zod'
  * Complete Post entity (matches database schema)
  */
 export interface Post {
-  id: number
-  title: string
-  slug: string
-  content: string | null
-  authorId: number
-  createdAt: string
-  updatedAt: string
+  id: number;
+  title: string;
+  slug: string;
+  content: string | null;
+  authorId: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 /**
  * Post entity with author information (for display)
  */
 export interface PostWithAuthor extends Post {
-  author: PublicUser
+  author: PublicUser;
 }
 
 // =============================================================================
@@ -47,26 +47,34 @@ export interface PostWithAuthor extends Post {
  * Schema for creating a new post (client-side form)
  */
 export const createPostSchema = z.object({
-  title: z.string().min(TEXT_FIELD_LIMITS.TITLE.MIN).max(TEXT_FIELD_LIMITS.TITLE.MAX).trim(),
-  content: z.string().min(TEXT_FIELD_LIMITS.CONTENT.MIN).max(TEXT_FIELD_LIMITS.CONTENT.MAX).trim()
-})
+  title: z
+    .string()
+    .min(TEXT_FIELD_LIMITS.TITLE.MIN)
+    .max(TEXT_FIELD_LIMITS.TITLE.MAX)
+    .trim(),
+  content: z
+    .string()
+    .min(TEXT_FIELD_LIMITS.CONTENT.MIN)
+    .max(TEXT_FIELD_LIMITS.CONTENT.MAX)
+    .trim(),
+});
 
 /**
  * Schema for creating a new post (server-side with authorId)
  */
 export const createPostWithAuthorSchema = createPostSchema.extend({
-  authorId: z.number().int().positive()
-})
+  authorId: z.number().int().positive(),
+});
 
 /**
  * Schema for updating an existing post
  */
-export const updatePostSchema = createPostSchema
+export const updatePostSchema = createPostSchema;
 
 /**
  * Schema for partial post updates (all fields optional)
  */
-export const partialPostSchema = createPostSchema.partial()
+export const partialPostSchema = createPostSchema.partial();
 
 // =============================================================================
 // DERIVED TYPES
@@ -75,15 +83,17 @@ export const partialPostSchema = createPostSchema.partial()
 /**
  * Post data types inferred from validation schemas
  */
-export type CreatePostData = z.infer<typeof createPostSchema>
-export type CreatePostWithAuthorData = z.infer<typeof createPostWithAuthorSchema>
-export type UpdatePostData = z.infer<typeof updatePostSchema>
-export type PartialPostData = z.infer<typeof partialPostSchema>
+export type CreatePostData = z.infer<typeof createPostSchema>;
+export type CreatePostWithAuthorData = z.infer<
+  typeof createPostWithAuthorSchema
+>;
+export type UpdatePostData = z.infer<typeof updatePostSchema>;
+export type PartialPostData = z.infer<typeof partialPostSchema>;
 
 /**
  * Post form state (client-side)
  */
-export type PostFormState = CreatePostData
+export type PostFormState = CreatePostData;
 
 // =============================================================================
 // CONSTANTS & DEFAULTS
@@ -93,6 +103,6 @@ export type PostFormState = CreatePostData
  * Initial state for post forms
  */
 export const initialPostState: PostFormState = {
-  title: '',
-  content: ''
-}
+  title: "",
+  content: "",
+};

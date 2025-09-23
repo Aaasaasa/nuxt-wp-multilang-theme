@@ -1,4 +1,4 @@
-import { defineEventHandler } from 'h3';
+import { defineEventHandler } from "h3";
 import { getPrisma } from "~/utils/dbClients";
 
 export default defineEventHandler(async (event) => {

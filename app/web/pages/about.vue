@@ -1,1 +1,6 @@
-<template><div><h1>About</h1><p>About page</p></div></template>
+<template>
+  <div>
+    <h1>About</h1>
+    <p>About page</p>
+  </div>
+</template>

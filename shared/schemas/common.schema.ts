@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 /**
  * Common validation schemas using Zod
@@ -8,10 +8,10 @@ import { z } from 'zod'
  * Schema for validating numeric IDs (positive integers)
  */
 export const idSchema = z.object({
-  id: z.coerce.number().int().positive()
-})
+  id: z.coerce.number().int().positive(),
+});
 
 /**
  * Type inference for ID schema
  */
-export type IdSchemaData = z.infer<typeof idSchema>
+export type IdSchemaData = z.infer<typeof idSchema>;

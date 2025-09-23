@@ -1,1 +1,3 @@
-export default defineNuxtPlugin(() => ({ /* add route guards later */ }));
+export default defineNuxtPlugin(() => ({
+  /* add route guards later */
+}));

@@ -32,23 +32,23 @@
  */
 export default defineEventHandler(async (event) => {
   try {
-    const userData = await validateBody(event, registerUserSchema)
+    const userData = await validateBody(event, registerUserSchema);
 
     // Transform to CreateUserData (remove confirmPassword)
-    const { confirmPassword, ...createUserData } = userData
+    const { confirmPassword, ...createUserData } = userData;
 
     // Create user using service
-    const user = await createUser(createUserData)
+    const user = await createUser(createUserData);
 
     // Set user session automatically after registration
     await setUserSession(event, {
       user,
-      loggedInAt: new Date()
-    })
+      loggedInAt: new Date(),
+    });
 
-    return createCreatedResponse(user)
+    return createCreatedResponse(user);
   } catch (error: any) {
-    if (error.statusCode) throw error
-    throw serverError('Registration failed')
+    if (error.statusCode) throw error;
+    throw serverError("Registration failed");
   }
-})
+});

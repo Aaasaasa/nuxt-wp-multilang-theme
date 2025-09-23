@@ -17,13 +17,10 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "preview": "turbo run preview",
-
     "lint": "pnpm run lint:root",
     "lint:root": "eslint app server shared --config eslint.config.js --fix",
     "lint:ci": "eslint app server shared --config eslint.config.ci.js",
-
     "lint:all": "turbo run lint",
-
     "test": "turbo run test",
     "postinstall": "turbo run postinstall || true",
     "env:check": "sh -c '[ -f .env ] || (echo \"ERROR: Missing .env file\" && exit 1)'",
@@ -35,9 +32,9 @@
     "clean:cache": "pnpm store prune",
     "clean": "pnpm run clean:root && pnpm run clean:workspaces && pnpm run clean:prisma && pnpm run clean:cache",
     "reinstall": "pnpm run clean && pnpm install && pnpm run postinstall",
-    "bootstrap": "pnpm run reinstall"
+    "bootstrap": "pnpm run reinstall",
+    "format": "prettier --write ."
   },
-
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
@@ -47,10 +44,13 @@
     "@typescript-eslint/utils": "^8.44.1",
     "conventional-changelog-cli": "^5.0.0",
     "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-nuxt": "^4.0.0",
+    "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-vue": "^10.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.0",
+    "prettier": "^3.6.2",
     "turbo": "^2.5.6",
     "typescript": "^5.6.3"
   },
@@ -58,5 +58,5 @@
     "node": ">=24.5.0",
     "pnpm": ">=9.0.0"
   },
-  "packageManager": "pnpm@9.12.3"
+  "packageManager": "pnpm@10.17.1"
 }

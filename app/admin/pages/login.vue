@@ -3,7 +3,7 @@
     <UCard class="w-full max-w-md">
       <template #header>
         <h1 class="text-2xl font-bold text-center">
-          {{ t('login.title') }}
+          {{ t("login.title") }}
         </h1>
       </template>
 
@@ -26,19 +26,14 @@
           />
         </UFormGroup>
 
-        <UButton
-          type="submit"
-          block
-          color="primary"
-          :loading="loading"
-        >
-          {{ t('login.submit') }}
+        <UButton type="submit" block color="primary" :loading="loading">
+          {{ t("login.submit") }}
         </UButton>
       </form>
 
       <template #footer>
         <p class="text-center text-sm text-gray-500 dark:text-gray-400">
-          {{ t('login.hint') }}
+          {{ t("login.hint") }}
         </p>
       </template>
     </UCard>
@@ -46,19 +41,19 @@
 </template>
 
 <script setup lang="ts">
-const { t } = useI18n()
-const email = ref('')
-const password = ref('')
-const loading = ref(false)
+const { t } = useI18n();
+const email = ref("");
+const password = ref("");
+const loading = ref(false);
 
 const handleLogin = async () => {
-  loading.value = true
+  loading.value = true;
 
   // Fake auth — postavi user u global state
-  const user = useState('authUser')
-  user.value = { id: 1, name: 'Admin', email: email.value }
+  const user = useState("authUser");
+  user.value = { id: 1, name: "Admin", email: email.value };
 
   // Redirect na dashboard
-  await navigateTo('/')
-}
+  await navigateTo("/");
+};
 </script>

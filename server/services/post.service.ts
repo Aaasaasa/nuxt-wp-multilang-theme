@@ -1,4 +1,4 @@
-import prisma from '@@/lib/prisma'
+import prisma from "@@/lib/prisma";
 
 /**
  * Post Service - Pure business logic without validation
@@ -10,37 +10,37 @@ import prisma from '@@/lib/prisma'
  */
 export async function createPost(
   postData: CreatePostData,
-  authorId: number
+  authorId: number,
 ): Promise<PostWithAuthor> {
   try {
     const post = await prisma.post.create({
       data: {
         title: postData.title,
         content: postData.content,
-        authorId
+        authorId,
       },
       include: {
-        author: true
-      }
-    })
+        author: true,
+      },
+    });
 
     return {
       ...post,
       author: toPublicUser(post.author),
       createdAt: post.createdAt.toISOString(),
-      updatedAt: post.updatedAt.toISOString()
-    }
+      updatedAt: post.updatedAt.toISOString(),
+    };
   } catch (error: any) {
     if (error.code === PRISMA_ERRORS.FOREIGN_KEY_CONSTRAINT_FAILED) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Invalid author ID'
-      })
+        statusMessage: "Invalid author ID",
+      });
     }
     throw createError({
       statusCode: 500,
-      statusMessage: 'Failed to create post'
-    })
+      statusMessage: "Failed to create post",
+    });
   }
 }
 
@@ -50,17 +50,17 @@ export async function createPost(
 export async function getAllPosts(): Promise<PostWithAuthor[]> {
   const posts = await prisma.post.findMany({
     include: {
-      author: true
+      author: true,
     },
-    orderBy: { createdAt: 'desc' }
-  })
+    orderBy: { createdAt: "desc" },
+  });
 
   return posts.map((post) => ({
     ...post,
     author: toPublicUser(post.author),
     createdAt: post.createdAt.toISOString(),
-    updatedAt: post.updatedAt.toISOString()
-  }))
+    updatedAt: post.updatedAt.toISOString(),
+  }));
 }
 
 /**
@@ -70,20 +70,20 @@ export async function getPostById(id: number): Promise<PostWithAuthor | null> {
   const post = await prisma.post.findUnique({
     where: { id },
     include: {
-      author: true
-    }
-  })
+      author: true,
+    },
+  });
 
   if (!post) {
-    return null
+    return null;
   }
 
   return {
     ...post,
     author: toPublicUser(post.author),
     createdAt: post.createdAt.toISOString(),
-    updatedAt: post.updatedAt.toISOString()
-  }
+    updatedAt: post.updatedAt.toISOString(),
+  };
 }
 
 /**
@@ -92,26 +92,26 @@ export async function getPostById(id: number): Promise<PostWithAuthor | null> {
 export async function updatePost(
   id: number,
   postData: UpdatePostData,
-  authorId: number
+  authorId: number,
 ): Promise<PostWithAuthor> {
   // Check if post exists and user owns it
   const existingPost = await prisma.post.findUnique({
     where: { id },
-    select: { authorId: true }
-  })
+    select: { authorId: true },
+  });
 
   if (!existingPost) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Post not found'
-    })
+      statusMessage: "Post not found",
+    });
   }
 
   if (existingPost.authorId !== authorId) {
     throw createError({
       statusCode: 403,
-      statusMessage: 'You can only edit your own posts'
-    })
+      statusMessage: "You can only edit your own posts",
+    });
   }
 
   try {
@@ -119,27 +119,27 @@ export async function updatePost(
       where: { id },
       data: postData,
       include: {
-        author: true
-      }
-    })
+        author: true,
+      },
+    });
 
     return {
       ...post,
       author: toPublicUser(post.author),
       createdAt: post.createdAt.toISOString(),
-      updatedAt: post.updatedAt.toISOString()
-    }
+      updatedAt: post.updatedAt.toISOString(),
+    };
   } catch (error: any) {
     if (error.code === PRISMA_ERRORS.RECORD_NOT_FOUND) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Post not found'
-      })
+        statusMessage: "Post not found",
+      });
     }
     throw createError({
       statusCode: 500,
-      statusMessage: 'Failed to update post'
-    })
+      statusMessage: "Failed to update post",
+    });
   }
 }
 
@@ -150,37 +150,37 @@ export async function deletePost(id: number, authorId: number): Promise<void> {
   // Check if post exists and user owns it
   const existingPost = await prisma.post.findUnique({
     where: { id },
-    select: { authorId: true }
-  })
+    select: { authorId: true },
+  });
 
   if (!existingPost) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Post not found'
-    })
+      statusMessage: "Post not found",
+    });
   }
 
   if (existingPost.authorId !== authorId) {
     throw createError({
       statusCode: 403,
-      statusMessage: 'You can only delete your own posts'
-    })
+      statusMessage: "You can only delete your own posts",
+    });
   }
 
   try {
     await prisma.post.delete({
-      where: { id }
-    })
+      where: { id },
+    });
   } catch (error: any) {
     if (error.code === PRISMA_ERRORS.RECORD_NOT_FOUND) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Post not found'
-      })
+        statusMessage: "Post not found",
+      });
     }
     throw createError({
       statusCode: 500,
-      statusMessage: 'Failed to delete post'
-    })
+      statusMessage: "Failed to delete post",
+    });
   }
 }

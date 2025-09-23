@@ -1,10 +1,9 @@
 // app/admin/middleware/auth.ts
-import { sharedAuthGuard } from '#shared/middleware/auth'
+import { sharedAuthGuard } from "#shared/middleware/auth";
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  return sharedAuthGuard(to, from)
-})
-
+  return sharedAuthGuard(to, from);
+});
 
 /*export default defineNuxtRouteMiddleware((to) => {
   const user = useState('authUser', () => null) // globalni state za usera

@@ -5,10 +5,7 @@ const posts = ref([{ slug: "hello", title: "Hello" }]);
   <div>
     <h1>Blog</h1>
     <ul>
-      <li
-        v-for="p in posts"
-        :key="p.slug"
-      >
+      <li v-for="p in posts" :key="p.slug">
         <NuxtLink :to="`/blog/${p.slug}`">
           {{ p.title }}
         </NuxtLink>

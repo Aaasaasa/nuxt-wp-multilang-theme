@@ -27,20 +27,20 @@
  */
 export default defineEventHandler(async (event) => {
   try {
-    const { email, password } = await validateBody(event, loginUserSchema)
+    const { email, password } = await validateBody(event, loginUserSchema);
 
     // Authenticate user using service
-    const user = await authenticateUser(email, password)
+    const user = await authenticateUser(email, password);
 
     // Set user session
     await setUserSession(event, {
       user,
-      loggedInAt: new Date()
-    })
+      loggedInAt: new Date(),
+    });
 
-    return createApiResponse(user, HTTP_STATUS.OK, 'Login successful')
+    return createApiResponse(user, HTTP_STATUS.OK, "Login successful");
   } catch (error: any) {
-    if (error.statusCode) throw error
-    throw serverError('Login failed')
+    if (error.statusCode) throw error;
+    throw serverError("Login failed");
   }
-})
+});

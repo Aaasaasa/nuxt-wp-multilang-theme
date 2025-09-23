@@ -7,41 +7,41 @@
 export const TEXT_FIELD_LIMITS = {
   TITLE: {
     MIN: 3,
-    MAX: 100
+    MAX: 100,
   },
   DESCRIPTION: {
     MIN: 10,
-    MAX: 500
+    MAX: 500,
   },
   CONTENT: {
     MIN: 10,
-    MAX: 1000
+    MAX: 1000,
   },
   NAME: {
     MIN: 2,
-    MAX: 50
+    MAX: 50,
   },
   EMAIL: {
-    MAX: 254
+    MAX: 254,
   },
   PASSWORD: {
     MIN: 8,
-    MAX: 128
-  }
-} as const
+    MAX: 128,
+  },
+} as const;
 
 // Pagination limits
 export const PAGINATION_LIMITS = {
   PAGE: {
     MIN: 1,
-    DEFAULT: 1
+    DEFAULT: 1,
   },
   LIMIT: {
     MIN: 1,
     MAX: 50,
-    DEFAULT: 10
-  }
-} as const
+    DEFAULT: 10,
+  },
+} as const;
 
 // Validation patterns
 export const VALIDATION_PATTERNS = {
@@ -50,5 +50,5 @@ export const VALIDATION_PATTERNS = {
   PHONE: /^[\\+]?[1-9][\d]{0,15}$/,
   URL: /^https?:\/\/.+/,
   SLUG: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-  USERNAME: /^[a-zA-Z0-9_]{3,20}$/
-} as const
+  USERNAME: /^[a-zA-Z0-9_]{3,20}$/,
+} as const;

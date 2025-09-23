@@ -1,4 +1,4 @@
-import { defineEventHandler } from 'h3';
+import { defineEventHandler } from "h3";
 import { getPrisma } from "~/utils/dbClients";
 
 export default defineEventHandler(async (event) => {
@@ -15,8 +15,8 @@ export default defineEventHandler(async (event) => {
       seoKeywords: body.seoKeywords,
       ogImage: body.ogImage,
       canonicalUrl: body.canonicalUrl,
-      noIndex: body.noIndex ?? false
-    }
+      noIndex: body.noIndex ?? false,
+    },
   });
 });
 

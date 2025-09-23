@@ -1,11 +1,11 @@
-import { defineConfig } from "vite"
-import path from "node:path"
+import { defineConfig } from "vite";
+import path from "node:path";
 
 export default defineConfig({
   resolve: {
     alias: {
       "#shared": path.resolve(__dirname, "../../shared"),
-      "@local/shared": path.resolve(__dirname, "../../shared")
-    }
-  }
-})
+      "@local/shared": path.resolve(__dirname, "../../shared"),
+    },
+  },
+});

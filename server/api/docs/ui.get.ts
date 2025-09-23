@@ -1,4 +1,4 @@
-import { isSwaggerEnabled } from '~/lib/swagger'
+import { isSwaggerEnabled } from "~/lib/swagger";
 
 // Swagger UI interface - not included in documentation
 export default defineEventHandler(async (event) => {
@@ -6,12 +6,12 @@ export default defineEventHandler(async (event) => {
   if (!isSwaggerEnabled()) {
     throw createError({
       statusCode: 403,
-      statusMessage: 'API documentation is not available in production'
-    })
+      statusMessage: "API documentation is not available in production",
+    });
   }
 
   // Set Content-Type for HTML
-  setHeader(event, 'Content-Type', 'text/html')
+  setHeader(event, "Content-Type", "text/html");
 
   // Swagger UI interface
   return `
@@ -69,5 +69,5 @@ export default defineEventHandler(async (event) => {
     </script>
   </body>
 </html>
-  `.trim()
-})
+  `.trim();
+});

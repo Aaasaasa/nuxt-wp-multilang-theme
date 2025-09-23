@@ -29,16 +29,16 @@
 export default defineEventHandler(async (event) => {
   try {
     // User is already authenticated by middleware and available in context
-    const user = event.context.user
+    const user = event.context.user;
 
-    const postData = await validateBody(event, createPostSchema)
+    const postData = await validateBody(event, createPostSchema);
 
     // Create post using service
-    const post = await createPost(postData, user.id)
+    const post = await createPost(postData, user.id);
 
-    return createCreatedResponse(post)
+    return createCreatedResponse(post);
   } catch (error: any) {
-    if (error.statusCode) throw error
-    throw serverError('Failed to create post')
+    if (error.statusCode) throw error;
+    throw serverError("Failed to create post");
   }
-})
+});
