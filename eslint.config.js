@@ -1,15 +1,22 @@
 // eslint.config.js
+
+// ✅ ESLint core rules (JavaScript standardni set)
 import js from "@eslint/js"
+
+// ✅ TypeScript plugin + parser
 import tseslint from "@typescript-eslint/eslint-plugin"
-import parser from "@typescript-eslint/parser"
+import tsParser from "@typescript-eslint/parser"
+
+// ✅ Vue i Nuxt plugini
 import vue from "eslint-plugin-vue"
 import nuxt from "eslint-plugin-nuxt"
+import vueParser from "vue-eslint-parser"
 
 export default [
-
-
+  // 1. 📌 Standardni JS rules
   js.configs.recommended,
-  // ⬅️ Root ignore blok — ESLint ga prepoznaje odmah
+
+  // 2. 📌 Ignorisani folderi (da ESLint ne ulazi u build output, cache i vendor)
   {
     ignores: [
       "node_modules/**",
@@ -19,27 +26,35 @@ export default [
       "coverage/**",
       ".docker/**",
       ".output/**",
-      ".turbo/**",
-      "app/assets/**"
+      ".turbo/**"
     ]
   },
 
+  // 3. 📌 Pravila za kod (*.js, *.ts, *.vue)
   {
     files: ["**/*.{js,ts,vue}"],
+
+    // Parser podešavanja
     languageOptions: {
-      parser,
+      parser: vueParser, // ⬅️ koristi vue-eslint-parser
       parserOptions: {
+        parser: tsParser, // ⬅️ za <script lang="ts">
         ecmaVersion: "latest",
-        sourceType: "module"
+        sourceType: "module",
+        extraFileExtensions: [".vue"]
       }
     },
+
+    // Aktivni plugini
     plugins: {
       "@typescript-eslint": tseslint,
       vue,
       nuxt
     },
+
+    // Pravila
     rules: {
-      // 🔧 TypeScript rules
+      // 🔧 TypeScript
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": [
         "warn",
@@ -47,18 +62,23 @@ export default [
       ],
       "@typescript-eslint/no-explicit-any": "off",
 
-      // 🔧 Vue/Nuxt rules
+      // 🔧 Vue / Nuxt
       "vue/multi-word-component-names": [
         "error",
-        { ignores: ["index", "[...slug]", "[slug]",
-          ".docker/**"
-        ] }
+        {
+          // Dozvoljene single-word komponente/layouts/pages
+          ignores: [
+            "index", "[...slug]", "[slug]",
+            "default", "error", "admin", "dashboard",
+            "login", "about", "edit", "Card"
+          ]
+        }
       ],
 
       // 🔧 General rules
-      "no-empty": "off",
-      "no-console": "off",
-      "no-undef": "off"
+      "no-empty": "off",   // prazni blokovi nisu error
+      "no-console": "off", // dozvoljavamo console.log
+      "no-undef": "off"    // isključeno jer Nuxt dodaje globalne stvari
     }
   }
 ]
