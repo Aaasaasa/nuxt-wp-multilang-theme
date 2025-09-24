@@ -1,19 +1,5 @@
 {
-  "extends": "./.nuxt/tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"],
-      "#shared/*": ["../../shared/*"],
-      "@local/shared/*": ["../../shared/*"]
-    }
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.vue",
-    ".nuxt",
-    "nuxt.config.ts",
-    "app.vue"
-  ],
-  "exclude": ["node_modules", "dist", ".output"]
+  "extends": "../../tsconfig.base.json",
+  "include": ["."],
+  "exclude": ["node_modules", ".nuxt", "dist"]
 }

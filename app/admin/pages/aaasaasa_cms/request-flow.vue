@@ -44,26 +44,22 @@
       <h2 class="text-2xl font-semibold mb-4">Request Flow Diagram</h2>
       <div class="flow-diagram">
         <div class="mermaid">
-          flowchart TD A[Request Received] --> B[Middleware Processing] B -->
-          C[Route Validation] C --> D{Layout Selection} D --> E[app.vue] E -->
-          F[Layout Component] F --> G[Page Component] G --> H[Component
-          Rendering] H --> I[Client/Server Components] I --> J[Response Sent]
-          subgraph Middleware B end subgraph Layout D F end subgraph Page G end
-          subgraph Components H I end style A fill:#dcfce7 style B fill:#e9d5ff
-          style D fill:#fef3c7 style F fill:#bbf7d0 style G fill:#bfdbfe style I
-          fill:#fed7aa style J fill:#fbcfe8
+          flowchart TD A[Request Received] --> B[Middleware Processing] B --> C[Route Validation] C
+          --> D{Layout Selection} D --> E[app.vue] E --> F[Layout Component] F --> G[Page Component]
+          G --> H[Component Rendering] H --> I[Client/Server Components] I --> J[Response Sent]
+          subgraph Middleware B end subgraph Layout D F end subgraph Page G end subgraph Components
+          H I end style A fill:#dcfce7 style B fill:#e9d5ff style D fill:#fef3c7 style F
+          fill:#bbf7d0 style G fill:#bfdbfe style I fill:#fed7aa style J fill:#fbcfe8
         </div>
       </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
       <div class="bg-white p-6 rounded-lg shadow-lg step-card">
-        <h2 class="text-2xl font-semibold mb-4 text-nuxt">
-          1. app.vue - The Root Component
-        </h2>
+        <h2 class="text-2xl font-semibold mb-4 text-nuxt">1. app.vue - The Root Component</h2>
         <p class="mb-4">
-          Every request starts at <code>app.vue</code>, which serves as the root
-          component of your Nuxt application.
+          Every request starts at <code>app.vue</code>, which serves as the root component of your
+          Nuxt application.
         </p>
         <ul class="list-disc pl-5 space-y-2">
           <li>Initializes the Vue application</li>
@@ -84,12 +80,9 @@
       </div>
 
       <div class="bg-white p-6 rounded-lg shadow-lg step-card">
-        <h2 class="text-2xl font-semibold mb-4 text-nuxt">
-          2. Layout Selection
-        </h2>
+        <h2 class="text-2xl font-semibold mb-4 text-nuxt">2. Layout Selection</h2>
         <p class="mb-4">
-          Nuxt automatically selects a layout based on route metadata or default
-          conventions.
+          Nuxt automatically selects a layout based on route metadata or default conventions.
         </p>
         <ul class="list-disc pl-5 space-y-2">
           <li>Uses <code>layouts/default.vue</code> by default</li>
@@ -108,12 +101,9 @@
       </div>
 
       <div class="bg-white p-6 rounded-lg shadow-lg step-card">
-        <h2 class="text-2xl font-semibold mb-4 text-middleware">
-          3. Middleware Execution
-        </h2>
+        <h2 class="text-2xl font-semibold mb-4 text-middleware">3. Middleware Execution</h2>
         <p class="mb-4">
-          Middleware runs before navigation completes and can redirect or modify
-          requests.
+          Middleware runs before navigation completes and can redirect or modify requests.
         </p>
         <ul class="list-disc pl-5 space-y-2">
           <li>Runs on client and server</li>
@@ -135,13 +125,10 @@
       <div class="bg-white p-6 rounded-lg shadow-lg step-card">
         <h2 class="text-2xl font-semibold mb-4 text-nuxt">4. Page Rendering</h2>
         <p class="mb-4">
-          The page component corresponding to the route is rendered within the
-          layout.
+          The page component corresponding to the route is rendered within the layout.
         </p>
         <ul class="list-disc pl-5 space-y-2">
-          <li>
-            File-based routing: <code>pages/index.vue</code> → <code>/</code>
-          </li>
+          <li>File-based routing: <code>pages/index.vue</code> → <code>/</code></li>
           <li>
             Dynamic routes: <code>pages/users/[id].vue</code> →
             <code>/users/123</code>
@@ -160,12 +147,9 @@
       </div>
 
       <div class="bg-white p-6 rounded-lg shadow-lg step-card">
-        <h2 class="text-2xl font-semibold mb-4 text-client">
-          5. Client-Side Components
-        </h2>
+        <h2 class="text-2xl font-semibold mb-4 text-client">5. Client-Side Components</h2>
         <p class="mb-4">
-          Components with <code>.client.vue</code> suffix render only on the
-          client.
+          Components with <code>.client.vue</code> suffix render only on the client.
         </p>
         <ul class="list-disc pl-5 space-y-2">
           <li>Use for browser-specific functionality</li>
@@ -192,12 +176,9 @@
       </div>
 
       <div class="bg-white p-6 rounded-lg shadow-lg step-card">
-        <h2 class="text-2xl font-semibold mb-4 text-server">
-          6. Server-Side Components
-        </h2>
+        <h2 class="text-2xl font-semibold mb-4 text-server">6. Server-Side Components</h2>
         <p class="mb-4">
-          Components with <code>.server.vue</code> suffix render only on the
-          server.
+          Components with <code>.server.vue</code> suffix render only on the server.
         </p>
         <ul class="list-disc pl-5 space-y-2">
           <li>Optimized for server rendering</li>
@@ -231,17 +212,12 @@
       <ol class="list-decimal pl-5 space-y-6">
         <li class="p-4 bg-blue-50 rounded-lg">
           <h3 class="text-lg font-semibold">Request received by the server</h3>
-          <p>
-            Nuxt server handles the incoming request for <code>/dashboard</code>
-          </p>
+          <p>Nuxt server handles the incoming request for <code>/dashboard</code></p>
         </li>
 
         <li class="p-4 bg-purple-50 rounded-lg">
           <h3 class="text-lg font-semibold">Global middleware execution</h3>
-          <p>
-            Any global middleware in <code>middleware/*.global.ts</code> runs
-            first
-          </p>
+          <p>Any global middleware in <code>middleware/*.global.ts</code> runs first</p>
           <div class="code-block mt-2">
             <pre><code>// middleware/auth.global.ts
   export default defineNuxtRouteMiddleware((to, from) => {
@@ -275,10 +251,7 @@
 
         <li class="p-4 bg-green-50 rounded-lg">
           <h3 class="text-lg font-semibold">Page component rendering</h3>
-          <p>
-            The <code>pages/dashboard.vue</code> component is rendered inside
-            the layout
-          </p>
+          <p>The <code>pages/dashboard.vue</code> component is rendered inside the layout</p>
         </li>
 
         <li class="p-4 bg-orange-50 rounded-lg">

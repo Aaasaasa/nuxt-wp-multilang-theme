@@ -8,13 +8,13 @@
  *       200:
  *         description: Logout successful
  */
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   try {
     // Clear user session
-    await clearUserSession(event);
+    await clearUserSession(event)
 
-    return createApiResponse(null, HTTP_STATUS.OK, "Logout successful");
+    return createApiResponse(null, HTTP_STATUS.OK, 'Logout successful')
   } catch {
-    throw serverError("Logout failed");
+    throw serverError('Logout failed')
   }
-});
+})

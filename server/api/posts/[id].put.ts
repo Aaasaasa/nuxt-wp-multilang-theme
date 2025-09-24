@@ -35,20 +35,20 @@
  *       404:
  *         description: Post not found
  */
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   try {
     // User is already authenticated by middleware and available in context
-    const user = event.context.user;
+    const user = event.context.user
 
-    const { id } = await validateParams(event, idSchema);
-    const postData = await validateBody(event, updatePostSchema);
+    const { id } = await validateParams(event, idSchema)
+    const postData = await validateBody(event, updatePostSchema)
 
     // Update post using service (includes ownership check)
-    const post = await updatePost(id, postData, user.id);
+    const post = await updatePost(id, postData, user.id)
 
-    return createApiResponse(post, HTTP_STATUS.OK, "Post updated successfully");
+    return createApiResponse(post, HTTP_STATUS.OK, 'Post updated successfully')
   } catch (error: any) {
-    if (error.statusCode) throw error;
-    throw serverError("Failed to update post");
+    if (error.statusCode) throw error
+    throw serverError('Failed to update post')
   }
-});
+})

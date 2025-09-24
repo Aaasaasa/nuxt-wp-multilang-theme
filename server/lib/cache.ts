@@ -1,4 +1,4 @@
-import { db } from "~/utils/dbClients";
+import { db } from '~/utils/dbClients'
 
 /**
  * Cache Helper: Holt Daten aus Redis oder führt Fetcher aus und speichert sie.
@@ -7,29 +7,29 @@ import { db } from "~/utils/dbClients";
 export async function getOrSet<T>(
   key: string,
   ttlSec: number,
-  fetcher: () => Promise<T>,
+  fetcher: () => Promise<T>
 ): Promise<T> {
   // Wenn Redis gar nicht aktiv ist → direkt DB/API aufrufen
   if (!db.redis) {
-    return fetcher();
+    return fetcher()
   }
 
   try {
-    const hit = await db.redis.get(key);
+    const hit = await db.redis.get(key)
     if (hit) {
-      return JSON.parse(hit) as T;
+      return JSON.parse(hit) as T
     }
   } catch (e) {
-    console.warn(`[cache] Redis GET failed:`, (e as Error).message);
+    console.warn(`[cache] Redis GET failed:`, (e as Error).message)
   }
 
-  const data = await fetcher();
+  const data = await fetcher()
 
   try {
-    await db.redis.set(key, JSON.stringify(data), { EX: ttlSec });
+    await db.redis.set(key, JSON.stringify(data), { EX: ttlSec })
   } catch (e) {
-    console.warn(`[cache] Redis SET failed:`, (e as Error).message);
+    console.warn(`[cache] Redis SET failed:`, (e as Error).message)
   }
 
-  return data;
+  return data
 }

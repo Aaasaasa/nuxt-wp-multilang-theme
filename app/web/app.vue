@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import * as locales from "@nuxt/ui/locale";
+import * as locales from '@nuxt/ui/locale'
 
-const { locale } = useI18n();
+const { locale } = useI18n()
 </script>

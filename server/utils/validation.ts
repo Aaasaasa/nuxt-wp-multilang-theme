@@ -1,5 +1,5 @@
-import type { ZodType, ZodError } from "zod";
-import type { H3Event, EventHandlerRequest } from "h3";
+import type { ZodType, ZodError } from 'zod'
+import type { H3Event, EventHandlerRequest } from 'h3'
 
 /**
  * Create a validation error from Zod result
@@ -7,12 +7,12 @@ import type { H3Event, EventHandlerRequest } from "h3";
 function createValidationError(message: string, error: ZodError) {
   throw createError({
     statusCode: 400,
-    statusMessage: "Validation Failed",
+    statusMessage: 'Validation Failed',
     data: {
       message,
-      errors: error.issues,
-    },
-  });
+      errors: error.issues
+    }
+  })
 }
 
 /**
@@ -25,23 +25,23 @@ function createValidationError(message: string, error: ZodError) {
  */
 export async function validateBody<T>(
   event: H3Event<EventHandlerRequest>,
-  schema: ZodType<T>,
+  schema: ZodType<T>
 ): Promise<T> {
   try {
-    const body = await readBody(event);
-    const result = schema.safeParse(body);
+    const body = await readBody(event)
+    const result = schema.safeParse(body)
 
     if (!result.success) {
-      createValidationError("Request body validation failed", result.error);
+      createValidationError('Request body validation failed', result.error)
     }
 
-    return result.data!;
+    return result.data!
   } catch (error: any) {
-    if (error.statusCode) throw error;
+    if (error.statusCode) throw error
     throw createError({
       statusCode: 400,
-      statusMessage: "Bad Request",
-    });
+      statusMessage: 'Bad Request'
+    })
   }
 }
 
@@ -55,23 +55,23 @@ export async function validateBody<T>(
  */
 export async function validateParams<T>(
   event: H3Event<EventHandlerRequest>,
-  schema: ZodType<T>,
+  schema: ZodType<T>
 ): Promise<T> {
   try {
-    const params = getRouterParams(event);
-    const result = schema.safeParse(params);
+    const params = getRouterParams(event)
+    const result = schema.safeParse(params)
 
     if (!result.success) {
-      createValidationError("Parameter validation failed", result.error);
+      createValidationError('Parameter validation failed', result.error)
     }
 
-    return result.data!;
+    return result.data!
   } catch (error: any) {
-    if (error.statusCode) throw error;
+    if (error.statusCode) throw error
     throw createError({
       statusCode: 400,
-      statusMessage: "Bad Request",
-    });
+      statusMessage: 'Bad Request'
+    })
   }
 }
 
@@ -85,22 +85,22 @@ export async function validateParams<T>(
  */
 export async function validateQuery<T>(
   event: H3Event<EventHandlerRequest>,
-  schema: ZodType<T>,
+  schema: ZodType<T>
 ): Promise<T> {
   try {
-    const query = getQuery(event);
-    const result = schema.safeParse(query);
+    const query = getQuery(event)
+    const result = schema.safeParse(query)
 
     if (!result.success) {
-      createValidationError("Query validation failed", result.error);
+      createValidationError('Query validation failed', result.error)
     }
 
-    return result.data!;
+    return result.data!
   } catch (error: any) {
-    if (error.statusCode) throw error;
+    if (error.statusCode) throw error
     throw createError({
       statusCode: 400,
-      statusMessage: "Bad Request",
-    });
+      statusMessage: 'Bad Request'
+    })
   }
 }

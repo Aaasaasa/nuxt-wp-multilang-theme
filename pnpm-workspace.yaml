@@ -1,4 +1,14 @@
 packages:
-  - "app/*"
-  - "server"
-  - "shared"
+  - app/*
+  - server
+  - shared
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@tailwindcss/oxide'
+  - esbuild
+  - prisma
+  - sharp
+  - vue-demi

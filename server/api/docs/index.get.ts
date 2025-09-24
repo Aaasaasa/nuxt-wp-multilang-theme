@@ -1,4 +1,4 @@
-import { generateSwaggerSpec, isSwaggerEnabled } from "~/lib/swagger";
+import { generateSwaggerSpec, isSwaggerEnabled } from '~/lib/swagger'
 
 // Documentation endpoint - not included in Swagger
 export default defineEventHandler(async () => {
@@ -6,16 +6,16 @@ export default defineEventHandler(async () => {
   if (!isSwaggerEnabled()) {
     throw createError({
       statusCode: 403,
-      statusMessage: "API documentation is not available in production",
-    });
+      statusMessage: 'API documentation is not available in production'
+    })
   }
 
   try {
-    const swaggerSpec = generateSwaggerSpec();
+    const swaggerSpec = generateSwaggerSpec()
 
     // Return OpenAPI spec directly for Swagger UI
-    return swaggerSpec;
+    return swaggerSpec
   } catch {
-    throw serverError("Failed to generate API documentation");
+    throw serverError('Failed to generate API documentation')
   }
-});
+})

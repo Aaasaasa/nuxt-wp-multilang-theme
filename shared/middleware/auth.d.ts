@@ -31,12 +31,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 */
 
 export function sharedAuthGuard(to: any, from: any) {
-  const user = useState("authUser", () => null);
+  const user = useState('authUser', () => null)
 
-  if (!user.value && to.path !== "/login") {
-    return navigateTo("/login");
+  if (!user.value && to.path !== '/login') {
+    return navigateTo('/login')
   }
-  if (user.value && to.path === "/login") {
-    return navigateTo("/");
+  if (user.value && to.path === '/login') {
+    return navigateTo('/')
   }
 }

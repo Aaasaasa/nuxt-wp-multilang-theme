@@ -8,7 +8,7 @@
         :to="localePath('index')"
         class="text-xl font-bold text-secondary-500 dark:text-secondary-400"
       >
-        {{ t("app.name") }}
+        {{ t('app.name') }}
       </NuxtLink>
       <div class="flex items-center gap-4">
         <LayoutThemeSwitcher />
@@ -23,7 +23,7 @@
 
       <footer class="py-6 border-t border-neutral-200 dark:border-neutral-800">
         <p class="text-neutral-600 dark:text-neutral-400 text-center">
-          {{ t("app.footer") }}
+          {{ t('app.footer') }}
         </p>
       </footer>
     </div>
@@ -34,21 +34,21 @@
 // import AppSidebar from "~/components/AppSidebar.vue";
 // import AppHeader from "~/components/AppHeader.vue";
 // import AppFooter from "~/components/AppFooter.vue";
-import LayoutThemeSwitcher from "@/compoonents/layout/ThemeSwitcher.vue";
-import LayoutLanguageSwitcher from "~/components/layout/LanguageSwitcher.vue";
-import { useI18n, useLocalePath } from "#imports";
-import { useHead } from "@unhead/vue";
+import LayoutThemeSwitcher from '@/compoonents/layout/ThemeSwitcher.vue'
+import LayoutLanguageSwitcher from '~/components/layout/LanguageSwitcher.vue'
+import { useI18n, useLocalePath } from '#imports'
+import { useHead } from '@unhead/vue'
 
-const localePath = useLocalePath();
-const { t } = useI18n();
+const localePath = useLocalePath()
+const { t } = useI18n()
 
 useHead({
-  title: t("app.name"),
+  title: t('app.name'),
   meta: [
-    { name: "description", content: t("app.description") },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
-  ],
-});
+    { name: 'description', content: t('app.description') },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+  ]
+})
 </script>
 
 <!--

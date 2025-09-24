@@ -1,5 +1,5 @@
 <script setup>
-const isDark = useState("dark", () => false);
+const isDark = useState('dark', () => false)
 </script>
 
 <template>

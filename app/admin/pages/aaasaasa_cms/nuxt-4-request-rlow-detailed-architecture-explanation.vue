@@ -5,8 +5,8 @@
         Nuxt 4 Request Flow Architecture
       </h1>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        A comprehensive guide to the request processing pipeline in Nuxt 4
-        applications with detailed folder and file explanations
+        A comprehensive guide to the request processing pipeline in Nuxt 4 applications with
+        detailed folder and file explanations
       </p>
     </header>
 
@@ -17,26 +17,22 @@
 
       <div class="architecture-canvas">
         <div class="mermaid">
-          flowchart TD A[🌐 Incoming Request] --> B{Request Type?} B -->
-          C[Static Asset] B --> D[Dynamic Request] C --> E[Return from<br />public/
-          directory] subgraph DynamicRequest [Dynamic Request Processing] D -->
-          F[Middleware Processing] F --> G[Route Validation] G --> H{Layout
-          Selection} H --> I[Default Layout<br />layouts/default.vue] H -->
-          J[Custom Layout<br />e.g. layouts/admin.vue] I --> K[app.vue] J --> K
-          K --> L[Page Component] L --> M[Component Rendering] M --> N[Server
-          Components<br />*.server.vue] M --> O[Client Components<br />*.client.vue]
-          M --> P[Universal Components<br />*.vue] end N --> Q[Response
-          Generation] O --> Q P --> Q E --> Q Q --> R[📨 Response Sent] style A
-          fill:#dcfce7,stroke:#00DC82,stroke-width:3px style C
-          fill:#e0e7ff,stroke:#6366f1 style D fill:#fef3c7,stroke:#f59e0b style
-          E fill:#ddd6fe,stroke:#8b5cf6 style F fill:#fecaca,stroke:#ef4444
-          style G fill:#bbf7d0,stroke:#22c55e style H
-          fill:#fed7aa,stroke:#ea580c style I fill:#bfdbfe,stroke:#3b82f6 style
-          J fill:#fbcfe8,stroke:#ec4899 style K fill:#c7d2fe,stroke:#6366f1
-          style L fill:#a7f3d0,stroke:#10b981 style M
-          fill:#fde68a,stroke:#f59e0b style N fill:#fed7aa,stroke:#f97316 style
-          O fill:#bfdbfe,stroke:#38bdf8 style P fill:#ddd6fe,stroke:#8b5cf6
-          style Q fill:#dcfce7,stroke:#00DC82 style R
+          flowchart TD A[🌐 Incoming Request] --> B{Request Type?} B --> C[Static Asset] B -->
+          D[Dynamic Request] C --> E[Return from<br />public/ directory] subgraph DynamicRequest
+          [Dynamic Request Processing] D --> F[Middleware Processing] F --> G[Route Validation] G
+          --> H{Layout Selection} H --> I[Default Layout<br />layouts/default.vue] H --> J[Custom
+          Layout<br />e.g. layouts/admin.vue] I --> K[app.vue] J --> K K --> L[Page Component] L -->
+          M[Component Rendering] M --> N[Server Components<br />*.server.vue] M --> O[Client
+          Components<br />*.client.vue] M --> P[Universal Components<br />*.vue] end N -->
+          Q[Response Generation] O --> Q P --> Q E --> Q Q --> R[📨 Response Sent] style A
+          fill:#dcfce7,stroke:#00DC82,stroke-width:3px style C fill:#e0e7ff,stroke:#6366f1 style D
+          fill:#fef3c7,stroke:#f59e0b style E fill:#ddd6fe,stroke:#8b5cf6 style F
+          fill:#fecaca,stroke:#ef4444 style G fill:#bbf7d0,stroke:#22c55e style H
+          fill:#fed7aa,stroke:#ea580c style I fill:#bfdbfe,stroke:#3b82f6 style J
+          fill:#fbcfe8,stroke:#ec4899 style K fill:#c7d2fe,stroke:#6366f1 style L
+          fill:#a7f3d0,stroke:#10b981 style M fill:#fde68a,stroke:#f59e0b style N
+          fill:#fed7aa,stroke:#f97316 style O fill:#bfdbfe,stroke:#38bdf8 style P
+          fill:#ddd6fe,stroke:#8b5cf6 style Q fill:#dcfce7,stroke:#00DC82 style R
           fill:#dcfce7,stroke:#00DC82,stroke-width:3px
         </div>
       </div>
@@ -44,10 +40,9 @@
       <div class="note">
         <p class="font-semibold">Note:</p>
         <p>
-          The request flow differs based on whether the request is for a static
-          asset or requires server processing. Static assets are served directly
-          from the public/ directory, while dynamic requests go through the full
-          processing pipeline.
+          The request flow differs based on whether the request is for a static asset or requires
+          server processing. Static assets are served directly from the public/ directory, while
+          dynamic requests go through the full processing pipeline.
         </p>
       </div>
     </article>
@@ -96,12 +91,10 @@ nuxt-app/
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="step-card bg-blue-50 p-6">
-          <h3 class="text-xl font-semibold mb-4 text-blue-800">
-            1. Request Reception
-          </h3>
+          <h3 class="text-xl font-semibold mb-4 text-blue-800">1. Request Reception</h3>
           <p>
-            When a request arrives at the Nuxt server, it first determines if
-            it's for a static asset or requires dynamic processing.
+            When a request arrives at the Nuxt server, it first determines if it's for a static
+            asset or requires dynamic processing.
           </p>
           <div class="code-block mt-4">
             <pre>
@@ -113,12 +106,10 @@ nuxt-app/
         </div>
 
         <div class="step-card bg-purple-50 p-6">
-          <h3 class="text-xl font-semibold mb-4 text-purple-800">
-            2. Middleware Processing
-          </h3>
+          <h3 class="text-xl font-semibold mb-4 text-purple-800">2. Middleware Processing</h3>
           <p>
-            Middleware are functions that run before navigation. They can modify
-            the request, redirect, or cancel navigation.
+            Middleware are functions that run before navigation. They can modify the request,
+            redirect, or cancel navigation.
           </p>
           <div class="code-block mt-4">
             <pre>
@@ -134,13 +125,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
         </div>
 
         <div class="step-card bg-green-50 p-6">
-          <h3 class="text-xl font-semibold mb-4 text-green-800">
-            3. Route Validation
-          </h3>
-          <p>
-            Nuxt validates route parameters and can abort navigation if
-            validation fails.
-          </p>
+          <h3 class="text-xl font-semibold mb-4 text-green-800">3. Route Validation</h3>
+          <p>Nuxt validates route parameters and can abort navigation if validation fails.</p>
           <div class="code-block mt-4">
             <pre>
 // pages/users/[id].vue
@@ -155,13 +141,8 @@ definePageMeta({
         </div>
 
         <div class="step-card bg-pink-50 p-6">
-          <h3 class="text-xl font-semibold mb-4 text-pink-800">
-            4. Layout Selection
-          </h3>
-          <p>
-            Based on page metadata, Nuxt selects the appropriate layout
-            component.
-          </p>
+          <h3 class="text-xl font-semibold mb-4 text-pink-800">4. Layout Selection</h3>
+          <p>Based on page metadata, Nuxt selects the appropriate layout component.</p>
           <div class="code-block mt-4">
             <pre>
 // pages/dashboard.vue
@@ -175,12 +156,8 @@ definePageMeta({
         </div>
 
         <div class="step-card bg-indigo-50 p-6">
-          <h3 class="text-xl font-semibold mb-4 text-indigo-800">
-            5. app.vue Execution
-          </h3>
-          <p>
-            The root app.vue component is always executed and wraps all content.
-          </p>
+          <h3 class="text-xl font-semibold mb-4 text-indigo-800">5. app.vue Execution</h3>
+          <p>The root app.vue component is always executed and wraps all content.</p>
           <div class="code-block mt-4">
             <pre>
 // app.vue
@@ -196,12 +173,8 @@ definePageMeta({
         </div>
 
         <div class="step-card bg-teal-50 p-6">
-          <h3 class="text-xl font-semibold mb-4 text-teal-800">
-            6. Page Component Rendering
-          </h3>
-          <p>
-            The appropriate page component based on the URL route is rendered.
-          </p>
+          <h3 class="text-xl font-semibold mb-4 text-teal-800">6. Page Component Rendering</h3>
+          <p>The appropriate page component based on the URL route is rendered.</p>
           <div class="code-block mt-4">
             <pre>
 // pages/users/[id].vue
@@ -216,13 +189,8 @@ definePageMeta({
         </div>
 
         <div class="step-card bg-amber-50 p-6">
-          <h3 class="text-xl font-semibold mb-4 text-amber-800">
-            7. Component Rendering
-          </h3>
-          <p>
-            Components within the page are rendered with environment-specific
-            logic.
-          </p>
+          <h3 class="text-xl font-semibold mb-4 text-amber-800">7. Component Rendering</h3>
+          <p>Components within the page are rendered with environment-specific logic.</p>
           <div class="code-block mt-4">
             <pre>
 // components/DataTable.server.vue
@@ -239,12 +207,10 @@ const { data } = await useFetch('/api/data');
         </div>
 
         <div class="step-card bg-emerald-50 p-6">
-          <h3 class="text-xl font-semibold mb-4 text-emerald-800">
-            8. Response Generation
-          </h3>
+          <h3 class="text-xl font-semibold mb-4 text-emerald-800">8. Response Generation</h3>
           <p>
-            Nuxt generates the final HTML response based on the rendering mode
-            (SSR, SPA, or Static).
+            Nuxt generates the final HTML response based on the rendering mode (SSR, SPA, or
+            Static).
           </p>
           <div class="code-block mt-4">
             <pre>
@@ -267,12 +233,9 @@ export default defineNuxtConfig({
 
       <div class="space-y-6">
         <div>
-          <h3 class="text-xl font-semibold mb-3 text-gray-700">
-            Using Different Layouts
-          </h3>
+          <h3 class="text-xl font-semibold mb-3 text-gray-700">Using Different Layouts</h3>
           <p>
-            To use different layouts for different URIs, specify the layout in
-            the page component:
+            To use different layouts for different URIs, specify the layout in the page component:
           </p>
           <div class="code-block">
             <pre>
@@ -290,9 +253,7 @@ definePageMeta({
         </div>
 
         <div>
-          <h3 class="text-xl font-semibold mb-3 text-gray-700">
-            Route-Specific Middleware
-          </h3>
+          <h3 class="text-xl font-semibold mb-3 text-gray-700">Route-Specific Middleware</h3>
           <p>Apply middleware to specific routes using page metadata:</p>
           <div class="code-block">
             <pre>
@@ -313,12 +274,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
         </div>
 
         <div>
-          <h3 class="text-xl font-semibold mb-3 text-gray-700">
-            Dynamic Route Handling
-          </h3>
-          <p>
-            Handle dynamic parameters in routes using square bracket syntax:
-          </p>
+          <h3 class="text-xl font-semibold mb-3 text-gray-700">Dynamic Route Handling</h3>
+          <p>Handle dynamic parameters in routes using square bracket syntax:</p>
           <div class="code-block">
             <pre>
 // File structure:
@@ -340,9 +297,7 @@ const userId = route.params.id; // Extract dynamic parameter</pre
         </div>
 
         <div>
-          <h3 class="text-xl font-semibold mb-3 text-gray-700">
-            Environment-Specific Components
-          </h3>
+          <h3 class="text-xl font-semibold mb-3 text-gray-700">Environment-Specific Components</h3>
           <p>Use different components based on rendering environment:</p>
           <div class="code-block">
             <pre>

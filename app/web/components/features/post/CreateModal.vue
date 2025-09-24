@@ -2,25 +2,15 @@
   <UModal
     v-model:open="open"
     :dismissible="!loading"
-    :title="
-      isEditing
-        ? t('postForm.actions.edit.title')
-        : t('postForm.actions.create.title')
-    "
+    :title="isEditing ? t('postForm.actions.edit.title') : t('postForm.actions.create.title')"
     :description="
-      isEditing
-        ? t('postForm.actions.edit.description')
-        : t('postForm.actions.create.description')
+      isEditing ? t('postForm.actions.edit.description') : t('postForm.actions.create.description')
     "
   >
     <UButton
       size="lg"
       color="primary"
-      :label="
-        isEditing
-          ? t('postForm.actions.edit.title')
-          : t('postForm.actions.create.title')
-      "
+      :label="isEditing ? t('postForm.actions.edit.title') : t('postForm.actions.create.title')"
       :icon="isEditing ? 'i-lucide-edit' : 'i-lucide-plus'"
       class="shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1 bg-white text-primary-600 hover:bg-gray-50"
       @click="open = true"
@@ -51,39 +41,27 @@
           <div class="space-y-4">
             <div class="flex items-center justify-between text-sm">
               <div class="flex items-center gap-4">
-                <div
-                  class="flex items-center gap-1 text-gray-500 dark:text-gray-400"
-                >
+                <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
                   <UIcon name="i-lucide-type" class="w-4 h-4" />
                   <span>{{
-                    t("postForm.analytics.characterCount", {
-                      count: state.content.length,
+                    t('postForm.analytics.characterCount', {
+                      count: state.content.length
                     })
                   }}</span>
                 </div>
-                <div
-                  class="flex items-center gap-1 text-gray-500 dark:text-gray-400"
-                >
+                <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
                   <UIcon name="i-lucide-book-open" class="w-4 h-4" />
-                  <span>{{
-                    t("postForm.analytics.wordCount", { count: wordCount })
-                  }}</span>
+                  <span>{{ t('postForm.analytics.wordCount', { count: wordCount }) }}</span>
                 </div>
                 <div
                   v-if="readingTime > 0"
                   class="flex items-center gap-1 text-gray-500 dark:text-gray-400"
                 >
                   <UIcon name="i-lucide-clock" class="w-4 h-4" />
-                  <span>{{
-                    t("postForm.analytics.readingTime", { count: readingTime })
-                  }}</span>
+                  <span>{{ t('postForm.analytics.readingTime', { count: readingTime }) }}</span>
                 </div>
               </div>
-              <UBadge
-                :label="getBadgeLabel()"
-                :color="getBadgeColor()"
-                variant="soft"
-              />
+              <UBadge :label="getBadgeLabel()" :color="getBadgeColor()" variant="soft" />
             </div>
           </div>
         </div>
@@ -97,8 +75,8 @@
           <span class="text-xs text-gray-500 dark:text-gray-400">
             {{
               isEditing
-                ? t("postForm.actions.edit.autoSaveInfo")
-                : t("postForm.actions.create.autoSaveInfo")
+                ? t('postForm.actions.edit.autoSaveInfo')
+                : t('postForm.actions.create.autoSaveInfo')
             }}
           </span>
         </div>
@@ -108,9 +86,7 @@
             color="neutral"
             variant="outline"
             :label="
-              isEditing
-                ? t('postForm.actions.edit.cancel')
-                : t('postForm.actions.create.cancel')
+              isEditing ? t('postForm.actions.edit.cancel') : t('postForm.actions.create.cancel')
             "
             icon="i-lucide-x"
             :disabled="loading"
@@ -120,9 +96,7 @@
             type="submit"
             color="primary"
             :label="
-              isEditing
-                ? t('postForm.actions.edit.save')
-                : t('postForm.actions.create.submit')
+              isEditing ? t('postForm.actions.edit.save') : t('postForm.actions.create.submit')
             "
             :loading="loading"
             :icon="isEditing ? 'i-lucide-save' : 'i-lucide-plus'"
@@ -135,122 +109,120 @@
 </template>
 
 <script setup lang="ts">
-import type { FormSubmitEvent } from "@nuxt/ui";
+import type { FormSubmitEvent } from '@nuxt/ui'
 
-const { t } = useI18n();
+const { t } = useI18n()
 
 interface Props {
-  post?: Post;
-  mode?: "create" | "edit";
+  post?: Post
+  mode?: 'create' | 'edit'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   post: undefined,
-  mode: "create",
-});
+  mode: 'create'
+})
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(['close'])
 
-const open = defineModel<boolean>("open", { required: true });
+const open = defineModel<boolean>('open', { required: true })
 
-const { state, schema, setState, resetState } = usePostForm();
+const { state, schema, setState, resetState } = usePostForm()
 
-const form = useTemplateRef("form");
-const loading = ref(false);
+const form = useTemplateRef('form')
+const loading = ref(false)
 
-const isEditing = computed(() => props.mode === "edit" || !!props.post);
+const isEditing = computed(() => props.mode === 'edit' || !!props.post)
 
-const wordCount = computed(
-  () => state.content.split(/\s+/).filter((word) => word.length > 0).length,
-);
+const wordCount = computed(() => state.content.split(/\s+/).filter(word => word.length > 0).length)
 
 const readingTime = computed(() => {
-  const wordsPerMinute = 200;
-  if (wordCount.value === 0) return 0;
-  return Math.max(1, Math.ceil(wordCount.value / wordsPerMinute));
-});
+  const wordsPerMinute = 200
+  if (wordCount.value === 0) return 0
+  return Math.max(1, Math.ceil(wordCount.value / wordsPerMinute))
+})
 
 const getBadgeLabel = () => {
-  const length = state.content.length;
-  if (length > 500) return t("postForm.badgeLabels.length.long");
-  if (length > 200) return t("postForm.badgeLabels.length.medium");
-  return t("postForm.badgeLabels.length.short");
-};
+  const length = state.content.length
+  if (length > 500) return t('postForm.badgeLabels.length.long')
+  if (length > 200) return t('postForm.badgeLabels.length.medium')
+  return t('postForm.badgeLabels.length.short')
+}
 
 const getBadgeColor = () => {
-  const length = state.content.length;
-  if (length > 500) return "success";
-  if (length > 200) return "primary";
-  return "neutral";
-};
+  const length = state.content.length
+  if (length > 500) return 'success'
+  if (length > 200) return 'primary'
+  return 'neutral'
+}
 
 const stopPostWatcher = watch(
   () => props.post,
-  (newPost) => {
-    if (newPost && isEditing.value) setState(newPost);
+  newPost => {
+    if (newPost && isEditing.value) setState(newPost)
   },
-  { immediate: true },
-);
+  { immediate: true }
+)
 
 const stopOpenWatcher = watch(
   () => open.value,
-  (isOpen) => {
+  isOpen => {
     if (isOpen) {
       if (!isEditing.value) {
-        resetState();
+        resetState()
       } else if (props.post) {
-        setState(props.post);
+        setState(props.post)
       }
     }
-  },
-);
+  }
+)
 
 onUnmounted(() => {
-  stopPostWatcher();
-  stopOpenWatcher();
-});
+  stopPostWatcher()
+  stopOpenWatcher()
+})
 
 const onSubmit = async (event: FormSubmitEvent<PostFormState>) => {
-  if (isEditing.value && !props.post) return;
+  if (isEditing.value && !props.post) return
 
-  loading.value = true;
+  loading.value = true
   try {
     if (isEditing.value) {
       await $fetch<ApiResponse<Post>>(`/api/posts/${props.post!.id}`, {
-        method: "PUT",
-        body: event.data,
-      });
+        method: 'PUT',
+        body: event.data
+      })
       useNotifications().success({
-        title: t("postForm.actions.edit.success.title"),
-        message: t("postForm.actions.edit.success.message"),
-      });
+        title: t('postForm.actions.edit.success.title'),
+        message: t('postForm.actions.edit.success.message')
+      })
     } else {
-      await $fetch<ApiResponse<Post>>("/api/posts", {
-        method: "POST",
-        body: event.data,
-      });
+      await $fetch<ApiResponse<Post>>('/api/posts', {
+        method: 'POST',
+        body: event.data
+      })
       useNotifications().success({
-        title: t("postForm.actions.create.success.title"),
-        message: t("postForm.actions.create.success.message"),
-      });
-      resetState();
+        title: t('postForm.actions.create.success.title'),
+        message: t('postForm.actions.create.success.message')
+      })
+      resetState()
     }
-    emit("close", { success: true });
-    open.value = false;
+    emit('close', { success: true })
+    open.value = false
   } catch {
     const errorTitle = isEditing.value
-      ? t("postForm.actions.edit.error.title")
-      : t("postForm.actions.create.error.title");
+      ? t('postForm.actions.edit.error.title')
+      : t('postForm.actions.create.error.title')
     const errorMessage = isEditing.value
-      ? t("postForm.actions.edit.error.message")
-      : t("postForm.actions.create.error.message");
+      ? t('postForm.actions.edit.error.message')
+      : t('postForm.actions.create.error.message')
 
     useNotifications().error({
       title: errorTitle,
-      message: errorMessage,
-    });
+      message: errorMessage
+    })
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 </script>

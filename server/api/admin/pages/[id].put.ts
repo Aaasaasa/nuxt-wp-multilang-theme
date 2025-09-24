@@ -1,10 +1,10 @@
-import { defineEventHandler } from "h3";
-import { getPrisma } from "../../../utils/dbClients";
+import { defineEventHandler } from 'h3'
+import { getPrisma } from '../../../utils/dbClients'
 
-export default defineEventHandler(async (event) => {
-  const prisma = getPrisma();
-  const id = Number(event.context.params!.id);
-  const body = await readBody(event);
+export default defineEventHandler(async event => {
+  const prisma = getPrisma()
+  const id = Number(event.context.params!.id)
+  const body = await readBody(event)
 
   return prisma.page.update({
     where: { id },
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
       seoKeywords: body.seoKeywords,
       ogImage: body.ogImage,
       canonicalUrl: body.canonicalUrl,
-      noIndex: body.noIndex ?? false,
-    },
-  });
-});
+      noIndex: body.noIndex ?? false
+    }
+  })
+})

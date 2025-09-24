@@ -25,7 +25,7 @@
           @keydown.enter.exact.prevent="onSend"
         />
         <UButton type="submit" :disabled="loading || !input.trim()">
-          {{ loading ? "..." : "Send" }}
+          {{ loading ? '...' : 'Send' }}
         </UButton>
       </div>
     </form>
@@ -33,47 +33,45 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const input = ref("");
-const loading = ref(false);
-const messages = ref<
-  { id: string; role: "user" | "assistant"; content: string }[]
->([]);
+const input = ref('')
+const loading = ref(false)
+const messages = ref<{ id: string; role: 'user' | 'assistant'; content: string }[]>([])
 
 const onSend = async () => {
-  if (!input.value.trim()) return;
-  const text = input.value.trim();
-  input.value = "";
-  loading.value = true;
+  if (!input.value.trim()) return
+  const text = input.value.trim()
+  input.value = ''
+  loading.value = true
 
-  const userMessage = { id: crypto.randomUUID(), role: "user", content: text };
-  messages.value.push(userMessage);
+  const userMessage = { id: crypto.randomUUID(), role: 'user', content: text }
+  messages.value.push(userMessage)
 
   try {
-    const res = await $fetch("/api/aaasaasa/chat", {
-      method: "POST",
+    const res = await $fetch('/api/aaasaasa/chat', {
+      method: 'POST',
       body: {
-        session_id: "default",
-        profile: "local-ollama",
-        prompt: text,
-      },
-    });
+        session_id: 'default',
+        profile: 'local-ollama',
+        prompt: text
+      }
+    })
     if (res?.text) {
       messages.value.push({
         id: crypto.randomUUID(),
-        role: "assistant",
-        content: res.text,
-      });
+        role: 'assistant',
+        content: res.text
+      })
     }
   } catch (err) {
     messages.value.push({
       id: crypto.randomUUID(),
-      role: "assistant",
-      content: "⚠️ Error: " + (err as any)?.message || err,
-    });
+      role: 'assistant',
+      content: '⚠️ Error: ' + (err as any)?.message || err
+    })
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 </script>

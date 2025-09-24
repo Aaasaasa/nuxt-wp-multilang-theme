@@ -1,9 +1,9 @@
-import { defineEventHandler } from "h3";
-import { getPrisma } from "~/utils/dbClients";
+import { defineEventHandler } from 'h3'
+import { getPrisma } from '~/utils/dbClients'
 
-export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
-  const prisma = getPrisma();
+export default defineEventHandler(async event => {
+  const body = await readBody(event)
+  const prisma = getPrisma()
 
   return prisma.page.create({
     data: {
@@ -15,10 +15,10 @@ export default defineEventHandler(async (event) => {
       seoKeywords: body.seoKeywords,
       ogImage: body.ogImage,
       canonicalUrl: body.canonicalUrl,
-      noIndex: body.noIndex ?? false,
-    },
-  });
-});
+      noIndex: body.noIndex ?? false
+    }
+  })
+})
 
 /*
 

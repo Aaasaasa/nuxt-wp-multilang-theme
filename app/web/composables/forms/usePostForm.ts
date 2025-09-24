@@ -1,23 +1,23 @@
 export const usePostForm = () => {
-  const { t } = useI18n();
+  const { t } = useI18n()
 
-  const state = reactive<PostFormState>({ ...initialPostState });
+  const state = reactive<PostFormState>({ ...initialPostState })
 
   const setState = (data: Partial<PostFormState> | Post | null) => {
-    if (!data) return;
+    if (!data) return
 
     // Handle conversion from Post (with nullable content) to PostFormState
     const formData: Partial<PostFormState> = {
       title: data.title,
-      content: data.content ?? "",
-    };
+      content: data.content ?? ''
+    }
 
-    Object.assign(state, formData);
-  };
+    Object.assign(state, formData)
+  }
 
   const resetState = () => {
-    Object.assign(state, { ...initialPostState });
-  };
+    Object.assign(state, { ...initialPostState })
+  }
 
   // Schema with client-side translations only
   const schema = computed(() =>
@@ -25,40 +25,28 @@ export const usePostForm = () => {
       title: z
         .string()
         .trim()
-        .refine((val) => val.length > 0, {
-          message: t("postForm.fields.title.validation.required"),
+        .refine(val => val.length > 0, {
+          message: t('postForm.fields.title.validation.required')
         })
-        .min(
-          TEXT_FIELD_LIMITS.TITLE.MIN,
-          t("postForm.fields.title.validation.minLength"),
-        )
-        .max(
-          TEXT_FIELD_LIMITS.TITLE.MAX,
-          t("postForm.fields.title.validation.maxLength"),
-        ),
+        .min(TEXT_FIELD_LIMITS.TITLE.MIN, t('postForm.fields.title.validation.minLength'))
+        .max(TEXT_FIELD_LIMITS.TITLE.MAX, t('postForm.fields.title.validation.maxLength')),
       content: z
         .string()
         .trim()
-        .refine((val) => val.length > 0, {
-          message: t("postForm.fields.content.validation.required"),
+        .refine(val => val.length > 0, {
+          message: t('postForm.fields.content.validation.required')
         })
-        .min(
-          TEXT_FIELD_LIMITS.CONTENT.MIN,
-          t("postForm.fields.content.validation.minLength"),
-        )
-        .max(
-          TEXT_FIELD_LIMITS.CONTENT.MAX,
-          t("postForm.fields.content.validation.maxLength"),
-        ),
-    }),
-  );
+        .min(TEXT_FIELD_LIMITS.CONTENT.MIN, t('postForm.fields.content.validation.minLength'))
+        .max(TEXT_FIELD_LIMITS.CONTENT.MAX, t('postForm.fields.content.validation.maxLength'))
+    })
+  )
 
   const isValid = computed(() => {
-    const result = schema.value.safeParse(state);
-    return result.success;
-  });
+    const result = schema.value.safeParse(state)
+    return result.success
+  })
 
-  const validate = () => schema.value.safeParse(state);
+  const validate = () => schema.value.safeParse(state)
 
   return {
     state,
@@ -66,6 +54,6 @@ export const usePostForm = () => {
     resetState,
     schema,
     isValid,
-    validate,
-  };
-};
+    validate
+  }
+}

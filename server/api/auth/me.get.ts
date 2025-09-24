@@ -12,9 +12,9 @@
  *       401:
  *         description: Not authenticated
  */
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   // User is already authenticated by middleware and available in context
-  const user = event.context.user;
+  const user = event.context.user
 
-  return createApiResponse(user, HTTP_STATUS.OK, "User session retrieved");
-});
+  return createApiResponse(user, HTTP_STATUS.OK, 'User session retrieved')
+})

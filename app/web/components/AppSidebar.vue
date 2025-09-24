@@ -1,41 +1,34 @@
-// ───────────────────────────────────────────────────────────── // File:
-components/AppSidebar.vue //
-─────────────────────────────────────────────────────────────
+// ───────────────────────────────────────────────────────────── // File: components/AppSidebar.vue
+// ─────────────────────────────────────────────────────────────
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useRoute } from "#imports";
-import {
-  Home,
-  Bot,
-  Settings,
-  PanelLeftClose,
-  PanelLeftOpen,
-} from "lucide-vue-next";
+import { ref, computed } from 'vue'
+import { useRoute } from '#imports'
+import { Home, Bot, Settings, PanelLeftClose, PanelLeftOpen } from 'lucide-vue-next'
 
-const collapsed = ref(false);
-const route = useRoute();
+const collapsed = ref(false)
+const route = useRoute()
 
 const nav = [
-  { to: "/", label: "Home", icon: Home },
+  { to: '/', label: 'Home', icon: Home },
   // { to: '/ai', label: 'AI', icon: Bot },
   // { to: '/chatgpt', label: 'ChatGPT', icon: Bot },
-  { to: "/about", label: "About", icon: Bot },
+  { to: '/about', label: 'About', icon: Bot }
   // { to: '/settings', label: 'Settings', icon: Settings },
-];
+]
 
 const actions = [
-  { action: "chatgptWeb", label: "ChatGPT Web", icon: Bot },
-  { action: "deepseek", label: "DeepSeek", icon: Bot },
-];
+  { action: 'chatgptWeb', label: 'ChatGPT Web', icon: Bot },
+  { action: 'deepseek', label: 'DeepSeek', icon: Bot }
+]
 
 //const isActive = (to: string) => computed(() => route.path === to)
-const isActive = true;
+const isActive = true
 
 function handleAction(item: any) {
-  if (item.action === "chatgptWeb") {
+  if (item.action === 'chatgptWeb') {
     // (window as any)?.aaasaasa?.openChatGPT?.()
   }
-  if (item.action === "deepseek") {
+  if (item.action === 'deepseek') {
     // (window as any)?.aaasaasa?.deepseek?.()
   }
 }
@@ -45,7 +38,7 @@ function handleAction(item: any) {
   <aside
     :class="[
       'h-screen border-r bg-background transition-all duration-200',
-      collapsed ? 'w-16' : 'w-56',
+      collapsed ? 'w-16' : 'w-56'
     ]"
   >
     <!-- Header -->
@@ -59,10 +52,7 @@ function handleAction(item: any) {
         @click="collapsed = !collapsed"
         :title="collapsed ? 'Expand' : 'Collapse'"
       >
-        <component
-          :is="collapsed ? PanelLeftOpen : PanelLeftClose"
-          class="w-4 h-4"
-        />
+        <component :is="collapsed ? PanelLeftOpen : PanelLeftClose" class="w-4 h-4" />
       </UButton>
     </div>
 

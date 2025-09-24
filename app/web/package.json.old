@@ -1,5 +1,5 @@
 {
-  "name": "admin",
+  "name": "web",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -12,13 +12,13 @@
   "author": "Aleksandar Stajic",
   "license": "MIT",
   "scripts": {
-    "dev": "nuxt dev --port 3300",
+    "dev": "nuxt dev --port 3000",
     "build": "nuxt build",
     "preview": "nuxt preview",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
-    "postinstall": "echo 'Admin postinstall complete'",
-    "prepare:types": "nuxt prepare"
+    "prepare:types": "nuxt prepare",
+    "postinstall": "echo 'Admin postinstall complete'"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.68",
@@ -60,4 +60,3 @@
     "pnpm": ">=9.0.0"
   }
 }
-

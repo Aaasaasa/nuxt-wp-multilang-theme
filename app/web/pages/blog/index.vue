@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const posts = ref([{ slug: "hello", title: "Hello" }]);
+const posts = ref([{ slug: 'hello', title: 'Hello' }])
 </script>
 <template>
   <div>

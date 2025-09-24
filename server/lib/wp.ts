@@ -1,6 +1,6 @@
-import { wp } from "~/utils/dbClients";
+import { wp } from '~/utils/dbClients'
 
-const P = process.env.MYSQL_PREFIX || "wp_";
+const P = process.env.MYSQL_PREFIX || 'wp_'
 
 // Basic fetch of latest published posts/pages
 export async function getWpPosts(limit = 10, lang?: string) {
@@ -10,9 +10,9 @@ export async function getWpPosts(limit = 10, lang?: string) {
     WHERE post_status='publish' AND post_type IN ('post','page')
     ORDER BY post_date DESC
     LIMIT ?
-  `;
-  const [rows] = await wp.execute(sql, [limit]);
-  return rows as any[];
+  `
+  const [rows] = await wp.execute(sql, [limit])
+  return rows as any[]
 }
 
 /**
@@ -39,28 +39,28 @@ export async function getWpMenu(menuSlug: string) {
     LEFT JOIN ${P}posts p2 ON p2.ID = pm_obj.meta_value
     WHERE t.slug = ?
     ORDER BY p.menu_order ASC, p.ID ASC
-  `;
-  const [rows] = await wp.execute(sql, [menuSlug]);
+  `
+  const [rows] = await wp.execute(sql, [menuSlug])
   // Build a tree structure
-  const byId: Record<string, any> = {};
-  const roots: any[] = [];
-  (rows as any[]).forEach((r) => {
+  const byId: Record<string, any> = {}
+  const roots: any[] = []
+  ;(rows as any[]).forEach(r => {
     const node = {
       id: String(r.item_id),
       label: r.target_title || r.item_title,
-      slug: r.target_slug || "",
-      type: r.target_type || "custom",
+      slug: r.target_slug || '',
+      type: r.target_type || 'custom',
       parent: r.parent_id ? String(r.parent_id) : null,
-      children: [] as any[],
-    };
-    byId[node.id] = node;
-  });
-  (rows as any[]).forEach((r) => {
-    const id = String(r.item_id);
-    const parent = r.parent_id ? String(r.parent_id) : null;
-    const node = byId[id];
-    if (parent && byId[parent]) byId[parent].children.push(node);
-    else roots.push(node);
-  });
-  return { slug: menuSlug, items: roots };
+      children: [] as any[]
+    }
+    byId[node.id] = node
+  })
+  ;(rows as any[]).forEach(r => {
+    const id = String(r.item_id)
+    const parent = r.parent_id ? String(r.parent_id) : null
+    const node = byId[id]
+    if (parent && byId[parent]) byId[parent].children.push(node)
+    else roots.push(node)
+  })
+  return { slug: menuSlug, items: roots }
 }

@@ -1,37 +1,19 @@
-name: Lint
+# .github/workflows/lint.yml
+name: Lint Check
 
-on:
-  push:
-    branches: [ master, main ]
-  pull_request:
-    branches: [ master, main ]
+on: [push, pull_request]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
-
     steps:
-      # ✅ Checkout repo
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # ✅ Setup Node (koristi verziju iz package.json)
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
         with:
-          node-version: 24.5.0
-          cache: pnpm
-
-      # ✅ Setup pnpm
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
+          version: 8
+      - uses: actions/setup-node@v4
         with:
-          version: 9.12.3
-
-      # ✅ Install dependencies (sa cache)
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      # ✅ Run lint in CI mode
-      - name: Run ESLint (CI)
-        run: pnpm lint:ci
+          node-version: 20
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm lint:ci

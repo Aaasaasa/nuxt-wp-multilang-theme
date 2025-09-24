@@ -1,11 +1,10 @@
 {
-"$schema": "https://turbo.build/schema.json",
-"tasks": {
-"postinstall": { "cache": false },
-"dev": { "cache": false, "persistent": true },
-"lint": { "outputs": [] },
-"test": { "dependsOn": ["^build"], "outputs": ["coverage/**"] },
-"build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".nuxt/**", ".output/**"] },
-"preview": { "dependsOn": ["build"], "cache": false }
-}
+  "$schema": "https://turborepo.org/schema.json",
+  "tasks": {
+    "dev": { "cache": false, "persistent": true },
+    "build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".output/**"] },
+    "lint": { "outputs": [] },
+    "test": { "outputs": ["coverage/**"] },
+    "postinstall": {}
+  }
 }

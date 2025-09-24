@@ -4,6 +4,6 @@ export default defineAppConfig({
   vite: {
     // plugins: [tsconfigPaths()]
   },
-  name: "Web",
-  ui: { primary: "blue" },
-});
+  name: 'Web',
+  ui: { primary: 'blue' }
+})

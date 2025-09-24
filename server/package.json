@@ -16,11 +16,12 @@
   "dependencies": {
     "@fastify/cookie": "^11.0.2",
     "@fastify/secure-session": "^8.2.0",
+    "@local/shared": "workspace:*",
     "@prisma/client": "^6.0.0",
     "cors": "^2.8.5",
     "fastify": "^5.6.0",
-    "zod": "^3.23.8",
-    "@local/shared": "workspace:*"
+    "ws": "^8.18.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",
@@ -38,4 +39,3 @@
     "pnpm": ">=9.0.0"
   }
 }
-
