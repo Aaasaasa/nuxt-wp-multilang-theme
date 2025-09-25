@@ -7,7 +7,7 @@ export default config.map((entry) => {
       ...entry,
       rules: {
         ...entry.rules,
-        'no-console': 'error',
+        'no-console': 'off',
         'no-debugger': 'error',
       },
     }

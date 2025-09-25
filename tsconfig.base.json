@@ -4,17 +4,39 @@
     "lib": ["ES2022", "DOM"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "allowJs": false,
     "strict": true,
     "noEmit": true,
     "types": ["node"],
+
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
     "baseUrl": ".",
     "paths": {
-      "@local/shared/*": ["shared/*"]
+      "@@local/shared/*": ["shared/*"],
+      "@@shared/*": ["shared/*"],
+      "@@utils/*": ["shared/utils/*"],
+      "@@server/*": ["server/*"]
     }
   },
-  "include": [".", "app/*", "server", "shared"],
-  "exclude": ["node_modules", "dist", ".docker", ".output", ".nuxt", ".turbo"]
+  "include": [
+    "app/admin",
+    "app/web",
+    "server",
+    "shared",
+    // "test"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".docker",
+    ".output",
+    ".nuxt",
+    ".turbo"
+  ]
 }
-

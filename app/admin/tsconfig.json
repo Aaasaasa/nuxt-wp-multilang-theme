@@ -1,5 +1,35 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["."],
-  "exclude": ["node_modules", ".nuxt", "dist"]
+  "compilerOptions": {
+    //"target": "ES2022",
+    //"lib": ["ES2022", "DOM"],
+    "module": "NodeNext",
+    //"moduleResolution": "NodeNext",
+    //"resolveJsonModule": true,
+    //"allowJs": false,
+    //"strict": true,
+    //"noEmit": true,
+    //"types": ["node"],
+
+    "baseUrl": ".",
+    "paths": {
+      "@@local/shared/*": ["../../shared/*"],
+      "@@shared/*": ["../../shared/*"],
+      "@@utils/*": ["../../shared/utils/*"],
+      "@@server/*": ["../../server/*"],
+      "~~/components/*": ["./components/*"],
+      "~~/middleware/*": ["./middleware/*"],
+      "~~/pages/*": ["./pages/*"],
+      "~~/plugins/*": ["./plugins/*"]
+    }
+  },
+  "include": ["components", "middleware", "pages", "plugins", "shared"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".docker",
+    ".output",
+    ".nuxt",
+    ".turbo"
+  ]
 }

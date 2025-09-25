@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "nuxt dev --port 3000",
     "build": "nuxt build",
-    "preview": "nuxt preview",
+    "preview": "echo 'nuxt preview ne moze da pokrene i .nuxt se generise tek kada pnpm dev bude pokrenut' && nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {

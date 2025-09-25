@@ -1,11 +1,11 @@
 // shared/middleware/auth.ts
-/*
+
 import { defineNuxtRouteMiddleware, navigateTo, useNuxtApp } from 'nuxt/app';
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const { $auth } = useNuxtApp(); // Access nuxt-auth-utils
   const user = $auth?.user; // Get user from session
-
+  const f = from;
   // Check if user is authenticated
   if (!user && to.path.startsWith('/admin')) {
     return navigateTo('/login');
@@ -27,9 +27,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       return navigateTo('/login', { replace: true });
     }
   }
-});
-*/
+})
 
+/*
 export function sharedAuthGuard(to: any, from: any) {
   const user = useState('authUser', () => null)
 
@@ -40,3 +40,4 @@ export function sharedAuthGuard(to: any, from: any) {
     return navigateTo('/')
   }
 }
+  */

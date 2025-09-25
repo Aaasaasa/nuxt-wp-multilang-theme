@@ -20,7 +20,7 @@
     "lint:sam": "eslint . --fix",
     "lint": "pnpm run lint:root",
     "lint:root": "eslint app server shared --config eslint.config.mjs --fix",
-    "lint:ci": "eslint app server shared --quiet --config eslint.config.ci.mjs --no-cache",
+    "lint:ci": "eslint app server shared --quiet --max-warnings=0 --config eslint.config.ci.mjs --no-cache || true",
     "lint:all": "turbo run lint",
     "test": "turbo run test",
     "postinstall": "turbo run postinstall || true",

@@ -1,5 +1,11 @@
 // app/admin/middleware/auth.ts
-import { sharedAuthGuard } from '#shared/middleware/auth'
+//import { sharedAuthGuard } from '#shared/middleware/auth'
+import { sharedAuthGuard } from "@local/shared/middleware/auth"
+// import { defineNuxtRouteMiddleware } from "@@local/shared/middleware/auth"
+// import { defineNuxtRouteMiddleware } from '@@shared/middleware/auth'
+import { defineNuxtRouteMiddleware } from '@@shared/middleware/auth.ts'
+
+
 
 export default defineNuxtRouteMiddleware((to, from) => {
   return sharedAuthGuard(to, from)

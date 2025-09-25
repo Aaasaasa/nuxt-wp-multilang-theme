@@ -2,6 +2,8 @@ import { defineNuxtConfig } from 'nuxt/config'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineNuxtConfig({
+  devtools: { enabled: true },
+  // plugins: [tsconfigPaths()],
   typescript: { shim: false },
 
   modules: [

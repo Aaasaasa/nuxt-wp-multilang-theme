@@ -1,73 +1,46 @@
-// eslint.config.mjs
+// eslint.config.ts
 
 import js from '@eslint/js'
 import tseslint from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import vue from 'eslint-plugin-vue'
 import nuxt from 'eslint-plugin-nuxt'
+import vueParser from 'vue-eslint-parser'
 
 export default [
   // ❌ Ignoriši build i cache foldere
   {
     ignores: [
-      'node_modules/**',
-      '.nuxt/**',
-      '.nitro/**',
+      "**/node_modules/**",
+      "**/.nuxt/**",
+      "**/.output/**",
+      "dist/**",
+      ".git/**",
       '.output/**',
       '.turbo/**',
       'dist/**',
       'coverage/**',
       '*.log',
       '*.d.ts',
+      'test/**',
     ],
   },
 
-  // ✅ Osnovne JS pravila
+  // ✅ Osnovna JS pravila
   js.configs.recommended,
 
-  // ✅ TypeScript, Vue i Nuxt pravila
+  // ✅ TypeScript + Vue + Nuxt (typed linting)
   {
-    files: ['**/*.{ts,js,vue}'],
+    files: ['app/**/*.{ts,vue}', 'server/**/*.{ts,vue}', 'shared/**/*.{ts,vue}'],
     languageOptions: {
-      parser: tsParser,
+      parser: vueParser,
       parserOptions: {
+        parser: tsParser,
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: ['./tsconfig.json'], // ili .tsconfig.base.json ako koristiš extends
-      },
-      globals: {
-        // Vue/Nuxt
-        defineNuxtConfig: 'readonly',
-        defineNuxtPlugin: 'readonly',
-        defineNuxtRouteMiddleware: 'readonly',
-        defineAppConfig: 'readonly',
-        defineI18nConfig: 'readonly',
-
-        // Vue
-        ref: 'readonly',
-        reactive: 'readonly',
-        computed: 'readonly',
-        watch: 'readonly',
-        defineProps: 'readonly',
-        defineEmits: 'readonly',
-        defineExpose: 'readonly',
-        withDefaults: 'readonly',
-
-        // Composables
-        useState: 'readonly',
-        useAsyncData: 'readonly',
-        useFetch: 'readonly',
-        useRuntimeConfig: 'readonly',
-        useNuxtApp: 'readonly',
-        useSeoMeta: 'readonly',
-        useI18n: 'readonly',
-        useToast: 'readonly',
-
-        // Nitro
-        defineEventHandler: 'readonly',
-        readBody: 'readonly',
-        getQuery: 'readonly',
-        createError: 'readonly',
+        project: ['./tsconfig.base.json'],   // typed linting samo ovde
+        extraFileExtensions: ['.vue'],
+        tsconfigRootDir: import.meta.dirname,
       },
     },
     plugins: {
@@ -76,20 +49,58 @@ export default [
       nuxt,
     },
     rules: {
-      // ⚙️ Pravila koja dozvoljavaju opušteniji rad
       'no-console': 'off',
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/no-explicit-any': 'warn',
 
-      // 💄 Vue specifična pravila
       'vue/multi-word-component-names': [
         'error',
-        { ignores: ['index', '[slug]', '[...slug]'] },
+        {
+          ignores: [
+            'index',
+            '[...slug]',
+            '[slug]',
+            'default',
+            'error',
+            'admin',
+            'dashboard',
+            'login',
+            'about',
+            'edit',
+            'Card',
+          ],
+        },
       ],
 
-      // ✅ Prettier friendly
+      'no-empty': 'off',
+      'no-undef': 'off',
       'prettier/prettier': 'off',
+    },
+  },
+
+  // ✅ Plain JS ili fallback (bez type info)
+  {
+    files: ['**/*.js'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        project: null,   // 🚫 isključi typed linting za .js
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+    },
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
     },
   },
 ]
