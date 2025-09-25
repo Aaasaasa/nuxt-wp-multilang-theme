@@ -4,16 +4,25 @@ name: Lint Check
 on: [push, pull_request]
 
 jobs:
-  lint:
+  lint-and-typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24.5.0
           cache: 'pnpm'
-      - run: pnpm install
-      - run: pnpm lint:ci
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9 # ili tvoja verzija pnpm-a
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint:ci
+
+      - name: Type check
+        run: pnpm typecheck
