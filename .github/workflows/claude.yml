@@ -33,8 +33,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
+          node-version: '24.5.0'
+          cache: 'pnpm'
 
       - name: Run Claude Code
         id: claude
@@ -56,7 +56,7 @@ jobs:
           # assignee_trigger: "claude-bot"
 
           # Project commands from CLAUDE.md
-          allowed_tools: 'Bash(npm install),Bash(npm run dev),Bash(npm run build),Bash(npm run lint),Bash(npm run test:*),Bash(docker compose up -d),Bash(npx prisma migrate dev),Bash(npm run db:*)'
+          allowed_tools: 'Bash(pnpm install),Bash(pnpm run dev),Bash(pnpm run build),Bash(pnpm run lint),Bash(pnpm run test:*),Bash(docker compose up -d),Bash(npx prisma migrate dev),Bash(pnpm run db:*)'
 
           # Nuxt 4 project-specific instructions
           custom_instructions: |
