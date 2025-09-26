@@ -1,10 +1,12 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import { fileURLToPath } from 'node:url'
+
+const isDev = process.env.NODE_ENV !== 'production'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  plugins: [tsconfigPaths()],
-  typescript: { shim: false },
+  typescript: { shim: true },
 
   modules: [
     '@nuxt/ui',
@@ -78,7 +80,10 @@ export default defineNuxtConfig({
   },
 
   // ako budeš trebao alias: koristi TS paths (tsconfigPaths) umjesto ručnog aliasa
-  alias: {},
+  alias: {
+    '@@shared': fileURLToPath(new URL('../../shared', import.meta.url)),
+    '@@shared/': fileURLToPath(new URL('../../shared/', import.meta.url))
+  },
 
   vite: {
     plugins: [tsconfigPaths()],
@@ -90,17 +95,20 @@ export default defineNuxtConfig({
 
   security: {
     headers: {
-      contentSecurityPolicy: {
-        'default-src': ["'self'"],
-        'img-src': ["'self'", 'data:', 'https:'],
-        'style-src': ["'self'", "'unsafe-inline'"],
-        'script-src': ["'self'"],
-        'font-src': ["'self'", 'data:'],
-        'object-src': ["'none'"],
-        'frame-ancestors': ["'none'"],
-        'base-uri': ["'self'"],
-        'form-action': ["'self'"]
-      },
+      contentSecurityPolicy: isDev
+        ? false
+        : {
+            'default-src': ["'self'"],
+            'img-src': ["'self'", 'data:', 'https:'],
+            'style-src': ["'self'", "'unsafe-inline'"],
+            'script-src': ["'self'"],
+            'font-src': ["'self'", 'data:'],
+            'connect-src': ["'self'", 'https:'],
+            'object-src': ["'none'"],
+            'frame-ancestors': ["'none'"],
+            'base-uri': ["'self'"],
+            'form-action': ["'self'"]
+          },
       xFrameOptions: 'DENY',
       xContentTypeOptions: 'nosniff',
       referrerPolicy: 'no-referrer',

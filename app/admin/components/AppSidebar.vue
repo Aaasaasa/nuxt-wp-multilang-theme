@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRoute } from '#imports'
+import { useRoute } from 'nuxt/app'
 import { Home, Bot, Settings, PanelLeftClose, PanelLeftOpen } from 'lucide-vue-next'
 
 const collapsed = ref(false)
@@ -26,6 +26,7 @@ const nav = [
   { to: '/about', label: 'About', icon: Bot },
   { to: '/settings', label: 'Settings', icon: Settings }
 ]
+
 function isActive(path: string) {
   return route.path === path
 }
@@ -53,10 +54,10 @@ function isActive(path: string) {
       </UButton>
     </div>
 
-    <UDivider />
+    <USeparator />
 
     <!-- Scrollable nav -->
-    <UScrollbar class="h-[calc(100vh-56px)]">
+    <div class="h-[calc(100vh-56px)] overflow-y-auto">
       <nav class="p-2 space-y-1">
         <NuxtLink
           v-for="item in nav"
@@ -69,10 +70,19 @@ function isActive(path: string) {
               : 'text-muted-foreground hover:bg-muted hover:text-foreground'
           "
         >
-          <component :is="item.icon" class="w-5 h-5 shrink-0" />
+          <!-- Tooltip samo kad je collapsed -->
+          <UTooltip v-if="collapsed" :text="item.label" placement="right">
+            <component :is="item.icon" class="w-5 h-5 shrink-0" />
+          </UTooltip>
+
+          <component
+            v-else
+            :is="item.icon"
+            class="w-5 h-5 shrink-0"
+          />
           <span v-if="!collapsed" class="truncate">{{ item.label }}</span>
         </NuxtLink>
       </nav>
-    </UScrollbar>
+    </div>
   </aside>
 </template>

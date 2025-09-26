@@ -1,5 +1,7 @@
 import { defineEventHandler } from 'h3'
-import { getPrisma } from '../../../utils/dbClients'
+// import { getPrisma } from '~/utils/dbClients'
+import { getPrisma } from '@@server/utils/dbClients'
+import { readBody } from 'h3'
 
 export default defineEventHandler(async event => {
   const prisma = getPrisma()

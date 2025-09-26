@@ -1,7 +1,7 @@
 {
   "seo": {
     "site": {
-      "name": "Nuxt Boilerplate",
+      "name": "Admin Nuxt Boilerplate",
       "description": "A simple and efficient starting point for Nuxt 3 applications with TypeScript, Pinia, and modern tooling.",
       "keywords": "nuxt, vue, typescript, pinia, boilerplate, starter",
       "titleTemplate": "%s | Nuxt Boilerplate"

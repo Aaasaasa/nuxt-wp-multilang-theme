@@ -1,25 +1,48 @@
+<script setup lang="ts">
+const colorMode = useColorMode()
+
+const themeItems = [
+  {
+    label: 'Light',
+    icon: 'i-lucide-sun',
+    click: () => (colorMode.preference = 'light')
+  },
+  {
+    label: 'Dark',
+    icon: 'i-lucide-moon',
+    click: () => (colorMode.preference = 'dark')
+  },
+  {
+    label: 'System',
+    icon: 'i-lucide-laptop',
+    click: () => (colorMode.preference = 'system')
+  }
+]
+
+const currentIcon = computed(() => {
+  switch (colorMode.preference) {
+    case 'dark':
+      return 'i-lucide-moon'
+    case 'light':
+      return 'i-lucide-sun'
+    default:
+      return 'i-lucide-laptop'
+  }
+})
+</script>
+
 <template>
   <ClientOnly>
-    <UButton
-      :icon="isDark ? 'i-lucide:moon' : 'i-lucide:sun'"
-      color="neutral"
-      variant="ghost"
-      @click="toggleDark()"
-    />
+    <UDropdownMenu :items="themeItems">
+      <UButton
+        :icon="currentIcon"
+        color="gray"
+        variant="ghost"
+      />
+    </UDropdownMenu>
+
     <template #fallback>
-      <UButton icon="i-lucide:sun" color="neutral" variant="ghost" disabled />
+      <UButton icon="i-lucide-sun" color="gray" variant="ghost" disabled />
     </template>
   </ClientOnly>
 </template>
-
-<script setup lang="ts">
-const colorMode = useColorMode()
-const isDark = computed({
-  get: () => colorMode.value === 'dark',
-  set: (value: boolean) => (colorMode.value = value ? 'dark' : 'light')
-})
-
-const toggleDark = () => {
-  isDark.value = !isDark.value
-}
-</script>

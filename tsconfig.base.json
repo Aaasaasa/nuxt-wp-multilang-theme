@@ -9,19 +9,18 @@
     "allowJs": false,
     "strict": true,
     "noEmit": true,
-    "types": ["node"],
+    "types": ["node", "nuxt/schema"],
 
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
 
     "baseUrl": ".",
     "paths": {
-      "@@local/shared/*": ["shared/*"],
-      "@@shared/*": ["shared/*"],
-      "@@utils/*": ["shared/utils/*"],
-      "@@server/*": ["server/*"]
+      "@@shared/*": ["./shared/*"],
+      "@@admin/*": ["./app/admin/*"],
+      "@@web/*": ["./app/web/*"],
+      "@@server/*": ["./server/*"]
     }
   },
   "include": [

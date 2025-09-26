@@ -1,14 +1,23 @@
 // app/admin/middleware/auth.ts
-//import { sharedAuthGuard } from '#shared/middleware/auth'
-import { sharedAuthGuard } from "@local/shared/middleware/auth"
-// import { defineNuxtRouteMiddleware } from "@@local/shared/middleware/auth"
-// import { defineNuxtRouteMiddleware } from '@@shared/middleware/auth'
-import { defineNuxtRouteMiddleware } from '@@shared/middleware/auth.ts'
+import sharedAuthGuard from '@@shared/middleware/auth'
+import { defineNuxtRouteMiddleware, useState, useNuxtApp, navigateTo } from 'nuxt/app'
 
+export default defineNuxtRouteMiddleware(async (to, from) => {
+  const nuxtApp = useNuxtApp()
+  const stateUser = useState('authUser', () => null)
 
+  const fetcher = (p: RequestInfo | string, init?: RequestInit) => {
+    // Nutze Nuxt $fetch wenn verfügbar, sonst global fetch
+    // @ts-ignore
+    const _fetch = nuxtApp?.$fetch ?? globalThis.fetch
+    return _fetch(p as any, init as any)
+  }
 
-export default defineNuxtRouteMiddleware((to, from) => {
-  return sharedAuthGuard(to, from)
+  return await sharedAuthGuard(to, {
+    fetcher,
+    navigateTo: (p: string, opts?: any) => navigateTo(p, opts),
+    getUser: () => (nuxtApp?.$auth?.user ?? stateUser.value)
+  })
 })
 
 /*export default defineNuxtRouteMiddleware((to) => {

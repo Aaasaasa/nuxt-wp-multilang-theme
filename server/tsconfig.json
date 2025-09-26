@@ -1,11 +1,21 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "outDir": "dist",
-    "types": ["node"],
-    "moduleResolution": "Bundler"
+    "types": ["node", "nuxt/schema"],
+    "baseUrl": ".",
+    "paths": {
+      "@@shared/*": ["../shared/*"],
+      "@@admin/*": ["../app/admin/*"],
+      "@@web/*": ["../app/web/*"],
+      // "@@server/*": entfernt — redundant
+      "~/utils/*": ["./utils/*"],
+      "~/config/*": ["./config/*"],
+      "~/prisma/*": ["./prisma/*"],
+      "~/src/*": ["./src/*"],
+      "~lib/*": ["./lib/*"],
+    }
   },
-  "include": ["src/**/*.ts", "prisma/**/*.ts"],
+  "include": ["src/**/*.ts", "prisma/**/*.ts", "server/**/*.ts", "utils/**/*.ts", "config/**/*.ts", "lib/**/*.ts", "nuxt.config.ts", ".nuxt/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

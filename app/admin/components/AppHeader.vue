@@ -1,26 +1,35 @@
+<script setup lang="ts">
+import AdminNav from '~/components/AdminNav.vue'
+import LayoutThemeSwitcher from '~/components/layout/ThemeSwitcher.vue'
+import LayoutLanguageSwitcher from '~/components/layout/LanguageSwitcher.vue'
+import PreferencesControls from '~/components/layout/PreferencesControls.vue'
+</script>
+
 <template>
-  <header>
-    <nav>
-      <NuxtLink to="/">Home</NuxtLink>
-      <NuxtLink to="#">About</NuxtLink>
-      <NuxtLink to="#">Blog</NuxtLink>
-    </nav>
-    <AdminNav />
-    <LayoutThemeSwitcher />
-    <LayoutLanguageSwitcher />
+  <header class="border-b bg-background">
+    <UContainer class="flex items-center justify-between h-14">
+      <!-- Left: Logo + main nav -->
+      <div class="flex items-center gap-8">
+        <NuxtLink to="/" class="text-lg font-bold text-primary">Aaasaasa NuxtWP AI CMS</NuxtLink>
+        <nav class="hidden md:flex items-center gap-4 text-sm font-medium">
+          <ULink to="/" active-class="text-primary font-semibold">Home</ULink>
+          <ULink to="/about" active-class="text-primary font-semibold">About</ULink>
+          <ULink to="/blog" active-class="text-primary font-semibold">Blog</ULink>
+        </nav>
+      </div>
+
+      <!-- Right: actions -->
+      <div class="flex items-right gap-6">
+        <AdminNav />
+        <LayoutLanguageSwitcher />
+        <LayoutThemeSwitcher />
+        <UModal  teleport="#modal-root">
+          <UButton icon="i-lucide-settings" color="gray" variant="ghost" />
+          <template #body>
+            <PreferencesControls />
+          </template>
+        </UModal>
+      </div>
+    </UContainer>
   </header>
 </template>
-<script lang="ts" setup>
-import AdminNav from '@/components/AdminNav.vue'
-// import AppSidebar from '@/components/AppSidebar.vue'
-// import AppHeader from '@/components/AppHeader.vue'
-// import AppFooter from '@/components/AppFooter.vue'
-import LayoutThemeSwitcher from '@/components/layout/ThemeSwitcher.vue'
-import LayoutLanguageSwitcher from '@/components/layout/LanguageSwitcher.vue'
-// import { useI18n, useLocalePath } from '#imports'
-// import { useHead } from '#imports'
-// import { useHead } from '@unhead/vue'
-
-// const localePath = useLocalePath()
-// const { t } = useI18n()
-</script>

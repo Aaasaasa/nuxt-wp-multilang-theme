@@ -1,7 +1,8 @@
 <!-- layouts/default.vue -->
 <template>
   <div class="grid grid-cols-[auto_1fr] min-h-screen">
-    <UTooltipProvider>
+
+    <UTooltip>
       <div class="flex">
         <AppSidebar />
         <!--
@@ -10,15 +11,9 @@
         </div>
         -->
       </div>
-    </UTooltipProvider>
+    </UTooltip>
     <div class="flex flex-col">
-      <div class="flex items-center gap-4">
-        <AppHeader />
-        <!--<AdminNav />
-        <LayoutThemeSwitcher />
-        <LayoutLanguageSwitcher />
-        -->
-      </div>
+      <AppHeader />
 
       <main class="p-0">
         <slot />
@@ -32,9 +27,9 @@
 
 <script lang="ts" setup>
 // import AdminNav from "@/components/AdminNav.vue";
-import AppSidebar from '@/components/AppSidebar.vue'
-import AppHeader from '@/components/AppHeader.vue'
-import AppFooter from '@/components/AppFooter.vue'
+import AppSidebar from '~/components/AppSidebar.vue'
+import AppHeader from '~/components/AppHeader.vue'
+import AppFooter from '~/components/AppFooter.vue'
 //import LayoutThemeSwitcher from '@/components/layout/ThemeSwitcher.vue'
 // import LayoutLanguageSwitcher from '@/components/layout/LanguageSwitcher.vue'
 import { useI18n, useLocalePath } from '#imports'

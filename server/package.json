@@ -1,41 +1,37 @@
 {
   "name": "server",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "author": "Aleksandar Stajic",
-  "license": "MIT",
+  "main": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./middleware/*": "./middleware/*.ts",
+    "./lib/*": "./lib/*.ts"
+  },
   "scripts": {
-    "dev": "tsx src/index.ts -port 4000",
-    "build": "tsc -p tsconfig.json",
-    "lint": "eslint . --ext .js,.ts --fix",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
-    "prisma:studio": "prisma studio"
+    "dev": "nuxt dev --port 4000",
+    "lint": "eslint . --fix",
+    "format": "prettier --write .",
+    "build": "echo 'Shared build (no-op)'",
+    "db:generate": "prisma generate --schema=../prisma/schema.prisma",
+    "db:migrate": "prisma migrate dev --name shared-migration",
+    "db:convert": "node scripts/convert-db.js",
+    "db:setup": "pnpm db:generate && pnpm db:migrate"
   },
   "dependencies": {
-    "@fastify/cookie": "^11.0.2",
-    "@fastify/secure-session": "^8.2.0",
-    "@local/shared": "workspace:*",
-    "@prisma/client": "^6.0.0",
-    "cors": "^2.8.5",
-    "fastify": "^5.6.0",
-    "ws": "^8.18.3",
-    "zod": "^3.23.8"
+    "@prisma/client": "^6.16.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "ioredis": "^5.8.0",
+    "mongodb": "^6.20.0",
+    "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0",
-    "eslint": "^9.36.0",
-    "eslint-plugin-node": "^11.1.0",
-    "prisma": "^6.0.0",
-    "tsx": "^4.20.5",
-    "typescript": "^5.6.3"
-  },
-  "prisma": {
-    "schema": "./prisma/schema.prisma"
-  },
-  "engines": {
-    "node": ">=24.5.0",
-    "pnpm": "^10.17.1"
+    "@types/node": "^24.5.2",
+    "nuxt": "^4.1.2",
+    "prettier": "^3.6.2",
+    "prisma": "^6.16.2",
+    "typescript": "^5.9.2"
   }
 }

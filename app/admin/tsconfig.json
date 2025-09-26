@@ -9,21 +9,22 @@
     //"allowJs": false,
     //"strict": true,
     //"noEmit": true,
-    //"types": ["node"],
+    "types": ["nuxt/schema", "node"],
 
     "baseUrl": ".",
     "paths": {
-      "@@local/shared/*": ["../../shared/*"],
+
+      // "@@local/shared/*": ["../../shared/*"],
       "@@shared/*": ["../../shared/*"],
-      "@@utils/*": ["../../shared/utils/*"],
+      // "@@utils/*": ["../../shared/utils/*"],
       "@@server/*": ["../../server/*"],
-      "~~/components/*": ["./components/*"],
-      "~~/middleware/*": ["./middleware/*"],
-      "~~/pages/*": ["./pages/*"],
-      "~~/plugins/*": ["./plugins/*"]
+      "~/components/*": ["./components/*"],
+      "~/middleware/*": ["./middleware/*"],
+      "~/pages/*": ["./pages/*"],
+      "~/plugins/*": ["./plugins/*"]
     }
   },
-  "include": ["components", "middleware", "pages", "plugins", "shared"],
+  "include": ["components", "middleware", "pages", "plugins", "composables", "app.vue", "nuxt.config.ts"],
   "exclude": [
     "node_modules",
     "dist",
