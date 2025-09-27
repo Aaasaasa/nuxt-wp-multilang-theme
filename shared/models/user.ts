@@ -8,6 +8,7 @@
 // export interface User { id: string; email: string; name: string; }
 
 import { z } from 'zod'
+import { VALIDATION_PATTERNS, TEXT_FIELD_LIMITS } from '~/constants/validation'
 
 // =============================================================================
 // DATABASE ENTITY

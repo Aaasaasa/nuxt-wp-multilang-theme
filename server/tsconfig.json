@@ -14,8 +14,10 @@
       "~/prisma/*": ["./prisma/*"],
       "~/src/*": ["./src/*"],
       "~lib/*": ["./lib/*"],
+      "~constants/*": ["./constants/*"],
+      "~/*": ["./*"],
     }
   },
-  "include": ["src/**/*.ts", "prisma/**/*.ts", "server/**/*.ts", "utils/**/*.ts", "config/**/*.ts", "lib/**/*.ts", "nuxt.config.ts", ".nuxt/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  // "include": ["src/**/*.ts", "prisma/**/*.ts", "server/**/*.ts", "utils/**/*.ts", "config/**/*.ts", "lib/**/*.ts", "nuxt.config.ts", ".nuxt/**/*.ts"],
+  "exclude": ["node_modules", "dist", ".nuxt/dist", ".nuxt/tsconfig.json" ]
 }

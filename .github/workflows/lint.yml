@@ -17,6 +17,12 @@ jobs:
         with:
           version: 10.17.1
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -25,3 +31,5 @@ jobs:
 
       - name: Type check
         run: pnpm typecheck
+
+

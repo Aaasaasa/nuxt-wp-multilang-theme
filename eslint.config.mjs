@@ -13,6 +13,7 @@ export default [
     ignores: [
       "**/node_modules/**",
       "**/.nuxt/**",
+      "**/.nitro/**",
       "**/.output/**",
       "dist/**",
       ".git/**",
