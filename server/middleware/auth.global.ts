@@ -4,6 +4,10 @@
  * Automatically attaches user to context for protected API routes
  * Public routes are defined in the publicRoutes array below
  */
+import { defineEventHandler } from 'h3'
+// import { defineEventHandler } from '#imports'
+
+
 
 export default defineEventHandler(async event => {
   // Only apply to API routes

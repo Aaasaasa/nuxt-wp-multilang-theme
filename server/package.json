@@ -17,7 +17,8 @@
     "db:generate": "prisma generate --schema=../prisma/schema.prisma",
     "db:migrate": "prisma migrate dev --name shared-migration",
     "db:convert": "node scripts/convert-db.js",
-    "db:setup": "pnpm db:generate && pnpm db:migrate"
+    "db:setup": "pnpm db:generate && pnpm db:migrate",
+    "patch:nitropack": "ts-node patch-nitropack.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.16.2",
