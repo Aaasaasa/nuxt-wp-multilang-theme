@@ -10,13 +10,19 @@ body,
 </style>
 
 <template>
-  <UApp class="bg-background text-foreground min-h-screen">
-    <div>
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-    </div>
-    <!-- 👇 Dodaj modal root ovde -->
-    <div id="modal-root"></div>
+  <UApp :locale="locales[locale]">
+    <UiProvider>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+    </UiProvider>
   </UApp>
 </template>
+
+<script setup lang="ts">
+import * as locales from '@nuxt/ui/locale'
+import { useI18n } from "@nuxtjs/i18n"
+// import { useI18n } from 'vue-i18n'
+
+const { locale } = useI18n()
+</script>

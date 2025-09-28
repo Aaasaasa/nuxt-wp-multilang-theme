@@ -5,7 +5,8 @@ const themeItems = [
   {
     label: 'Light',
     icon: 'i-lucide-sun',
-    click: () => (colorMode.preference = 'light')
+    click: () => (colorMode.preference= 'light')
+
   },
   {
     label: 'Dark',
@@ -45,4 +46,7 @@ const currentIcon = computed(() => {
       <UButton icon="i-lucide-sun" color="gray" variant="ghost" disabled />
     </template>
   </ClientOnly>
+
+  <p>Preference: {{ colorMode.preference }}</p>
+<p>Value: {{ colorMode.value }}</p>
 </template>

@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/image',
     '@nuxtjs/i18n',
+    '@nuxtjs/color-mode',
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
     'nuxt-security'
@@ -31,6 +32,16 @@ export default defineNuxtConfig({
   },
 
   ui: { icons: ['lucide', 'openmoji'] },
+
+  colorMode: {
+    preference: 'system',   // default tema (system/light/dark)
+    fallback: 'light',      // kad nema system support
+    classSuffix: '',         // važno: da koristi samo .dark, bez .dark-mode
+    componentName: 'ColorScheme',
+    classPrefix: '',
+    storage: 'localStorage', // or 'sessionStorage' or 'cookie'
+    storageKey: 'nuxt-color-mode'
+  },
 
   i18n: {
     locales: [
