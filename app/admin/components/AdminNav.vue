@@ -1,16 +1,29 @@
 <script setup lang="ts">
 import { User, LogOut, LayoutDashboard, FileText, Users } from 'lucide-vue-next'
 
+// i18n route helper
+const localePath = useLocalePath()
+
+// mock user data
 const user = {
   name: 'Aleksandar',
   email: 'aleksandar@example.com',
   avatar: 'https://i.pravatar.cc/40?u=aleksandar'
 }
 
+// main nav links
 const nav = [
   { label: 'Dashboard', to: '/admin', icon: LayoutDashboard },
   { label: 'Posts', to: '/admin/posts', icon: FileText },
   { label: 'Users', to: '/admin/users', icon: Users }
+]
+
+// profile dropdown items
+const profileItems = [
+  [
+    { label: 'Profile', to: '/profile', icon: User },
+    { label: 'Sign out', to: '/logout', icon: LogOut }
+  ]
 ]
 </script>
 
@@ -21,7 +34,7 @@ const nav = [
       <ULink
         v-for="item in nav"
         :key="item.to"
-        :to="item.to"
+        :to="localePath(item.to)"
         active-class="text-primary font-semibold"
         class="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
       >
@@ -29,43 +42,32 @@ const nav = [
         <span>{{ item.label }}</span>
       </ULink>
     </div>
-<ClientOnly>
+
     <!-- Profile dropdown -->
-    <UDropdownMenu
-      :items="[
-        [{ label: user.name, slot: 'account', disabled: true }],
-        [
-          { label: 'Dashboard', to: '/admin', icon: LayoutDashboard },
-          { label: 'Posts', to: '/admin/posts', icon: FileText },
-          { label: 'Users', to: '/admin/users', icon: Users }
-        ],
-        [
-          { label: 'Profile', to: '/profile', icon: User },
-          { label: 'Sign out', to: '/logout', icon: LogOut }
-        ]
-      ]"
-      class="ml-2"
-    >
-      <UAvatar :src="user.avatar" size="sm" />
+    <ClientOnly>
+      <UDropdownMenu
+        :items="[
+          [{ label: user.name, slot: 'account', disabled: true }],
+          nav,
+          profileItems[0]
+        ]"
+        class="ml-2"
+      >
+        <UAvatar :src="user.avatar" size="sm" />
 
-      <!-- ovo je slot, i ovo je jedini drugi <template> koji je dozvoljen -->
-      <template #account>
-        <div class="flex flex-col">
-          <span class="text-sm font-medium">{{ user.name }}</span>
-          <span class="text-xs text-muted-foreground">{{ user.email }}</span>
-        </div>
+        <!-- slot for account info -->
+        <template #account>
+          <div class="flex flex-col">
+            <span class="text-sm font-medium">{{ user.name }}</span>
+            <span class="text-xs text-muted-foreground">{{ user.email }}</span>
+          </div>
+        </template>
+      </UDropdownMenu>
+
+      <!-- Fallback when JS is disabled or hydration mismatch -->
+      <template #fallback>
+        <UButton icon="i-lucide-user" color="gray" variant="ghost" disabled />
       </template>
-    </UDropdownMenu>
-</ClientOnly>
-
-<ClientOnly>
-  <UDropdownMenu :items="dropdownItems">
-    <UButton icon="i-lucide-user" color="gray" variant="ghost" />
-  </UDropdownMenu>
-
-  <template #fallback>
-    <UButton icon="i-lucide-user" color="gray" variant="ghost" disabled />
-  </template>
-</ClientOnly>
+    </ClientOnly>
   </nav>
 </template>

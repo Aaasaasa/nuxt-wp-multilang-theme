@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import { useRoute } from 'nuxt/app'
 import { Home, Bot, Settings, PanelLeftClose, PanelLeftOpen } from 'lucide-vue-next'
 
+// dodano: localePath helper iz i18n
+const localePath = useLocalePath()
+
 const collapsed = ref(false)
 const route = useRoute()
 
@@ -62,7 +65,7 @@ function isActive(path: string) {
         <NuxtLink
           v-for="item in nav"
           :key="item.to"
-          :to="item.to"
+          :to="localePath(item.to)"
           class="group flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors"
           :class="
             isActive(item.to)

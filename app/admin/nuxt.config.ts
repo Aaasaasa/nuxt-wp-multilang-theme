@@ -89,7 +89,12 @@ export default defineNuxtConfig({
       }
     ],
     defaultLocale: 'de',
-    strategy: 'prefix_except_default'
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root'
+    }
   },
 
   // ako budeš trebao alias: koristi TS paths (tsconfigPaths) umjesto ručnog aliasa
