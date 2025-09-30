@@ -1,0 +1,23 @@
+generator postgres {
+  provider = "prisma-client-js"
+  output   = "./generated/postgres"
+}
+
+datasource postgresb {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model pgPost {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Menu {
+  slug       String   @id
+  data       Json // JSONB za menu podatke
+  updated_at DateTime @default(now())
+}

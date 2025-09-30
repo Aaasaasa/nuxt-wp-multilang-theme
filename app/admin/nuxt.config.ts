@@ -113,6 +113,12 @@ export default defineNuxtConfig({
     }
   },
 
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.PUBLIC_API_BASE || 'http://localhost:4000/api'
+    }
+  },
+
   security: {
     headers: {
       contentSecurityPolicy: isDev

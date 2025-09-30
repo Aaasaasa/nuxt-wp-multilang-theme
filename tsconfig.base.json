@@ -17,9 +17,11 @@
 
     "baseUrl": ".",
     "paths": {
+      "@@*": ["./*"],
       "@@shared/*": ["./shared/*"],
       "@@admin/*": ["./app/admin/*"],
       "@@web/*": ["./app/web/*"],
+      "@@prisma/*": ["./prisma/*"],
       "@@server/*": ["./server/*"]
     }
   },

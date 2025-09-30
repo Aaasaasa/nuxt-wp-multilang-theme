@@ -2,22 +2,21 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "types": ["node", "nuxt/schema"],
+    "types": [],
+    "typeRoots": ["./types", "./node_modules/@types"],
     "baseUrl": ".",
     "paths": {
-      "@@shared/*": ["../shared/*"],
-      "@@admin/*": ["../app/admin/*"],
-      "@@web/*": ["../app/web/*"],
-      // "@@server/*": entfernt — redundant
-      "~/utils/*": ["./utils/*"],
-      "~/config/*": ["./config/*"],
-      "~/prisma/*": ["./prisma/*"],
-      "~/src/*": ["./src/*"],
-      "~lib/*": ["./lib/*"],
-      "~constants/*": ["./constants/*"],
+      "@@shared*": ["../shared/*"],
+      "@@web*": ["../app/web/*"],
+      "@@admin*": ["../app/admin/*"],
+      "@@prisma*": ["../prisma/*"],
+      "~/utils*": ["./utils/*"],
+      "~/lib*": ["./lib/*"],
       "~/*": ["./*"],
+      // "@/*": ["./*"],
+      // "@prisma/*": ["../../prisma/*"]
     }
   },
-  // "include": ["src/**/*.ts", "prisma/**/*.ts", "server/**/*.ts", "utils/**/*.ts", "config/**/*.ts", "lib/**/*.ts", "nuxt.config.ts", ".nuxt/**/*.ts"],
-  "exclude": ["node_modules", "dist", ".nuxt/dist", ".nuxt/tsconfig.json" ]
+  "include": [".nuxt", "nuxt.config.ts", "api", "lib", "utils", "types"],
+  "exclude": ["node_modules", "dist" ]
 }

@@ -9,18 +9,20 @@
     //"allowJs": false,
     //"strict": true,
     //"noEmit": true,
-    //"types": ["node"],
-
+    "types": ["node",],
+    "typeRoots": ["./types", "../../node_modules/@types"],
     "baseUrl": ".",
     "paths": {
       //"@@local/shared/*": ["../../shared/*"],
-      "@@shared/*": ["../../shared/*"],
+      "@@shared*": ["../../shared/*"],
+      // "@@prisma": "../../prisma",
       //"@@utils/*": ["../../shared/utils/*"],
-      "@@server/*": ["../../server/*"],
-      "~/components/*": ["./components/*"],
-      "~/middleware/*": ["./middleware/*"],
-      "~/pages/*": ["./pages/*"],
-      "~/plugins/*": ["./plugins/*"]
+      "@@server*": ["../../server/*"],
+      "~/components*": ["./components/*"],
+      "~/middleware*": ["./middleware/*"],
+      "~/pages*": ["./pages/*"],
+      "~/plugins*": ["./plugins/*"],
+      "~/composables*": ["./composables/*"],
     }
   },
   "include": ["components", "middleware", "pages", "plugins", "composables", "app.vue", "nuxt.config.ts"],

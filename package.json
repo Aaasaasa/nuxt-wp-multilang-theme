@@ -51,6 +51,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.0",
     "prettier": "^3.6.2",
+    "prisma": "^6.16.2",
     "turbo": "^2.5.8",
     "typescript": "^5.9.2",
     "vite-tsconfig-paths": "^5.1.4",
@@ -60,5 +61,10 @@
     "node": ">=24.5.0",
     "pnpm": "^10.17.1"
   },
-  "packageManager": "pnpm@10.17.1"
+  "packageManager": "pnpm@10.17.1",
+  "dependencies": {
+    "@prisma/client": "^6.16.2",
+    "@prisma/config": "^6.16.2",
+    "dotenv": "^17.2.2"
+  }
 }

@@ -26,6 +26,13 @@
 </template>
 
 <script lang="ts" setup>
+const config = useRuntimeConfig()
+
+const { data: menu, error } = await useFetch(`${config.public.apiBase}/wp/menu`, {
+  query: { slug: 'main-menu' }
+})
+
+console.log('ADMIN MENU:', menu.value)
 // import AdminNav from "@/components/AdminNav.vue";
 import AppSidebar from '~/components/AppSidebar.vue'
 import AppHeader from '~/components/AppHeader.vue'

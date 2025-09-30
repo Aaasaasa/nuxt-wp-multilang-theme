@@ -5,7 +5,15 @@
  * Public routes are defined in the publicRoutes array below
  */
 import { defineEventHandler } from 'h3'
-// import { defineEventHandler } from '#imports'
+
+export default defineEventHandler((event) => {
+  // allow everything
+  return
+})
+
+/*
+import { defineEventHandler } from 'h3'
+//import { defineEventHandler } from '#imports'
 
 
 
@@ -45,3 +53,4 @@ export default defineEventHandler(async event => {
     })
   }
 })
+*/

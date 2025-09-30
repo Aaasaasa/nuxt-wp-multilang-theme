@@ -10,6 +10,20 @@
       >
         {{ t('app.name') }}
       </NuxtLink>
+
+      <nav v-if="menu?.items" class="flex gap-6">
+        <NuxtLink
+          v-for="item in menu.items"
+          :key="item.id"
+          :to="'/' + item.slug"
+          class="hover:underline"
+        >
+          {{ item.label }}
+        </NuxtLink>
+      </nav>
+
+
+
       <div class="flex items-center gap-4">
         <LayoutThemeSwitcher />
         <LayoutLanguageSwitcher />
@@ -31,6 +45,14 @@
 </template>
 
 <script lang="ts" setup>
+const config = useRuntimeConfig()
+
+//const { data: menu } = await useFetch('@@/server/api/menu')
+const { data: menu, error } = await useFetch(`${config.public.apiBase}/wp/menu`, {
+  query: { slug: 'main-menu' }
+})
+console.log('MENU from API:', menu.value)
+// console.error('Fetch error:', error.value)
 // import AppSidebar from "~/components/AppSidebar.vue";
 // import AppHeader from "~/components/AppHeader.vue";
 // import AppFooter from "~/components/AppFooter.vue";
@@ -51,34 +73,5 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
   ]
 })
-</script>
-
-<!--
-
-<script setup lang="ts">
 
 </script>
-
-<template>
-  <div class="grid grid-cols-[auto_1fr] min-h-screen">
-    <AppSidebar />
-    <div class="flex flex-col">
-      <AppHeader />
-      <main class="p-0">
-        <slot />
-      </main>
-    </div>
-  </div>
-</template>
-
-
-
-<template>
-<div>
-<AppHeader />
-<main class="container"><slot /></main>
-<AppFooter />
-</div>
-</template>
-
--->

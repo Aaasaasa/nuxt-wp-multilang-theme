@@ -1,15 +1,15 @@
-generator client {
+generator mongo {
   provider = "prisma-client-js"
   output   = "./generated/mongo"
   previewFeatures = ["mongoDb"]
 }
 
-datasource db {
+datasource mongo {
   provider = "mongodb"
   url      = env("MONGO_URL")
 }
 
-model Article {
+model mgArticle {
   id      String   @id @map("_id") @default(auto()) @db.ObjectId
   title   String
   body    String?

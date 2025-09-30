@@ -1,10 +1,12 @@
+// filepath: /srv/stranice/nuxt-multilang-theme-develop/server/api/admin/pages/[id].delete.ts
 import { defineEventHandler } from 'h3'
-import { getPrisma } from '~/utils/dbClients'
+import { db } from '~/utils/dbClients.ts'
 
 export default defineEventHandler(async event => {
-  const prisma = getPrisma()
   const id = Number(event.context.params!.id)
 
-  await prisma.page.delete({ where: { id } })
+  // Raw SQL za delete iz as_posts
+  await db.mysql.execute('DELETE FROM as_posts WHERE ID = ?', [id])
+
   return { success: true }
 })

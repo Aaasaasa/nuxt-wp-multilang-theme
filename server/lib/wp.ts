@@ -1,24 +1,10 @@
-import { wp } from '~/utils/dbClients'
+import { db } from '~/utils/dbClients.ts'
 
 const P = process.env.MYSQL_PREFIX || 'wp_'
-
-// Basic fetch of latest published posts/pages
-export async function getWpPosts(limit = 10, lang?: string) {
-  const sql = `
-    SELECT ID, post_title, post_name, post_date, post_type, post_status
-    FROM ${P}posts
-    WHERE post_status='publish' AND post_type IN ('post','page')
-    ORDER BY post_date DESC
-    LIMIT ?
-  `
-  const [rows] = await wp.execute(sql, [limit])
-  return rows as any[]
-}
 
 /**
  * Fetch a WP nav menu by slug (classic nav_menu taxonomy).
  * NOTE: This is a simplified join that maps menu items -> target posts/pages.
- * It assumes standard WP structure for nav menus.
  */
 export async function getWpMenu(menuSlug: string) {
   const sql = `
@@ -40,27 +26,64 @@ export async function getWpMenu(menuSlug: string) {
     WHERE t.slug = ?
     ORDER BY p.menu_order ASC, p.ID ASC
   `
-  const [rows] = await wp.execute(sql, [menuSlug])
-  // Build a tree structure
-  const byId: Record<string, any> = {}
-  const roots: any[] = []
-  ;(rows as any[]).forEach(r => {
-    const node = {
-      id: String(r.item_id),
-      label: r.target_title || r.item_title,
-      slug: r.target_slug || '',
-      type: r.target_type || 'custom',
-      parent: r.parent_id ? String(r.parent_id) : null,
-      children: [] as any[]
-    }
-    byId[node.id] = node
-  })
-  ;(rows as any[]).forEach(r => {
-    const id = String(r.item_id)
-    const parent = r.parent_id ? String(r.parent_id) : null
-    const node = byId[id]
-    if (parent && byId[parent]) byId[parent].children.push(node)
-    else roots.push(node)
-  })
-  return { slug: menuSlug, items: roots }
+
+  try {
+    const [rows] = await db.mysql.execute(sql, [menuSlug]) as [any[], any]
+    const byId: Record<string, any> = {}
+    const roots: any[] = []
+
+    ;(rows as any[]).forEach(r => {
+      const node = {
+        id: String(r.item_id),
+        label: r.target_title || r.item_title || '',
+        slug: r.target_slug || '',
+        type: r.target_type || 'custom',
+        parent: r.parent_id ? String(r.parent_id) : null,
+        children: [] as any[]
+      }
+      byId[node.id] = node
+    })
+
+    ;(rows as any[]).forEach(r => {
+      const id = String(r.item_id)
+      const parent = r.parent_id ? String(r.parent_id) : null
+      const node = byId[id]
+      if (parent && byId[parent]) {
+        byId[parent].children.push(node)
+      } else if (node) {
+        roots.push(node)
+      }
+    })
+    console.log('[getWpMenu] rows for slug', menuSlug, rows)
+
+    return { slug: menuSlug, items: roots }
+  } catch (err) {
+    console.error(`[getWpMenu] failed for slug "${menuSlug}":`, (err as Error).message)
+    // fallback празан мени
+    return { slug: menuSlug, items: [] }
+  }
+}
+
+/**
+ * Fetch WP posts/pages by criteria (e.g., post_type, limit).
+ * Simplified for migration – adjust as needed.
+ */
+export async function getWpPosts(options: { postType?: string; limit?: number } = {}) {
+  const { postType = 'post', limit = 10 } = options
+  const sql = `
+    SELECT ID, post_name AS slug, post_title AS title, post_content AS content, post_date AS createdAt
+    FROM ${P}posts
+    WHERE post_type = ? AND post_status = 'publish'
+    ORDER BY post_date DESC
+    LIMIT ?
+  `
+
+  try {
+    const [rows] = await db.mysql.execute(sql, [postType, limit]) as [any[], any]
+    console.log('[getWpPosts] rows for postType', postType, rows)
+    return rows as any[]
+  } catch (err) {
+    console.error(`[getWpPosts] failed for postType "${postType}":`, (err as Error).message)
+    return []
+  }
 }

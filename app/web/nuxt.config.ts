@@ -93,7 +93,8 @@ export default defineNuxtConfig({
   // ako budeš trebao alias: koristi TS paths (tsconfigPaths) umjesto ručnog aliasa
   alias: {
     '@@shared': fileURLToPath(new URL('../../shared', import.meta.url)),
-    '@@shared/': fileURLToPath(new URL('../../shared/', import.meta.url))
+    '@@shared/': fileURLToPath(new URL('../../shared/', import.meta.url)),
+    //'@prisma': '../../prisma'
   },
 
   vite: {
@@ -101,6 +102,13 @@ export default defineNuxtConfig({
     define: {
       // zaštita od jiti fallback-a koji koristi import.meta.require
       'import.meta.require': undefined
+    }
+  },
+
+  runtimeConfig: {
+    public: {
+      // PUBLIC_API_BASE из .env, fallback за дев ако је празно
+      apiBase: process.env.PUBLIC_API_BASE || 'http://localhost:4000/api'
     }
   },
 

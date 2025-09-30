@@ -1,25 +1,16 @@
-import { defineEventHandler } from 'h3'
-// import { getPrisma } from '~/utils/dbClients'
-import { getPrisma } from '@@server/utils/dbClients'
-import { readBody } from 'h3'
+// filepath: /srv/stranice/nuxt-multilang-theme-develop/server/api/admin/pages/[id].put.ts
+import { defineEventHandler, readBody } from 'h3'
+import { db } from '~/utils/dbClients.ts'
 
 export default defineEventHandler(async event => {
-  const prisma = getPrisma()
   const id = Number(event.context.params!.id)
   const body = await readBody(event)
 
-  return prisma.page.update({
-    where: { id },
-    data: {
-      slug: body.slug,
-      title: body.title,
-      content: body.content,
-      seoTitle: body.seoTitle,
-      seoDescription: body.seoDescription,
-      seoKeywords: body.seoKeywords,
-      ogImage: body.ogImage,
-      canonicalUrl: body.canonicalUrl,
-      noIndex: body.noIndex ?? false
-    }
-  })
+  // Raw SQL za update as_posts
+  await db.mysql.execute(
+    'UPDATE as_posts SET post_name = ?, post_title = ?, post_content = ? WHERE ID = ?',
+    [body.slug, body.title, body.content, id]
+  ) as [import('mysql2').ResultSetHeader, any]  // Cast ako treba
+
+  return { success: true }
 })

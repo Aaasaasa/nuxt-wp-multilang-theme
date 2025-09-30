@@ -1,17 +1,228 @@
-generator client {
-  provider = "prisma-client-js"
-  output   = "./generated/postgres"
+generator pgCMSClient {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+  output          = "../generated/postgres/cms"
 }
 
-datasource db {
+datasource pgCMSdb {
   provider = "postgresql"
-  url      = env("POSTGRES_URL")
+  url      = env("POSTGRES_CMS_URL")
 }
 
-model Post {
+// --- Enumi ---
+enum Role {
+  GUEST
+  SUBSCRIBER
+  CONTRIBUTOR
+  AUTHOR
+  EDITOR
+  ADMIN
+  SUPERADMIN
+}
+
+enum Status {
+  DRAFT
+  PENDING
+  PUBLISHED
+  ARCHIVED
+  TRASH
+}
+
+enum ContentType {
+  POST
+  PAGE
+  ARTICLE
+  PORTFOLIO
+  MEDIA
+}
+
+// --- Users ---
+model User {
+  id          Int       @id @default(autoincrement())
+  login       String    @unique
+  email       String    @unique
+  password    String
+  displayName String
+  role        Role      @default(SUBSCRIBER)
+  isActive    Boolean   @default(true)
+  registeredAt DateTime @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  articles    Article[]
+  comments    Comment[]
+  metas       Meta[]
+  revisions   Revision[]
+
+  @@map("cms_users")
+}
+
+// --- Articles (posts/pages/portfolio) ---
+model Article {
+  id          Int         @id @default(autoincrement())
+  slug        String      @unique
+  guid        String?
+  status      Status      @default(DRAFT)
+  type        ContentType @default(ARTICLE)
+  authorId    Int
+  parentId    Int?
+  menuOrder   Int         @default(0)
+  language    String
+  title       Json
+  content     Json
+  excerpt     Json?
+  publishedAt DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  author    User     @relation(fields: [authorId], references: [id])
+  parent    Article? @relation("ArticleHierarchy", fields: [parentId], references: [id])
+  children  Article[] @relation("ArticleHierarchy")
+  metas     Meta[]
+  terms     TermRelationship[]
+  comments  Comment[]
+  revisions Revision[]
+  media     Media[]   @relation("ArticleMedia")
+
+  @@map("cms_articles")
+}
+
+// --- Meta (user/article/comment/term) ---
+model Meta {
+  id         Int    @id @default(autoincrement())
+  objectId   Int
+  objectType String
+  key        String
+  value      Json
+
+  article  Article? @relation(fields: [objectId], references: [id], map: "article_meta")
+  user     User?    @relation(fields: [objectId], references: [id], map: "user_meta")
+  comment  Comment? @relation(fields: [objectId], references: [id], map: "comment_meta")
+
+  @@map("cms_metas")
+}
+
+// --- Comments ---
+model Comment {
   id        Int      @id @default(autoincrement())
-  title     String
+  articleId Int
+  userId    Int?
   content   String
-  published Boolean  @default(false)
+  status    String   @default("approved")
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  article   Article @relation(fields: [articleId], references: [id])
+  user      User?   @relation(fields: [userId], references: [id])
+  metas     Meta[]
+
+  @@map("cms_comments")
+}
+
+// --- Terms & Taxonomies ---
+model Term {
+  id    Int    @id @default(autoincrement())
+  slug  String @unique
+  name  Json
+  group Int    @default(0)
+
+  taxonomies TermTaxonomy[]
+
+  @@map("cms_terms")
+}
+
+model TermTaxonomy {
+  id          Int    @id @default(autoincrement())
+  termId      Int
+  taxonomy    String
+  description Json?
+  parentId    Int?
+  count       Int    @default(0)
+
+  term        Term @relation(fields: [termId], references: [id])
+  parent      TermTaxonomy? @relation("TaxonomyHierarchy", fields: [parentId], references: [id])
+  children    TermTaxonomy[] @relation("TaxonomyHierarchy")
+  relationships TermRelationship[]
+
+  @@map("cms_term_taxonomies")
+}
+
+model TermRelationship {
+  articleId      Int
+  termTaxonomyId Int
+
+  article      Article      @relation(fields: [articleId], references: [id])
+  termTaxonomy TermTaxonomy @relation(fields: [termTaxonomyId], references: [id])
+
+  @@id([articleId, termTaxonomyId])
+  @@map("cms_term_relationships")
+}
+
+// --- Media Library ---
+model Media {
+  id        Int      @id @default(autoincrement())
+  url       String   // file path or CDN
+  alt       String?
+  title     String?
+  type      String   // image, video, pdf, audio...
+  meta      Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  articles  Article[] @relation("ArticleMedia")
+
+  @@map("cms_media")
+}
+
+// --- SEO Metadata ---
+model Seo {
+  id          Int      @id @default(autoincrement())
+  objectId    Int
+  objectType  String   // "article", "page", "category"
+  title       String?
+  description String?
+  keywords    String?
+  openGraph   Json?
+  twitter     Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("cms_seo")
+}
+
+// --- Revisions ---
+model Revision {
+  id        Int      @id @default(autoincrement())
+  articleId Int
+  authorId  Int?
+  content   Json
+  createdAt DateTime @default(now())
+
+  article   Article @relation(fields: [articleId], references: [id])
+  author    User?   @relation(fields: [authorId], references: [id])
+
+  @@map("cms_revisions")
+}
+
+// --- Menus ---
+model Menu {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  name      Json
+  items     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cms_menus")
+}
+
+// --- Settings ---
+model Setting {
+  key   String @id
+  value Json
+
+  @@map("cms_settings")
 }
