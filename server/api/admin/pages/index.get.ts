@@ -1,6 +1,6 @@
 // filepath: /srv/stranice/nuxt-multilang-theme-develop/server/api/admin/pages/index.get.ts
 import { defineEventHandler } from 'h3'
-import { db } from '~/utils/dbClients.ts'
+import { db } from '../../../utils/dbClients.ts'
 
 export default defineEventHandler(async () => {
   // Raw SQL za select iz as_posts

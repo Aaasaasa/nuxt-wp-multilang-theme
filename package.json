@@ -35,12 +35,18 @@
     "clean": "pnpm run clean:root && pnpm run clean:workspaces && pnpm run clean:prisma && pnpm run clean:cache",
     "reinstall": "pnpm run clean && pnpm install && pnpm run postinstall",
     "bootstrap": "pnpm run reinstall",
-    "format": "prettier --write ."
+    "migrate:wp": "ts-node migrate/migrate.ts",
+    "format": "prettier --write .",
+    "db:generate": "pnpm db:generate:pg && pnpm db:generate:mysql && pnpm db:generate:mongo",
+    "db:generate:pg": "prisma generate --schema=prisma/adapters/schema-postgres.prisma",
+    "db:generate:mysql": "prisma generate --schema=prisma/adapters/schema-mysql.prisma",
+    "db:generate:mongo": "prisma generate --schema=prisma/adapters/schema-mongo.prisma"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
     "@nuxt/kit": "^4.1.2",
-    "@types/node": "^24.5.2",
+    "@prisma/client": "6.16.3",
+    "@types/node": "^24.6.0",
     "@typescript-eslint/eslint-plugin": "^8.44.1",
     "@typescript-eslint/parser": "^8.44.1",
     "eslint": "^9.36.0",
@@ -51,7 +57,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.0",
     "prettier": "^3.6.2",
-    "prisma": "^6.16.2",
+    "ts-node": "^10.9.2",
     "turbo": "^2.5.8",
     "typescript": "^5.9.2",
     "vite-tsconfig-paths": "^5.1.4",
@@ -63,8 +69,7 @@
   },
   "packageManager": "pnpm@10.17.1",
   "dependencies": {
-    "@prisma/client": "^6.16.2",
-    "@prisma/config": "^6.16.2",
-    "dotenv": "^17.2.2"
+    "dotenv": "^17.2.2",
+    "prisma": "^6.16.3"
   }
 }

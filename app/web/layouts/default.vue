@@ -48,7 +48,7 @@
 const config = useRuntimeConfig()
 
 //const { data: menu } = await useFetch('@@/server/api/menu')
-const { data: menu, error } = await useFetch(`${config.public.apiBase}/wp/menu`, {
+const { data: menu, error } = await useFetch(`${config.public.apiBase}/cms/menu`, {
   query: { slug: 'main-menu' }
 })
 console.log('MENU from API:', menu.value)

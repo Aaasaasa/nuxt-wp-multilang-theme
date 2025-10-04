@@ -3,7 +3,7 @@
     "target": "ES2022",
     "lib": ["ES2022", "DOM"],
     "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "nodenext",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "allowJs": false,
@@ -11,9 +11,9 @@
     "noEmit": true,
     "types": ["node", "nuxt/schema"],
 
-    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+
 
     "baseUrl": ".",
     "paths": {
@@ -21,15 +21,20 @@
       "@@shared/*": ["./shared/*"],
       "@@admin/*": ["./app/admin/*"],
       "@@web/*": ["./app/web/*"],
-      "@@prisma/*": ["./prisma/*"],
-      "@@server/*": ["./server/*"]
+      // "@@prisma/*": ["./prisma/*"],
+      "@@server/*": ["./server/*"],
+      "#prisma/*": ["prisma/*"],
+      "@@prisma/*": ["./prisma/generated/*"],
+      "@@public/*": ["./public/*"]
     }
   },
+  "typeRoots": ["./node_modules/@types"],
   "include": [
     "app/admin",
     "app/web",
     "server",
     "shared",
+    "prisma/generated",
     // "test"
   ],
   "exclude": [

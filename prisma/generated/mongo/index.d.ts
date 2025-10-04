@@ -14,10 +14,10 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model Article
+ * Model mgArticle
  * 
  */
-export type Article = $Result.DefaultSelection<Prisma.$ArticlePayload>
+export type mgArticle = $Result.DefaultSelection<Prisma.$mgArticlePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -26,8 +26,8 @@ export type Article = $Result.DefaultSelection<Prisma.$ArticlePayload>
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Articles
- * const articles = await prisma.article.findMany()
+ * // Fetch zero or more MgArticles
+ * const mgArticles = await prisma.mgArticle.findMany()
  * ```
  *
  *
@@ -47,8 +47,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Articles
-   * const articles = await prisma.article.findMany()
+   * // Fetch zero or more MgArticles
+   * const mgArticles = await prisma.mgArticle.findMany()
    * ```
    *
    *
@@ -67,13 +67,6 @@ export class PrismaClient<
    * Disconnect from the database
    */
   $disconnect(): $Utils.JsPromise<void>;
-
-  /**
-   * Add a middleware
-   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
-   * @see https://pris.ly/d/extensions
-   */
-  $use(cb: Prisma.Middleware): void
 
 /**
    * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
@@ -112,14 +105,14 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.article`: Exposes CRUD operations for the **Article** model.
+   * `prisma.mgArticle`: Exposes CRUD operations for the **mgArticle** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Articles
-    * const articles = await prisma.article.findMany()
+    * // Fetch zero or more MgArticles
+    * const mgArticles = await prisma.mgArticle.findMany()
     * ```
     */
-  get article(): Prisma.ArticleDelegate<ExtArgs, ClientOptions>;
+  get mgArticle(): Prisma.mgArticleDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -178,8 +171,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.13.0
-   * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
+   * Prisma Client JS version: 6.16.3
+   * Query Engine version: bb420e667c1820a8c05a38023385f6cc7ef8e83a
    */
   export type PrismaVersion = {
     client: string
@@ -356,7 +349,7 @@ export namespace Prisma {
   ? False
   : T extends Uint8Array
   ? False
-  : T extends bigint
+  : T extends BigInt
   ? False
   : T extends object
   ? True
@@ -560,14 +553,14 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Article: 'Article'
+    mgArticle: 'mgArticle'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 
 
   export type Datasources = {
-    db?: Datasource
+    mongo?: Datasource
   }
 
   interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
@@ -579,81 +572,81 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "article"
+      modelProps: "mgArticle"
       txIsolationLevel: never
     }
     model: {
-      Article: {
-        payload: Prisma.$ArticlePayload<ExtArgs>
-        fields: Prisma.ArticleFieldRefs
+      mgArticle: {
+        payload: Prisma.$mgArticlePayload<ExtArgs>
+        fields: Prisma.mgArticleFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ArticleFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticlePayload> | null
+            args: Prisma.mgArticleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mgArticlePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ArticleFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticlePayload>
+            args: Prisma.mgArticleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mgArticlePayload>
           }
           findFirst: {
-            args: Prisma.ArticleFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticlePayload> | null
+            args: Prisma.mgArticleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mgArticlePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ArticleFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticlePayload>
+            args: Prisma.mgArticleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mgArticlePayload>
           }
           findMany: {
-            args: Prisma.ArticleFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticlePayload>[]
+            args: Prisma.mgArticleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mgArticlePayload>[]
           }
           create: {
-            args: Prisma.ArticleCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticlePayload>
+            args: Prisma.mgArticleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mgArticlePayload>
           }
           createMany: {
-            args: Prisma.ArticleCreateManyArgs<ExtArgs>
+            args: Prisma.mgArticleCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           delete: {
-            args: Prisma.ArticleDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticlePayload>
+            args: Prisma.mgArticleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mgArticlePayload>
           }
           update: {
-            args: Prisma.ArticleUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticlePayload>
+            args: Prisma.mgArticleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mgArticlePayload>
           }
           deleteMany: {
-            args: Prisma.ArticleDeleteManyArgs<ExtArgs>
+            args: Prisma.mgArticleDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ArticleUpdateManyArgs<ExtArgs>
+            args: Prisma.mgArticleUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           upsert: {
-            args: Prisma.ArticleUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ArticlePayload>
+            args: Prisma.mgArticleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mgArticlePayload>
           }
           aggregate: {
-            args: Prisma.ArticleAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateArticle>
+            args: Prisma.MgArticleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMgArticle>
           }
           groupBy: {
-            args: Prisma.ArticleGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ArticleGroupByOutputType>[]
+            args: Prisma.mgArticleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MgArticleGroupByOutputType>[]
           }
           findRaw: {
-            args: Prisma.ArticleFindRawArgs<ExtArgs>
+            args: Prisma.mgArticleFindRawArgs<ExtArgs>
             result: JsonObject
           }
           aggregateRaw: {
-            args: Prisma.ArticleAggregateRawArgs<ExtArgs>
+            args: Prisma.mgArticleAggregateRawArgs<ExtArgs>
             result: JsonObject
           }
           count: {
-            args: Prisma.ArticleCountArgs<ExtArgs>
-            result: $Utils.Optional<ArticleCountAggregateOutputType> | number
+            args: Prisma.mgArticleCountArgs<ExtArgs>
+            result: $Utils.Optional<MgArticleCountAggregateOutputType> | number
           }
         }
       }
@@ -736,7 +729,7 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    article?: ArticleOmit
+    mgArticle?: mgArticleOmit
   }
 
   /* Types for Logging */
@@ -795,25 +788,6 @@ export namespace Prisma {
     | 'findRaw'
     | 'groupBy'
 
-  /**
-   * These options are being passed into the middleware as "params"
-   */
-  export type MiddlewareParams = {
-    model?: ModelName
-    action: PrismaAction
-    args: any
-    dataPath: string[]
-    runInTransaction: boolean
-  }
-
-  /**
-   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
-   */
-  export type Middleware<T = any> = (
-    params: MiddlewareParams,
-    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
-  ) => $Utils.JsPromise<T>
-
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
 
@@ -837,30 +811,30 @@ export namespace Prisma {
    */
 
   /**
-   * Model Article
+   * Model mgArticle
    */
 
-  export type AggregateArticle = {
-    _count: ArticleCountAggregateOutputType | null
-    _min: ArticleMinAggregateOutputType | null
-    _max: ArticleMaxAggregateOutputType | null
+  export type AggregateMgArticle = {
+    _count: MgArticleCountAggregateOutputType | null
+    _min: MgArticleMinAggregateOutputType | null
+    _max: MgArticleMaxAggregateOutputType | null
   }
 
-  export type ArticleMinAggregateOutputType = {
+  export type MgArticleMinAggregateOutputType = {
     id: string | null
     title: string | null
     body: string | null
     created: Date | null
   }
 
-  export type ArticleMaxAggregateOutputType = {
+  export type MgArticleMaxAggregateOutputType = {
     id: string | null
     title: string | null
     body: string | null
     created: Date | null
   }
 
-  export type ArticleCountAggregateOutputType = {
+  export type MgArticleCountAggregateOutputType = {
     id: number
     title: number
     body: number
@@ -870,21 +844,21 @@ export namespace Prisma {
   }
 
 
-  export type ArticleMinAggregateInputType = {
+  export type MgArticleMinAggregateInputType = {
     id?: true
     title?: true
     body?: true
     created?: true
   }
 
-  export type ArticleMaxAggregateInputType = {
+  export type MgArticleMaxAggregateInputType = {
     id?: true
     title?: true
     body?: true
     created?: true
   }
 
-  export type ArticleCountAggregateInputType = {
+  export type MgArticleCountAggregateInputType = {
     id?: true
     title?: true
     body?: true
@@ -893,114 +867,114 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type ArticleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MgArticleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Article to aggregate.
+     * Filter which mgArticle to aggregate.
      */
-    where?: ArticleWhereInput
+    where?: mgArticleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Articles to fetch.
+     * Determine the order of mgArticles to fetch.
      */
-    orderBy?: ArticleOrderByWithRelationInput | ArticleOrderByWithRelationInput[]
+    orderBy?: mgArticleOrderByWithRelationInput | mgArticleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ArticleWhereUniqueInput
+    cursor?: mgArticleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Articles from the position of the cursor.
+     * Take `±n` mgArticles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Articles.
+     * Skip the first `n` mgArticles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Articles
+     * Count returned mgArticles
     **/
-    _count?: true | ArticleCountAggregateInputType
+    _count?: true | MgArticleCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ArticleMinAggregateInputType
+    _min?: MgArticleMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ArticleMaxAggregateInputType
+    _max?: MgArticleMaxAggregateInputType
   }
 
-  export type GetArticleAggregateType<T extends ArticleAggregateArgs> = {
-        [P in keyof T & keyof AggregateArticle]: P extends '_count' | 'count'
+  export type GetMgArticleAggregateType<T extends MgArticleAggregateArgs> = {
+        [P in keyof T & keyof AggregateMgArticle]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateArticle[P]>
-      : GetScalarType<T[P], AggregateArticle[P]>
+        : GetScalarType<T[P], AggregateMgArticle[P]>
+      : GetScalarType<T[P], AggregateMgArticle[P]>
   }
 
 
 
 
-  export type ArticleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ArticleWhereInput
-    orderBy?: ArticleOrderByWithAggregationInput | ArticleOrderByWithAggregationInput[]
-    by: ArticleScalarFieldEnum[] | ArticleScalarFieldEnum
-    having?: ArticleScalarWhereWithAggregatesInput
+  export type mgArticleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: mgArticleWhereInput
+    orderBy?: mgArticleOrderByWithAggregationInput | mgArticleOrderByWithAggregationInput[]
+    by: MgArticleScalarFieldEnum[] | MgArticleScalarFieldEnum
+    having?: mgArticleScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ArticleCountAggregateInputType | true
-    _min?: ArticleMinAggregateInputType
-    _max?: ArticleMaxAggregateInputType
+    _count?: MgArticleCountAggregateInputType | true
+    _min?: MgArticleMinAggregateInputType
+    _max?: MgArticleMaxAggregateInputType
   }
 
-  export type ArticleGroupByOutputType = {
+  export type MgArticleGroupByOutputType = {
     id: string
     title: string
     body: string | null
     tags: string[]
     created: Date
-    _count: ArticleCountAggregateOutputType | null
-    _min: ArticleMinAggregateOutputType | null
-    _max: ArticleMaxAggregateOutputType | null
+    _count: MgArticleCountAggregateOutputType | null
+    _min: MgArticleMinAggregateOutputType | null
+    _max: MgArticleMaxAggregateOutputType | null
   }
 
-  type GetArticleGroupByPayload<T extends ArticleGroupByArgs> = Prisma.PrismaPromise<
+  type GetMgArticleGroupByPayload<T extends mgArticleGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ArticleGroupByOutputType, T['by']> &
+      PickEnumerable<MgArticleGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ArticleGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof MgArticleGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ArticleGroupByOutputType[P]>
-            : GetScalarType<T[P], ArticleGroupByOutputType[P]>
+              : GetScalarType<T[P], MgArticleGroupByOutputType[P]>
+            : GetScalarType<T[P], MgArticleGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ArticleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type mgArticleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
     body?: boolean
     tags?: boolean
     created?: boolean
-  }, ExtArgs["result"]["article"]>
+  }, ExtArgs["result"]["mgArticle"]>
 
 
 
-  export type ArticleSelectScalar = {
+  export type mgArticleSelectScalar = {
     id?: boolean
     title?: boolean
     body?: boolean
@@ -1008,10 +982,10 @@ export namespace Prisma {
     created?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "body" | "tags" | "created", ExtArgs["result"]["article"]>
+  export type mgArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "body" | "tags" | "created", ExtArgs["result"]["mgArticle"]>
 
-  export type $ArticlePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Article"
+  export type $mgArticlePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "mgArticle"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1019,143 +993,143 @@ export namespace Prisma {
       body: string | null
       tags: string[]
       created: Date
-    }, ExtArgs["result"]["article"]>
+    }, ExtArgs["result"]["mgArticle"]>
     composites: {}
   }
 
-  type ArticleGetPayload<S extends boolean | null | undefined | ArticleDefaultArgs> = $Result.GetResult<Prisma.$ArticlePayload, S>
+  type mgArticleGetPayload<S extends boolean | null | undefined | mgArticleDefaultArgs> = $Result.GetResult<Prisma.$mgArticlePayload, S>
 
-  type ArticleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ArticleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ArticleCountAggregateInputType | true
+  type mgArticleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<mgArticleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MgArticleCountAggregateInputType | true
     }
 
-  export interface ArticleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Article'], meta: { name: 'Article' } }
+  export interface mgArticleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['mgArticle'], meta: { name: 'mgArticle' } }
     /**
-     * Find zero or one Article that matches the filter.
-     * @param {ArticleFindUniqueArgs} args - Arguments to find a Article
+     * Find zero or one MgArticle that matches the filter.
+     * @param {mgArticleFindUniqueArgs} args - Arguments to find a MgArticle
      * @example
-     * // Get one Article
-     * const article = await prisma.article.findUnique({
+     * // Get one MgArticle
+     * const mgArticle = await prisma.mgArticle.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ArticleFindUniqueArgs>(args: SelectSubset<T, ArticleFindUniqueArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends mgArticleFindUniqueArgs>(args: SelectSubset<T, mgArticleFindUniqueArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Article that matches the filter or throw an error with `error.code='P2025'`
+     * Find one MgArticle that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ArticleFindUniqueOrThrowArgs} args - Arguments to find a Article
+     * @param {mgArticleFindUniqueOrThrowArgs} args - Arguments to find a MgArticle
      * @example
-     * // Get one Article
-     * const article = await prisma.article.findUniqueOrThrow({
+     * // Get one MgArticle
+     * const mgArticle = await prisma.mgArticle.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ArticleFindUniqueOrThrowArgs>(args: SelectSubset<T, ArticleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends mgArticleFindUniqueOrThrowArgs>(args: SelectSubset<T, mgArticleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Article that matches the filter.
+     * Find the first MgArticle that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleFindFirstArgs} args - Arguments to find a Article
+     * @param {mgArticleFindFirstArgs} args - Arguments to find a MgArticle
      * @example
-     * // Get one Article
-     * const article = await prisma.article.findFirst({
+     * // Get one MgArticle
+     * const mgArticle = await prisma.mgArticle.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ArticleFindFirstArgs>(args?: SelectSubset<T, ArticleFindFirstArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends mgArticleFindFirstArgs>(args?: SelectSubset<T, mgArticleFindFirstArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Article that matches the filter or
+     * Find the first MgArticle that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleFindFirstOrThrowArgs} args - Arguments to find a Article
+     * @param {mgArticleFindFirstOrThrowArgs} args - Arguments to find a MgArticle
      * @example
-     * // Get one Article
-     * const article = await prisma.article.findFirstOrThrow({
+     * // Get one MgArticle
+     * const mgArticle = await prisma.mgArticle.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ArticleFindFirstOrThrowArgs>(args?: SelectSubset<T, ArticleFindFirstOrThrowArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends mgArticleFindFirstOrThrowArgs>(args?: SelectSubset<T, mgArticleFindFirstOrThrowArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Articles that matches the filter.
+     * Find zero or more MgArticles that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {mgArticleFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Articles
-     * const articles = await prisma.article.findMany()
+     * // Get all MgArticles
+     * const mgArticles = await prisma.mgArticle.findMany()
      * 
-     * // Get first 10 Articles
-     * const articles = await prisma.article.findMany({ take: 10 })
+     * // Get first 10 MgArticles
+     * const mgArticles = await prisma.mgArticle.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const articleWithIdOnly = await prisma.article.findMany({ select: { id: true } })
+     * const mgArticleWithIdOnly = await prisma.mgArticle.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ArticleFindManyArgs>(args?: SelectSubset<T, ArticleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends mgArticleFindManyArgs>(args?: SelectSubset<T, mgArticleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Article.
-     * @param {ArticleCreateArgs} args - Arguments to create a Article.
+     * Create a MgArticle.
+     * @param {mgArticleCreateArgs} args - Arguments to create a MgArticle.
      * @example
-     * // Create one Article
-     * const Article = await prisma.article.create({
+     * // Create one MgArticle
+     * const MgArticle = await prisma.mgArticle.create({
      *   data: {
-     *     // ... data to create a Article
+     *     // ... data to create a MgArticle
      *   }
      * })
      * 
      */
-    create<T extends ArticleCreateArgs>(args: SelectSubset<T, ArticleCreateArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends mgArticleCreateArgs>(args: SelectSubset<T, mgArticleCreateArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Articles.
-     * @param {ArticleCreateManyArgs} args - Arguments to create many Articles.
+     * Create many MgArticles.
+     * @param {mgArticleCreateManyArgs} args - Arguments to create many MgArticles.
      * @example
-     * // Create many Articles
-     * const article = await prisma.article.createMany({
+     * // Create many MgArticles
+     * const mgArticle = await prisma.mgArticle.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ArticleCreateManyArgs>(args?: SelectSubset<T, ArticleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends mgArticleCreateManyArgs>(args?: SelectSubset<T, mgArticleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Article.
-     * @param {ArticleDeleteArgs} args - Arguments to delete one Article.
+     * Delete a MgArticle.
+     * @param {mgArticleDeleteArgs} args - Arguments to delete one MgArticle.
      * @example
-     * // Delete one Article
-     * const Article = await prisma.article.delete({
+     * // Delete one MgArticle
+     * const MgArticle = await prisma.mgArticle.delete({
      *   where: {
-     *     // ... filter to delete one Article
+     *     // ... filter to delete one MgArticle
      *   }
      * })
      * 
      */
-    delete<T extends ArticleDeleteArgs>(args: SelectSubset<T, ArticleDeleteArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends mgArticleDeleteArgs>(args: SelectSubset<T, mgArticleDeleteArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Article.
-     * @param {ArticleUpdateArgs} args - Arguments to update one Article.
+     * Update one MgArticle.
+     * @param {mgArticleUpdateArgs} args - Arguments to update one MgArticle.
      * @example
-     * // Update one Article
-     * const article = await prisma.article.update({
+     * // Update one MgArticle
+     * const mgArticle = await prisma.mgArticle.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1165,30 +1139,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ArticleUpdateArgs>(args: SelectSubset<T, ArticleUpdateArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends mgArticleUpdateArgs>(args: SelectSubset<T, mgArticleUpdateArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Articles.
-     * @param {ArticleDeleteManyArgs} args - Arguments to filter Articles to delete.
+     * Delete zero or more MgArticles.
+     * @param {mgArticleDeleteManyArgs} args - Arguments to filter MgArticles to delete.
      * @example
-     * // Delete a few Articles
-     * const { count } = await prisma.article.deleteMany({
+     * // Delete a few MgArticles
+     * const { count } = await prisma.mgArticle.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ArticleDeleteManyArgs>(args?: SelectSubset<T, ArticleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends mgArticleDeleteManyArgs>(args?: SelectSubset<T, mgArticleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Articles.
+     * Update zero or more MgArticles.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {mgArticleUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Articles
-     * const article = await prisma.article.updateMany({
+     * // Update many MgArticles
+     * const mgArticle = await prisma.mgArticle.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1198,79 +1172,79 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ArticleUpdateManyArgs>(args: SelectSubset<T, ArticleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends mgArticleUpdateManyArgs>(args: SelectSubset<T, mgArticleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Article.
-     * @param {ArticleUpsertArgs} args - Arguments to update or create a Article.
+     * Create or update one MgArticle.
+     * @param {mgArticleUpsertArgs} args - Arguments to update or create a MgArticle.
      * @example
-     * // Update or create a Article
-     * const article = await prisma.article.upsert({
+     * // Update or create a MgArticle
+     * const mgArticle = await prisma.mgArticle.upsert({
      *   create: {
-     *     // ... data to create a Article
+     *     // ... data to create a MgArticle
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Article we want to update
+     *     // ... the filter for the MgArticle we want to update
      *   }
      * })
      */
-    upsert<T extends ArticleUpsertArgs>(args: SelectSubset<T, ArticleUpsertArgs<ExtArgs>>): Prisma__ArticleClient<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends mgArticleUpsertArgs>(args: SelectSubset<T, mgArticleUpsertArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Articles that matches the filter.
-     * @param {ArticleFindRawArgs} args - Select which filters you would like to apply.
+     * Find zero or more MgArticles that matches the filter.
+     * @param {mgArticleFindRawArgs} args - Select which filters you would like to apply.
      * @example
-     * const article = await prisma.article.findRaw({
+     * const mgArticle = await prisma.mgArticle.findRaw({
      *   filter: { age: { $gt: 25 } }
      * })
      */
-    findRaw(args?: ArticleFindRawArgs): Prisma.PrismaPromise<JsonObject>
+    findRaw(args?: mgArticleFindRawArgs): Prisma.PrismaPromise<JsonObject>
 
     /**
-     * Perform aggregation operations on a Article.
-     * @param {ArticleAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * Perform aggregation operations on a MgArticle.
+     * @param {mgArticleAggregateRawArgs} args - Select which aggregations you would like to apply.
      * @example
-     * const article = await prisma.article.aggregateRaw({
+     * const mgArticle = await prisma.mgArticle.aggregateRaw({
      *   pipeline: [
      *     { $match: { status: "registered" } },
      *     { $group: { _id: "$country", total: { $sum: 1 } } }
      *   ]
      * })
      */
-    aggregateRaw(args?: ArticleAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+    aggregateRaw(args?: mgArticleAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
 
 
     /**
-     * Count the number of Articles.
+     * Count the number of MgArticles.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleCountArgs} args - Arguments to filter Articles to count.
+     * @param {mgArticleCountArgs} args - Arguments to filter MgArticles to count.
      * @example
-     * // Count the number of Articles
-     * const count = await prisma.article.count({
+     * // Count the number of MgArticles
+     * const count = await prisma.mgArticle.count({
      *   where: {
-     *     // ... the filter for the Articles we want to count
+     *     // ... the filter for the MgArticles we want to count
      *   }
      * })
     **/
-    count<T extends ArticleCountArgs>(
-      args?: Subset<T, ArticleCountArgs>,
+    count<T extends mgArticleCountArgs>(
+      args?: Subset<T, mgArticleCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ArticleCountAggregateOutputType>
+          : GetScalarType<T['select'], MgArticleCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Article.
+     * Allows you to perform aggregations operations on a MgArticle.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {MgArticleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -1290,13 +1264,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ArticleAggregateArgs>(args: Subset<T, ArticleAggregateArgs>): Prisma.PrismaPromise<GetArticleAggregateType<T>>
+    aggregate<T extends MgArticleAggregateArgs>(args: Subset<T, MgArticleAggregateArgs>): Prisma.PrismaPromise<GetMgArticleAggregateType<T>>
 
     /**
-     * Group by Article.
+     * Group by MgArticle.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ArticleGroupByArgs} args - Group by arguments.
+     * @param {mgArticleGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1311,14 +1285,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ArticleGroupByArgs,
+      T extends mgArticleGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ArticleGroupByArgs['orderBy'] }
-        : { orderBy?: ArticleGroupByArgs['orderBy'] },
+        ? { orderBy: mgArticleGroupByArgs['orderBy'] }
+        : { orderBy?: mgArticleGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1367,20 +1341,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ArticleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetArticleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, mgArticleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMgArticleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Article model
+   * Fields of the mgArticle model
    */
-  readonly fields: ArticleFieldRefs;
+  readonly fields: mgArticleFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Article.
+   * The delegate class that acts as a "Promise-like" for mgArticle.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ArticleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__mgArticleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1408,323 +1382,323 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Article model
+   * Fields of the mgArticle model
    */
-  interface ArticleFieldRefs {
-    readonly id: FieldRef<"Article", 'String'>
-    readonly title: FieldRef<"Article", 'String'>
-    readonly body: FieldRef<"Article", 'String'>
-    readonly tags: FieldRef<"Article", 'String[]'>
-    readonly created: FieldRef<"Article", 'DateTime'>
+  interface mgArticleFieldRefs {
+    readonly id: FieldRef<"mgArticle", 'String'>
+    readonly title: FieldRef<"mgArticle", 'String'>
+    readonly body: FieldRef<"mgArticle", 'String'>
+    readonly tags: FieldRef<"mgArticle", 'String[]'>
+    readonly created: FieldRef<"mgArticle", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Article findUnique
+   * mgArticle findUnique
    */
-  export type ArticleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Article
+     * Select specific fields to fetch from the mgArticle
      */
-    select?: ArticleSelect<ExtArgs> | null
+    select?: mgArticleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Article
+     * Omit specific fields from the mgArticle
      */
-    omit?: ArticleOmit<ExtArgs> | null
+    omit?: mgArticleOmit<ExtArgs> | null
     /**
-     * Filter, which Article to fetch.
+     * Filter, which mgArticle to fetch.
      */
-    where: ArticleWhereUniqueInput
+    where: mgArticleWhereUniqueInput
   }
 
   /**
-   * Article findUniqueOrThrow
+   * mgArticle findUniqueOrThrow
    */
-  export type ArticleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Article
+     * Select specific fields to fetch from the mgArticle
      */
-    select?: ArticleSelect<ExtArgs> | null
+    select?: mgArticleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Article
+     * Omit specific fields from the mgArticle
      */
-    omit?: ArticleOmit<ExtArgs> | null
+    omit?: mgArticleOmit<ExtArgs> | null
     /**
-     * Filter, which Article to fetch.
+     * Filter, which mgArticle to fetch.
      */
-    where: ArticleWhereUniqueInput
+    where: mgArticleWhereUniqueInput
   }
 
   /**
-   * Article findFirst
+   * mgArticle findFirst
    */
-  export type ArticleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Article
+     * Select specific fields to fetch from the mgArticle
      */
-    select?: ArticleSelect<ExtArgs> | null
+    select?: mgArticleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Article
+     * Omit specific fields from the mgArticle
      */
-    omit?: ArticleOmit<ExtArgs> | null
+    omit?: mgArticleOmit<ExtArgs> | null
     /**
-     * Filter, which Article to fetch.
+     * Filter, which mgArticle to fetch.
      */
-    where?: ArticleWhereInput
+    where?: mgArticleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Articles to fetch.
+     * Determine the order of mgArticles to fetch.
      */
-    orderBy?: ArticleOrderByWithRelationInput | ArticleOrderByWithRelationInput[]
+    orderBy?: mgArticleOrderByWithRelationInput | mgArticleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Articles.
+     * Sets the position for searching for mgArticles.
      */
-    cursor?: ArticleWhereUniqueInput
+    cursor?: mgArticleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Articles from the position of the cursor.
+     * Take `±n` mgArticles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Articles.
+     * Skip the first `n` mgArticles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Articles.
+     * Filter by unique combinations of mgArticles.
      */
-    distinct?: ArticleScalarFieldEnum | ArticleScalarFieldEnum[]
+    distinct?: MgArticleScalarFieldEnum | MgArticleScalarFieldEnum[]
   }
 
   /**
-   * Article findFirstOrThrow
+   * mgArticle findFirstOrThrow
    */
-  export type ArticleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Article
+     * Select specific fields to fetch from the mgArticle
      */
-    select?: ArticleSelect<ExtArgs> | null
+    select?: mgArticleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Article
+     * Omit specific fields from the mgArticle
      */
-    omit?: ArticleOmit<ExtArgs> | null
+    omit?: mgArticleOmit<ExtArgs> | null
     /**
-     * Filter, which Article to fetch.
+     * Filter, which mgArticle to fetch.
      */
-    where?: ArticleWhereInput
+    where?: mgArticleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Articles to fetch.
+     * Determine the order of mgArticles to fetch.
      */
-    orderBy?: ArticleOrderByWithRelationInput | ArticleOrderByWithRelationInput[]
+    orderBy?: mgArticleOrderByWithRelationInput | mgArticleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Articles.
+     * Sets the position for searching for mgArticles.
      */
-    cursor?: ArticleWhereUniqueInput
+    cursor?: mgArticleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Articles from the position of the cursor.
+     * Take `±n` mgArticles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Articles.
+     * Skip the first `n` mgArticles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Articles.
+     * Filter by unique combinations of mgArticles.
      */
-    distinct?: ArticleScalarFieldEnum | ArticleScalarFieldEnum[]
+    distinct?: MgArticleScalarFieldEnum | MgArticleScalarFieldEnum[]
   }
 
   /**
-   * Article findMany
+   * mgArticle findMany
    */
-  export type ArticleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Article
+     * Select specific fields to fetch from the mgArticle
      */
-    select?: ArticleSelect<ExtArgs> | null
+    select?: mgArticleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Article
+     * Omit specific fields from the mgArticle
      */
-    omit?: ArticleOmit<ExtArgs> | null
+    omit?: mgArticleOmit<ExtArgs> | null
     /**
-     * Filter, which Articles to fetch.
+     * Filter, which mgArticles to fetch.
      */
-    where?: ArticleWhereInput
+    where?: mgArticleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Articles to fetch.
+     * Determine the order of mgArticles to fetch.
      */
-    orderBy?: ArticleOrderByWithRelationInput | ArticleOrderByWithRelationInput[]
+    orderBy?: mgArticleOrderByWithRelationInput | mgArticleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Articles.
+     * Sets the position for listing mgArticles.
      */
-    cursor?: ArticleWhereUniqueInput
+    cursor?: mgArticleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Articles from the position of the cursor.
+     * Take `±n` mgArticles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Articles.
+     * Skip the first `n` mgArticles.
      */
     skip?: number
-    distinct?: ArticleScalarFieldEnum | ArticleScalarFieldEnum[]
+    distinct?: MgArticleScalarFieldEnum | MgArticleScalarFieldEnum[]
   }
 
   /**
-   * Article create
+   * mgArticle create
    */
-  export type ArticleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Article
+     * Select specific fields to fetch from the mgArticle
      */
-    select?: ArticleSelect<ExtArgs> | null
+    select?: mgArticleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Article
+     * Omit specific fields from the mgArticle
      */
-    omit?: ArticleOmit<ExtArgs> | null
+    omit?: mgArticleOmit<ExtArgs> | null
     /**
-     * The data needed to create a Article.
+     * The data needed to create a mgArticle.
      */
-    data: XOR<ArticleCreateInput, ArticleUncheckedCreateInput>
+    data: XOR<mgArticleCreateInput, mgArticleUncheckedCreateInput>
   }
 
   /**
-   * Article createMany
+   * mgArticle createMany
    */
-  export type ArticleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Articles.
+     * The data used to create many mgArticles.
      */
-    data: ArticleCreateManyInput | ArticleCreateManyInput[]
+    data: mgArticleCreateManyInput | mgArticleCreateManyInput[]
   }
 
   /**
-   * Article update
+   * mgArticle update
    */
-  export type ArticleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Article
+     * Select specific fields to fetch from the mgArticle
      */
-    select?: ArticleSelect<ExtArgs> | null
+    select?: mgArticleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Article
+     * Omit specific fields from the mgArticle
      */
-    omit?: ArticleOmit<ExtArgs> | null
+    omit?: mgArticleOmit<ExtArgs> | null
     /**
-     * The data needed to update a Article.
+     * The data needed to update a mgArticle.
      */
-    data: XOR<ArticleUpdateInput, ArticleUncheckedUpdateInput>
+    data: XOR<mgArticleUpdateInput, mgArticleUncheckedUpdateInput>
     /**
-     * Choose, which Article to update.
+     * Choose, which mgArticle to update.
      */
-    where: ArticleWhereUniqueInput
+    where: mgArticleWhereUniqueInput
   }
 
   /**
-   * Article updateMany
+   * mgArticle updateMany
    */
-  export type ArticleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Articles.
+     * The data used to update mgArticles.
      */
-    data: XOR<ArticleUpdateManyMutationInput, ArticleUncheckedUpdateManyInput>
+    data: XOR<mgArticleUpdateManyMutationInput, mgArticleUncheckedUpdateManyInput>
     /**
-     * Filter which Articles to update
+     * Filter which mgArticles to update
      */
-    where?: ArticleWhereInput
+    where?: mgArticleWhereInput
     /**
-     * Limit how many Articles to update.
+     * Limit how many mgArticles to update.
      */
     limit?: number
   }
 
   /**
-   * Article upsert
+   * mgArticle upsert
    */
-  export type ArticleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Article
+     * Select specific fields to fetch from the mgArticle
      */
-    select?: ArticleSelect<ExtArgs> | null
+    select?: mgArticleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Article
+     * Omit specific fields from the mgArticle
      */
-    omit?: ArticleOmit<ExtArgs> | null
+    omit?: mgArticleOmit<ExtArgs> | null
     /**
-     * The filter to search for the Article to update in case it exists.
+     * The filter to search for the mgArticle to update in case it exists.
      */
-    where: ArticleWhereUniqueInput
+    where: mgArticleWhereUniqueInput
     /**
-     * In case the Article found by the `where` argument doesn't exist, create a new Article with this data.
+     * In case the mgArticle found by the `where` argument doesn't exist, create a new mgArticle with this data.
      */
-    create: XOR<ArticleCreateInput, ArticleUncheckedCreateInput>
+    create: XOR<mgArticleCreateInput, mgArticleUncheckedCreateInput>
     /**
-     * In case the Article was found with the provided `where` argument, update it with this data.
+     * In case the mgArticle was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ArticleUpdateInput, ArticleUncheckedUpdateInput>
+    update: XOR<mgArticleUpdateInput, mgArticleUncheckedUpdateInput>
   }
 
   /**
-   * Article delete
+   * mgArticle delete
    */
-  export type ArticleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Article
+     * Select specific fields to fetch from the mgArticle
      */
-    select?: ArticleSelect<ExtArgs> | null
+    select?: mgArticleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Article
+     * Omit specific fields from the mgArticle
      */
-    omit?: ArticleOmit<ExtArgs> | null
+    omit?: mgArticleOmit<ExtArgs> | null
     /**
-     * Filter which Article to delete.
+     * Filter which mgArticle to delete.
      */
-    where: ArticleWhereUniqueInput
+    where: mgArticleWhereUniqueInput
   }
 
   /**
-   * Article deleteMany
+   * mgArticle deleteMany
    */
-  export type ArticleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Articles to delete
+     * Filter which mgArticles to delete
      */
-    where?: ArticleWhereInput
+    where?: mgArticleWhereInput
     /**
-     * Limit how many Articles to delete.
+     * Limit how many mgArticles to delete.
      */
     limit?: number
   }
 
   /**
-   * Article findRaw
+   * mgArticle findRaw
    */
-  export type ArticleFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
      */
@@ -1736,9 +1710,9 @@ export namespace Prisma {
   }
 
   /**
-   * Article aggregateRaw
+   * mgArticle aggregateRaw
    */
-  export type ArticleAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
      */
@@ -1750,17 +1724,17 @@ export namespace Prisma {
   }
 
   /**
-   * Article without action
+   * mgArticle without action
    */
-  export type ArticleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Article
+     * Select specific fields to fetch from the mgArticle
      */
-    select?: ArticleSelect<ExtArgs> | null
+    select?: mgArticleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Article
+     * Omit specific fields from the mgArticle
      */
-    omit?: ArticleOmit<ExtArgs> | null
+    omit?: mgArticleOmit<ExtArgs> | null
   }
 
 
@@ -1768,7 +1742,7 @@ export namespace Prisma {
    * Enums
    */
 
-  export const ArticleScalarFieldEnum: {
+  export const MgArticleScalarFieldEnum: {
     id: 'id',
     title: 'title',
     body: 'body',
@@ -1776,7 +1750,7 @@ export namespace Prisma {
     created: 'created'
   };
 
-  export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
+  export type MgArticleScalarFieldEnum = (typeof MgArticleScalarFieldEnum)[keyof typeof MgArticleScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1845,18 +1819,18 @@ export namespace Prisma {
    */
 
 
-  export type ArticleWhereInput = {
-    AND?: ArticleWhereInput | ArticleWhereInput[]
-    OR?: ArticleWhereInput[]
-    NOT?: ArticleWhereInput | ArticleWhereInput[]
-    id?: StringFilter<"Article"> | string
-    title?: StringFilter<"Article"> | string
-    body?: StringNullableFilter<"Article"> | string | null
-    tags?: StringNullableListFilter<"Article">
-    created?: DateTimeFilter<"Article"> | Date | string
+  export type mgArticleWhereInput = {
+    AND?: mgArticleWhereInput | mgArticleWhereInput[]
+    OR?: mgArticleWhereInput[]
+    NOT?: mgArticleWhereInput | mgArticleWhereInput[]
+    id?: StringFilter<"mgArticle"> | string
+    title?: StringFilter<"mgArticle"> | string
+    body?: StringNullableFilter<"mgArticle"> | string | null
+    tags?: StringNullableListFilter<"mgArticle">
+    created?: DateTimeFilter<"mgArticle"> | Date | string
   }
 
-  export type ArticleOrderByWithRelationInput = {
+  export type mgArticleOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
     body?: SortOrder
@@ -1864,88 +1838,88 @@ export namespace Prisma {
     created?: SortOrder
   }
 
-  export type ArticleWhereUniqueInput = Prisma.AtLeast<{
+  export type mgArticleWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: ArticleWhereInput | ArticleWhereInput[]
-    OR?: ArticleWhereInput[]
-    NOT?: ArticleWhereInput | ArticleWhereInput[]
-    title?: StringFilter<"Article"> | string
-    body?: StringNullableFilter<"Article"> | string | null
-    tags?: StringNullableListFilter<"Article">
-    created?: DateTimeFilter<"Article"> | Date | string
+    AND?: mgArticleWhereInput | mgArticleWhereInput[]
+    OR?: mgArticleWhereInput[]
+    NOT?: mgArticleWhereInput | mgArticleWhereInput[]
+    title?: StringFilter<"mgArticle"> | string
+    body?: StringNullableFilter<"mgArticle"> | string | null
+    tags?: StringNullableListFilter<"mgArticle">
+    created?: DateTimeFilter<"mgArticle"> | Date | string
   }, "id">
 
-  export type ArticleOrderByWithAggregationInput = {
+  export type mgArticleOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     body?: SortOrder
     tags?: SortOrder
     created?: SortOrder
-    _count?: ArticleCountOrderByAggregateInput
-    _max?: ArticleMaxOrderByAggregateInput
-    _min?: ArticleMinOrderByAggregateInput
+    _count?: mgArticleCountOrderByAggregateInput
+    _max?: mgArticleMaxOrderByAggregateInput
+    _min?: mgArticleMinOrderByAggregateInput
   }
 
-  export type ArticleScalarWhereWithAggregatesInput = {
-    AND?: ArticleScalarWhereWithAggregatesInput | ArticleScalarWhereWithAggregatesInput[]
-    OR?: ArticleScalarWhereWithAggregatesInput[]
-    NOT?: ArticleScalarWhereWithAggregatesInput | ArticleScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Article"> | string
-    title?: StringWithAggregatesFilter<"Article"> | string
-    body?: StringNullableWithAggregatesFilter<"Article"> | string | null
-    tags?: StringNullableListFilter<"Article">
-    created?: DateTimeWithAggregatesFilter<"Article"> | Date | string
+  export type mgArticleScalarWhereWithAggregatesInput = {
+    AND?: mgArticleScalarWhereWithAggregatesInput | mgArticleScalarWhereWithAggregatesInput[]
+    OR?: mgArticleScalarWhereWithAggregatesInput[]
+    NOT?: mgArticleScalarWhereWithAggregatesInput | mgArticleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"mgArticle"> | string
+    title?: StringWithAggregatesFilter<"mgArticle"> | string
+    body?: StringNullableWithAggregatesFilter<"mgArticle"> | string | null
+    tags?: StringNullableListFilter<"mgArticle">
+    created?: DateTimeWithAggregatesFilter<"mgArticle"> | Date | string
   }
 
-  export type ArticleCreateInput = {
+  export type mgArticleCreateInput = {
     id?: string
     title: string
     body?: string | null
-    tags?: ArticleCreatetagsInput | string[]
+    tags?: mgArticleCreatetagsInput | string[]
     created?: Date | string
   }
 
-  export type ArticleUncheckedCreateInput = {
+  export type mgArticleUncheckedCreateInput = {
     id?: string
     title: string
     body?: string | null
-    tags?: ArticleCreatetagsInput | string[]
+    tags?: mgArticleCreatetagsInput | string[]
     created?: Date | string
   }
 
-  export type ArticleUpdateInput = {
+  export type mgArticleUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     body?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: ArticleUpdatetagsInput | string[]
+    tags?: mgArticleUpdatetagsInput | string[]
     created?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ArticleUncheckedUpdateInput = {
+  export type mgArticleUncheckedUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     body?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: ArticleUpdatetagsInput | string[]
+    tags?: mgArticleUpdatetagsInput | string[]
     created?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ArticleCreateManyInput = {
+  export type mgArticleCreateManyInput = {
     id?: string
     title: string
     body?: string | null
-    tags?: ArticleCreatetagsInput | string[]
+    tags?: mgArticleCreatetagsInput | string[]
     created?: Date | string
   }
 
-  export type ArticleUpdateManyMutationInput = {
+  export type mgArticleUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     body?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: ArticleUpdatetagsInput | string[]
+    tags?: mgArticleUpdatetagsInput | string[]
     created?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ArticleUncheckedUpdateManyInput = {
+  export type mgArticleUncheckedUpdateManyInput = {
     title?: StringFieldUpdateOperationsInput | string
     body?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: ArticleUpdatetagsInput | string[]
+    tags?: mgArticleUpdatetagsInput | string[]
     created?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -1999,7 +1973,7 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type ArticleCountOrderByAggregateInput = {
+  export type mgArticleCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     body?: SortOrder
@@ -2007,14 +1981,14 @@ export namespace Prisma {
     created?: SortOrder
   }
 
-  export type ArticleMaxOrderByAggregateInput = {
+  export type mgArticleMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     body?: SortOrder
     created?: SortOrder
   }
 
-  export type ArticleMinOrderByAggregateInput = {
+  export type mgArticleMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     body?: SortOrder
@@ -2072,7 +2046,7 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type ArticleCreatetagsInput = {
+  export type mgArticleCreatetagsInput = {
     set: string[]
   }
 
@@ -2085,7 +2059,7 @@ export namespace Prisma {
     unset?: boolean
   }
 
-  export type ArticleUpdatetagsInput = {
+  export type mgArticleUpdatetagsInput = {
     set?: string[]
     push?: string | string[]
   }

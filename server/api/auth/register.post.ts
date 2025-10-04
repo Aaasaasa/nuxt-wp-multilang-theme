@@ -1,3 +1,6 @@
+import { validateBody } from "../../utils/validation.ts"
+import { defineEventHandler } from "h3"
+
 /**
  * @openapi
  * /api/auth/register:

@@ -1,16 +1,24 @@
-import type { ApiResponse } from '@/shared/types/api'
+import { createError } from "h3"
+import type { ApiResponse } from "@@shared/types/api"
+
+export const HTTP_STATUS = {
+  OK: 200,
+  CREATED: 201,
+  NO_CONTENT: 204,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER_ERROR: 500
+} as const
 
 /**
- * Create a standard API response
- * @param data - The data to return in the response
- * @param statusCode - The HTTP status code (default is 200)
- * @returns An ApiResponse object
- * @template T - The type of the data in the response
+ * Standardizovan API response
  */
 export function createApiResponse<T>(
   data?: T | null,
   statusCode: number = HTTP_STATUS.OK,
-  message?: string
+  message: string = "OK"
 ): ApiResponse<T> {
   return {
     statusCode,
@@ -21,38 +29,29 @@ export function createApiResponse<T>(
 
 /**
  * Create a response for created resources
- * @param data - The data of the created resource
- * @returns An ApiResponse object with status code 201 (Created)
- * @template T - The type of the data in the response
  */
 export function createCreatedResponse<T>(data: T): ApiResponse<T> {
-  return createApiResponse(data, HTTP_STATUS.CREATED, 'Resource created successfully')
+  return createApiResponse(data, HTTP_STATUS.CREATED, "Resource created successfully")
 }
 
 /**
  * Create a response for no content
- * @returns An ApiResponse object with status code 204 (No Content)
- * @template T - The type of the data in the response
  */
 export function createNoContentResponse(): ApiResponse<null> {
-  return createApiResponse(null, HTTP_STATUS.NO_CONTENT, 'No Content')
+  return createApiResponse(null, HTTP_STATUS.NO_CONTENT, "No Content")
 }
 
 /**
  * Create a response for deleted resources
- * @returns An ApiResponse object with status code 204 (No Content)
- * @template T - The type of the data in the response
  */
 export function createDeletedResponse(): ApiResponse<null> {
-  return createApiResponse(null, HTTP_STATUS.NO_CONTENT, 'Resource deleted successfully')
+  return createApiResponse(null, HTTP_STATUS.NO_CONTENT, "Resource deleted successfully")
 }
 
 /**
- * Create a response for no content
- * @returns An ApiResponse object with status code 204 (No Content)
- * @template T - The type of the data in the response
+ * Not found error
  */
-export function notFoundError(message = 'Resource not found') {
+export function notFoundError(message = "Resource not found") {
   throw createError({
     statusCode: HTTP_STATUS.NOT_FOUND,
     statusMessage: message
@@ -60,11 +59,9 @@ export function notFoundError(message = 'Resource not found') {
 }
 
 /**
- * Create a response for bad requests
- * @param message - The error message to return
- * @returns An error with status code 400 (Bad Request)
+ * Bad request error
  */
-export function badRequestError(message = 'Bad Request') {
+export function badRequestError(message = "Bad Request") {
   throw createError({
     statusCode: HTTP_STATUS.BAD_REQUEST,
     statusMessage: message
@@ -72,25 +69,21 @@ export function badRequestError(message = 'Bad Request') {
 }
 
 /**
- * Create a server error response
- * @param message - The error message to return
- * @returns An error with status code 500 (Internal Server Error)
+ * Server error
  */
-export function serverError(message = 'Internal Server Error') {
+export function serverError(message = "Internal Server Error") {
   throw createError({
-    statusCode: HTTP_STATUS.INTERNAL_ERROR,
+    statusCode: HTTP_STATUS.INTERNAL_SERVER_ERROR,
     statusMessage: message
   })
 }
 
 /**
- * Create a validation error response
- * @param message - The error message to return
- * @returns An error with status code 422 (Unprocessable Entity)
+ * Validation error (422)
  */
-export function validationError(message = 'Validation Error') {
+export function validationError(message = "Validation Error") {
   throw createError({
-    statusCode: HTTP_STATUS.BAD_REQUEST,
+    statusCode: 422,
     statusMessage: message
   })
 }

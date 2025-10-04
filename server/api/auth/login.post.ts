@@ -1,8 +1,15 @@
+import { validateBody } from "../../utils/validation.ts" // ✅ bez @@server
+
+import { defineEventHandler } from "h3"
+import { authenticateUser } from "../../services/user.service.ts"
+import { setUserSession } from "../../utils/session.ts"
+import { createApiResponse, createCreatedResponse, HTTP_STATUS, serverError } from "../../utils/response.ts"
+
 /**
  * @openapi
  * /api/auth/login:
  *   post:
- *     summary: Login with email and password
+ *     summary: Login a user
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -17,22 +24,23 @@
  *                 format: email
  *               password:
  *                 type: string
- *     responses:
- *       200:
- *         description: Login successful
- *       400:
- *         description: Validation error
- *       401:
- *         description: Invalid credentials
  */
+const loginUserSchema: any = {
+  type: 'object',
+  required: ['email', 'password'],
+  properties: {
+    email: { type: 'string', format: 'email' },
+    password: { type: 'string' }
+  }
+}
+
 export default defineEventHandler(async event => {
+
   try {
     const { email, password } = await validateBody(event, loginUserSchema)
 
-    // Authenticate user using service
     const user = await authenticateUser(email, password)
 
-    // Set user session
     await setUserSession(event, {
       user,
       loggedInAt: new Date()

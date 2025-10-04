@@ -1,4 +1,4 @@
-import prisma from '../lib/prisma'
+import prisma from '../lib/prisma.ts'
 
 /**
  * User Service - Pure business logic without validation

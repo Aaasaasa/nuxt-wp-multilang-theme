@@ -1,7 +1,7 @@
+//prisma/adapters/schema-mongo.prisma
 generator mongo {
   provider = "prisma-client-js"
-  output   = "./generated/mongo"
-  previewFeatures = ["mongoDb"]
+  output   = "../generated/mongo"
 }
 
 datasource mongo {
@@ -10,7 +10,7 @@ datasource mongo {
 }
 
 model mgArticle {
-  id      String   @id @map("_id") @default(auto()) @db.ObjectId
+  id      String   @id @default(auto()) @map("_id") @mongo.ObjectId
   title   String
   body    String?
   tags    String[]

@@ -1,5 +1,5 @@
-import { getWpMenu } from '~/lib/wp.ts'
-import { db } from '~/utils/dbClients.ts'
+import { getWpMenu } from '../lib/wp.ts'
+import { db } from '../utils/dbClients.ts'
 
 /**
  * ETL: Fetch menu from MySQL → save/update into Postgres as JSONB

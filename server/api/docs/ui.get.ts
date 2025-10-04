@@ -1,4 +1,5 @@
-import { isSwaggerEnabled } from '~/lib/swagger'
+import { createError, defineEventHandler, setHeader } from 'h3'
+import { isSwaggerEnabled } from '../../lib/swagger.ts'
 
 // Swagger UI interface - not included in documentation
 export default defineEventHandler(async event => {

@@ -35,12 +35,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.13.0
- * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
+ * Prisma Client JS version: 6.16.3
+ * Query Engine version: bb420e667c1820a8c05a38023385f6cc7ef8e83a
  */
 Prisma.prismaVersion = {
-  client: "6.13.0",
-  engine: "361e86d0ea4987e9f53a565309b3eed797a6bcbd"
+  client: "6.16.3",
+  engine: "bb420e667c1820a8c05a38023385f6cc7ef8e83a"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -85,7 +85,7 @@ Prisma.NullTypes = {
 /**
  * Enums
  */
-exports.Prisma.ArticleScalarFieldEnum = {
+exports.Prisma.MgArticleScalarFieldEnum = {
   id: 'id',
   title: 'title',
   body: 'body',
@@ -105,14 +105,14 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Article: 'Article'
+  mgArticle: 'mgArticle'
 };
 /**
  * Create the Client
  */
 const config = {
   "generator": {
-    "name": "client",
+    "name": "mongo",
     "provider": {
       "fromEnvVar": null,
       "value": "prisma-client-js"
@@ -131,39 +131,37 @@ const config = {
         "native": true
       }
     ],
-    "previewFeatures": [
-      "mongoDb"
-    ],
-    "sourceFilePath": "/srv/stranice/nuxt-multilang-theme-develop/prisma/schema-mongo.prisma",
+    "previewFeatures": [],
+    "sourceFilePath": "/srv/stranice/nuxt-multilang-theme-develop/prisma/adapters/schema-mongo.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
-  "relativePath": "../..",
-  "clientVersion": "6.13.0",
-  "engineVersion": "361e86d0ea4987e9f53a565309b3eed797a6bcbd",
+  "relativePath": "../../adapters",
+  "clientVersion": "6.16.3",
+  "engineVersion": "bb420e667c1820a8c05a38023385f6cc7ef8e83a",
   "datasourceNames": [
-    "db"
+    "mongo"
   ],
   "activeProvider": "mongodb",
   "postinstall": false,
   "inlineDatasources": {
-    "db": {
+    "mongo": {
       "url": {
         "fromEnvVar": "MONGO_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"./generated/mongo\"\n  previewFeatures = [\"mongoDb\"]\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"MONGO_URL\")\n}\n\nmodel Article {\n  id      String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  title   String\n  body    String?\n  tags    String[]\n  created DateTime @default(now())\n}\n\n// npx prisma generate --schema=prisma/schema-postgres.prisma\n// npx prisma generate --schema=prisma/schema-mysql.prisma\n// npx prisma generate --schema=prisma/schema-mongo.prisma\n",
-  "inlineSchemaHash": "ede126f518f0bd8ca205fd57938a54c8b54bbaa74990d8c7c38938c61dff6353",
+  "inlineSchema": "//prisma/adapters/schema-mongo.prisma\ngenerator mongo {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/mongo\"\n}\n\ndatasource mongo {\n  provider = \"mongodb\"\n  url      = env(\"MONGO_URL\")\n}\n\nmodel mgArticle {\n  id      String   @id @default(auto()) @map(\"_id\") @mongo.ObjectId\n  title   String\n  body    String?\n  tags    String[]\n  created DateTime @default(now())\n}\n\n// npx prisma generate --schema=prisma/schema-postgres.prisma\n// npx prisma generate --schema=prisma/schema-mysql.prisma\n// npx prisma generate --schema=prisma/schema-mongo.prisma\n",
+  "inlineSchemaHash": "9e3f412b290f2b4b614358b568109efe87ad538c98a75450964387974a7d4d9f",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Article\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"dbName\":\"_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":[\"ObjectId\",[]],\"default\":{\"name\":\"auto\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"title\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"body\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"tags\",\"kind\":\"scalar\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"created\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"mgArticle\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"dbName\":\"_id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":[\"ObjectId\",[]],\"default\":{\"name\":\"auto\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"title\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"body\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"tags\",\"kind\":\"scalar\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"created\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = undefined
 config.compilerWasm = undefined

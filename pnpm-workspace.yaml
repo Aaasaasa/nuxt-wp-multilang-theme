@@ -2,6 +2,10 @@ packages:
   - app/*
   - server
   - shared
+  - prisma
+catalogs:
+  prisma:
+    prisma: latest
 
 onlyBuiltDependencies:
   - '@parcel/watcher'

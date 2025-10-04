@@ -1,4 +1,4 @@
-import { db } from '~/utils/dbClients.ts'
+import { db } from '../utils/dbClients.ts'
 
 const P = process.env.MYSQL_PREFIX || 'wp_'
 

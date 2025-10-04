@@ -1,3 +1,4 @@
+// @ts-ignore: No type declarations for 'swagger-jsdoc'
 import swaggerJsdoc from 'swagger-jsdoc'
 import type { OAS3Definition, OAS3Options } from 'swagger-jsdoc'
 import { readFileSync } from 'fs'

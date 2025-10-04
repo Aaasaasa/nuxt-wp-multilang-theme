@@ -1,3 +1,6 @@
+import { createApiResponse } from "../../utils/response.ts"
+import { defineEventHandler } from "h3"
+
 /**
  * @openapi
  * /api/auth/me:

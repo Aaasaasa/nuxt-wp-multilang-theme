@@ -1,6 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { fileURLToPath } from 'node:url'
+import path from 'path'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
@@ -92,13 +93,19 @@ export default defineNuxtConfig({
 
   // ako budeš trebao alias: koristi TS paths (tsconfigPaths) umjesto ručnog aliasa
   alias: {
-    '@@shared': fileURLToPath(new URL('../../shared', import.meta.url)),
+    //'@@shared': fileURLToPath(new URL('../../shared', import.meta.url)),
     '@@shared/': fileURLToPath(new URL('../../shared/', import.meta.url)),
     //'@prisma': '../../prisma'
+    '@@': path.resolve(__dirname, '../../'),             // root
+    '@@shared': path.resolve(__dirname, '../../shared'),
+    '@@admin': path.resolve(__dirname, '../../app/admin'),
+    '@@web': path.resolve(__dirname, './'),              // lokalni web app
+    '@@prisma': path.resolve(__dirname, '../../prisma'),
+    '@@server': path.resolve(__dirname, '../../server')
   },
 
   vite: {
-    plugins: [tsconfigPaths()],
+    plugins: [tsconfigPaths() as any],
     define: {
       // zaštita od jiti fallback-a koji koristi import.meta.require
       'import.meta.require': undefined

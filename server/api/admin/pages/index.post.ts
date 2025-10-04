@@ -1,6 +1,6 @@
 // filepath: /srv/stranice/nuxt-multilang-theme-develop/server/api/admin/pages/index.post.ts
 import { defineEventHandler, readBody } from 'h3'
-import { db } from '~/utils/dbClients.ts'
+import { db } from '../../../utils/dbClients.ts'
 
 export default defineEventHandler(async event => {
   const body = await readBody(event)

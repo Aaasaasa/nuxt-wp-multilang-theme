@@ -4,18 +4,6 @@
     "outDir": "dist",
     "types": [],
     "typeRoots": ["./types", "./node_modules/@types"],
-    "baseUrl": ".",
-    "paths": {
-      "@@shared*": ["../shared/*"],
-      "@@web*": ["../app/web/*"],
-      "@@admin*": ["../app/admin/*"],
-      "@@prisma*": ["../prisma/*"],
-      "~/utils*": ["./utils/*"],
-      "~/lib*": ["./lib/*"],
-      "~/*": ["./*"],
-      // "@/*": ["./*"],
-      // "@prisma/*": ["../../prisma/*"]
-    }
   },
   "include": [".nuxt", "nuxt.config.ts", "api", "lib", "utils", "types"],
   "exclude": ["node_modules", "dist" ]

@@ -1,20 +1,14 @@
-/**
- * @openapi
- * /api/auth/logout:
- *   post:
- *     summary: Logout current user
- *     tags: [Authentication]
- *     responses:
- *       200:
- *         description: Logout successful
- */
-export default defineEventHandler(async event => {
-  try {
-    // Clear user session
-    await clearUserSession(event)
+// server/api/auth/logout.post.ts
+import { defineEventHandler } from "h3"
+import { clearUserSession } from "../../utils/session.ts"
+import { createApiResponse, HTTP_STATUS } from "../../utils/response.ts"
 
-    return createApiResponse(null, HTTP_STATUS.OK, 'Logout successful')
-  } catch {
-    throw serverError('Logout failed')
-  }
+export default defineEventHandler(async (event) => {
+  clearUserSession(event)
+
+  return createApiResponse(
+    { success: true },
+    HTTP_STATUS.OK,
+    "Logout successful"
+  )
 })

@@ -1,40 +1,54 @@
-// API route за get menu by slug (server/api/menus/[slug].get.ts)
-// get menu from MySQL (ako je još tamo)
-
-import { defineEventHandler, getRouterParams, createError } from 'h3'
-import { db } from '~/utils/dbClients.ts'
+import { defineEventHandler } from 'h3'
+import { pgCMS } from '../../utils/dbClients.ts'
 
 export default defineEventHandler(async (event) => {
-  const { slug } = getRouterParams(event)
+  const slug = event.context.params!.slug
 
-  // Raw SQL za select menu iz MySQL (pretpostavimo tabelu as_menus ili sličnu)
-  const [rows] = await db.mysql.execute(
-    'SELECT * FROM as_menus WHERE slug = ?',  // Promijeni tabelu ako je drugačija
-    [slug]
-  ) as [any[], any]
+  // 1. Nadji taxonomy nav_menu sa tim slug-om
+  const menu = await pgCMS.cms_terms.findFirst({
+    where: { slug },
+    include: {
+      taxonomy: {
+        where: { taxonomy: 'nav_menu' }
+      }
+    }
+  })
 
-  if (rows.length === 0) {
-    throw createError({ statusCode: 404, statusMessage: 'Menu not found' })
+  if (!menu) {
+    return { error: 'Menu not found' }
   }
 
-  return rows[0]  // Vrati menu objekat
+  // 2. Nadji sve posts tipa nav_menu_item koji pripadaju tom meniju
+  const items = await pgCMS.cms_posts.findMany({
+    where: { post_type: 'nav_menu_item' },
+    include: {
+      metas: true
+    }
+  })
+
+  // 3. Rekonstruisi menu strukturu iz meta vrijednosti
+  const menuItems = items.map(item => {
+    const getMeta = (key: string) =>
+      item.metas.find(m => m.meta_key === key)?.meta_value ?? null
+
+    return {
+      id: item.id,
+      title: item.post_title,
+      url: getMeta('_menu_item_url') || item.guid,
+      parent: parseInt(getMeta('_menu_item_menu_item_parent') || '0'),
+      objectId: getMeta('_menu_item_object_id')
+    }
+  })
+
+  // 4. Vrati kao hijerarhiju
+  function buildTree(list: any[], parent = 0) {
+    return list
+      .filter(i => i.parent === parent)
+      .map(i => ({ ...i, children: buildTree(list, i.id) }))
+  }
+
+  return {
+    slug,
+    items: buildTree(menuItems)
+  }
 })
-
-/* --- HOW TO ---
-
-Како ради у пракси
-
-Прво рефрешуј мени (MySQL → Postgres):
-
-curl -X POST http://localhost:3000/api/wp/etl/menu -H "Content-Type: application/json" -d '{"slug":"main-menu"}'
-
-
-Сада можеш да га читаш из Postgres:
-
-curl http://localhost:3000/api/menus/main-menu
-
-
-Frontend користи само /api/menus/[slug] → што значи да си већ decoupled од MySQL.
-Ако сутра пребациш у чист Postgres, ETL више није потребан.
-
-*/

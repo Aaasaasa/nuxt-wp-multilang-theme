@@ -1,6 +1,6 @@
 // filepath: /srv/stranice/nuxt-multilang-theme-develop/server/api/admin/pages/[id].get.ts
 import { defineEventHandler, createError } from 'h3'
-import { db } from '~/utils/dbClients.ts'
+import { db } from '../../../utils/dbClients.ts'
 
 export default defineEventHandler(async event => {
   const id = Number(event.context.params!.id)

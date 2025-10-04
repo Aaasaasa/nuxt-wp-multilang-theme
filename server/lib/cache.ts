@@ -1,4 +1,4 @@
-import { db } from '~/utils/dbClients'
+import { db } from '../utils/dbClients.ts'
 
 /**
  * Cache Helper: Holt Daten aus Redis oder führt Fetcher aus und speichert sie.

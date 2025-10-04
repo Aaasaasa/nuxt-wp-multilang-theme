@@ -6,14 +6,20 @@
   "scripts": {
     "dev": "nuxt dev --port 4000",
     "build": "nuxt build",
-    "start": "nuxt start",
+
+    "start": "node .output/server/index.mjs",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
-    "db:generate": "prisma generate --schema=../prisma/schema.prisma",
-    "db:migrate": "prisma migrate dev --name shared-migration"
+
+    "db:generate": "pnpm db:generate:pg && pnpm db:generate:mysql && pnpm db:generate:mongo",
+
+    "db:generate:pg": "prisma generate --schema=../prisma/adapters/schema-postgres.prisma",
+    "db:generate:mysql": "prisma generate --schema=../prisma/adapters/schema-mysql.prisma",
+    "db:generate:mongo": "prisma generate --schema=../prisma/adapters/schema-mongo.prisma"
+
   },
   "dependencies": {
-    "@prisma/client": "^6.16.2",
+    "@prisma/client": "^6.16.3",
     "h3": "^1.15.4",
     "ioredis": "^5.8.0",
     "mysql2": "^3.15.1",
@@ -22,7 +28,7 @@
   "devDependencies": {
     "nuxt": "^4.1.2",
     "prettier": "^3.6.2",
-    "prisma": "^6.16.2",
+    "prisma": "^6.16.3",
     "swagger-jsdoc": "^6.2.8",
     "typescript": "^5.9.2"
   }

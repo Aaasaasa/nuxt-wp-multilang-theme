@@ -1,6 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { fileURLToPath } from 'node:url'
+import path from 'path'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
@@ -100,8 +101,14 @@ export default defineNuxtConfig({
   // ako budeš trebao alias: koristi TS paths (tsconfigPaths) umjesto ručnog aliasa
   alias: {
         // Laufzeit-Alias für shared (passt zu deinem @@shared Pfad)
-    '@@shared': fileURLToPath(new URL('../../shared', import.meta.url)),
-    '@@shared/': fileURLToPath(new URL('../../shared/', import.meta.url))
+    // '@@shared': fileURLToPath(new URL('../../shared', import.meta.url)),
+    '@@shared/': fileURLToPath(new URL('../../shared/', import.meta.url)),
+    '@@': path.resolve(__dirname, '../../'),
+    '@@shared': path.resolve(__dirname, '../../shared'),
+    '@@admin': path.resolve(__dirname, './'),            // lokalni admin app
+    '@@web': path.resolve(__dirname, '../../app/web'),
+    '@@prisma': path.resolve(__dirname, '../../prisma'),
+    '@@server': path.resolve(__dirname, '../../server')
 
   },
 
