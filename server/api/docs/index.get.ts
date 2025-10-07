@@ -1,6 +1,6 @@
-import { defineEventHandler,createError } from 'h3'
-import { generateSwaggerSpec, isSwaggerEnabled } from '../../lib/swagger.ts'
-import { serverError } from '@@server/utils/response.ts'
+import { defineEventHandler, createError } from 'h3'
+import { generateSwaggerSpec, isSwaggerEnabled } from '~/lib/swagger.ts'
+import { serverError } from '~/utils/response.ts'
 
 // Documentation endpoint - not included in Swagger
 export default defineEventHandler(async () => {

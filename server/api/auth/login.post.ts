@@ -1,9 +1,14 @@
-import { validateBody } from "../../utils/validation.ts" // ✅ bez @@server
+import { validateBody } from '../../utils/validation.ts' // ✅ bez @@server
 
-import { defineEventHandler } from "h3"
-import { authenticateUser } from "../../services/user.service.ts"
-import { setUserSession } from "../../utils/session.ts"
-import { createApiResponse, createCreatedResponse, HTTP_STATUS, serverError } from "../../utils/response.ts"
+import { defineEventHandler } from 'h3'
+import { authenticateUser } from '../../services/user.service.ts'
+import { setUserSession } from '../../utils/session.ts'
+import {
+  createApiResponse,
+  createCreatedResponse,
+  HTTP_STATUS,
+  serverError
+} from '../../utils/response.ts'
 
 /**
  * @openapi
@@ -35,7 +40,6 @@ const loginUserSchema: any = {
 }
 
 export default defineEventHandler(async event => {
-
   try {
     const { email, password } = await validateBody(event, loginUserSchema)
 

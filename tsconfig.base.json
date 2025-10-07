@@ -1,32 +1,39 @@
 {
+  // "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2022", "DOM"],
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": false,
     "strict": true,
     "noEmit": true,
     "types": ["node", "nuxt/schema"],
 
+    "isolatedModules": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-
 
     "baseUrl": ".",
     "paths": {
+      /*
       "@@*": ["./*"],
       "@@shared/*": ["./shared/*"],
       "@@admin/*": ["./app/admin/*"],
       "@@web/*": ["./app/web/*"],
       // "@@prisma/*": ["./prisma/*"],
-      "@@server/*": ["./server/*"],
-      "#prisma/*": ["prisma/*"],
-      "@@prisma/*": ["./prisma/generated/*"],
-      "@@public/*": ["./public/*"]
+      */
+      //"@@server/*": ["./server/*"],
+      //"#prisma/*": ["prisma/*"],
+      "@prisma/*": ["prisma/generated/*"],
+      "@shared/*": ["shared/*"],
+      "@server/*": [ "server/*" ],
+      "@admin/*": [ "apps/admin/*" ],
+      "@web/*": [ "apps/web/*" ]
     }
+
   },
   "typeRoots": ["./node_modules/@types"],
   "include": [

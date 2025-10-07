@@ -1,6 +1,8 @@
 // prisma/adapters/schema-mysql.prisma
 generator mysql {
   provider = "prisma-client-js"
+  //previewFeatures = ["postgresqlExtensions"]
+  // output   = "../../node_modules/.prisma/mysql"
   output   = "../generated/mysql"
 }
 

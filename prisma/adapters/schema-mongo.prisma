@@ -1,6 +1,8 @@
 //prisma/adapters/schema-mongo.prisma
 generator mongo {
   provider = "prisma-client-js"
+  //previewFeatures = ["postgresqlExtensions"]
+  //output   = "../../node_modules/.prisma/mongo"
   output   = "../generated/mongo"
 }
 

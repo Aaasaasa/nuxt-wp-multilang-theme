@@ -6,7 +6,7 @@
  */
 import { defineEventHandler } from 'h3'
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(event => {
   // allow everything
   return
 })

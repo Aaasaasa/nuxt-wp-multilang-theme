@@ -32,6 +32,7 @@
     "clean:workspaces": "rm -rf app/*/node_modules app/*/.nuxt app/*/.output app/*/.turbo server/node_modules shared/node_modules",
     "clean:prisma": "rm -rf node_modules/.prisma node_modules/.prisma-client",
     "clean:cache": "pnpm store prune",
+    "clean:nitro": "rm -rf server/.output server/.nitro",
     "clean": "pnpm run clean:root && pnpm run clean:workspaces && pnpm run clean:prisma && pnpm run clean:cache",
     "reinstall": "pnpm run clean && pnpm install && pnpm run postinstall",
     "bootstrap": "pnpm run reinstall",
@@ -45,7 +46,6 @@
   "devDependencies": {
     "@eslint/js": "^9.36.0",
     "@nuxt/kit": "^4.1.2",
-    "@prisma/client": "6.16.3",
     "@types/node": "^24.6.0",
     "@typescript-eslint/eslint-plugin": "^8.44.1",
     "@typescript-eslint/parser": "^8.44.1",
@@ -57,10 +57,10 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.0",
     "prettier": "^3.6.2",
+    "prisma": "6.16.3",
     "ts-node": "^10.9.2",
     "turbo": "^2.5.8",
     "typescript": "^5.9.2",
-    "vite-tsconfig-paths": "^5.1.4",
     "vue-eslint-parser": "^9.4.3"
   },
   "engines": {
@@ -69,7 +69,15 @@
   },
   "packageManager": "pnpm@10.17.1",
   "dependencies": {
+    "@nuxtjs/i18n": "^10.1.0",
+    "@prisma/client": "6.16.3",
     "dotenv": "^17.2.2",
-    "prisma": "^6.16.3"
+    "nuxt": "^4.1.2",
+    "vue-i18n": "^11.1.12"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client"
+    ]
   }
 }

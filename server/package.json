@@ -4,32 +4,30 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nuxt dev --port 4000",
-    "build": "nuxt build",
-
+    "dev": "nitro dev --port 4000",
+    "build": "nitro build",
+    "preview": "nitro preview",
     "start": "node .output/server/index.mjs",
-    "lint": "eslint . --fix",
-    "format": "prettier --write .",
-
-    "db:generate": "pnpm db:generate:pg && pnpm db:generate:mysql && pnpm db:generate:mongo",
-
-    "db:generate:pg": "prisma generate --schema=../prisma/adapters/schema-postgres.prisma",
-    "db:generate:mysql": "prisma generate --schema=../prisma/adapters/schema-mysql.prisma",
-    "db:generate:mongo": "prisma generate --schema=../prisma/adapters/schema-mongo.prisma"
-
+    "lint": "eslint . --ext .ts,.vue --fix",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@prisma/client": "^6.16.3",
-    "h3": "^1.15.4",
-    "ioredis": "^5.8.0",
-    "mysql2": "^3.15.1",
-    "zod": "^4.1.11"
+    "dotenv": "^16.4.5",
+    "h3": "^1.11.1",
+    "ioredis": "^5.4.2",
+    "mongodb": "^6.20.0",
+    "mysql2": "^3.11.3",
+    "nitropack": "^2.12.6",
+    "nuxt": "4.1.2",
+    "openapi3-ts": "^4.5.0",
+    "pathe": "^1.1.2"
   },
   "devDependencies": {
-    "nuxt": "^4.1.2",
-    "prettier": "^3.6.2",
+    "@nuxt/kit": "^4.1.2",
+    "eslint": "^9.10.0",
+    "prettier": "^3.3.3",
     "prisma": "^6.16.3",
-    "swagger-jsdoc": "^6.2.8",
-    "typescript": "^5.9.2"
+    "typescript": "^5.5.4"
   }
 }

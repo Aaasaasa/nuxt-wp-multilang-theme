@@ -1,0 +1,23 @@
+export default defineNitroConfig({
+  compatibilityDate: '2025-10-06', // додај за сваки случај
+
+  esbuild: {
+    options: {
+      target: 'esnext',
+      format: 'esm'
+    }
+  },
+
+  buildDir: '.nitro',
+  preset: 'node-server',
+  moduleSideEffects: [],
+  inlineDynamicImports: true,
+
+  scanDirs: ['server/api', 'server/routes'],
+
+  externals: {
+    inline: ['@prisma/client']
+  },
+
+  verbosity: 3
+})

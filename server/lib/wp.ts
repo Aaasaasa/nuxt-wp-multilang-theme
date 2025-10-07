@@ -28,7 +28,7 @@ export async function getWpMenu(menuSlug: string) {
   `
 
   try {
-    const [rows] = await db.mysql.execute(sql, [menuSlug]) as [any[], any]
+    const [rows] = (await db.mysql.execute(sql, [menuSlug])) as [any[], any]
     const byId: Record<string, any> = {}
     const roots: any[] = []
 
@@ -43,7 +43,6 @@ export async function getWpMenu(menuSlug: string) {
       }
       byId[node.id] = node
     })
-
     ;(rows as any[]).forEach(r => {
       const id = String(r.item_id)
       const parent = r.parent_id ? String(r.parent_id) : null
@@ -79,7 +78,7 @@ export async function getWpPosts(options: { postType?: string; limit?: number } 
   `
 
   try {
-    const [rows] = await db.mysql.execute(sql, [postType, limit]) as [any[], any]
+    const [rows] = (await db.mysql.execute(sql, [postType, limit])) as [any[], any]
     console.log('[getWpPosts] rows for postType', postType, rows)
     return rows as any[]
   } catch (err) {

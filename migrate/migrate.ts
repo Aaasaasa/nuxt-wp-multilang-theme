@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { PrismaClient as MySqlClient } from "../prisma/generated/mysql/index.js";
-import { PrismaClient as PgCMSClient } from "../prisma/generated/postgres/cms/index.js";
+import { PrismaClient as PgCMSClient } from "../prisma/generated/postgres-cms/index.js";
 
 const mysql = new MySqlClient();
 const pg = new PgCMSClient();

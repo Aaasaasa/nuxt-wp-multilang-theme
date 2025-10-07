@@ -1,9 +1,9 @@
 import { defineEventHandler } from 'h3'
-import { pgCMS } from '../../utils/dbClients.ts'
+import { db } from '~/utils/dbClients.ts'
 
 export default defineEventHandler(async () => {
   // 1. Nadji sve termine koji su taxonomy = "nav_menu"
-  const menus = await pgCMS.cms_terms.findMany({
+  const menus = await db.pgCMS.cms_terms.findMany({
     where: {
       taxonomy: {
         some: { taxonomy: 'nav_menu' }

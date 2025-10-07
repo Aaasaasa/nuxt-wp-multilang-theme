@@ -155,8 +155,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "//prisma/adapters/schema-mongo.prisma\ngenerator mongo {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/mongo\"\n}\n\ndatasource mongo {\n  provider = \"mongodb\"\n  url      = env(\"MONGO_URL\")\n}\n\nmodel mgArticle {\n  id      String   @id @default(auto()) @map(\"_id\") @mongo.ObjectId\n  title   String\n  body    String?\n  tags    String[]\n  created DateTime @default(now())\n}\n\n// npx prisma generate --schema=prisma/schema-postgres.prisma\n// npx prisma generate --schema=prisma/schema-mysql.prisma\n// npx prisma generate --schema=prisma/schema-mongo.prisma\n",
-  "inlineSchemaHash": "9e3f412b290f2b4b614358b568109efe87ad538c98a75450964387974a7d4d9f",
+  "inlineSchema": "//prisma/adapters/schema-mongo.prisma\ngenerator mongo {\n  provider = \"prisma-client-js\"\n  //previewFeatures = [\"postgresqlExtensions\"]\n  //output   = \"../../node_modules/.prisma/mongo\"\n  output   = \"../generated/mongo\"\n}\n\ndatasource mongo {\n  provider = \"mongodb\"\n  url      = env(\"MONGO_URL\")\n}\n\nmodel mgArticle {\n  id      String   @id @default(auto()) @map(\"_id\") @mongo.ObjectId\n  title   String\n  body    String?\n  tags    String[]\n  created DateTime @default(now())\n}\n\n// npx prisma generate --schema=prisma/schema-postgres.prisma\n// npx prisma generate --schema=prisma/schema-mysql.prisma\n// npx prisma generate --schema=prisma/schema-mongo.prisma\n",
+  "inlineSchemaHash": "7e48be2d038b71112c751d9c7382f23ae8f5487b7733312b67d6dd1781fc229d",
   "copyEngine": true
 }
 config.dirname = '/'

@@ -1,16 +1,13 @@
+// server/api/docs/ui.get.ts
 import { defineEventHandler } from 'h3'
 
 export default defineEventHandler(() => {
-  return `
+  const html = `
     <!DOCTYPE html>
     <html>
       <head>
-        <meta charset="utf-8" />
         <title>Swagger UI</title>
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css"
-        />
+        <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
       </head>
       <body>
         <div id="swagger-ui"></div>
@@ -18,11 +15,11 @@ export default defineEventHandler(() => {
         <script>
           SwaggerUIBundle({
             url: '/api/docs',
-            dom_id: '#swagger-ui',
-            layout: 'BaseLayout'
-          });
+            dom_id: '#swagger-ui'
+          })
         </script>
       </body>
     </html>
   `
+  return html
 })

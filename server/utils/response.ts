@@ -1,5 +1,5 @@
-import { createError } from "h3"
-import type { ApiResponse } from "@@shared/types/api"
+import { createError } from 'h3'
+import type { ApiResponse } from '@@shared/types/api'
 
 export const HTTP_STATUS = {
   OK: 200,
@@ -18,7 +18,7 @@ export const HTTP_STATUS = {
 export function createApiResponse<T>(
   data?: T | null,
   statusCode: number = HTTP_STATUS.OK,
-  message: string = "OK"
+  message: string = 'OK'
 ): ApiResponse<T> {
   return {
     statusCode,
@@ -31,27 +31,27 @@ export function createApiResponse<T>(
  * Create a response for created resources
  */
 export function createCreatedResponse<T>(data: T): ApiResponse<T> {
-  return createApiResponse(data, HTTP_STATUS.CREATED, "Resource created successfully")
+  return createApiResponse(data, HTTP_STATUS.CREATED, 'Resource created successfully')
 }
 
 /**
  * Create a response for no content
  */
 export function createNoContentResponse(): ApiResponse<null> {
-  return createApiResponse(null, HTTP_STATUS.NO_CONTENT, "No Content")
+  return createApiResponse(null, HTTP_STATUS.NO_CONTENT, 'No Content')
 }
 
 /**
  * Create a response for deleted resources
  */
 export function createDeletedResponse(): ApiResponse<null> {
-  return createApiResponse(null, HTTP_STATUS.NO_CONTENT, "Resource deleted successfully")
+  return createApiResponse(null, HTTP_STATUS.NO_CONTENT, 'Resource deleted successfully')
 }
 
 /**
  * Not found error
  */
-export function notFoundError(message = "Resource not found") {
+export function notFoundError(message = 'Resource not found') {
   throw createError({
     statusCode: HTTP_STATUS.NOT_FOUND,
     statusMessage: message
@@ -61,7 +61,7 @@ export function notFoundError(message = "Resource not found") {
 /**
  * Bad request error
  */
-export function badRequestError(message = "Bad Request") {
+export function badRequestError(message = 'Bad Request') {
   throw createError({
     statusCode: HTTP_STATUS.BAD_REQUEST,
     statusMessage: message
@@ -71,7 +71,7 @@ export function badRequestError(message = "Bad Request") {
 /**
  * Server error
  */
-export function serverError(message = "Internal Server Error") {
+export function serverError(message = 'Internal Server Error') {
   throw createError({
     statusCode: HTTP_STATUS.INTERNAL_SERVER_ERROR,
     statusMessage: message
@@ -81,7 +81,7 @@ export function serverError(message = "Internal Server Error") {
 /**
  * Validation error (422)
  */
-export function validationError(message = "Validation Error") {
+export function validationError(message = 'Validation Error') {
   throw createError({
     statusCode: 422,
     statusMessage: message

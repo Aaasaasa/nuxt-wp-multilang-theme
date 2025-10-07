@@ -8,6 +8,7 @@ generator pgCMSClient {
   provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
   output          = "../generated/postgres-cms"
+  //output          = "../../node_modules/.prisma/postgres-cms"
 }
 
 datasource pgCMSdb {

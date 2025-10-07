@@ -1,8 +1,7 @@
-import { getWpPosts } from '../../lib/wp.ts'
-import { getOrSet } from '../../lib/cache.ts'
+import { getWpPosts } from '~/lib/wp.ts'
+import { getOrSet } from '~/lib/cache.ts'
 // API route за refresh (server/api/wp/etl/menu.post.ts)
 import { defineEventHandler, getQuery } from 'h3'
-
 
 export default defineEventHandler(async event => {
   const q = getQuery(event)
