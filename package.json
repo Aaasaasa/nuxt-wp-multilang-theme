@@ -65,9 +65,9 @@
   },
   "engines": {
     "node": ">=24.5.0",
-    "pnpm": "^10.17.1"
+    "pnpm": "^10.18.1"
   },
-  "packageManager": "pnpm@10.17.1",
+  "packageManager": "pnpm@10.18.1",
   "dependencies": {
     "@nuxtjs/i18n": "^10.1.0",
     "@prisma/client": "6.16.3",
@@ -77,7 +77,18 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "@prisma/client"
+      "@parcel/watcher",
+      "@prisma/client",
+      "@prisma/engines",
+      "@tailwindcss/oxide",
+      "esbuild",
+      "prisma",
+      "sharp",
+      "vue-demi"
+    ],
+    "ignoredBuiltDependencies": [
+      "sharp",
+      "vue-demi"
     ]
   }
 }

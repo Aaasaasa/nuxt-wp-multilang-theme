@@ -15,6 +15,9 @@ export default defineNitroConfig({
   // 🚀 ESBuild podešavanje – dozvoljava top-level await i ESM
   esbuild: {
     options: {
+      define: {
+        'buffer.hasOwnProperty': 'Object.prototype.hasOwnProperty.call',
+      },
       target: 'esnext',
       format: 'esm'
     }

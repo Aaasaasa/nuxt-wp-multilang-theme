@@ -1,8 +1,10 @@
+// server / utils / dbClients.ts
 import { createPool, Pool } from 'mysql2/promise'
 import Redis from 'ioredis'
 import dotenv from 'dotenv'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import '~/utils/polyfill.ts'
 
 dotenv.config()
 
@@ -46,13 +48,13 @@ export async function initDb() {
   })
 
   // ✅ Redis client
-  const redis = new Redis(process.env.REDIS_URL || 'redis://127.0.0.1:6379', {
+  const redis: Redis = new Redis(process.env.REDIS_URL || 'redis://127.0.0.1:6379', {
     maxRetriesPerRequest: null,
     connectTimeout: 8000
   })
 
   redis.on('connect', () => console.log('[redis] connected'))
-  redis.on('error', err => console.error('[redis] ❌ connection error:', err.message))
+  redis.on('error', (err: Error) => console.error('[redis] ❌ connection error:', err.message))
 
   return { pgCMS, mysqlPrisma, mongoPrisma, wp, redis }
 }
