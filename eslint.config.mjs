@@ -14,6 +14,9 @@ export default [
       "**/node_modules/**",
       "**/.nuxt/**",
       "**/.nitro/**",
+      "**/Prisma/**",
+      "**/prisma/**",
+      "**/generated/**",
       "**/.output/**",
       "dist/**",
       ".git/**",
@@ -42,6 +45,7 @@ export default [
         project: ['./tsconfig.base.json'],   // typed linting samo ovde
         extraFileExtensions: ['.vue'],
         tsconfigRootDir: import.meta.dirname,
+        //tsconfigRootDir: __dirname
       },
     },
     plugins: {

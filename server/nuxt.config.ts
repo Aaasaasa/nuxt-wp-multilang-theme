@@ -1,15 +1,28 @@
 import { defineNuxtConfig } from 'nuxt/config'
+import { resolve } from 'node:path'
 
 export default defineNuxtConfig({
-  ssr: true,
+  // name:'server',
+  // ssr: true,
   devtools: { enabled: false },
-  srcDir: '.',
-  serverDir: '.',
+  rootDir: resolve(__dirname, '..'),
+  srcDir: 'server',
+  // sserverDir: 'server',
   app: {},
   modules: [],
   nitro: {
     preset: 'node-server',
-    serveStatic: false
+    esnext: true,
+    noExternals: false,
+    compatibilityDate: '2024-10-01',
+    // serveStatic: false
+  },
+  alias: {
+    '~': resolve(__dirname, '.'),
+    '#': resolve(__dirname, '..'),
+    '@': resolve(__dirname, '.'),
+    '@shared': resolve(__dirname, '../packages/shared'),
+    '@utils': resolve(__dirname, '../packages/utils')
   },
   typescript: {
     tsConfig: {

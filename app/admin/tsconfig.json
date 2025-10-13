@@ -1,25 +1,18 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    //"target": "ES2022",
-    //"lib": ["ES2022", "DOM"],
-    //"module": "NodeNext",
-    //"moduleResolution": "NodeNext",
-    //"resolveJsonModule": true,
-    //"allowJs": false,
-    //"strict": true,
-    //"noEmit": true,
-    // "types": ["node"],
-    "types": ["node", "nuxt/schema", "@nuxt/ui"]
-    // "typeRoots": ["./types", "../../node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "#shared/*": ["../../shared/*"]
+    },
+    "types": ["nuxt", "node"]
   },
-  "include": ["components", "middleware", "pages", "plugins", "composables", "app.vue", "nuxt.config.ts"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    ".docker",
-    ".output",
-    ".nuxt",
-    ".turbo"
+  "include": [
+    "**/*.ts",
+    "**/*.vue",
+    "**/*.js",
+    "../../shared/**/*.ts"
   ]
 }

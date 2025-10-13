@@ -1,55 +1,52 @@
 {
-  // "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "target": "ESNext",
+    /* ⚙️ Osnovno */
+    "target": "ES2022",
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "allowImportingTsExtensions": true,
+    "moduleResolution": "NodeNext",
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "allowJs": false,
-    "strict": true,
-    "noEmit": true,
-    "types": ["node", "nuxt/schema"],
-
-    "isolatedModules": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
     "skipLibCheck": true,
+    "strict": true,
 
+    /* 💡 Bitno za monorepo */
     "baseUrl": ".",
     "paths": {
-      /*
-      "@@*": ["./*"],
-      "@@shared/*": ["./shared/*"],
-      "@@admin/*": ["./app/admin/*"],
-      "@@web/*": ["./app/web/*"],
-      // "@@prisma/*": ["./prisma/*"],
-      */
-      //"@@server/*": ["./server/*"],
-      //"#prisma/*": ["prisma/*"],
-      "@prisma/*": ["prisma/generated/*"],
-      "@shared/*": ["shared/*"],
-      "@server/*": [ "server/*" ],
-      "@admin/*": [ "apps/admin/*" ],
-      "@web/*": [ "apps/web/*" ]
-    }
+      "~/*": ["./app/*", "./server/*"],
+      "@/*": ["./app/*"],
+      // "#/*": ["./packages/*"],
+      "@shared/*": ["./shared/*"],
+      // "@utils/*": ["./packages/utils/*"]
+    },
 
+    /* 🧠 Tipovi koji su globalno potrebni */
+    "types": ["nuxt", "node"],
+
+    /* 🔄 Sprečava preklapanja i zbrku kod TS servera */
+    "resolveJsonModule": true,
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false
   },
-  "typeRoots": ["./node_modules/@types"],
+
+  /* 🗂️ Šta sve uključiti */
   "include": [
-    "app/admin",
-    "app/web",
-    "server",
-    "shared",
-    "prisma/generated",
-    // "test"
+    "app/**/*",
+    "server/**/*",
+    "shared/**/*",
+    // "packages/**/*",
+    "types/**/*",
+    "*.d.ts"
   ],
+
+  /* 🚫 Isključi build output i node_modules */
   "exclude": [
     "node_modules",
-    "dist",
-    ".docker",
-    ".output",
     ".nuxt",
-    ".turbo"
+    ".output",
+    "dist"
   ]
 }

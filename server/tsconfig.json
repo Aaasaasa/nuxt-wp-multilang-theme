@@ -1,21 +1,25 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "moduleResolution": "node",
-    "module": "ESNext",
-    "target": "ESNext",
-    //"esModuleInterop": true,
-    "resolveJsonModule": true,
-    //"types": ["node"],
-    // "moduleDetection": "force",
-    //"allowSyntheticDefaultImports": true,
-
-    //"strict": true,
-    //"forceConsistentCasingInFileNames": true,
-    // "skipLibCheck": true,
+    "module": "nodenext",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"]
-    }
-  }
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "#shared/*": ["../shared/*"]
+    },
+    "types": ["nuxt"]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.vue",
+    "**/*.js",
+    "../shared/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    ".nitro",
+    ".output"
+  ]
 }

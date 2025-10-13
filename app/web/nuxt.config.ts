@@ -8,6 +8,8 @@ const isDev = process.env.NODE_ENV !== 'production'
 export default defineNuxtConfig({
   devtools: { enabled: true },
   typescript: { shim: true },
+  rootDir: path.resolve(__dirname, '../..'),
+  srcDir: 'apps/web',
 
   modules: [
     '@nuxt/ui',
