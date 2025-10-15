@@ -3,11 +3,11 @@ import { resolve } from 'node:path'
 
 export default defineNuxtConfig({
   // name:'server',
-  // ssr: true,
+  ssr: true,
   devtools: { enabled: false },
-  rootDir: resolve(__dirname, '..'),
+  rootDir: resolve(__dirname, '../'),
   srcDir: 'server',
-  // sserverDir: 'server',
+  serverDir: './',
   app: {},
   modules: [],
   nitro: {
@@ -21,9 +21,10 @@ export default defineNuxtConfig({
     '~': resolve(__dirname, '.'),
     '#': resolve(__dirname, '..'),
     '@': resolve(__dirname, '.'),
-    '@shared': resolve(__dirname, '../packages/shared'),
-    '@utils': resolve(__dirname, '../packages/utils')
+    // '@shared': resolve(__dirname, '../shared'),
+    // '@utils': resolve(__dirname, '../ckages/utils')
   },
+  /*
   typescript: {
     tsConfig: {
       compilerOptions: {
@@ -35,5 +36,6 @@ export default defineNuxtConfig({
       }
     }
   },
+  */
   compatibilityDate: '2024-10-06'
 })

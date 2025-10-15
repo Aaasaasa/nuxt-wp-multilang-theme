@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "main": "./nuxt.config.ts",
   "description": "Nuxt 4 admin panel sa TailwindCSS i shared modulima",
   "objasnjenjenje": "Imports subpath za shared, koristi u kodu: import { helper } from '#shared/utils'",
   "objasnjenjenje_dva": "import { locales } from '#shared/utils/locale.ts'",
   "imports": {
-    "#shared/*": "../../shared/*"
+    "#shared/*": "../../packages/shared/*"
   },
   "author": "Aleksandar Stajic",
   "license": "MIT",
@@ -27,7 +28,7 @@
     "@nuxt/icon": "^2.0.0",
     "@nuxt/image": "^1.11.0",
     "@nuxt/ui": "^4.0.1",
-    "@nuxtjs/i18n": "^10.1.0",
+    "@nuxtjs/i18n": "^10.1.1",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@pinia/nuxt": "^0.11.2",
     "class-variance-authority": "^0.7.1",

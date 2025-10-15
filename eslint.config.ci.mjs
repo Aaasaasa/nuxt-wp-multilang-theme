@@ -1,16 +1,12 @@
 // eslint.config.ci.mjs
-import config from './eslint.config.mjs' // assert { type: 'json' }
+import baseConfig from './eslint.config.mjs'
 
-export default config.map((entry) => {
-  if (entry.rules) {
-    return {
-      ...entry,
-      rules: {
-        ...entry.rules,
-        'no-console': 'off',
-        'no-debugger': 'error',
-      },
+export default [
+  ...baseConfig,
+  {
+    rules: {
+      'no-console': 'off',
+      'no-debugger': 'error'
     }
   }
-  return entry
-})
+]

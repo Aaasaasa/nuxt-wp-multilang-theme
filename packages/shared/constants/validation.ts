@@ -45,10 +45,10 @@ export const PAGINATION_LIMITS = {
 
 // Validation patterns
 export const VALIDATION_PATTERNS = {
-  EMAIL: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  EMAIL: /^[\w.%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i,
   PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/,
-  PHONE: /^[\\+]?[1-9][\d]{0,15}$/,
+  PHONE: /^[\\+]?[1-9]\d{0,15}$/,
   URL: /^https?:\/\/.+/,
   SLUG: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-  USERNAME: /^[a-zA-Z0-9_]{3,20}$/
+  USERNAME: /^\w{3,20}$/
 } as const

@@ -2,7 +2,54 @@
 import { defineAppConfig } from 'nuxt/app'
 
 export default defineAppConfig({
-  // 🎨 UI global config
+  i18n: {
+    locales: [
+      {
+        code: 'de',
+        name: 'Deutsch',
+        files: ['de/common.json', 'de/seo.json'],
+        language: 'de-DE',
+        flag: 'i-openmoji:flag-germany'
+      },
+      {
+        code: 'en',
+        name: 'English',
+        files: ['en/common.json', 'en/seo.json'],
+        language: 'en-US',
+        flag: 'i-openmoji:flag-united-states'
+      },
+      {
+        code: 'sr',
+        name: 'Србски',
+        files: ['sr/common.json', 'sr/seo.json'],
+        language: 'sr-SR',
+        flag: 'i-openmoji:flag-serbia'
+      },
+      {
+        code: 'ru',
+        name: 'Russia',
+        files: ['ru/common.json', 'ru/seo.json'],
+        language: 'ru-RU',
+        flag: 'i-openmoji:flag-russia'
+      },
+      {
+        code: 'es',
+        name: 'Español',
+        files: ['es/common.json', 'es/seo.json'],
+        language: 'es-ES',
+        flag: 'i-openmoji:flag-spain'
+      },
+      {
+        code: 'it',
+        name: 'Italy',
+        files: ['it/common.json', 'it/seo.json'],
+        language: 'it-IT',
+        flag: 'i-openmoji:flag-italy'
+      }
+    ],
+    defaultLocale: 'de',
+    strategy: 'prefix_except_default'
+  },
   ui: {
     icons: ['lucide', 'openmoji'],
     primary: 'indigo',

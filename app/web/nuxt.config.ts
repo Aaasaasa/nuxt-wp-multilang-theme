@@ -1,15 +1,20 @@
-import { defineNuxtConfig } from 'nuxt/config'
+// app/admin/nuxt.config.ts
+// import { defineNuxtConfig } from 'nuxt/config'
 import tsconfigPaths from 'vite-tsconfig-paths'
-import { fileURLToPath } from 'node:url'
-import path from 'path'
-
-const isDev = process.env.NODE_ENV !== 'production'
+import { resolve } from 'node:url'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
   typescript: { shim: true },
-  rootDir: path.resolve(__dirname, '../..'),
-  srcDir: 'apps/web',
+
+  modulesDir: [
+    'node_modules', // globalni (root)
+    resolve(__dirname, 'node_modules') // lokalni
+  ],
+
+  rootDir: resolve(__dirname, '../..'),
+  srcDir: 'app/admin',
+  serverDir: resolve(__dirname, '../../server'),
 
   modules: [
     '@nuxt/ui',
@@ -18,7 +23,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
-    'nuxt-security'
+    // 'nuxt-security'
   ],
 
   css: ['~/assets/css/tailwind.css'],
@@ -32,130 +37,40 @@ export default defineNuxtConfig({
     }
   },
 
-  ui: { icons: ['lucide', 'openmoji'] },
-
-  colorMode: {
-    preference: 'system',   // default tema (system/light/dark)
-    fallback: 'light',      // kad nema system support
-    classSuffix: '',         // važno: da koristi samo .dark, bez .dark-mode
-    componentName: 'ColorScheme',
-    classPrefix: '',
-    storage: 'localStorage', // or 'sessionStorage' or 'cookie'
-    storageKey: 'nuxt-color-mode'
-  },
-
-  i18n: {
-    locales: [
-      {
-        code: 'de',
-        name: 'Deutsch',
-        files: ['de/common.json', 'de/seo.json'],
-        language: 'de-DE',
-        flag: 'i-openmoji:flag-germany'
-      },
-      {
-        code: 'en',
-        name: 'English',
-        files: ['en/common.json', 'en/seo.json'],
-        language: 'en-US',
-        flag: 'i-openmoji:flag-united-states'
-      },
-      {
-        code: 'sr',
-        name: 'Србски',
-        files: ['sr/common.json', 'sr/seo.json'],
-        language: 'sr-SR',
-        flag: 'i-openmoji:flag-serbia'
-      },
-      {
-        code: 'ru',
-        name: 'Russia',
-        files: ['ru/common.json', 'ru/seo.json'],
-        language: 'ru-RU',
-        flag: 'i-openmoji:flag-russia'
-      },
-      {
-        code: 'es',
-        name: 'Español',
-        files: ['es/common.json', 'es/seo.json'],
-        language: 'es-ES',
-        flag: 'i-openmoji:flag-spain'
-      },
-      {
-        code: 'it',
-        name: 'Italy',
-        files: ['it/common.json', 'it/seo.json'],
-        language: 'it-IT',
-        flag: 'i-openmoji:flag-italy'
-      }
-    ],
-    defaultLocale: 'de',
-    strategy: 'prefix_except_default'
-  },
-
-  // ako budeš trebao alias: koristi TS paths (tsconfigPaths) umjesto ručnog aliasa
   alias: {
-    //'@@shared': fileURLToPath(new URL('../../shared', import.meta.url)),
-    '@@shared/': fileURLToPath(new URL('../../shared/', import.meta.url)),
-    //'@prisma': '../../prisma'
-    '@@': path.resolve(__dirname, '../../'),             // root
-    '@@shared': path.resolve(__dirname, '../../shared'),
-    '@@admin': path.resolve(__dirname, '../../app/admin'),
-    '@@web': path.resolve(__dirname, './'),              // lokalni web app
-    '@@prisma': path.resolve(__dirname, '../../prisma'),
-    '@@server': path.resolve(__dirname, '../../server')
+    '~': resolve(__dirname, '.'),
+    '#': resolve(__dirname, '..'),
+    '@': resolve(__dirname, '.'),
+    '@shared': resolve(__dirname, '../../packages/shared'),
+    '@utils': resolve(__dirname, '../../packages/utils')
   },
 
   vite: {
-    plugins: [tsconfigPaths() as any],
-    define: {
-      // zaštita od jiti fallback-a koji koristi import.meta.require
-      'import.meta.require': undefined
-    }
+    plugins: [tsconfigPaths()],
+    define: { 'import.meta.require': undefined }
   },
 
   runtimeConfig: {
     public: {
-      // PUBLIC_API_BASE из .env, fallback за дев ако је празно
       apiBase: process.env.PUBLIC_API_BASE || 'http://localhost:4000/api'
     }
   },
 
-  security: {
-    headers: {
-      contentSecurityPolicy: isDev
-        ? false
-        : {
-            'default-src': ["'self'"],
-            'img-src': ["'self'", 'data:', 'https:'],
-            'style-src': ["'self'", "'unsafe-inline'"],
-            'script-src': ["'self'"],
-            'font-src': ["'self'", 'data:'],
-            'connect-src': ["'self'", 'https:'],
-            'object-src': ["'none'"],
-            'frame-ancestors': ["'none'"],
-            'base-uri': ["'self'"],
-            'form-action': ["'self'"]
-          },
-      xFrameOptions: 'DENY',
-      xContentTypeOptions: 'nosniff',
-      referrerPolicy: 'no-referrer',
-      strictTransportSecurity: { maxAge: 31536000, includeSubdomains: true, preload: true }
-    },
-    corsHandler: {
-      origin:
-        process.env.NODE_ENV === 'development'
-          ? ['http://localhost:3300']
-          : [process.env.ADMIN_URL].filter(Boolean),
-      credentials: true
-    },
-    rateLimiter: { tokensPerInterval: 100, interval: 300000, throwError: true },
-    requestSizeLimiter: { maxRequestSizeInBytes: 2000000, maxUploadFileRequestInBytes: 8000000 },
-    hidePoweredBy: true
-  },
 
+  // 👇 Ručno dok secure nuxt ne aktualizira na 3.x verziju osnovne bezbjednosne zaglavlja
   routeRules: {
-    '/api/**': { cors: true, headers: { 'Access-Control-Max-Age': '86400' } }
+    '/api/**': {
+      cors: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'X-Frame-Options': 'DENY',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'no-referrer',
+        'Access-Control-Max-Age': '86400'
+      }
+    }
   },
 
   compatibilityDate: '2025-09-13'

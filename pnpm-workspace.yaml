@@ -1,8 +1,8 @@
 packages:
   - app/*
   - server
-  - shared
-  - prisma
+  - packages/shared
+  - server/prisma
 catalogs:
   prisma:
     prisma: latest

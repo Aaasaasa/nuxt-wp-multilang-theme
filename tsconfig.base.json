@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     /* ⚙️ Osnovno */
-    "target": "ES2022",
+    "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Bundler",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -13,31 +13,29 @@
     "skipLibCheck": true,
     "strict": true,
 
-    /* 💡 Bitno za monorepo */
+    /* 💡 Za monorepo: root kao baza */
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*", "./server/*"],
-      "@/*": ["./app/*"],
-      // "#/*": ["./packages/*"],
-      "@shared/*": ["./shared/*"],
-      // "@utils/*": ["./packages/utils/*"]
+      "~/*": ["app/*", "server/*"],
+      "@/*": ["app/*"],
+      "@shared/*": ["packages/shared/*"],
+      "#/*": ["packages/shared/*"]
     },
 
-    /* 🧠 Tipovi koji su globalno potrebni */
+    /* 🧠 Globalni tipovi */
     "types": ["nuxt", "node"],
 
-    /* 🔄 Sprečava preklapanja i zbrku kod TS servera */
+    /* 🪄 Kvalitet života */
     "resolveJsonModule": true,
     "noUncheckedIndexedAccess": false,
     "exactOptionalPropertyTypes": false
   },
 
-  /* 🗂️ Šta sve uključiti */
+  /* 🗂️ Uključi sve aplikacije */
   "include": [
     "app/**/*",
     "server/**/*",
-    "shared/**/*",
-    // "packages/**/*",
+    "packages/shared/**/*",
     "types/**/*",
     "*.d.ts"
   ],
@@ -47,6 +45,7 @@
     "node_modules",
     ".nuxt",
     ".output",
-    "dist"
+    "dist",
+    ".turbo"
   ]
 }

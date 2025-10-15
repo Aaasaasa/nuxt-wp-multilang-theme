@@ -14,6 +14,7 @@ export default defineNuxtConfig({
 
   rootDir: resolve(__dirname, '../../'),
   srcDir: 'app/admin',
+  serverDir: resolve(__dirname, '../../server'),
 
   modules: [
     '@nuxt/ui',
