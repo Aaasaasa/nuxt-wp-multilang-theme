@@ -22,12 +22,12 @@ Nuxt 4 boilerplate with:
 ## Key Commands
 
 ```bash
-npm run dev            # start dev server
-npm run build          # build for production
-npm run lint           # run ESLint + Prettier
-npm test               # run unit + E2E tests
+pnpm run dev            # start dev server
+pnpm run build          # build for production
+pnpm run lint           # run ESLint + Prettier
+pnpm test               # run unit + E2E tests
 docker compose up -d   # start PostgreSQL
-npx prisma migrate dev # run DB migrations
+pnpx prisma migrate dev # run DB migrations
 ```
 
 ## Patterns & Practices

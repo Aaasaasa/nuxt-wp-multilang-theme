@@ -1,26 +1,3 @@
 {
-  "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "rootDir": ".",
-    "outDir": ".output",
-    "moduleResolution": "Bundler",
-    "module": "ESNext",
-    "target": "ESNext",
-    "types": ["node", "nuxt"],
-    "paths": {
-      "@shared/*": ["../packages/shared/*"],
-      "~/*": ["./*"]
-    }
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.vue",
-    "api/**/*",
-    "utils/**/*",
-    "migrate/**/*",
-    "redis/**/*",
-    "prisma/**/*",
-    "nuxt.config.ts"
-  ],
-  "exclude": ["node_modules", ".nuxt", ".output", "dist"]
+  "extends": "../.nuxt/tsconfig.server.json"
 }

@@ -4,30 +4,26 @@ Auto-generated documentation via swagger-jsdoc.
 
 ## 🚀 Access
 
-```bash
-npm run dev
-open http://localhost:3000/api/docs/ui
-```
+**Development**: Visit `http://localhost:3000/api/docs/ui` during development for interactive documentation.
 
 **⚠️ Development only** (403 in production)
 
+## 🔐 Authentication Endpoints
+
+**Implementation**: See `server/api/auth/` for complete authentication endpoint implementations including registration, login, logout, and password reset.
+
+## 🛡️ Protected Routes
+
+All API routes except authentication and public endpoints require authentication:
+
+- **Protected:** POST/PUT/DELETE operations on posts
+- **Public:** GET operations on posts, authentication endpoints, documentation
+
+Authentication is handled automatically by the global auth middleware.
+
 ## 📝 Adding an endpoint
 
-```typescript
-/**
- * @openapi
- * /api/users:
- *   post:
- *     summary: Create user
- *     tags: [Users]
- *     responses:
- *       201:
- *         description: Success
- */
-export default defineEventHandler(async (event) => {
-  // Code here
-})
-```
+**Implementation**: See existing API routes in `server/api/` for OpenAPI comment patterns and endpoint structure examples.
 
 ## ✅ Benefits
 

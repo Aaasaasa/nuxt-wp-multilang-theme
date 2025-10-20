@@ -1,4 +1,4 @@
-import prisma from '../lib/prisma.ts'
+import prisma from '@@/lib/prisma'
 
 /**
  * User Service - Pure business logic without validation
@@ -15,10 +15,7 @@ export async function createUser(userData: CreateUserData): Promise<PublicUser> 
   })
 
   if (existingUser) {
-    throw createError({
-      statusCode: 409,
-      statusMessage: 'User with this email already exists'
-    })
+    throw conflictError(ERROR_CODES.USER.EMAIL_ALREADY_EXISTS)
   }
 
   // Hash password using auto-imported function from nuxt-auth-utils
@@ -36,15 +33,9 @@ export async function createUser(userData: CreateUserData): Promise<PublicUser> 
     return toPublicUser(user)
   } catch (error: any) {
     if (error.code === PRISMA_ERRORS.UNIQUE_CONSTRAINT_FAILED) {
-      throw createError({
-        statusCode: 409,
-        statusMessage: 'User with this email already exists'
-      })
+      throw conflictError(ERROR_CODES.USER.EMAIL_ALREADY_EXISTS)
     }
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Failed to create user'
-    })
+    throw serverError(ERROR_CODES.SERVER.DATABASE_ERROR, 'Failed to create user')
   }
 }
 
@@ -57,19 +48,13 @@ export async function authenticateUser(email: string, password: string): Promise
   })
 
   if (!user) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Invalid email or password'
-    })
+    throw unauthorizedError(ERROR_CODES.AUTH.INVALID_CREDENTIALS)
   }
 
   // Verify password using auto-imported function from nuxt-auth-utils
   const isPasswordValid = await verifyPassword(user.password, password)
   if (!isPasswordValid) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Invalid email or password'
-    })
+    throw unauthorizedError(ERROR_CODES.AUTH.INVALID_CREDENTIALS)
   }
 
   return toPublicUser(user)
@@ -78,7 +63,7 @@ export async function authenticateUser(email: string, password: string): Promise
 /**
  * Get user by ID
  */
-export async function getUserById(id: number): Promise<PublicUser | null> {
+export async function getUserById(id: string): Promise<PublicUser | null> {
   const user = await prisma.user.findUnique({
     where: { id }
   })
@@ -89,7 +74,7 @@ export async function getUserById(id: number): Promise<PublicUser | null> {
 /**
  * Check if user owns a specific post
  */
-export async function userOwnsPost(userId: number, postId: number): Promise<boolean> {
+export async function userOwnsPost(userId: string, postId: string): Promise<boolean> {
   const post = await prisma.post.findUnique({
     where: { id: postId },
     select: { authorId: true }

@@ -1,3 +1,4 @@
+// prettier.config.js
 export default {
   semi: false,
   singleQuote: true,
@@ -5,5 +6,7 @@ export default {
   printWidth: 100,
   tabWidth: 2,
   bracketSpacing: true,
-  arrowParens: 'avoid'
+  arrowParens: 'avoid',
+  vueIndentScriptAndStyle: true, // 👈 ovo dodaješ
+  plugins: ['prettier-plugin-tailwindcss'] // 👈 i ovo (tačka 2)
 }

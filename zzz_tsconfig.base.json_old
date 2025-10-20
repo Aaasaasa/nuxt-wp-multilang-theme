@@ -1,0 +1,59 @@
+{
+  "compilerOptions": {
+    /* ⚙️ Osnovno */
+    "target": "ESNext",
+    "module": "NodeNext",  // Changed: Must match moduleResolution
+    "moduleResolution": "NodeNext",
+    "moduleDetection": "force",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": true,
+
+    /* 💡 Paths za monorepo - corrected for your structure */
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],  // Generic tilde for each package's internal paths
+      "@/*": ["./app/*"],  // Generic app alias
+      "@@shared/*": ["./packages/shared/*"],  // Updated: your shared is at root/shared, not packages/shared
+      "@@admin/*": ["./app/admin/*"],
+      "@@web/*": ["./app/web/*"],
+      "@@server/*": ["./server/*"],
+      "#shared/*": ["./packages/shared/*"]  // Alternative alias for shared
+    },
+
+    /* 📦 Node tipovi i Nuxt tipovi */
+    "types": ["node", "nuxt/schema"],  // Changed: use nuxt/schema for better type support
+
+    /* ✅ Dodatne opcije */
+    "allowImportingTsExtensions": true,
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false
+  },
+
+  /* 🧠 Uključi sve aplikacije i shared pakete - corrected paths */
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.vue",
+    "server/**/*.ts",
+    "server/**/*.vue",
+    "shared/**/*.ts",  // Updated: shared is at root level
+    "shared/**/*.vue",
+    "*.d.ts",
+    "types/**/*.d.ts"
+  ],
+
+  /* 🚫 Isključi build output i cache foldere */
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    ".output",
+    ".turbo",
+    "dist"
+  ]
+}

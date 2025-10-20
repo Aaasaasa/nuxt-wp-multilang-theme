@@ -1,6 +1,3 @@
-import { validateBody } from '../../utils/validation.ts'
-import { defineEventHandler } from 'h3'
-
 /**
  * @openapi
  * /api/auth/register:
@@ -33,25 +30,25 @@ import { defineEventHandler } from 'h3'
  *       409:
  *         description: User already exists
  */
-export default defineEventHandler(async event => {
-  try {
-    const userData = await validateBody(event, registerUserSchema)
+export default defineEventHandler(async (event) => {
+  const userData = await validateBody(event, registerSchema)
 
-    // Transform to CreateUserData (remove confirmPassword)
-    const { confirmPassword, ...createUserData } = userData
+  // Transform to CreateUserData (remove confirmPassword)
+  const { confirmPassword, ...createUserData } = userData
 
-    // Create user using service
-    const user = await createUser(createUserData)
+  // Create user using service (user will have emailVerified: false by default)
+  const user = await createUser(createUserData)
 
-    // Set user session automatically after registration
-    await setUserSession(event, {
-      user,
-      loggedInAt: new Date()
-    })
+  // Create email verification token
+  const { token } = await createToken(user.id, TokenType.EMAIL_VERIFICATION)
 
-    return createCreatedResponse(user)
-  } catch (error: any) {
-    if (error.statusCode) throw error
-    throw serverError('Registration failed')
-  }
+  // Send verification email
+  const locale = getCookie(event, 'i18n_redirected') || 'fr'
+  await sendVerificationEmail(event, user.email, user.name, token, locale)
+
+  // Return success without auto-login
+  return createCreatedResponse({
+    message: 'Account created successfully. Please check your email to verify your account.',
+    email: user.email
+  })
 })

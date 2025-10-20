@@ -28,7 +28,7 @@ export const TEXT_FIELD_LIMITS = {
     MIN: 8,
     MAX: 128
   }
-} as const
+} // as const
 
 // Pagination limits
 export const PAGINATION_LIMITS = {
@@ -41,7 +41,7 @@ export const PAGINATION_LIMITS = {
     MAX: 50,
     DEFAULT: 10
   }
-} as const
+} // as const
 
 // Validation patterns
 export const VALIDATION_PATTERNS = {
@@ -51,4 +51,4 @@ export const VALIDATION_PATTERNS = {
   URL: /^https?:\/\/.+/,
   SLUG: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
   USERNAME: /^\w{3,20}$/
-} as const
+} // as const

@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "#shared/*": ["../../shared/*"]
+    },
+    "types": []
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.vue",
+    "**/*.js",
+    "../../shared/**/*.ts"
+  ]
+}

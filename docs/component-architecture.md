@@ -1,21 +1,23 @@
 # 🧩 Component Architecture
 
-Vue 3 Composition API components with Nuxt UI integration, following consistent patterns for reusability and maintainability.
+Vue 3 Composition API components with Nuxt UI Pro v4 integration, following consistent patterns for reusability and maintainability.
 
 ## 🏗️ Component Structure
 
 ```
 app/components/
-├── EditPostModal.vue        # Modal components for editing
-├── PostCard.vue             # Display components
-├── LanguageSwitcher.vue     # Utility components
-├── ThemeSwitcher.vue        # Utility components
-└── form/                    # Form components
-    ├── Post.vue             # Complete form components
-    └── field/               # Reusable field components
+├── features/
+│   └── post/
+│       ├── Card.vue         # Display components
+│       ├── CreateModal.vue  # Modal components with UAuthForm
+│       └── DeleteModal.vue  # Confirmation modals
+├── layout/
+│   └── PreferencesControls.vue  # Layout utility components
+└── ui/
+    └── form/               # Reusable form field components
         ├── Input.vue
+        ├── Email.vue
         ├── Password.vue
-        ├── Select.vue
         └── Textarea.vue
 ```
 
@@ -23,226 +25,71 @@ app/components/
 
 ### 1. Props & Events Pattern
 
-```vue
-<script setup lang="ts">
-// Type-safe props
-interface Props {
-  post: Post
-  loading?: boolean
-}
-
-const props = defineProps<Props>()
-
-// Type-safe events
-const emit = defineEmits<{
-  (e: 'delete', post: Post): void
-  (e: 'refresh'): void
-}>()
-</script>
-```
+**Implementation**: See components in `app/components/features/post/` for complete prop and event type definitions.
 
 ### 2. v-model Pattern
 
-```vue
-<script setup lang="ts">
-// Single v-model
-const modelValue = defineModel<string>({ required: true })
-
-// Named v-model
-const open = defineModel<boolean>('open', { required: true })
-</script>
-```
+**Implementation**: See `app/components/ui/form/` for v-model patterns and `app/components/features/post/CreateModal.vue` for named models.
 
 ### 3. Composable Integration
 
-```vue
-<script setup lang="ts">
-const { t } = useI18n()
-const { success, error } = useNotifications()
-const { state, schema } = usePostForm()
-</script>
-```
+**Implementation**: See components for composable integration patterns with useI18n, useNotifications, and form composables.
 
 ## 🎨 Component Categories
 
 ### Display Components
 
-**PostCard.vue** - Card component for displaying posts:
-
-```vue
-<template>
-  <UCard>
-    <template #header>
-      <div class="flex items-center justify-between">
-        <h3>{{ post.title }}</h3>
-        <div class="flex gap-1">
-          <!-- Action buttons with tooltips -->
-        </div>
-      </div>
-    </template>
-
-    <p class="whitespace-pre-wrap leading-relaxed">
-      {{ post.content }}
-    </p>
-  </UCard>
-</template>
-```
+**Implementation**: See `app/components/features/post/Card.vue` for complete post display component with Nuxt UI integration.
 
 **Features:**
 
-- ✅ **Nuxt UI integration** with UCard, UButton, UTooltip
-- ✅ **Action buttons** with accessibility tooltips
-- ✅ **Content formatting** with whitespace preservation
-- ✅ **Event emission** for parent interaction
+- ✅ **Nuxt UI Pro v4 integration** with UCard, UButton, UDropdownMenu
+- ✅ **Overlay system** with useOverlay() for modal management
+- ✅ **Consistent styling** with primary/secondary color scheme
+- ✅ **Micro-interactions** with hover effects and transitions
 
 ### Modal Components
 
-**EditPostModal.vue** - Modal for editing posts:
-
-```vue
-<template>
-  <UModal v-model:open="open" :dismissible="!loading">
-    <template #body>
-      <UForm :state="state" :schema="schema">
-        <!-- Form fields -->
-      </UForm>
-    </template>
-
-    <template #footer="{ close }">
-      <!-- Action buttons -->
-    </template>
-  </UModal>
-</template>
-```
+**Implementation**: See `app/components/features/post/CreateModal.vue` for complete modal component with form integration.
 
 **Features:**
 
-- ✅ **Form integration** with validation
-- ✅ **Loading states** with disabled interactions
-- ✅ **Auto-population** from props via watchers
-- ✅ **Success/error notifications**
+- ✅ **UAuthForm integration** for consistent form patterns
+- ✅ **Composable-driven** with usePostForm, useLoginForm, useRegisterForm
+- ✅ **Overlay management** with useOverlay() for better UX
+- ✅ **Real-time analytics** with character count, word count, reading time
 
 ### Form Field Components
 
-**Consistent field pattern:**
-
-```vue
-<template>
-  <UFormField :label="label" :name="name" :required="required">
-    <UInput
-      :value="modelValue"
-      :placeholder="placeholder"
-      @input="$emit('update:modelValue', $event.target.value)"
-    />
-
-    <template #error="{ error }">
-      <span class="text-red-400 text-sm">{{ error }}</span>
-    </template>
-  </UFormField>
-</template>
-
-<script setup lang="ts">
-defineProps<{
-  modelValue?: string
-  label: string
-  name: string
-  placeholder?: string
-  required?: boolean
-}>()
-
-defineEmits<(e: 'update:modelValue', value: string) => void>()
-</script>
-```
+**Implementation**: See `app/components/ui/form/` directory for consistent field component patterns with UFormField integration.
 
 ## 🎭 Styling Patterns
 
-### Nuxt UI Integration
+### Nuxt UI Pro v4 Integration
 
-```vue
-<template>
-  <!-- Primary colors for main actions -->
-  <UButton color="primary" variant="solid" />
-
-  <!-- Error colors for destructive actions -->
-  <UButton color="error" variant="ghost" />
-
-  <!-- Neutral colors for secondary actions -->
-  <UButton color="neutral" variant="outline" />
-</template>
-```
+**Implementation**: See components for consistent color and variant usage patterns with Nuxt UI components.
 
 ### Responsive Design
 
-```vue
-<template>
-  <div class="flex items-center justify-between">
-    <!-- Mobile-first approach with responsive utilities -->
-    <h3 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-      {{ title }}
-    </h3>
-  </div>
-</template>
-```
+**Implementation**: Components follow mobile-first responsive design with Tailwind CSS utilities and dark mode support.
 
 ### Dark Mode Support
 
-```vue
-<template>
-  <!-- Automatic dark mode with Tailwind -->
-  <p class="text-neutral-600 dark:text-neutral-400">
-    {{ content }}
-  </p>
-</template>
-```
+**Implementation**: All components include dark mode variants using Tailwind's dark: prefix classes.
 
 ## 🔧 State Management
 
 ### Local State
 
-```vue
-<script setup lang="ts">
-// Reactive refs for component state
-const showModal = ref(false)
-const isLoading = ref(false)
-
-// Reactive objects for complex state
-const formState = reactive({
-  title: '',
-  content: ''
-})
-</script>
-```
+**Implementation**: Components use Vue's reactive refs and reactive objects for local state management.
 
 ### Computed Properties
 
-```vue
-<script setup lang="ts">
-const isValid = computed(() => {
-  return formState.title.length > 0 && formState.content.length > 0
-})
-
-const buttonLabel = computed(() => {
-  return isLoading.value ? t('form.saving') : t('form.save')
-})
-</script>
-```
+**Implementation**: Components leverage Vue's computed properties for reactive derived state and dynamic content.
 
 ### Watchers
 
-```vue
-<script setup lang="ts">
-// Watch props for state updates
-watch(
-  () => props.post,
-  (newPost) => {
-    if (newPost) {
-      setState(newPost)
-    }
-  },
-  { immediate: true }
-)
-</script>
-```
+**Implementation**: Components use Vue watchers for reactive state updates based on prop changes and external data.
 
 ## 🚀 Best Practices
 
@@ -277,6 +124,7 @@ watch(
 ## 📚 Resources
 
 - [Vue 3 Composition API](https://vuejs.org/api/composition-api-setup.html)
-- [Nuxt UI Components](https://ui.nuxt.com/components)
+- [Nuxt UI Pro v4 Components](https://ui4.nuxt.com/components)
+- [Nuxt UI Pro v4 Auth Components](https://ui4.nuxt.com/docs/components/auth-form)
 - [TypeScript with Vue](https://vuejs.org/guide/typescript/overview.html)
 - [Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro/)

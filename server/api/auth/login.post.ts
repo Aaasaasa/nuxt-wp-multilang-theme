@@ -1,20 +1,8 @@
-import { validateBody } from '../../utils/validation.ts' // ✅ bez @@server
-
-import { defineEventHandler } from 'h3'
-import { authenticateUser } from '../../services/user.service.ts'
-import { setUserSession } from '../../utils/session.ts'
-import {
-  createApiResponse,
-  createCreatedResponse,
-  HTTP_STATUS,
-  serverError
-} from '../../utils/response.ts'
-
 /**
  * @openapi
  * /api/auth/login:
  *   post:
- *     summary: Login a user
+ *     summary: Login with email and password
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -29,30 +17,22 @@ import {
  *                 format: email
  *               password:
  *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *       400:
+ *         description: Validation error
+ *       401:
+ *         description: Invalid credentials
+ *       429:
+ *         description: Too many attempts
  */
-const loginUserSchema: any = {
-  type: 'object',
-  required: ['email', 'password'],
-  properties: {
-    email: { type: 'string', format: 'email' },
-    password: { type: 'string' }
-  }
-}
+export default defineEventHandler(async (event) => {
+  const { email, password } = await validateBody(event, loginSchema)
+  const ipAddress = getClientIP(event)
 
-export default defineEventHandler(async event => {
-  try {
-    const { email, password } = await validateBody(event, loginUserSchema)
+  // Use auth service for complete login business logic
+  const result = await loginUser(email, password, ipAddress, event)
 
-    const user = await authenticateUser(email, password)
-
-    await setUserSession(event, {
-      user,
-      loggedInAt: new Date()
-    })
-
-    return createApiResponse(user, HTTP_STATUS.OK, 'Login successful')
-  } catch (error: any) {
-    if (error.statusCode) throw error
-    throw serverError('Login failed')
-  }
+  return createApiResponse(result.user, HTTP_STATUS.OK, result.message)
 })
