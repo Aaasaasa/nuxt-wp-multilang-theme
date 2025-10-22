@@ -1,5 +1,7 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+/* eslint-disable quotes */
+// nuxt.config.ts
 import packageJson from './package.json'
+import { resolve } from 'path'
 
 export default defineNuxtConfig({
   // ========================================
@@ -9,9 +11,7 @@ export default defineNuxtConfig({
 
   devtools: {
     enabled: true,
-    timeline: {
-      enabled: true
-    }
+    timeline: { enabled: true }
   },
 
   // ========================================
@@ -35,14 +35,12 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     'nuxt-nodemailer',
 
-    // Security
+    // Security & State Management
     'nuxt-security',
-
-    // State Management
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
 
-    // Development Tools
+    // Dev Tools
     'nuxt-mcp'
   ],
 
@@ -51,10 +49,8 @@ export default defineNuxtConfig({
   // ========================================
   app: {
     head: {
-      htmlAttrs: {
-        lang: 'fr'
-      },
-      titleTemplate: '%s | Nuxt Boilerplate',
+      htmlAttrs: { lang: 'en' },
+      titleTemplate: '%s | Stajic Platform',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -65,7 +61,7 @@ export default defineNuxtConfig({
   },
 
   // ========================================
-  // Internationalization (i18n)
+  // i18n Configuration
   // ========================================
   i18n: {
     langDir: 'locales',
@@ -77,14 +73,20 @@ export default defineNuxtConfig({
         language: 'en-US'
       },
       {
-        code: 'fr',
-        name: 'Français',
-        files: ['fr/common.json', 'fr/seo.json', 'fr/email.json'],
-        language: 'fr-FR'
+        code: 'de',
+        name: 'Deutsch',
+        files: ['de/common.json', 'de/seo.json', 'de/email.json'],
+        language: 'de-DE'
+      },
+      {
+        code: 'sr',
+        name: 'Српски',
+        files: ['sr/common.json', 'sr/seo.json', 'sr/email.json'],
+        language: 'sr-RS'
       }
     ],
-    defaultLocale: 'fr',
-    strategy: 'prefix',
+    defaultLocale: 'en',
+    strategy: 'prefix_except_default',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
@@ -101,38 +103,50 @@ export default defineNuxtConfig({
   css: ['/assets/css/main.css'],
 
   // ========================================
-  // Auto-imports Configuration
+  // Auto-imports (clean)
   // ========================================
   imports: {
-    // Selective auto-imports for better tree-shaking
     dirs: [
-      'composables/**', // App composables
-      '../shared/**' // Shared resources
-    ],
-    imports: [
-      { name: 'z', from: 'zod' } // Zod for validation
+      'composables/**',
+      'server/utils/**',
+      'shared/**'
     ]
   },
 
+  // Zod auto-import (modern syntax)
+  hooks: {
+    'imports:extend': (imports) => {
+      imports.push({
+        from: 'zod',
+        name: 'z'
+      })
+    }
+  },
+
   // ========================================
-  // Nitro Server Configuration
+  // Nitro Configuration
   // ========================================
   nitro: {
+    alias: {
+      '@pgClient': resolve('./prisma/generated/postgres-cms/index.js'),
+      '@wpClient': resolve('./prisma/generated/mysql/index.js'),
+      '@mongoClient': resolve('./prisma/generated/mongo/index.js')
+    },
     imports: {
       dirs: [
-        'shared/**', // Shared resources
-        'server/constants/**', // Server constants
-        'server/services/**', // Server services
-        'server/utils/**', // Server utilities
-        'server/types/**' // Server types
+        'shared/**',
+        'server/constants/**',
+        'server/services/**',
+        'server/utils/**',
+        'server/types/**'
       ]
     },
-    serverAssets: [
-      {
-        baseName: 'templates',
-        dir: './templates'
+    serverAssets: [{ baseName: 'templates', dir: './templates' }],
+    rollupConfig: {
+      watch: {
+        exclude: ['data/**', 'data/mongo/**', '**/data/postgres/**', '**/data/mysql/**' ]
       }
-    ]
+    }
   },
 
   // ========================================
@@ -141,33 +155,30 @@ export default defineNuxtConfig({
   vite: {
     resolve: {
       alias: {
-        '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js'
+        //  '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js'
+        'prisma/generated/postgres-cms/index-browser.js': './node_modules/.prisma/client/index-browser.js'
       }
     },
-    build: {
-      chunkSizeWarningLimit: 600
-    }
+    build: { chunkSizeWarningLimit: 600 },
+    server: { watch: { ignored: ['**/data/**', '**/node_modules/**', '**/.nuxt/**'] } }
   },
 
   // ========================================
-  // Security Configuration
+  // Security
   // ========================================
   security: {
     headers: {
-      // Content Security Policy
       contentSecurityPolicy: {
-        'base-uri': ['\'self\''],
-        'font-src': ['\'self\'', 'https:', 'data:'],
-        'form-action': ['\'self\''],
-        'frame-ancestors': ['\'none\''],
-        'img-src': ['\'self\'', 'data:', 'https:'],
-        'object-src': ['\'none\''],
-        'script-src': ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\''],
-        'style-src': ['\'self\'', 'https:', '\'unsafe-inline\''],
+        'base-uri': ["'self'"],
+        'font-src': ["'self'", 'https:', 'data:'],
+        'form-action': ["'self'"],
+        'frame-ancestors': ["'none'"],
+        'img-src': ["'self'", 'data:', 'https:'],
+        'object-src': ["'none'"],
+        'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        'style-src': ["'self'", 'https:', "'unsafe-inline'"],
         'upgrade-insecure-requests': false
       },
-
-      // Other security headers (configured at runtime)
       crossOriginEmbedderPolicy: 'unsafe-none',
       referrerPolicy: 'no-referrer',
       strictTransportSecurity: false,
@@ -177,65 +188,49 @@ export default defineNuxtConfig({
       crossOriginOpenerPolicy: false,
       originAgentCluster: false
     },
-
-    // CORS - Disabled, using Nitro's built-in CORS instead (see routeRules)
     corsHandler: false,
-
-    // Rate Limiting
     rateLimiter: {
-      tokensPerInterval: 150, // 150 requests
-      interval: 5 * 60 * 1000, // 5 minutes
+      tokensPerInterval: 150,
+      interval: 5 * 60 * 1000,
       throwError: true
     },
-
     hidePoweredBy: true
   },
 
   // ========================================
-  // Routing & API Configuration
+  // Routing
   // ========================================
   routeRules: {
     '/api/**': {
-      cors: true, // This enables Nitro's built-in CORS handling
-      headers: {
-        'Access-Control-Max-Age': '86400'
-      }
-    }
+      cors: true,
+      headers: { 'Access-Control-Max-Age': '86400' }
+    },
+    '/lab/**': { ssr: false },
+    '/admin/**': { ssr: false }
   },
 
+  // ========================================
+  // SEO
+  // ========================================
   seo: {
-    meta: {
-      twitterCard: 'summary_large_image'
-    }
+    meta: { twitterCard: 'summary_large_image' }
   },
 
   // ========================================
-  // Runtime Configuration
+  // Runtime Config
   // ========================================
-  // All values here can be overridden by environment variables at runtime
-  // Format: NUXT_[nested_key] (e.g., NUXT_NODEMAILER_HOST)
   runtimeConfig: {
-    // ====== Server-only Configuration ======
-
-    // Email Configuration - Used by useMailer() utility
     nodemailer: {
-      host: '', // NUXT_NODEMAILER_HOST
-      port: 587, // NUXT_NODEMAILER_PORT
-      auth: {
-        user: '', // NUXT_NODEMAILER_AUTH_USER
-        pass: '' // NUXT_NODEMAILER_AUTH_PASS
-      },
-      from: '' // NUXT_NODEMAILER_FROM
+      host: '',
+      port: 587,
+      auth: { user: '', pass: '' },
+      from: ''
     },
-
-    // Rate Limiting Configuration
     rateLimit: {
-      loginMax: 5, // NUXT_RATE_LIMIT_LOGIN_MAX
-      loginWindow: 15, // NUXT_RATE_LIMIT_LOGIN_WINDOW (minutes)
-      tokenCooldown: 5 // NUXT_RATE_LIMIT_TOKEN_COOLDOWN (minutes)
+      loginMax: 5,
+      loginWindow: 15,
+      tokenCooldown: 5
     },
-
-    // ====== Public Configuration (accessible on client-side) ======
     public: {
       version: packageJson.version
     }

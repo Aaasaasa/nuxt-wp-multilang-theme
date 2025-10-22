@@ -6,11 +6,11 @@ services:
     container_name: nuxt_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: nuxt
-      POSTGRES_PASSWORD: nuxt
-      POSTGRES_DB: nuxtdb
+      POSTGRES_USER: usrcms
+      POSTGRES_PASSWORD: Utorak30Sep
+      POSTGRES_DB: nuxt_pg_cms_db
     ports:
-      - "5432:5434"
+      - "5432:5432" # 👈 host=5432, container=5432
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
       - ./.docker/postgres/init:/docker-entrypoint-initdb.d
@@ -20,10 +20,10 @@ services:
     container_name: nuxt_mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wpdb
-      MYSQL_USER: wpuser
-      MYSQL_PASSWORD: wppass
+      MYSQL_ROOT_PASSWORD: Freitag%230605
+      MYSQL_DATABASE: sta3wp
+      MYSQL_USER: rooth3wp
+      MYSQL_PASSWORD: Freitag%230605
     ports:
       - "3306:3306"
     volumes:
@@ -59,7 +59,10 @@ services:
       - "27017:27017"
     volumes:
       - ./data/mongo:/data/db
-      - ./.docker/mongo/init:/docker-entrypoint-initdb.d
+      - ./.docker/mongodb/init:/docker-entrypoint-initdb.d
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: yourpassword
 
   adminer:
     image: adminer

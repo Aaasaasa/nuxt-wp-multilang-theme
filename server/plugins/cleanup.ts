@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import prisma from '@@/lib/prisma'
+import prisma from '~~/server/utils/lib/prismaCms'
 
 export default defineNitroPlugin(async (nitroApp) => {
   console.log('[CLEANUP] Starting cleanup scheduler')

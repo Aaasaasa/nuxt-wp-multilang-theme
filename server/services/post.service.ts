@@ -1,4 +1,4 @@
-import prisma from '@@/lib/prisma'
+import prisma from '~~/server/utils/lib/prismaCms'
 
 /**
  * Post Service - Pure business logic without validation
