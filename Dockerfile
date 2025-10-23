@@ -1,22 +1,36 @@
-FROM node:24-alpine
+# ========== BASE IMAGE ==========
+FROM node:24-alpine AS base
 
+# Enable Corepack (for modern Yarn)
+RUN corepack enable && corepack prepare yarn@stable --activate
 
+# Set working directory
 WORKDIR /app
 
-# System-Tools (optional, falls prisma/mongo/postgres Tools gebraucht werden)
-RUN apk add --no-cache bash openssl
+# Install minimal system deps
+RUN apk add --no-cache bash openssl libc6-compat
 
-# Dependencies installieren
-COPY package.json package-lock.json turbo.json ./
-COPY app/web/package.json ./apps/web/
-COPY app/admin/package.json ./apps/admin/
-COPY server/package.json ./server/
-COPY shared/package.json ./shared/
+# Copy only dependency files first for caching
+COPY package.json yarn.lock ./
 
-RUN pnpm install
+# Install dependencies
+RUN yarn install --immutable
 
-# Projekt wird im Dev-Modus gemountet → kein Copy . .
-EXPOSE 3000
+# Copy all source files
+COPY . .
+
+# ========== DEVELOPMENT STAGE ==========
+FROM base AS dev
+
+# Use a non-root user to avoid file permission issues
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
+# Expose Nuxt dev port
 EXPOSE 4000
 
-CMD ["pnpm", "run", "dev"]
+# Recommended for file watching inside containers
+ENV CHOKIDAR_USEPOLLING=true
+
+# Default command: start Nuxt in dev mode
+CMD ["yarn", "dev"]

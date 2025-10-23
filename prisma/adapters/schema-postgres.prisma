@@ -8,7 +8,14 @@ generator pgCMSClient {
   provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
   output          = "../generated/postgres-cms"
-  //output          = "../../node_modules/.prisma/postgres-cms"
+  // output          = "../../node_modules/.prisma/client/default"
+}
+
+generator pgCMSClientDefault {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+  // output          = "../generated/postgres-cms"
+  output          = "../../node_modules/.prisma/client"
 }
 
 datasource pgCMSdb {
@@ -55,7 +62,60 @@ model User {
   products   Product[]
   comments   Comment[]
 
+  // New relations
+  vendor   Vendor?
+  employee Employee?
+  guest    Guest?
+
   @@map("cms_users")
+}
+
+// --- Vendor profile ---
+model Vendor {
+  id          Int     @id @default(autoincrement())
+  userId      Int     @unique
+  companyName String
+  taxNumber   String?
+  website     String?
+  phone       String?
+  address     String?
+  country     String?
+  logoUrl     String?
+
+  user     User      @relation(fields: [userId], references: [id])
+  products Product[]
+
+  @@map("cms_vendors")
+}
+
+// --- Employee profile ---
+model Employee {
+  id         Int       @id @default(autoincrement())
+  userId     Int       @unique
+  position   String?
+  department String?
+  company    String?
+  phone      String?
+  hireDate   DateTime?
+  salary     Float?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("cms_employees")
+}
+
+// --- Guest profile ---
+model Guest {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  sessionId String?
+  ipAddress String?
+  userAgent String?
+  lastVisit DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("cms_guests")
 }
 
 model UserMeta {
@@ -133,6 +193,15 @@ model Article {
   metas        ArticleMeta[]
   comments     Comment[]
   terms        TermRelationship[]
+
+  // Multilingual relations
+  article_en Article_en[]
+  article_de Article_de[]
+  article_sr Article_sr[]
+  article_es Article_es[]
+  article_fr Article_fr[]
+  article_it Article_it[]
+  article_ru Article_ru[]
 
   @@map("cms_articles")
 }
@@ -216,11 +285,22 @@ model Product {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  vendor       User                 @relation(fields: [vendorId], references: [id])
+  vendor        User    @relation(fields: [vendorId], references: [id], map: "cms_products_vendorId_user_fkey")
+  vendorProfile Vendor? @relation(fields: [vendorId], references: [id], map: "cms_products_vendorId_vendor_fkey")
+
   translations ProductTranslation[]
   metas        ProductMeta[]
   comments     Comment[]
   terms        TermRelationship[]
+
+  // Multilingual relations
+  product_en Product_en[]
+  product_de Product_de[]
+  product_sr Product_sr[]
+  product_es Product_es[]
+  product_fr Product_fr[]
+  product_it Product_it[]
+  product_ru Product_ru[]
 
   @@map("cms_products")
 }
@@ -247,6 +327,92 @@ model ProductMeta {
   product Product @relation(fields: [productId], references: [id])
 
   @@map("cms_product_meta")
+}
+
+// --- Multilingual Products (separate tables per language) ---
+
+model Product_en {
+  id          Int     @id @default(autoincrement())
+  productId   Int
+  title       String
+  description String
+  excerpt     String?
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("cms_product_en")
+}
+
+model Product_de {
+  id          Int     @id @default(autoincrement())
+  productId   Int
+  title       String
+  description String
+  excerpt     String?
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("cms_product_de")
+}
+
+model Product_sr {
+  id          Int     @id @default(autoincrement())
+  productId   Int
+  title       String
+  description String
+  excerpt     String?
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("cms_product_sr")
+}
+
+model Product_es {
+  id          Int     @id @default(autoincrement())
+  productId   Int
+  title       String
+  description String
+  excerpt     String?
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("cms_product_es")
+}
+
+model Product_fr {
+  id          Int     @id @default(autoincrement())
+  productId   Int
+  title       String
+  description String
+  excerpt     String?
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("cms_product_fr")
+}
+
+model Product_it {
+  id          Int     @id @default(autoincrement())
+  productId   Int
+  title       String
+  description String
+  excerpt     String?
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("cms_product_it")
+}
+
+model Product_ru {
+  id          Int     @id @default(autoincrement())
+  productId   Int
+  title       String
+  description String
+  excerpt     String?
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("cms_product_ru")
 }
 
 // --- Comments ---
@@ -346,4 +512,98 @@ model Setting {
   value Json
 
   @@map("cms_settings")
+}
+
+// --- Multilingual Articles (separate tables per language) ---
+
+model Article_en {
+  id        Int     @id @default(autoincrement())
+  articleId Int
+  title     String
+  content   String
+  excerpt   String?
+
+  article Article @relation(fields: [articleId], references: [id])
+
+  @@map("cms_article_en")
+}
+
+model Article_de {
+  id        Int     @id @default(autoincrement())
+  articleId Int
+  title     String
+  content   String
+  excerpt   String?
+
+  article Article @relation(fields: [articleId], references: [id])
+
+  @@map("cms_article_de")
+}
+
+model Article_sr {
+  id        Int     @id @default(autoincrement())
+  articleId Int
+  title     String
+  content   String
+  excerpt   String?
+
+  article Article @relation(fields: [articleId], references: [id])
+
+  @@map("cms_article_sr")
+}
+
+model Article_es {
+  id        Int     @id @default(autoincrement())
+  articleId Int
+  title     String
+  content   String
+  excerpt   String?
+
+  article Article @relation(fields: [articleId], references: [id])
+
+  @@map("cms_article_es")
+}
+
+model Article_fr {
+  id        Int     @id @default(autoincrement())
+  articleId Int
+  title     String
+  content   String
+  excerpt   String?
+
+  article Article @relation(fields: [articleId], references: [id])
+
+  @@map("cms_article_fr")
+}
+
+model Article_it {
+  id        Int     @id @default(autoincrement())
+  articleId Int
+  title     String
+  content   String
+  excerpt   String?
+
+  article Article @relation(fields: [articleId], references: [id])
+
+  @@map("cms_article_it")
+}
+
+model Article_ru {
+  id        Int     @id @default(autoincrement())
+  articleId Int
+  title     String
+  content   String
+  excerpt   String?
+
+  article Article @relation(fields: [articleId], references: [id])
+
+  @@map("cms_article_ru")
+}
+
+// --- Configuration ---
+model Conf {
+  key   String @id
+  value Json
+
+  @@map("cms_conf")
 }

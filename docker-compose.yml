@@ -1,6 +1,36 @@
 version: "3.9"
 
 services:
+  # ========= Nuxt App =========
+
+  nuxt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    container_name: nuxt_app
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: "true"
+      POSTGRES_URL: postgres://usrcms:Utorak30Sep@postgres:5432/nuxt_pg_cms_db
+      MYSQL_URL: mysql://rooth3wp:Freitag%230605@mysql:3306/sta3wp
+      REDIS_URL: redis://redis:6379
+      MONGO_URL: mongodb://root:yourpassword@mongodb:27017
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+      - mysql
+      - redis
+      - mongodb
+    restart: unless-stopped
+    command: ["yarn", "dev"]
+
+  # ========= PostgreSQL =========
+
   postgres:
     image: postgres:16
     container_name: nuxt_postgres
@@ -14,6 +44,8 @@ services:
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
       - ./.docker/postgres/init:/docker-entrypoint-initdb.d
+
+  # ========= MySQL =========
 
   mysql:
     image: mysql:8.3
@@ -30,6 +62,8 @@ services:
       - ./data/mysql:/var/lib/mysql
       - ./.docker/mysql/init:/docker-entrypoint-initdb.d
 
+  # ========= phpMyAdmin =========
+
   phpmyadmin:
     image: phpmyadmin:latest
     restart: unless-stopped
@@ -41,6 +75,8 @@ services:
     depends_on:
       - mysql
 
+  # ========= Redis =========
+
   redis:
     image: redis:7
     container_name: nuxt_redis
@@ -50,6 +86,8 @@ services:
     volumes:
       - ./data/redis:/data
       - ./.docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+
+  # ========= MongoDB =========
 
   mongodb:
     image: mongo:7
@@ -61,8 +99,10 @@ services:
       - ./data/mongo:/data/db
       - ./.docker/mongodb/init:/docker-entrypoint-initdb.d
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_USERNAME: aleks
       MONGO_INITDB_ROOT_PASSWORD: yourpassword
+
+  # ========= Adminer =========
 
   adminer:
     image: adminer
@@ -70,7 +110,8 @@ services:
     ports:
       - "8082:8080"
 
-# DuckDB nije service – mountaš lokalni fajl iz .docker/duckdb/
+  # ========= DuckDB =========
+  #  DuckDB nije service – mountaš lokalni fajl iz .docker/duckdb/
 volumes:
   postgres_data:
   mysql_data:

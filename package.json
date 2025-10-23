@@ -15,8 +15,8 @@
   },
   "scripts": {
     "build": "nuxt build",
-    "dev": "yarn nuxt dev",
-    "dev:clean": "rm -rf .nuxt .output && yarn dev",
+    "dev": "nuxt dev --port 4000 --host 0.0.0.0",
+    "dev:clean": "rm -rf .nuxt .output && nuxt dev --port 4000 --host 0.0.0.0",
     "preview": "nuxt preview",
     "lint": "yarn run lint:prettier && npm run lint:eslint",
     "lint:eslint": "eslint . --fix --ignore-pattern volumes/",
@@ -34,8 +34,8 @@
     "db:seed": "prisma db seed",
     "env:check": "sh -c '[ -f .env ] || (echo \"❌ Missing .env file\" && exit 1)'",
     "env:copy": "cp .env.example .env",
+    "db:seed:ts": "ts-node prisma/seed.ts",
     "db:init": "yarn prisma migrate dev --name init --schema=prisma/adapters/schema-postgres.prisma && yarn prisma generate --schema=prisma/adapters/schema-postgres.prisma",
-
     "db:generate": "yarn db:pg && yarn db:mysql && yarn db:mongo",
     "db:pg": "prisma generate --schema=prisma/adapters/schema-postgres.prisma",
     "db:mysql": "prisma generate --schema=prisma/adapters/schema-mysql.prisma",
@@ -62,7 +62,9 @@
     "@nuxtjs/i18n": "^10.1.1",
     "@nuxtjs/seo": "^3.2.2",
     "@pinia/nuxt": "^0.11.2",
+    "@prisma/client": "^6.18.0",
     "@prisma/nuxt": "^0.3.0",
+    "bcryptjs": "^3.0.2",
     "handlebars": "^4.7.8",
     "nodemailer": "^7.0.9",
     "nuxt": "^4.1.3",
@@ -71,6 +73,7 @@
     "nuxt-security": "^2.4.0",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.5.0",
+    "vue-i18n": "^11.1.12",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -79,6 +82,7 @@
     "@nuxt/eslint": "^1.9.0",
     "@nuxt/test-utils": "^3.19.2",
     "@playwright/test": "^1.56.1",
+    "@types/bcryptjs": "^3.0.0",
     "@types/node": "^24.9.1",
     "eslint": "^9.38.0",
     "happy-dom": "^20.0.8",
@@ -94,7 +98,7 @@
     "vitest": "^4.0.1"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx ./prisma/seed.ts"
   },
   "packageManager": "yarn@1.22.22",
   "engines": {

@@ -1,4 +1,5 @@
-import prisma from '~~/server/utils/lib/prismaCms'
+// server/services/post.service.ts
+import prismaCms from '~~/server/utils/lib/prismaCms'
 
 /**
  * Post Service - Pure business logic without validation
@@ -13,7 +14,7 @@ export async function createPost(
   authorId: string
 ): Promise<PostWithAuthor> {
   try {
-    const post = await prisma.post.create({
+    const article = await prismaCms.article.create({
       data: {
         title: postData.title,
         content: postData.content,
@@ -25,10 +26,10 @@ export async function createPost(
     })
 
     return {
-      ...post,
-      author: toPublicUser(post.author),
-      createdAt: post.createdAt.toISOString(),
-      updatedAt: post.updatedAt.toISOString()
+      ...article,
+      author: toPublicUser(article.authorId),
+      createdAt: article.createdAt.toISOString(),
+      updatedAt: article.updatedAt.toISOString()
     }
   } catch (error: any) {
     if (error.code === PRISMA_ERRORS.FOREIGN_KEY_CONSTRAINT_FAILED) {
@@ -42,18 +43,18 @@ export async function createPost(
  * Get all posts
  */
 export async function getAllPosts(): Promise<PostWithAuthor[]> {
-  const posts = await prisma.post.findMany({
+  const articles = await prismaCms.article.findMany({
     include: {
       author: true
     },
     orderBy: { createdAt: 'desc' }
   })
 
-  return posts.map((post) => ({
-    ...post,
-    author: toPublicUser(post.author),
-    createdAt: post.createdAt.toISOString(),
-    updatedAt: post.updatedAt.toISOString()
+  return articles.map((article) => ({
+    ...article,
+    author: toPublicUser(article.authorId),
+    createdAt: article.createdAt.toISOString(),
+    updatedAt: article.updatedAt.toISOString()
   }))
 }
 
