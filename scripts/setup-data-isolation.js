@@ -20,10 +20,10 @@ const dataBackupDir = join(dirname(projectRoot), 'nuxt-wp-multilang-theme-data')
 
 function log(message, type = 'info') {
   const colors = {
-    info: '\x1b[36m',    // cyan
+    info: '\x1b[36m', // cyan
     success: '\x1b[32m', // green
     warning: '\x1b[33m', // yellow
-    error: '\x1b[31m'    // red
+    error: '\x1b[31m' // red
   }
   const reset = '\x1b[0m'
   // eslint-disable-next-line no-console
@@ -64,7 +64,6 @@ function setupDataIsolation() {
     log(`   • Original data moved to: ${dataBackupDir}`, 'info')
     log(`   • Symlink created at: ${dataDir}`, 'info')
     log('   • MySQL file watcher permission errors should be resolved', 'info')
-
   } catch (error) {
     log(`❌ Error setting up data isolation: ${error.message}`, 'error')
     process.exit(1)
@@ -90,7 +89,6 @@ function restoreDataDirectory() {
     } else {
       log('No backup data directory found', 'warning')
     }
-
   } catch (error) {
     log(`❌ Error restoring data directory: ${error.message}`, 'error')
     process.exit(1)
