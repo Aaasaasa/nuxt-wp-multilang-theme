@@ -1,5 +1,5 @@
 // server/lib/prismaCms.ts
-import { PrismaClient as PrismaCmsClient } from '../../prisma/generated/postgres-cms/index.js'
+import { PrismaClient as PrismaCmsClient } from '~~/prisma/generated/postgres-cms/index.js'
 
 const prismaCmsSingleton = () => new PrismaCmsClient()
 type PrismaCmsSingleton = ReturnType<typeof prismaCmsSingleton>

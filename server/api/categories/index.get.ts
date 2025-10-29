@@ -1,7 +1,7 @@
 // server/api/categories/index.get.ts
 // API Endpoint für Kategorien mit Redis Caching
 
-import { PrismaClient as PostgresCMSClient } from '../../../prisma/generated/postgres-cms/index.js'
+import { PrismaClient as PostgresCMSClient } from '~~/prisma/generated/postgres-cms/index.js'
 import { createClient } from 'redis'
 
 const pg = new PostgresCMSClient()
