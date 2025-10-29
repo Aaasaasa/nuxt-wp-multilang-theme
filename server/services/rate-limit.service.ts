@@ -1,4 +1,4 @@
-import prisma from '~~/server/lib/prismaCms'
+import prisma from '~~/server/utils/prismaCms'
 import type { H3Event } from 'h3'
 
 /**

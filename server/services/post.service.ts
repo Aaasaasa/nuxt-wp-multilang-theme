@@ -1,5 +1,5 @@
 // server/services/post.service.ts
-import prismaCms from '../lib/prismaCms'
+import prismaCms from '../utils/prismaCms'
 import { toPublicUser } from '~~/shared/models/user'
 import {
   badRequestError,

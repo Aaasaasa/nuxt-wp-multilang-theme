@@ -1,5 +1,5 @@
 // server/services/product.service.ts
-import prismaCms from '../lib/prismaCms'
+import prismaCms from '../utils/prismaCms'
 
 // Types
 interface ProductWithVendor {

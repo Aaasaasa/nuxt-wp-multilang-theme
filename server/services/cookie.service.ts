@@ -1,5 +1,5 @@
-import type { PrismaClient as PrismaCmsClient } from '@@/prisma/generated/postgres-cms/index.js'
-import prismaCms from '../lib/prismaCms'
+import type { PrismaClient as PrismaCmsClient } from '@prisma/cms'
+import prismaCms from '../utils/prismaCms'
 
 export class CookieService {
   private prisma: PrismaCmsClient
@@ -58,7 +58,7 @@ export class CookieService {
       orderBy: { sortOrder: 'asc' }
     })
 
-    return categories.map(category => {
+    return categories.map((category) => {
       const translation = category.translations[0]
       return {
         id: category.id,
@@ -68,7 +68,7 @@ export class CookieService {
         required: category.required,
         enabled: category.enabled,
         sortOrder: category.sortOrder,
-        cookies: category.cookies.map(cookie => {
+        cookies: category.cookies.map((cookie) => {
           const cookieTranslation = cookie.translations[0]
           return {
             id: cookie.id,

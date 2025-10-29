@@ -1,4 +1,4 @@
-import prismaCms from '../lib/prismaCms'
+import prismaCms from '../utils/prismaCms'
 
 const prisma = prismaCms
 

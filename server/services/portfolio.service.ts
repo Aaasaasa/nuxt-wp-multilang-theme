@@ -1,5 +1,5 @@
 // server/services/portfolio.service.ts
-import prismaCms from '../lib/prismaCms'
+import prismaCms from '../utils/prismaCms'
 import { MediaResolver } from '../utils/mediaResolver'
 
 // Types

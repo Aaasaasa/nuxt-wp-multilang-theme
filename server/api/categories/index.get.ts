@@ -1,7 +1,7 @@
 // server/api/categories/index.get.ts
 // API Endpoint für Kategorien mit Redis Caching
 
-import { PrismaClient as PostgresCMSClient } from '../../../prisma/generated/postgres-cms/index.js'
+import { PrismaClient as PostgresCMSClient } from '@prisma/cms'
 import { createClient } from 'redis'
 
 const pg = new PostgresCMSClient()
@@ -40,13 +40,15 @@ export default defineEventHandler(async (event) => {
     }
 
     // 2️⃣ Datenbank Query
-    const categories = await pg.$queryRaw<Array<{
-      id: number
-      name: string
-      slug: string
-      description: string | null
-      article_count: bigint
-    }>>`
+    const categories = await pg.$queryRaw<
+      Array<{
+        id: number
+        name: string
+        slug: string
+        description: string | null
+        article_count: bigint
+      }>
+    >`
       SELECT
         t.id,
         t.name,
@@ -63,7 +65,7 @@ export default defineEventHandler(async (event) => {
     `
 
     // Konvertiere bigint zu number
-    const formattedCategories = categories.map(cat => ({
+    const formattedCategories = categories.map((cat) => ({
       id: cat.id,
       name: cat.name,
       slug: cat.slug,
@@ -80,7 +82,6 @@ export default defineEventHandler(async (event) => {
       cached: false,
       timestamp: new Date().toISOString()
     }
-
   } catch (error) {
     console.error('❌ Error fetching categories:', error)
     throw createError({
