@@ -7,19 +7,14 @@ const { postViewMode, postDisplayMode, setPostViewMode, setPostDisplayMode, rese
 </script>
 
 <template>
-  <UCard
-    class="shadow-lg border-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm"
-  >
+  <UCard class="shadow-lg border-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
     <!-- Header -->
     <template #header>
       <div class="flex items-center gap-3">
         <div
           class="p-2 bg-primary-100 dark:bg-primary-900 rounded-lg flex items-center justify-center"
         >
-          <UIcon
-            name="i-lucide-settings"
-            class="w-5 h-5 text-primary-600 dark:text-primary-400"
-          />
+          <UIcon name="i-lucide-settings" class="w-5 h-5 text-primary-600 dark:text-primary-400" />
         </div>
         <div>
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
@@ -36,9 +31,7 @@ const { postViewMode, postDisplayMode, setPostViewMode, setPostDisplayMode, rese
     <div class="space-y-6">
       <!-- View Mode -->
       <div class="space-y-3">
-        <label
-          class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
-        >
+        <label class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
           <UIcon name="i-lucide-layout-grid" class="w-4 h-4" />
           {{ t('preferences.displayMode.label') }}
         </label>
@@ -66,9 +59,7 @@ const { postViewMode, postDisplayMode, setPostViewMode, setPostDisplayMode, rese
 
       <!-- Detail Level -->
       <div class="space-y-3">
-        <label
-          class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
-        >
+        <label class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
           <UIcon name="i-lucide-eye" class="w-4 h-4" />
           {{ t('preferences.detailLevel.label') }}
         </label>
@@ -99,12 +90,7 @@ const { postViewMode, postDisplayMode, setPostViewMode, setPostDisplayMode, rese
         <div class="space-y-3">
           <div class="flex items-center justify-between text-xs">
             <span class="text-gray-500 dark:text-gray-400">{{ t('preferences.current') }}</span>
-            <UButton
-              variant="ghost"
-              icon="i-lucide-rotate-cw"
-              size="xs"
-              @click="resetPreferences"
-            >
+            <UButton variant="ghost" icon="i-lucide-rotate-cw" size="xs" @click="resetPreferences">
               {{ t('actions.reset') }}
             </UButton>
           </div>

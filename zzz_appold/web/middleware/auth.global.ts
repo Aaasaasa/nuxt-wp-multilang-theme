@@ -16,7 +16,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   return await sharedAuthGuard(to, {
     fetcher,
     navigateTo: (p: string, opts?: any) => navigateTo(p, opts),
-    getUser: () => (nuxtApp?.$auth?.user ?? stateUser.value)
+    getUser: () => nuxtApp?.$auth?.user ?? stateUser.value
   })
 })
 

@@ -19,8 +19,8 @@ if (import.meta.client) {
       }
       if (saved.postViewMode) postViewMode.value = saved.postViewMode
       if (saved.postDisplayMode) postDisplayMode.value = saved.postDisplayMode
-    } catch (e) {
-      console.warn('[usePreferences] Failed to parse localStorage:', e)
+    } catch {
+      // Failed to parse localStorage
     }
   }
 }

@@ -78,11 +78,7 @@ function isActive(path: string) {
             <component :is="item.icon" class="w-5 h-5 shrink-0" />
           </UTooltip>
 
-          <component
-            :is="item.icon"
-            v-else
-            class="w-5 h-5 shrink-0"
-          />
+          <component :is="item.icon" v-else class="w-5 h-5 shrink-0" />
           <span v-if="!collapsed" class="truncate">{{ item.label }}</span>
         </NuxtLink>
       </nav>

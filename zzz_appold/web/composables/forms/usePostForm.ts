@@ -25,7 +25,7 @@ export const usePostForm = () => {
       title: z
         .string()
         .trim()
-        .refine(val => val.length > 0, {
+        .refine((val) => val.length > 0, {
           message: t('postForm.fields.title.validation.required')
         })
         .min(TEXT_FIELD_LIMITS.TITLE.MIN, t('postForm.fields.title.validation.minLength'))
@@ -33,7 +33,7 @@ export const usePostForm = () => {
       content: z
         .string()
         .trim()
-        .refine(val => val.length > 0, {
+        .refine((val) => val.length > 0, {
           message: t('postForm.fields.content.validation.required')
         })
         .min(TEXT_FIELD_LIMITS.CONTENT.MIN, t('postForm.fields.content.validation.minLength'))

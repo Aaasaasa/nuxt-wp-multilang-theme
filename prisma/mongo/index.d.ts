@@ -1,9 +1,8 @@
-
 /**
  * Client
-*/
+ */
 
-import * as runtime from './runtime/library.js';
+import * as runtime from './runtime/library.js'
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -12,10 +11,9 @@ import $Result = runtime.Types.Result
 
 export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
-
 /**
  * Model mgArticle
- * 
+ *
  */
 export type mgArticle = $Result.DefaultSelection<Prisma.$mgArticlePayload>
 
@@ -35,12 +33,16 @@ export type mgArticle = $Result.DefaultSelection<Prisma.$mgArticlePayload>
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions
+    ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition>
+      ? Prisma.GetEvents<ClientOptions['log']>
+      : never
+    : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
 
-    /**
+  /**
    * ##  Prisma Client ʲˢ
    *
    * Type-safe database client for TypeScript & Node.js
@@ -55,20 +57,23 @@ export class PrismaClient<
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
-  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
-  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
+  constructor(optionsArg?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>)
+  $on<V extends U>(
+    eventType: V,
+    callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void
+  ): PrismaClient
 
   /**
    * Connect with the database
    */
-  $connect(): $Utils.JsPromise<void>;
+  $connect(): $Utils.JsPromise<void>
 
   /**
    * Disconnect from the database
    */
-  $disconnect(): $Utils.JsPromise<void>;
+  $disconnect(): $Utils.JsPromise<void>
 
-/**
+  /**
    * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
    * @example
    * ```
@@ -78,12 +83,17 @@ export class PrismaClient<
    *   prisma.user.create({ data: { name: 'Alice' } }),
    * ])
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P]): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(
+    arg: [...P]
+  ): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
-  $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number }): $Utils.JsPromise<R>
+  $transaction<R>(
+    fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>,
+    options?: { maxWait?: number; timeout?: number }
+  ): $Utils.JsPromise<R>
 
   /**
    * Executes a raw MongoDB command and returns the result of it.
@@ -95,24 +105,32 @@ export class PrismaClient<
    *   explain: false,
    * })
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $runCommandRaw(command: Prisma.InputJsonObject): Prisma.PrismaPromise<Prisma.JsonObject>
 
-  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
-    extArgs: ExtArgs
-  }>>
+  $extends: $Extensions.ExtendsHook<
+    'extends',
+    Prisma.TypeMapCb<ClientOptions>,
+    ExtArgs,
+    $Utils.Call<
+      Prisma.TypeMapCb<ClientOptions>,
+      {
+        extArgs: ExtArgs
+      }
+    >
+  >
 
-      /**
+  /**
    * `prisma.mgArticle`: Exposes CRUD operations for the **mgArticle** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more MgArticles
-    * const mgArticles = await prisma.mgArticle.findMany()
-    * ```
-    */
-  get mgArticle(): Prisma.mgArticleDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more MgArticles
+   * const mgArticles = await prisma.mgArticle.findMany()
+   * ```
+   */
+  get mgArticle(): Prisma.mgArticleDelegate<ExtArgs, ClientOptions>
 }
 
 export namespace Prisma {
@@ -143,8 +161,6 @@ export namespace Prisma {
   export import raw = runtime.raw
   export import Sql = runtime.Sql
 
-
-
   /**
    * Decimal.js
    */
@@ -161,8 +177,8 @@ export namespace Prisma {
   export type MetricHistogramBucket = runtime.MetricHistogramBucket
 
   /**
-  * Extensions
-  */
+   * Extensions
+   */
   export import Extension = $Extensions.UserArgs
   export import getExtensionContext = runtime.Extensions.getExtensionContext
   export import Args = $Public.Args
@@ -184,7 +200,6 @@ export namespace Prisma {
    * Utility Types
    */
 
-
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -199,36 +214,36 @@ export namespace Prisma {
    */
   namespace NullTypes {
     /**
-    * Type of `Prisma.DbNull`.
-    *
-    * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
-    *
-    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
-    */
+     * Type of `Prisma.DbNull`.
+     *
+     * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
+     *
+     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+     */
     class DbNull {
       private DbNull: never
       private constructor()
     }
 
     /**
-    * Type of `Prisma.JsonNull`.
-    *
-    * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
-    *
-    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
-    */
+     * Type of `Prisma.JsonNull`.
+     *
+     * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
+     *
+     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+     */
     class JsonNull {
       private JsonNull: never
       private constructor()
     }
 
     /**
-    * Type of `Prisma.AnyNull`.
-    *
-    * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
-    *
-    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
-    */
+     * Type of `Prisma.AnyNull`.
+     *
+     * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
+     *
+     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+     */
     class AnyNull {
       private AnyNull: never
       private constructor()
@@ -269,22 +284,23 @@ export namespace Prisma {
   /**
    * Get the type of the value, that the Promise holds.
    */
-  export type PromiseType<T extends PromiseLike<any>> = T extends PromiseLike<infer U> ? U : T;
+  export type PromiseType<T extends PromiseLike<any>> = T extends PromiseLike<infer U> ? U : T
 
   /**
    * Get the return type of a function which returns a Promise.
    */
-  export type PromiseReturnType<T extends (...args: any) => $Utils.JsPromise<any>> = PromiseType<ReturnType<T>>
+  export type PromiseReturnType<T extends (...args: any) => $Utils.JsPromise<any>> = PromiseType<
+    ReturnType<T>
+  >
 
   /**
    * From T, pick a set of properties whose keys are in the union K
    */
   type Prisma__Pick<T, K extends keyof T> = {
-      [P in K]: T[P];
-  };
+    [P in K]: T[P]
+  }
 
-
-  export type Enumerable<T> = T | Array<T>;
+  export type Enumerable<T> = T | Array<T>
 
   export type RequiredKeys<T> = {
     [K in keyof T]-?: {} extends Prisma__Pick<T, K> ? never : K
@@ -301,8 +317,8 @@ export namespace Prisma {
    * @desc From `T` pick properties that exist in `U`. Simple version of Intersection
    */
   export type Subset<T, U> = {
-    [key in keyof T]: key extends keyof U ? T[key] : never;
-  };
+    [key in keyof T]: key extends keyof U ? T[key] : never
+  }
 
   /**
    * SelectSubset
@@ -311,12 +327,11 @@ export namespace Prisma {
    */
   export type SelectSubset<T, U> = {
     [key in keyof T]: key extends keyof U ? T[key] : never
-  } &
-    (T extends SelectAndInclude
-      ? 'Please either choose `select` or `include`.'
-      : T extends SelectAndOmit
-        ? 'Please either choose `select` or `omit`.'
-        : {})
+  } & (T extends SelectAndInclude
+    ? 'Please either choose `select` or `include`.'
+    : T extends SelectAndOmit
+      ? 'Please either choose `select` or `omit`.'
+      : {})
 
   /**
    * Subset + Intersection
@@ -324,37 +339,35 @@ export namespace Prisma {
    */
   export type SubsetIntersection<T, U, K> = {
     [key in keyof T]: key extends keyof U ? T[key] : never
-  } &
-    K
+  } & K
 
-  type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+  type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never }
 
   /**
    * XOR is needed to have a real mutually exclusive union type
    * https://stackoverflow.com/questions/42123407/does-typescript-support-mutually-exclusive-types
    */
-  type XOR<T, U> =
-    T extends object ?
-    U extends object ?
-      (Without<T, U> & U) | (Without<U, T> & T)
-    : U : T
-
+  type XOR<T, U> = T extends object
+    ? U extends object
+      ? (Without<T, U> & U) | (Without<U, T> & T)
+      : U
+    : T
 
   /**
    * Is T a Record?
    */
-  type IsObject<T extends any> = T extends Array<any>
-  ? False
-  : T extends Date
-  ? False
-  : T extends Uint8Array
-  ? False
-  : T extends bigint
-  ? False
-  : T extends object
-  ? True
-  : False
-
+  type IsObject<T extends any> =
+    T extends Array<any>
+      ? False
+      : T extends Date
+        ? False
+        : T extends Uint8Array
+          ? False
+          : T extends bigint
+            ? False
+            : T extends object
+              ? True
+              : False
 
   /**
    * If it's T[], return T
@@ -375,20 +388,14 @@ export namespace Prisma {
 
   type EitherLoose<O extends object, K extends Key> = ComputeRaw<__Either<O, K>>
 
-  type _Either<
-    O extends object,
-    K extends Key,
-    strict extends Boolean
-  > = {
+  type _Either<O extends object, K extends Key, strict extends Boolean> = {
     1: EitherStrict<O, K>
     0: EitherLoose<O, K>
   }[strict]
 
-  type Either<
-    O extends object,
-    K extends Key,
-    strict extends Boolean = 1
-  > = O extends unknown ? _Either<O, K, strict> : never
+  type Either<O extends object, K extends Key, strict extends Boolean = 1> = O extends unknown
+    ? _Either<O, K, strict>
+    : never
 
   export type Union = any
 
@@ -397,57 +404,68 @@ export namespace Prisma {
   } & {}
 
   /** Helper Types for "Merge" */
-  export type IntersectOf<U extends Union> = (
-    U extends unknown ? (k: U) => void : never
-  ) extends (k: infer I) => void
+  export type IntersectOf<U extends Union> = (U extends unknown ? (k: U) => void : never) extends (
+    k: infer I
+  ) => void
     ? I
     : never
 
   export type Overwrite<O extends object, O1 extends object> = {
-      [K in keyof O]: K extends keyof O1 ? O1[K] : O[K];
-  } & {};
+    [K in keyof O]: K extends keyof O1 ? O1[K] : O[K]
+  } & {}
 
-  type _Merge<U extends object> = IntersectOf<Overwrite<U, {
-      [K in keyof U]-?: At<U, K>;
-  }>>;
+  type _Merge<U extends object> = IntersectOf<
+    Overwrite<
+      U,
+      {
+        [K in keyof U]-?: At<U, K>
+      }
+    >
+  >
 
-  type Key = string | number | symbol;
-  type AtBasic<O extends object, K extends Key> = K extends keyof O ? O[K] : never;
-  type AtStrict<O extends object, K extends Key> = O[K & keyof O];
-  type AtLoose<O extends object, K extends Key> = O extends unknown ? AtStrict<O, K> : never;
+  type Key = string | number | symbol
+  type AtBasic<O extends object, K extends Key> = K extends keyof O ? O[K] : never
+  type AtStrict<O extends object, K extends Key> = O[K & keyof O]
+  type AtLoose<O extends object, K extends Key> = O extends unknown ? AtStrict<O, K> : never
   export type At<O extends object, K extends Key, strict extends Boolean = 1> = {
-      1: AtStrict<O, K>;
-      0: AtLoose<O, K>;
-  }[strict];
+    1: AtStrict<O, K>
+    0: AtLoose<O, K>
+  }[strict]
 
-  export type ComputeRaw<A extends any> = A extends Function ? A : {
-    [K in keyof A]: A[K];
-  } & {};
+  export type ComputeRaw<A extends any> = A extends Function
+    ? A
+    : {
+        [K in keyof A]: A[K]
+      } & {}
 
   export type OptionalFlat<O> = {
-    [K in keyof O]?: O[K];
-  } & {};
+    [K in keyof O]?: O[K]
+  } & {}
 
   type _Record<K extends keyof any, T> = {
-    [P in K]: T;
-  };
+    [P in K]: T
+  }
 
   // cause typescript not to expand types and preserve names
-  type NoExpand<T> = T extends unknown ? T : never;
+  type NoExpand<T> = T extends unknown ? T : never
 
   // this type assumes the passed object is entirely optional
   type AtLeast<O extends object, K extends string> = NoExpand<
     O extends unknown
-    ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
-      | {[P in keyof O as P extends K ? P : never]-?: O[P]} & O
-    : never>;
+      ?
+          | (K extends keyof O ? { [P in K]: O[P] } & O : O)
+          | ({ [P in keyof O as P extends K ? P : never]-?: O[P] } & O)
+      : never
+  >
 
-  type _Strict<U, _U = U> = U extends unknown ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>> : never;
+  type _Strict<U, _U = U> = U extends unknown
+    ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>>
+    : never
 
-  export type Strict<U extends object> = ComputeRaw<_Strict<U>>;
+  export type Strict<U extends object> = ComputeRaw<_Strict<U>>
   /** End Helper Types for "Merge" */
 
-  export type Merge<U extends object> = ComputeRaw<_Merge<Strict<U>>>;
+  export type Merge<U extends object> = ComputeRaw<_Merge<Strict<U>>>
 
   /**
   A [[Boolean]]
@@ -472,12 +490,10 @@ export namespace Prisma {
   export type Extends<A1 extends any, A2 extends any> = [A1] extends [never]
     ? 0 // anything `never` is false
     : A1 extends A2
-    ? 1
-    : 0
+      ? 1
+      : 0
 
-  export type Has<U extends Union, U1 extends Union> = Not<
-    Extends<Exclude<U1, U>, U1>
-  >
+  export type Has<U extends Union, U1 extends Union> = Not<Extends<Exclude<U1, U>, U1>>
 
   export type Or<B1 extends Boolean, B2 extends Boolean> = {
     0: {
@@ -492,32 +508,25 @@ export namespace Prisma {
 
   export type Keys<U extends Union> = U extends unknown ? keyof U : never
 
-  type Cast<A, B> = A extends B ? A : B;
+  type Cast<A, B> = A extends B ? A : B
 
-  export const type: unique symbol;
-
-
+  export const type: unique symbol
 
   /**
    * Used by group by
    */
 
-  export type GetScalarType<T, O> = O extends object ? {
-    [P in keyof T]: P extends keyof O
-      ? O[P]
-      : never
-  } : never
+  export type GetScalarType<T, O> = O extends object
+    ? {
+        [P in keyof T]: P extends keyof O ? O[P] : never
+      }
+    : never
 
-  type FieldPaths<
-    T,
-    U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>
-  > = IsObject<T> extends True ? U : T
+  type FieldPaths<T, U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>> =
+    IsObject<T> extends True ? U : T
 
   type GetHavingFields<T> = {
-    [K in keyof T]: Or<
-      Or<Extends<'OR', K>, Extends<'AND', K>>,
-      Extends<'NOT', K>
-    > extends True
+    [K in keyof T]: Or<Or<Extends<'OR', K>, Extends<'AND', K>>, Extends<'NOT', K>> extends True
       ? // infer is only needed to not hit TS limit
         // based on the brilliant idea of Pierre-Antoine Mills
         // https://github.com/microsoft/TypeScript/issues/30188#issuecomment-478938437
@@ -525,8 +534,8 @@ export namespace Prisma {
         ? GetHavingFields<UnEnumerate<TK> extends object ? Merge<UnEnumerate<TK>> : never>
         : never
       : {} extends FieldPaths<T[K]>
-      ? never
-      : K
+        ? never
+        : K
   }[keyof T]
 
   /**
@@ -539,40 +548,49 @@ export namespace Prisma {
   /**
    * Like `Pick`, but additionally can also accept an array of keys
    */
-  type PickEnumerable<T, K extends Enumerable<keyof T> | keyof T> = Prisma__Pick<T, MaybeTupleToUnion<K>>
+  type PickEnumerable<T, K extends Enumerable<keyof T> | keyof T> = Prisma__Pick<
+    T,
+    MaybeTupleToUnion<K>
+  >
 
   /**
    * Exclude all keys with underscores
    */
   type ExcludeUnderscoreKeys<T extends string> = T extends `_${string}` ? never : T
 
-
   export type FieldRef<Model, FieldType> = runtime.FieldRef<Model, FieldType>
 
-  type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRef<Model, FieldType>
-
+  type FieldRefInputType<Model, FieldType> = Model extends never
+    ? never
+    : FieldRef<Model, FieldType>
 
   export const ModelName: {
     mgArticle: 'mgArticle'
-  };
+  }
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
-
 
   export type Datasources = {
     mongo?: Datasource
   }
 
-  interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
-    returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
+  interface TypeMapCb<ClientOptions = {}>
+    extends $Utils.Fn<{ extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
+    returns: Prisma.TypeMap<
+      this['params']['extArgs'],
+      ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}
+    >
   }
 
-  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> = {
+  export type TypeMap<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    GlobalOmitOptions = {}
+  > = {
     globalOmitOptions: {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "mgArticle"
+      modelProps: 'mgArticle'
       txIsolationLevel: never
     }
     model: {
@@ -656,13 +674,17 @@ export namespace Prisma {
       payload: any
       operations: {
         $runCommandRaw: {
-          args: Prisma.InputJsonObject,
+          args: Prisma.InputJsonObject
           result: Prisma.JsonObject
         }
       }
     }
   }
-  export const defineExtension: $Extensions.ExtendsHook<"define", Prisma.TypeMapCb, $Extensions.DefaultArgs>
+  export const defineExtension: $Extensions.ExtendsHook<
+    'define',
+    Prisma.TypeMapCb,
+    $Extensions.DefaultArgs
+  >
   export type DefaultPrismaClient = PrismaClient
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
@@ -683,7 +705,7 @@ export namespace Prisma {
      * ```
      * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
-     * 
+     *
      * // Emit as events only
      * log: [
      *   { emit: 'event', level: 'query' },
@@ -691,14 +713,14 @@ export namespace Prisma {
      *   { emit: 'event', level: 'warn' }
      *   { emit: 'event', level: 'error' }
      * ]
-     * 
+     *
      * / Emit as events and log to stdout
      * og: [
      *  { emit: 'stdout', level: 'query' },
      *  { emit: 'stdout', level: 'info' },
      *  { emit: 'stdout', level: 'warn' }
      *  { emit: 'stdout', level: 'error' }
-     * 
+     *
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -714,7 +736,7 @@ export namespace Prisma {
     }
     /**
      * Global configuration for omitting model fields by default.
-     * 
+     *
      * @example
      * ```
      * const prisma = new PrismaClient({
@@ -739,15 +761,12 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never
 
-  export type GetLogType<T> = CheckIsLogLevel<
-    T extends LogDefinition ? T['level'] : T
-  >;
+  export type GetLogType<T> = CheckIsLogLevel<T extends LogDefinition ? T['level'] : T>
 
-  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
-    ? GetLogType<T[number]>
-    : never;
+  export type GetEvents<T extends any[]> =
+    T extends Array<LogLevel | LogDefinition> ? GetLogType<T[number]> : never
 
   export type QueryEvent = {
     timestamp: Date
@@ -763,7 +782,6 @@ export namespace Prisma {
     target: string
   }
   /* End Types for Logging */
-
 
   export type PrismaAction =
     | 'findUnique'
@@ -789,7 +807,7 @@ export namespace Prisma {
     | 'groupBy'
 
   // tested in getLogLevel.test.ts
-  export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
+  export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined
 
   /**
    * `PrismaClient` proxy available in interactive transactions.
@@ -803,8 +821,6 @@ export namespace Prisma {
   /**
    * Count Types
    */
-
-
 
   /**
    * Models
@@ -843,7 +859,6 @@ export namespace Prisma {
     _all: number
   }
 
-
   export type MgArticleMinAggregateInputType = {
     id?: true
     title?: true
@@ -867,67 +882,68 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type MgArticleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MgArticleAggregateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Filter which mgArticle to aggregate.
      */
     where?: mgArticleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of mgArticles to fetch.
      */
     orderBy?: mgArticleOrderByWithRelationInput | mgArticleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: mgArticleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` mgArticles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` mgArticles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned mgArticles
-    */
+     */
     _count?: true | MgArticleCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    */
+     */
     _min?: MgArticleMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    */
+     */
     _max?: MgArticleMaxAggregateInputType
   }
 
   export type GetMgArticleAggregateType<T extends MgArticleAggregateArgs> = {
-        [P in keyof T & keyof AggregateMgArticle]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateMgArticle]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateMgArticle[P]>
       : GetScalarType<T[P], AggregateMgArticle[P]>
   }
 
-
-
-
-  export type mgArticleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleGroupByArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     where?: mgArticleWhereInput
     orderBy?: mgArticleOrderByWithAggregationInput | mgArticleOrderByWithAggregationInput[]
     by: MgArticleScalarFieldEnum[] | MgArticleScalarFieldEnum
@@ -952,27 +968,27 @@ export namespace Prisma {
 
   type GetMgArticleGroupByPayload<T extends mgArticleGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<MgArticleGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof MgArticleGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], MgArticleGroupByOutputType[P]>
+      PickEnumerable<MgArticleGroupByOutputType, T['by']> & {
+        [P in keyof T & keyof MgArticleGroupByOutputType]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], MgArticleGroupByOutputType[P]>
-        }
-      >
+          : GetScalarType<T[P], MgArticleGroupByOutputType[P]>
+      }
     >
+  >
 
-
-  export type mgArticleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    title?: boolean
-    body?: boolean
-    tags?: boolean
-    created?: boolean
-  }, ExtArgs["result"]["mgArticle"]>
-
-
+  export type mgArticleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    $Extensions.GetSelect<
+      {
+        id?: boolean
+        title?: boolean
+        body?: boolean
+        tags?: boolean
+        created?: boolean
+      },
+      ExtArgs['result']['mgArticle']
+    >
 
   export type mgArticleSelectScalar = {
     id?: boolean
@@ -982,30 +998,46 @@ export namespace Prisma {
     created?: boolean
   }
 
-  export type mgArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "body" | "tags" | "created", ExtArgs["result"]["mgArticle"]>
+  export type mgArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    $Extensions.GetOmit<
+      'id' | 'title' | 'body' | 'tags' | 'created',
+      ExtArgs['result']['mgArticle']
+    >
 
-  export type $mgArticlePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "mgArticle"
+  export type $mgArticlePayload<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
+    name: 'mgArticle'
     objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      title: string
-      body: string | null
-      tags: string[]
-      created: Date
-    }, ExtArgs["result"]["mgArticle"]>
+    scalars: $Extensions.GetPayloadResult<
+      {
+        id: string
+        title: string
+        body: string | null
+        tags: string[]
+        created: Date
+      },
+      ExtArgs['result']['mgArticle']
+    >
     composites: {}
   }
 
-  type mgArticleGetPayload<S extends boolean | null | undefined | mgArticleDefaultArgs> = $Result.GetResult<Prisma.$mgArticlePayload, S>
+  type mgArticleGetPayload<S extends boolean | null | undefined | mgArticleDefaultArgs> =
+    $Result.GetResult<Prisma.$mgArticlePayload, S>
 
   type mgArticleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<mgArticleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: MgArticleCountAggregateInputType | true
     }
 
-  export interface mgArticleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['mgArticle'], meta: { name: 'mgArticle' } }
+  export interface mgArticleDelegate<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    GlobalOmitOptions = {}
+  > {
+    [K: symbol]: {
+      types: Prisma.TypeMap<ExtArgs>['model']['mgArticle']
+      meta: { name: 'mgArticle' }
+    }
     /**
      * Find zero or one MgArticle that matches the filter.
      * @param {mgArticleFindUniqueArgs} args - Arguments to find a MgArticle
@@ -1017,7 +1049,19 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends mgArticleFindUniqueArgs>(args: SelectSubset<T, mgArticleFindUniqueArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends mgArticleFindUniqueArgs>(
+      args: SelectSubset<T, mgArticleFindUniqueArgs<ExtArgs>>
+    ): Prisma__mgArticleClient<
+      $Result.GetResult<
+        Prisma.$mgArticlePayload<ExtArgs>,
+        T,
+        'findUnique',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >
 
     /**
      * Find one MgArticle that matches the filter or throw an error with `error.code='P2025'`
@@ -1031,7 +1075,19 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends mgArticleFindUniqueOrThrowArgs>(args: SelectSubset<T, mgArticleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends mgArticleFindUniqueOrThrowArgs>(
+      args: SelectSubset<T, mgArticleFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__mgArticleClient<
+      $Result.GetResult<
+        Prisma.$mgArticlePayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >
 
     /**
      * Find the first MgArticle that matches the filter.
@@ -1046,7 +1102,19 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends mgArticleFindFirstArgs>(args?: SelectSubset<T, mgArticleFindFirstArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends mgArticleFindFirstArgs>(
+      args?: SelectSubset<T, mgArticleFindFirstArgs<ExtArgs>>
+    ): Prisma__mgArticleClient<
+      $Result.GetResult<
+        Prisma.$mgArticlePayload<ExtArgs>,
+        T,
+        'findFirst',
+        GlobalOmitOptions
+      > | null,
+      null,
+      ExtArgs,
+      GlobalOmitOptions
+    >
 
     /**
      * Find the first MgArticle that matches the filter or
@@ -1062,7 +1130,19 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends mgArticleFindFirstOrThrowArgs>(args?: SelectSubset<T, mgArticleFindFirstOrThrowArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends mgArticleFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, mgArticleFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__mgArticleClient<
+      $Result.GetResult<
+        Prisma.$mgArticlePayload<ExtArgs>,
+        T,
+        'findFirstOrThrow',
+        GlobalOmitOptions
+      >,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >
 
     /**
      * Find zero or more MgArticles that matches the filter.
@@ -1072,15 +1152,19 @@ export namespace Prisma {
      * @example
      * // Get all MgArticles
      * const mgArticles = await prisma.mgArticle.findMany()
-     * 
+     *
      * // Get first 10 MgArticles
      * const mgArticles = await prisma.mgArticle.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const mgArticleWithIdOnly = await prisma.mgArticle.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends mgArticleFindManyArgs>(args?: SelectSubset<T, mgArticleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends mgArticleFindManyArgs>(
+      args?: SelectSubset<T, mgArticleFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<
+      $Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
+    >
 
     /**
      * Create a MgArticle.
@@ -1092,9 +1176,16 @@ export namespace Prisma {
      *     // ... data to create a MgArticle
      *   }
      * })
-     * 
+     *
      */
-    create<T extends mgArticleCreateArgs>(args: SelectSubset<T, mgArticleCreateArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends mgArticleCreateArgs>(
+      args: SelectSubset<T, mgArticleCreateArgs<ExtArgs>>
+    ): Prisma__mgArticleClient<
+      $Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >
 
     /**
      * Create many MgArticles.
@@ -1106,9 +1197,11 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
-    createMany<T extends mgArticleCreateManyArgs>(args?: SelectSubset<T, mgArticleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends mgArticleCreateManyArgs>(
+      args?: SelectSubset<T, mgArticleCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Delete a MgArticle.
@@ -1120,9 +1213,16 @@ export namespace Prisma {
      *     // ... filter to delete one MgArticle
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends mgArticleDeleteArgs>(args: SelectSubset<T, mgArticleDeleteArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends mgArticleDeleteArgs>(
+      args: SelectSubset<T, mgArticleDeleteArgs<ExtArgs>>
+    ): Prisma__mgArticleClient<
+      $Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >
 
     /**
      * Update one MgArticle.
@@ -1137,9 +1237,16 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends mgArticleUpdateArgs>(args: SelectSubset<T, mgArticleUpdateArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends mgArticleUpdateArgs>(
+      args: SelectSubset<T, mgArticleUpdateArgs<ExtArgs>>
+    ): Prisma__mgArticleClient<
+      $Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >
 
     /**
      * Delete zero or more MgArticles.
@@ -1151,9 +1258,11 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
-    deleteMany<T extends mgArticleDeleteManyArgs>(args?: SelectSubset<T, mgArticleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends mgArticleDeleteManyArgs>(
+      args?: SelectSubset<T, mgArticleDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more MgArticles.
@@ -1170,9 +1279,11 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    updateMany<T extends mgArticleUpdateManyArgs>(args: SelectSubset<T, mgArticleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends mgArticleUpdateManyArgs>(
+      args: SelectSubset<T, mgArticleUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create or update one MgArticle.
@@ -1191,7 +1302,14 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends mgArticleUpsertArgs>(args: SelectSubset<T, mgArticleUpsertArgs<ExtArgs>>): Prisma__mgArticleClient<$Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends mgArticleUpsertArgs>(
+      args: SelectSubset<T, mgArticleUpsertArgs<ExtArgs>>
+    ): Prisma__mgArticleClient<
+      $Result.GetResult<Prisma.$mgArticlePayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
+      never,
+      ExtArgs,
+      GlobalOmitOptions
+    >
 
     /**
      * Find zero or more MgArticles that matches the filter.
@@ -1216,7 +1334,6 @@ export namespace Prisma {
      */
     aggregateRaw(args?: mgArticleAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
 
-
     /**
      * Count the number of MgArticles.
      * Note, that providing `undefined` is treated as the value not being there.
@@ -1229,9 +1346,9 @@ export namespace Prisma {
      *     // ... the filter for the MgArticles we want to count
      *   }
      * })
-    */
+     */
     count<T extends mgArticleCountArgs>(
-      args?: Subset<T, mgArticleCountArgs>,
+      args?: Subset<T, mgArticleCountArgs>
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
@@ -1263,8 +1380,10 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    */
-    aggregate<T extends MgArticleAggregateArgs>(args: Subset<T, MgArticleAggregateArgs>): Prisma.PrismaPromise<GetMgArticleAggregateType<T>>
+     */
+    aggregate<T extends MgArticleAggregateArgs>(
+      args: Subset<T, MgArticleAggregateArgs>
+    ): Prisma.PrismaPromise<GetMgArticleAggregateType<T>>
 
     /**
      * Group by MgArticle.
@@ -1282,14 +1401,11 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    */
+     *
+     */
     groupBy<
       T extends mgArticleGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
+      HasSelectOrTake extends Or<Extends<'skip', Keys<T>>, Extends<'take', Keys<T>>>,
       OrderByArg extends True extends HasSelectOrTake
         ? { orderBy: mgArticleGroupByArgs['orderBy'] }
         : { orderBy?: mgArticleGroupByArgs['orderBy'] },
@@ -1300,52 +1416,49 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? 'Error: "by" must not be empty.'
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, mgArticleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMgArticleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the mgArticle model
-   */
-  readonly fields: mgArticleFieldRefs;
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [Error, 'Field ', P, ' in "having" needs to be provided in "by"']
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+    >(
+      args: SubsetIntersection<T, mgArticleGroupByArgs, OrderByArg> & InputErrors
+    ): {} extends InputErrors ? GetMgArticleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    /**
+     * Fields of the mgArticle model
+     */
+    readonly fields: mgArticleFieldRefs
   }
 
   /**
@@ -1354,21 +1467,31 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__mgArticleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
+  export interface Prisma__mgArticleClient<
+    T,
+    Null = never,
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
+    GlobalOmitOptions = {}
+  > extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    then<TResult1 = T, TResult2 = never>(
+      onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+      onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+    ): $Utils.JsPromise<TResult1 | TResult2>
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    catch<TResult = never>(
+      onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
+    ): $Utils.JsPromise<T | TResult>
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
@@ -1378,26 +1501,24 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the mgArticle model
    */
   interface mgArticleFieldRefs {
-    readonly id: FieldRef<"mgArticle", 'String'>
-    readonly title: FieldRef<"mgArticle", 'String'>
-    readonly body: FieldRef<"mgArticle", 'String'>
-    readonly tags: FieldRef<"mgArticle", 'String[]'>
-    readonly created: FieldRef<"mgArticle", 'DateTime'>
+    readonly id: FieldRef<'mgArticle', 'String'>
+    readonly title: FieldRef<'mgArticle', 'String'>
+    readonly body: FieldRef<'mgArticle', 'String'>
+    readonly tags: FieldRef<'mgArticle', 'String[]'>
+    readonly created: FieldRef<'mgArticle', 'DateTime'>
   }
-    
 
   // Custom InputTypes
   /**
    * mgArticle findUnique
    */
-  export type mgArticleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindUniqueArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Select specific fields to fetch from the mgArticle
      */
@@ -1415,7 +1536,9 @@ export namespace Prisma {
   /**
    * mgArticle findUniqueOrThrow
    */
-  export type mgArticleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindUniqueOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Select specific fields to fetch from the mgArticle
      */
@@ -1433,7 +1556,9 @@ export namespace Prisma {
   /**
    * mgArticle findFirst
    */
-  export type mgArticleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindFirstArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Select specific fields to fetch from the mgArticle
      */
@@ -1448,31 +1573,31 @@ export namespace Prisma {
     where?: mgArticleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of mgArticles to fetch.
      */
     orderBy?: mgArticleOrderByWithRelationInput | mgArticleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for mgArticles.
      */
     cursor?: mgArticleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` mgArticles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` mgArticles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of mgArticles.
      */
     distinct?: MgArticleScalarFieldEnum | MgArticleScalarFieldEnum[]
@@ -1481,7 +1606,9 @@ export namespace Prisma {
   /**
    * mgArticle findFirstOrThrow
    */
-  export type mgArticleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindFirstOrThrowArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Select specific fields to fetch from the mgArticle
      */
@@ -1496,31 +1623,31 @@ export namespace Prisma {
     where?: mgArticleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of mgArticles to fetch.
      */
     orderBy?: mgArticleOrderByWithRelationInput | mgArticleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for mgArticles.
      */
     cursor?: mgArticleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` mgArticles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` mgArticles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of mgArticles.
      */
     distinct?: MgArticleScalarFieldEnum | MgArticleScalarFieldEnum[]
@@ -1529,7 +1656,9 @@ export namespace Prisma {
   /**
    * mgArticle findMany
    */
-  export type mgArticleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Select specific fields to fetch from the mgArticle
      */
@@ -1544,25 +1673,25 @@ export namespace Prisma {
     where?: mgArticleWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of mgArticles to fetch.
      */
     orderBy?: mgArticleOrderByWithRelationInput | mgArticleOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing mgArticles.
      */
     cursor?: mgArticleWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` mgArticles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` mgArticles.
      */
     skip?: number
@@ -1572,7 +1701,9 @@ export namespace Prisma {
   /**
    * mgArticle create
    */
-  export type mgArticleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleCreateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Select specific fields to fetch from the mgArticle
      */
@@ -1590,7 +1721,9 @@ export namespace Prisma {
   /**
    * mgArticle createMany
    */
-  export type mgArticleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleCreateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * The data used to create many mgArticles.
      */
@@ -1600,7 +1733,9 @@ export namespace Prisma {
   /**
    * mgArticle update
    */
-  export type mgArticleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleUpdateArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Select specific fields to fetch from the mgArticle
      */
@@ -1622,7 +1757,9 @@ export namespace Prisma {
   /**
    * mgArticle updateMany
    */
-  export type mgArticleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleUpdateManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * The data used to update mgArticles.
      */
@@ -1640,7 +1777,9 @@ export namespace Prisma {
   /**
    * mgArticle upsert
    */
-  export type mgArticleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleUpsertArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Select specific fields to fetch from the mgArticle
      */
@@ -1666,7 +1805,9 @@ export namespace Prisma {
   /**
    * mgArticle delete
    */
-  export type mgArticleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleDeleteArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Select specific fields to fetch from the mgArticle
      */
@@ -1684,7 +1825,9 @@ export namespace Prisma {
   /**
    * mgArticle deleteMany
    */
-  export type mgArticleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleDeleteManyArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Filter which mgArticles to delete
      */
@@ -1698,7 +1841,9 @@ export namespace Prisma {
   /**
    * mgArticle findRaw
    */
-  export type mgArticleFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleFindRawArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
      */
@@ -1712,7 +1857,9 @@ export namespace Prisma {
   /**
    * mgArticle aggregateRaw
    */
-  export type mgArticleAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleAggregateRawArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
      */
@@ -1726,7 +1873,9 @@ export namespace Prisma {
   /**
    * mgArticle without action
    */
-  export type mgArticleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type mgArticleDefaultArgs<
+    ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  > = {
     /**
      * Select specific fields to fetch from the mgArticle
      */
@@ -1737,97 +1886,85 @@ export namespace Prisma {
     omit?: mgArticleOmit<ExtArgs> | null
   }
 
-
   /**
    * Enums
    */
 
   export const MgArticleScalarFieldEnum: {
-    id: 'id',
-    title: 'title',
-    body: 'body',
-    tags: 'tags',
+    id: 'id'
+    title: 'title'
+    body: 'body'
+    tags: 'tags'
     created: 'created'
-  };
+  }
 
-  export type MgArticleScalarFieldEnum = (typeof MgArticleScalarFieldEnum)[keyof typeof MgArticleScalarFieldEnum]
-
+  export type MgArticleScalarFieldEnum =
+    (typeof MgArticleScalarFieldEnum)[keyof typeof MgArticleScalarFieldEnum]
 
   export const SortOrder: {
-    asc: 'asc',
+    asc: 'asc'
     desc: 'desc'
-  };
+  }
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
-
   export const QueryMode: {
-    default: 'default',
+    default: 'default'
     insensitive: 'insensitive'
-  };
+  }
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
 
   /**
    * Field references
    */
 
-
   /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
-    
-
 
   /**
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
 
   /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
 
   /**
    * Reference to a field of type 'DateTime[]'
    */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<
+    $PrismaModel,
+    'DateTime[]'
+  >
 
   /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
 
   /**
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
+
   /**
    * Deep Input Types
    */
-
 
   export type mgArticleWhereInput = {
     AND?: mgArticleWhereInput | mgArticleWhereInput[]
     OR?: mgArticleWhereInput[]
     NOT?: mgArticleWhereInput | mgArticleWhereInput[]
-    id?: StringFilter<"mgArticle"> | string
-    title?: StringFilter<"mgArticle"> | string
-    body?: StringNullableFilter<"mgArticle"> | string | null
-    tags?: StringNullableListFilter<"mgArticle">
-    created?: DateTimeFilter<"mgArticle"> | Date | string
+    id?: StringFilter<'mgArticle'> | string
+    title?: StringFilter<'mgArticle'> | string
+    body?: StringNullableFilter<'mgArticle'> | string | null
+    tags?: StringNullableListFilter<'mgArticle'>
+    created?: DateTimeFilter<'mgArticle'> | Date | string
   }
 
   export type mgArticleOrderByWithRelationInput = {
@@ -1838,16 +1975,19 @@ export namespace Prisma {
     created?: SortOrder
   }
 
-  export type mgArticleWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: mgArticleWhereInput | mgArticleWhereInput[]
-    OR?: mgArticleWhereInput[]
-    NOT?: mgArticleWhereInput | mgArticleWhereInput[]
-    title?: StringFilter<"mgArticle"> | string
-    body?: StringNullableFilter<"mgArticle"> | string | null
-    tags?: StringNullableListFilter<"mgArticle">
-    created?: DateTimeFilter<"mgArticle"> | Date | string
-  }, "id">
+  export type mgArticleWhereUniqueInput = Prisma.AtLeast<
+    {
+      id?: string
+      AND?: mgArticleWhereInput | mgArticleWhereInput[]
+      OR?: mgArticleWhereInput[]
+      NOT?: mgArticleWhereInput | mgArticleWhereInput[]
+      title?: StringFilter<'mgArticle'> | string
+      body?: StringNullableFilter<'mgArticle'> | string | null
+      tags?: StringNullableListFilter<'mgArticle'>
+      created?: DateTimeFilter<'mgArticle'> | Date | string
+    },
+    'id'
+  >
 
   export type mgArticleOrderByWithAggregationInput = {
     id?: SortOrder
@@ -1864,11 +2004,11 @@ export namespace Prisma {
     AND?: mgArticleScalarWhereWithAggregatesInput | mgArticleScalarWhereWithAggregatesInput[]
     OR?: mgArticleScalarWhereWithAggregatesInput[]
     NOT?: mgArticleScalarWhereWithAggregatesInput | mgArticleScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"mgArticle"> | string
-    title?: StringWithAggregatesFilter<"mgArticle"> | string
-    body?: StringNullableWithAggregatesFilter<"mgArticle"> | string | null
-    tags?: StringNullableListFilter<"mgArticle">
-    created?: DateTimeWithAggregatesFilter<"mgArticle"> | Date | string
+    id?: StringWithAggregatesFilter<'mgArticle'> | string
+    title?: StringWithAggregatesFilter<'mgArticle'> | string
+    body?: StringNullableWithAggregatesFilter<'mgArticle'> | string | null
+    tags?: StringNullableListFilter<'mgArticle'>
+    created?: DateTimeWithAggregatesFilter<'mgArticle'> | Date | string
   }
 
   export type mgArticleCreateInput = {
@@ -2179,8 +2319,6 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
-
-
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

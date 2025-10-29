@@ -66,7 +66,6 @@ import { useSeo } from '~/composables/features/useSeo'
 import { useI18n } from '#imports'
 const { t } = useI18n()
 
-
 // SEO
 useSeo('home')
 
@@ -77,5 +76,3 @@ const scrollToContent = () => {
   contentRef.value?.scrollIntoView({ behavior: 'smooth' })
 }
 </script>
-
-

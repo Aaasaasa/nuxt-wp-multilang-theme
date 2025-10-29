@@ -1,10 +1,6 @@
 // types/nuxt-globals.d.ts
 
-import type {
-  EventHandler,
-  EventHandlerRequest,
-  H3Event
-} from 'h3'
+import type { EventHandler, EventHandlerRequest, H3Event } from 'h3'
 import type { NuxtConfig } from '@nuxt/schema'
 import type { Plugin } from '#app'
 import type { DefineComponent } from 'vue'

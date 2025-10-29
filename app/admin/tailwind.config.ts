@@ -1,15 +1,15 @@
-// app/admin/tailwind.config.js
-const base = require('../../tailwind.config.js')
+// app/admin/tailwind.config.ts
+import baseConfig from '../../tailwind.config.cjs'
 
-module.exports = {
-  ...base,
+export default {
+  ...baseConfig,
   content: ['./app/admin/**/*.{vue,js,ts,html}', './shared/**/*.{vue,js,ts,html}'],
   theme: {
-    ...base.theme,
+    ...baseConfig.theme,
     extend: {
-      ...base.theme?.extend,
+      ...baseConfig.theme?.extend,
       colors: {
-        brand: '#e11d48' // Admin-specific (npr. crvena)
+        brand: '#e11d48' // Admin-specific
       }
     }
   }

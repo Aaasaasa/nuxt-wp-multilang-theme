@@ -70,7 +70,7 @@ async function migrateUsers() {
         password: u.user_pass,
         displayName: u.display_name,
         registeredAt: u.user_registered,
-        isActive: u.user_status === 0,
+        isActive: u.user_status === 0
       },
       create: {
         login: u.user_login,
@@ -78,8 +78,8 @@ async function migrateUsers() {
         password: u.user_pass,
         displayName: u.display_name,
         registeredAt: u.user_registered,
-        isActive: u.user_status === 0,
-      },
+        isActive: u.user_status === 0
+      }
     })
 
     const metas = await mysql.as_usermeta.findMany({ where: { user_id: u.ID } })
@@ -88,9 +88,9 @@ async function migrateUsers() {
         data: metas.map((m) => ({
           userId: user.id,
           key: m.meta_key || '',
-          value: m.meta_value ? { raw: m.meta_value } : {},
+          value: m.meta_value ? { raw: m.meta_value } : {}
         })),
-        skipDuplicates: true,
+        skipDuplicates: true
       })
     }
   }
@@ -103,7 +103,7 @@ async function migrateContent() {
   console.log('📝 Migrating pages, articles, portfolios...')
 
   const wpPosts = await mysql.as_posts.findMany({
-    where: { post_type: { in: ['page', 'post', 'portfolio'] } },
+    where: { post_type: { in: ['page', 'post', 'portfolio'] } }
   })
 
   for (const p of wpPosts) {
@@ -112,7 +112,7 @@ async function migrateContent() {
       status: mapStatus(p.post_status),
       authorId: toInt(p.post_author) || 1,
       createdAt: p.post_date,
-      updatedAt: p.post_modified,
+      updatedAt: p.post_modified
     }
 
     const metas = await mysql.as_postmeta.findMany({ where: { post_id: p.ID } })
@@ -124,12 +124,12 @@ async function migrateContent() {
           status: base.status,
           authorId: base.authorId,
           menuOrder: p.menu_order ?? 0,
-          updatedAt: base.updatedAt,
+          updatedAt: base.updatedAt
         },
         create: {
           ...base,
-          menuOrder: p.menu_order ?? 0,
-        },
+          menuOrder: p.menu_order ?? 0
+        }
       })
 
       await pg.pageTranslation.upsert({
@@ -137,15 +137,15 @@ async function migrateContent() {
         update: {
           title: p.post_title || '',
           content: p.post_content || '',
-          excerpt: p.post_excerpt || '',
+          excerpt: p.post_excerpt || ''
         },
         create: {
           pageId: page.id,
           lang: 'en',
           title: p.post_title || '',
           content: p.post_content || '',
-          excerpt: p.post_excerpt || '',
-        },
+          excerpt: p.post_excerpt || ''
+        }
       })
 
       if (metas.length) {
@@ -153,9 +153,9 @@ async function migrateContent() {
           data: metas.map((m) => ({
             pageId: page.id,
             key: m.meta_key || '',
-            value: m.meta_value ? { raw: m.meta_value } : {},
+            value: m.meta_value ? { raw: m.meta_value } : {}
           })),
-          skipDuplicates: true,
+          skipDuplicates: true
         })
       }
     }
@@ -166,9 +166,9 @@ async function migrateContent() {
         update: {
           status: base.status,
           authorId: base.authorId,
-          updatedAt: base.updatedAt,
+          updatedAt: base.updatedAt
         },
-        create: base,
+        create: base
       })
 
       await pg.articleTranslation.upsert({
@@ -176,15 +176,15 @@ async function migrateContent() {
         update: {
           title: p.post_title || '',
           content: p.post_content || '',
-          excerpt: p.post_excerpt || '',
+          excerpt: p.post_excerpt || ''
         },
         create: {
           articleId: article.id,
           lang: 'en',
           title: p.post_title || '',
           content: p.post_content || '',
-          excerpt: p.post_excerpt || '',
-        },
+          excerpt: p.post_excerpt || ''
+        }
       })
 
       if (metas.length) {
@@ -192,9 +192,9 @@ async function migrateContent() {
           data: metas.map((m) => ({
             articleId: article.id,
             key: m.meta_key || '',
-            value: m.meta_value ? { raw: m.meta_value } : {},
+            value: m.meta_value ? { raw: m.meta_value } : {}
           })),
-          skipDuplicates: true,
+          skipDuplicates: true
         })
       }
     }
@@ -205,27 +205,27 @@ async function migrateContent() {
         update: {
           status: base.status,
           authorId: base.authorId,
-          updatedAt: base.updatedAt,
+          updatedAt: base.updatedAt
         },
-        create: base,
+        create: base
       })
 
       await pg.portfolioTranslation.upsert({
         where: {
-          portfolioId_lang: { portfolioId: portfolio.id, lang: 'en' },
+          portfolioId_lang: { portfolioId: portfolio.id, lang: 'en' }
         },
         update: {
           title: p.post_title || '',
           content: p.post_content || '',
-          excerpt: p.post_excerpt || '',
+          excerpt: p.post_excerpt || ''
         },
         create: {
           portfolioId: portfolio.id,
           lang: 'en',
           title: p.post_title || '',
           content: p.post_content || '',
-          excerpt: p.post_excerpt || '',
-        },
+          excerpt: p.post_excerpt || ''
+        }
       })
 
       if (metas.length) {
@@ -233,9 +233,9 @@ async function migrateContent() {
           data: metas.map((m) => ({
             portfolioId: portfolio.id,
             key: m.meta_key || '',
-            value: m.meta_value ? { raw: m.meta_value } : {},
+            value: m.meta_value ? { raw: m.meta_value } : {}
           })),
-          skipDuplicates: true,
+          skipDuplicates: true
         })
       }
     }
@@ -249,7 +249,7 @@ async function migrateProducts() {
   console.log('🛒 Migrating products...')
 
   const wpProducts = await mysql.as_posts.findMany({
-    where: { post_type: 'product' },
+    where: { post_type: 'product' }
   })
 
   for (const p of wpProducts) {
@@ -258,29 +258,29 @@ async function migrateProducts() {
       update: {
         price: 0, // ako imaš cijenu u metama, možeš mapirati
         vendorId: toInt(p.post_author) || 1,
-        updatedAt: p.post_modified,
+        updatedAt: p.post_modified
       },
       create: {
         slug: p.post_name || `product-${String(p.ID)}`,
         price: 0,
         vendorId: toInt(p.post_author) || 1,
         createdAt: p.post_date,
-        updatedAt: p.post_modified,
-      },
+        updatedAt: p.post_modified
+      }
     })
 
     await pg.productTranslation.upsert({
       where: { productId_lang: { productId: product.id, lang: 'en' } },
       update: {
         title: p.post_title || '',
-        description: p.post_content || '',
+        description: p.post_content || ''
       },
       create: {
         productId: product.id,
         lang: 'en',
         title: p.post_title || '',
-        description: p.post_content || '',
-      },
+        description: p.post_content || ''
+      }
     })
 
     const metas = await mysql.as_postmeta.findMany({ where: { post_id: p.ID } })
@@ -289,9 +289,9 @@ async function migrateProducts() {
         data: metas.map((m) => ({
           productId: product.id,
           key: m.meta_key || '',
-          value: m.meta_value ? { raw: m.meta_value } : {},
+          value: m.meta_value ? { raw: m.meta_value } : {}
         })),
-        skipDuplicates: true,
+        skipDuplicates: true
       })
     }
   }
@@ -314,7 +314,7 @@ async function migrateComments() {
       content: c.comment_content || '',
       status: c.comment_approved === '1' ? 'approved' : 'pending',
       createdAt: c.comment_date,
-      updatedAt: c.comment_date_gmt,
+      updatedAt: c.comment_date_gmt
     }
 
     let created
@@ -322,50 +322,58 @@ async function migrateComments() {
       // pageId — nažalost nemamo mapu WP→PG ID koristimo slug upisane u migrateContent
       const wpPage = await mysql.as_posts.findUnique({ where: { ID: BigInt(targetPostId) } })
       const pgPage = wpPage
-        ? await pg.page.findUnique({ where: { slug: wpPage.post_name || `post-${String(wpPage.ID)}` } })
+        ? await pg.page.findUnique({
+            where: { slug: wpPage.post_name || `post-${String(wpPage.ID)}` }
+          })
         : null
 
       created = await pg.comment.create({
         data: {
           ...baseComment,
-          pageId: pgPage ? pgPage.id : null,
-        },
+          pageId: pgPage ? pgPage.id : null
+        }
       })
     } else if (postType === 'post') {
       const wpArt = await mysql.as_posts.findUnique({ where: { ID: BigInt(targetPostId) } })
       const pgArt = wpArt
-        ? await pg.article.findUnique({ where: { slug: wpArt.post_name || `post-${String(wpArt.ID)}` } })
+        ? await pg.article.findUnique({
+            where: { slug: wpArt.post_name || `post-${String(wpArt.ID)}` }
+          })
         : null
 
       created = await pg.comment.create({
         data: {
           ...baseComment,
-          articleId: pgArt ? pgArt.id : null,
-        },
+          articleId: pgArt ? pgArt.id : null
+        }
       })
     } else if (postType === 'portfolio') {
       const wpPort = await mysql.as_posts.findUnique({ where: { ID: BigInt(targetPostId) } })
       const pgPort = wpPort
-        ? await pg.portfolio.findUnique({ where: { slug: wpPort.post_name || `post-${String(wpPort.ID)}` } })
+        ? await pg.portfolio.findUnique({
+            where: { slug: wpPort.post_name || `post-${String(wpPort.ID)}` }
+          })
         : null
 
       created = await pg.comment.create({
         data: {
           ...baseComment,
-          portfolioId: pgPort ? pgPort.id : null,
-        },
+          portfolioId: pgPort ? pgPort.id : null
+        }
       })
     } else if (postType === 'product') {
       const wpProd = await mysql.as_posts.findUnique({ where: { ID: BigInt(targetPostId) } })
       const pgProd = wpProd
-        ? await pg.product.findUnique({ where: { slug: wpProd.post_name || `product-${String(wpProd.ID)}` } })
+        ? await pg.product.findUnique({
+            where: { slug: wpProd.post_name || `product-${String(wpProd.ID)}` }
+          })
         : null
 
       created = await pg.comment.create({
         data: {
           ...baseComment,
-          productId: pgProd ? pgProd.id : null,
-        },
+          productId: pgProd ? pgProd.id : null
+        }
       })
     } else {
       // Ako je nešto drugo, kreiraj “orphanned” komentar bez veze
@@ -379,9 +387,9 @@ async function migrateComments() {
         data: metas.map((m) => ({
           commentId: created.id,
           key: m.meta_key || '',
-          value: m.meta_value ? { raw: m.meta_value } : {},
+          value: m.meta_value ? { raw: m.meta_value } : {}
         })),
-        skipDuplicates: true,
+        skipDuplicates: true
       })
     }
   }
@@ -403,13 +411,13 @@ async function migrateTerms() {
       where: { slug: t.slug },
       update: {
         name: t.name,
-        group: Number(t.term_group) || 0,
+        group: Number(t.term_group) || 0
       },
       create: {
         slug: t.slug,
         name: t.name,
-        group: Number(t.term_group) || 0,
-      },
+        group: Number(t.term_group) || 0
+      }
     })
   }
 
@@ -428,15 +436,15 @@ async function migrateTerms() {
         termId: pgTerm.id,
         taxonomy: tx.taxonomy,
         description: tx.description || null,
-        count: Number(tx.count) || 0,
+        count: Number(tx.count) || 0
       },
       create: {
         termId: pgTerm.id,
         taxonomy: tx.taxonomy,
         description: tx.description || null,
         count: Number(tx.count) || 0,
-        parentId: null, // parent kasnije
-      },
+        parentId: null // parent kasnije
+      }
     })
   }
 
@@ -445,12 +453,12 @@ async function migrateTerms() {
     if (toInt(tx.parent) === 0) continue
 
     const parentTx = await mysql.as_term_taxonomy.findUnique({
-      where: { term_taxonomy_id: tx.parent },
+      where: { term_taxonomy_id: tx.parent }
     })
     if (!parentTx) continue
 
     const parentTerm = await mysql.as_terms.findUnique({
-      where: { term_id: parentTx.term_id },
+      where: { term_id: parentTx.term_id }
     })
     if (!parentTerm) continue
 
@@ -458,12 +466,12 @@ async function migrateTerms() {
     if (!pgParentTerm) continue
 
     const pgParentTx = await pg.termTaxonomy.findFirst({
-      where: { termId: pgParentTerm.id, taxonomy: parentTx.taxonomy },
+      where: { termId: pgParentTerm.id, taxonomy: parentTx.taxonomy }
     })
     if (!pgParentTx) continue
 
     const childTerm = await mysql.as_terms.findUnique({
-      where: { term_id: tx.term_id },
+      where: { term_id: tx.term_id }
     })
     if (!childTerm) continue
 
@@ -471,13 +479,13 @@ async function migrateTerms() {
     if (!pgChildTerm) continue
 
     const pgChildTx = await pg.termTaxonomy.findFirst({
-      where: { termId: pgChildTerm.id, taxonomy: tx.taxonomy },
+      where: { termId: pgChildTerm.id, taxonomy: tx.taxonomy }
     })
     if (!pgChildTx) continue
 
     await pg.termTaxonomy.update({
       where: { id: pgChildTx.id },
-      data: { parentId: pgParentTx.id },
+      data: { parentId: pgParentTx.id }
     })
   }
 
@@ -485,7 +493,7 @@ async function migrateTerms() {
   const wpRel = await mysql.as_term_relationships.findMany()
   for (const r of wpRel) {
     const tax = await mysql.as_term_taxonomy.findUnique({
-      where: { term_taxonomy_id: r.term_taxonomy_id },
+      where: { term_taxonomy_id: r.term_taxonomy_id }
     })
     if (!tax) continue
 
@@ -498,7 +506,7 @@ async function migrateTerms() {
     // nađi PG termTaxonomy: najbliže ćemo ga locirati po (termId, taxonomy)
     const pgTax = await pg.termTaxonomy.findFirst({
       where: { termId: pgTerm.id, taxonomy: tax.taxonomy },
-      orderBy: { id: 'asc' },
+      orderBy: { id: 'asc' }
     })
     if (!pgTax) continue
 
@@ -509,54 +517,62 @@ async function migrateTerms() {
     if (postType === 'page') {
       const wpPage = await mysql.as_posts.findUnique({ where: { ID: BigInt(objectId) } })
       const pgPage = wpPage
-        ? await pg.page.findUnique({ where: { slug: wpPage.post_name || `post-${String(wpPage.ID)}` } })
+        ? await pg.page.findUnique({
+            where: { slug: wpPage.post_name || `post-${String(wpPage.ID)}` }
+          })
         : null
       if (!pgPage) continue
 
       await pg.termRelationship.create({
         data: {
           pageId: pgPage.id,
-          termTaxonomyId: pgTax.id,
-        },
+          termTaxonomyId: pgTax.id
+        }
       })
     } else if (postType === 'post') {
       const wpArt = await mysql.as_posts.findUnique({ where: { ID: BigInt(objectId) } })
       const pgArt = wpArt
-        ? await pg.article.findUnique({ where: { slug: wpArt.post_name || `post-${String(wpArt.ID)}` } })
+        ? await pg.article.findUnique({
+            where: { slug: wpArt.post_name || `post-${String(wpArt.ID)}` }
+          })
         : null
       if (!pgArt) continue
 
       await pg.termRelationship.create({
         data: {
           articleId: pgArt.id,
-          termTaxonomyId: pgTax.id,
-        },
+          termTaxonomyId: pgTax.id
+        }
       })
     } else if (postType === 'portfolio') {
       const wpPort = await mysql.as_posts.findUnique({ where: { ID: BigInt(objectId) } })
       const pgPort = wpPort
-        ? await pg.portfolio.findUnique({ where: { slug: wpPort.post_name || `post-${String(wpPort.ID)}` } })
+        ? await pg.portfolio.findUnique({
+            where: { slug: wpPort.post_name || `post-${String(wpPort.ID)}` }
+          })
         : null
       if (!pgPort) continue
 
       await pg.termRelationship.create({
         data: {
           portfolioId: pgPort.id,
-          termTaxonomyId: pgTax.id,
-        },
+          termTaxonomyId: pgTax.id
+        }
       })
     } else if (postType === 'product') {
       const wpProd = await mysql.as_posts.findUnique({ where: { ID: BigInt(objectId) } })
       const pgProd = wpProd
-        ? await pg.product.findUnique({ where: { slug: wpProd.post_name || `product-${String(wpProd.ID)}` } })
+        ? await pg.product.findUnique({
+            where: { slug: wpProd.post_name || `product-${String(wpProd.ID)}` }
+          })
         : null
       if (!pgProd) continue
 
       await pg.termRelationship.create({
         data: {
           productId: pgProd.id,
-          termTaxonomyId: pgTax.id,
-        },
+          termTaxonomyId: pgTax.id
+        }
       })
     } else {
       // ignore other object types
@@ -572,7 +588,7 @@ async function migrateMenus() {
   console.log('📂 Migrating menus...')
 
   const menuTaxonomies = await mysql.as_term_taxonomy.findMany({
-    where: { taxonomy: 'nav_menu' },
+    where: { taxonomy: 'nav_menu' }
   })
 
   for (const tx of menuTaxonomies) {
@@ -581,7 +597,7 @@ async function migrateMenus() {
 
     // Nađi sve nav_menu_item postove povezane s ovim menijem preko term_relationships
     const relItems = await mysql.as_term_relationships.findMany({
-      where: { term_taxonomy_id: tx.term_taxonomy_id },
+      where: { term_taxonomy_id: tx.term_taxonomy_id }
     })
 
     const itemIds = relItems.map((r) => r.object_id)
@@ -589,13 +605,13 @@ async function migrateMenus() {
       await pg.menu.upsert({
         where: { slug: term.slug },
         update: { name: term.name, items: [] },
-        create: { slug: term.slug, name: term.name, items: [] },
+        create: { slug: term.slug, name: term.name, items: [] }
       })
       continue
     }
 
     const items = await mysql.as_posts.findMany({
-      where: { ID: { in: itemIds } },
+      where: { ID: { in: itemIds } }
     })
 
     const structured: any[] = []
@@ -612,14 +628,14 @@ async function migrateMenus() {
         url: url || null,
         parentId: parent ? Number(parent) : null,
         type: metas.find((m) => m.meta_key === '_menu_item_type')?.meta_value || null,
-        object: metas.find((m) => m.meta_key === '_menu_item_object')?.meta_value || null,
+        object: metas.find((m) => m.meta_key === '_menu_item_object')?.meta_value || null
       })
     }
 
     await pg.menu.upsert({
       where: { slug: term.slug },
       update: { name: term.name, items: structured },
-      create: { slug: term.slug, name: term.name, items: structured },
+      create: { slug: term.slug, name: term.name, items: structured }
     })
   }
 }
@@ -647,7 +663,7 @@ async function migrateSettings() {
     await pg.setting.upsert({
       where: { key: o.option_name },
       update: { value: parsed },
-      create: { key: o.option_name, value: parsed },
+      create: { key: o.option_name, value: parsed }
     })
   }
 }

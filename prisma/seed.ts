@@ -35,26 +35,36 @@ async function main() {
     }
   })
 
-  console.log('✅ Upserted user:', { id: user.id, login: user.login, email: user.email, role: user.role })
-
-  // (Opcionalno) Add a UserMeta entry without deleting anything
-  await prisma.userMeta.upsert({
-    where: { id: user.id }, // ako imaš drugačiji unique, možeš koristiti kombinaciju; ovde koristimo id kao primer
-    update: {},
-    create: {
-      userId: user.id,
-      key: 'seed',
-      value: { createdBy: 'seed', note: 'default superadmin created' }
-    }
-  }).catch(() => {
-    // Ako upsert preko id ne radi zbog unique key-a, preskočiti silently
+  // eslint-disable-next-line no-console
+  console.log('✅ Upserted user:', {
+    id: user.id,
+    login: user.login,
+    email: user.email,
+    role: user.role
   })
 
+  // (Opcionalno) Add a UserMeta entry without deleting anything
+  await prisma.userMeta
+    .upsert({
+      where: { id: user.id }, // ako imaš drugačiji unique, možeš koristiti kombinaciju; ovde koristimo id kao primer
+      update: {},
+      create: {
+        userId: user.id,
+        key: 'seed',
+        value: { createdBy: 'seed', note: 'default superadmin created' }
+      }
+    })
+    .catch(() => {
+      // Ako upsert preko id ne radi zbog unique key-a, preskočiti silently
+    })
+
+  // eslint-disable-next-line no-console
   console.log('✅ Seed finished (non-destructive).')
 }
 
 main()
-  .catch(e => {
+  .catch((e) => {
+    // eslint-disable-next-line no-console
     console.error('Seed error:', e)
     process.exit(1)
   })

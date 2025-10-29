@@ -69,7 +69,7 @@ export const registerUserSchema = z
     confirmPassword: z.string(),
     name: z.string().min(TEXT_FIELD_LIMITS.NAME.MIN).max(TEXT_FIELD_LIMITS.NAME.MAX).trim()
   })
-  .refine(data => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
     path: ['confirmPassword']
   })
@@ -138,11 +138,11 @@ export const changePasswordSchema = z
       ),
     confirmNewPassword: z.string()
   })
-  .refine(data => data.currentPassword !== data.newPassword, {
+  .refine((data) => data.currentPassword !== data.newPassword, {
     message: 'New password must be different from current password',
     path: ['newPassword']
   })
-  .refine(data => data.newPassword === data.confirmNewPassword, {
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
     message: 'Password confirmation does not match',
     path: ['confirmNewPassword']
   })

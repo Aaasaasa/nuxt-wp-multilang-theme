@@ -18,12 +18,12 @@
       <div class="architecture-canvas">
         <div class="mermaid">
           flowchart TD A[🌐 Incoming Request] --> B{Request Type?} B --> C[Static Asset] B -->
-          D[Dynamic Request] C --> E[Return from<br >public/ directory] subgraph DynamicRequest
+          D[Dynamic Request] C --> E[Return from<br />public/ directory] subgraph DynamicRequest
           [Dynamic Request Processing] D --> F[Middleware Processing] F --> G[Route Validation] G
-          --> H{Layout Selection} H --> I[Default Layout<br >layouts/default.vue] H --> J[Custom
-          Layout<br >e.g. layouts/admin.vue] I --> K[app.vue] J --> K K --> L[Page Component] L -->
-          M[Component Rendering] M --> N[Server Components<br >*.server.vue] M --> O[Client
-          Components<br >*.client.vue] M --> P[Universal Components<br >*.vue] end N -->
+          --> H{Layout Selection} H --> I[Default Layout<br />layouts/default.vue] H --> J[Custom
+          Layout<br />e.g. layouts/admin.vue] I --> K[app.vue] J --> K K --> L[Page Component] L -->
+          M[Component Rendering] M --> N[Server Components<br />*.server.vue] M --> O[Client
+          Components<br />*.client.vue] M --> P[Universal Components<br />*.vue] end N -->
           Q[Response Generation] O --> Q P --> Q E --> Q Q --> R[📨 Response Sent] style A
           fill:#dcfce7,stroke:#00DC82,stroke-width:3px style C fill:#e0e7ff,stroke:#6366f1 style D
           fill:#fef3c7,stroke:#f59e0b style E fill:#ddd6fe,stroke:#8b5cf6 style F

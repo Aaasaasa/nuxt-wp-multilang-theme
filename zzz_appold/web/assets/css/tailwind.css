@@ -1,11 +1,11 @@
 /* app/admin/assets/css/tailwind.css */
 
 /* ─── Imports ─────────────────────────────────────────── */
-@import "tw-animate-css";
-@import "tailwindcss";
-@import "tailwindcss/utilities";
-@import "@nuxt/ui";
-@import "@fontsource/inter/latin.css";
+@import 'tw-animate-css';
+@import 'tailwindcss';
+@import 'tailwindcss/utilities';
+@import '@nuxt/ui';
+@import '@fontsource/inter/latin.css';
 
 /* ─── Tailwind theme vars (mapa na CSS varijable) ─────── */
 @theme inline {

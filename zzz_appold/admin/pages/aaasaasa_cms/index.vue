@@ -69,9 +69,9 @@
       <h2 class="text-2xl font-semibold mb-4">Architecture Diagram</h2>
       <div class="architecture-diagram">
         <div class="mermaid">
-          graph TB subgraph Client [Client Side] UI[UI Components<br >Vue.js + Tailwind] SP[State
-          Management<br >Pinia] R[Routing<br >Vue Router] end subgraph Server [Server Side]
-          NS[Nuxt Server<br >Nitro] API[API Routes] PC[Prisma Client] end subgraph Database
+          graph TB subgraph Client [Client Side] UI[UI Components<br />Vue.js + Tailwind] SP[State
+          Management<br />Pinia] R[Routing<br />Vue Router] end subgraph Server [Server Side]
+          NS[Nuxt Server<br />Nitro] API[API Routes] PC[Prisma Client] end subgraph Database
           DB[(Database)] end UI --> SP UI --> R UI -- HTTP Requests --> API API --> PC PC --> DB NS
           --> API style UI fill:#dcfce7 style API fill:#dbeafe style PC fill:#ffedd5 style DB
           fill:#fae8ff
@@ -151,8 +151,8 @@ export default defineEventHandler(async (event) => {
           <p class="mb-2">Initialize a new Nuxt project and install dependencies:</p>
           <div class="code-block">
             <code
-              >npx nuxi@latest init my-app && cd my-app<br >npm install -D tailwindcss postcss
-              autoprefixer<br >npm install @prisma/client<br >npm install -D prisma</code
+              >npx nuxi@latest init my-app && cd my-app<br />npm install -D tailwindcss postcss
+              autoprefixer<br />npm install @prisma/client<br />npm install -D prisma</code
             >
           </div>
         </div>
@@ -162,8 +162,8 @@ export default defineEventHandler(async (event) => {
           <p class="mb-2">Initialize Prisma and configure your database connection:</p>
           <div class="code-block">
             <code
-              >npx prisma init<br ># Edit prisma/schema.prisma to define your data model<br >npx
-              prisma generate<br >npx prisma db push</code
+              >npx prisma init<br /># Edit prisma/schema.prisma to define your data model<br />npx
+              prisma generate<br />npx prisma db push</code
             >
           </div>
         </div>

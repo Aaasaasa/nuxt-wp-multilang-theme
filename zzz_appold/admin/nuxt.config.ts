@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/color-mode',
     '@pinia/nuxt',
-    'pinia-plugin-persistedstate/nuxt',
+    'pinia-plugin-persistedstate/nuxt'
     // 'nuxt-security'
   ],
 
@@ -56,14 +56,14 @@ export default defineNuxtConfig({
     }
   },
 
-
   // 👇 Ručno dok secure nuxt ne aktualizira na 3.x verziju osnovne bezbjednosne zaglavlja
   routeRules: {
     '/api/**': {
       cors: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+        'Access-Control-Allow-Headers':
+          'Origin, X-Requested-With, Content-Type, Accept, Authorization',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'X-Frame-Options': 'DENY',
         'X-Content-Type-Options': 'nosniff',

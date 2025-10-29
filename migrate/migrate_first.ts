@@ -1,4 +1,3 @@
-
 import { PrismaClient as MySqlClient } from '../prisma/generated/mysql/index.js'
 import { PrismaClient as PgCMSClient } from '../prisma/generated/postgres/cms/index.js'
 
@@ -16,7 +15,8 @@ const tablePrefix = process.env.WP_TABLE_PREFIX || 'wp_'
 // Function to dynamically get WP table prefix from database
 async function getWpTablePrefix(): Promise<string> {
   try {
-    const result = await mysql.$queryRaw`SELECT option_value FROM ${mysql.$queryRaw`${tablePrefix}options`} WHERE option_name = 'wp_db_prefix' LIMIT 1`
+    const result =
+      await mysql.$queryRaw`SELECT option_value FROM ${mysql.$queryRaw`${tablePrefix}options`} WHERE option_name = 'wp_db_prefix' LIMIT 1`
     // Assuming result is an array, extract the prefix
     if (Array.isArray(result) && result.length > 0) {
       return result[0].option_value as string
@@ -28,8 +28,7 @@ async function getWpTablePrefix(): Promise<string> {
 }
 
 // Use dynamic prefix
-const dynamicTablePrefix = await getWpTablePrefix()
-
+const _dynamicTablePrefix = await getWpTablePrefix()
 
 // To make this migration work for any WordPress database, dynamically load the table prefix.
 // WordPress stores the prefix in the 'wp_options' table under the key 'wp_db_prefix' (default is 'wp_').
@@ -47,7 +46,6 @@ const dynamicTablePrefix = await getWpTablePrefix()
 // const tablePrefix = 'as_' // Temporary: Replace with dynamic loading for universal use
 // const wpPosts = await mysql[`${tablePrefix}posts`].findMany() // Example usage
 
-
 // example: const wpPosts = await mysql[`${tablePrefix}posts`].findMany()
 
 function toInt(value: any): number {
@@ -59,11 +57,16 @@ function toInt(value: any): number {
  */
 function mapStatus(status: string): any {
   switch (status) {
-    case 'publish': return 'PUBLISHED'
-    case 'draft': return 'DRAFT'
-    case 'pending': return 'PENDING'
-    case 'trash': return 'TRASH'
-    default: return 'ARCHIVED'
+    case 'publish':
+      return 'PUBLISHED'
+    case 'draft':
+      return 'DRAFT'
+    case 'pending':
+      return 'PENDING'
+    case 'trash':
+      return 'TRASH'
+    default:
+      return 'ARCHIVED'
   }
 }
 
@@ -72,11 +75,16 @@ function mapStatus(status: string): any {
  */
 function mapType(type: string): any {
   switch (type) {
-    case 'post': return 'POST'
-    case 'page': return 'PAGE'
-    case 'portfolio': return 'PORTFOLIO'
-    case 'attachment': return 'MEDIA' // ide u Media model
-    default: return 'ARTICLE'
+    case 'post':
+      return 'POST'
+    case 'page':
+      return 'PAGE'
+    case 'portfolio':
+      return 'PORTFOLIO'
+    case 'attachment':
+      return 'MEDIA' // ide u Media model
+    default:
+      return 'ARTICLE'
   }
 }
 
@@ -93,7 +101,7 @@ async function migrateUsers() {
         password: u.user_pass,
         displayName: u.display_name,
         registeredAt: u.user_registered,
-        isActive: u.user_status === 0,
+        isActive: u.user_status === 0
       },
       create: {
         id: toInt(u.ID),
@@ -102,8 +110,8 @@ async function migrateUsers() {
         password: u.user_pass,
         displayName: u.display_name,
         registeredAt: u.user_registered,
-        isActive: u.user_status === 0,
-      },
+        isActive: u.user_status === 0
+      }
     })
   }
 }
@@ -118,8 +126,8 @@ for (const m of wpUsermeta) {
           objectId: toInt(m.user_id),
           objectType: 'user',
           key: m.meta_key || '',
-          value: m.meta_value ? { raw: m.meta_value } : {},
-        },
+          value: m.meta_value ? { raw: m.meta_value } : {}
+        }
       })
     } catch (error) {
       console.warn(`Skipping user meta for user ${m.user_id}:`, error.message)
@@ -132,8 +140,8 @@ async function migrateArticles() {
 
   const wpPosts = await mysql.as_posts.findMany({
     where: {
-      post_type: { in: ['post', 'page', 'portfolio'] },
-    },
+      post_type: { in: ['post', 'page', 'portfolio'] }
+    }
   })
 
   for (const p of wpPosts) {
@@ -153,7 +161,7 @@ async function migrateArticles() {
         excerpt: { en: p.post_excerpt },
         publishedAt: p.post_date_gmt,
         createdAt: p.post_date,
-        updatedAt: p.post_modified,
+        updatedAt: p.post_modified
       },
       create: {
         id: toInt(p.ID),
@@ -170,8 +178,8 @@ async function migrateArticles() {
         excerpt: { en: p.post_excerpt },
         publishedAt: p.post_date_gmt,
         createdAt: p.post_date,
-        updatedAt: p.post_modified,
-      },
+        updatedAt: p.post_modified
+      }
     })
   }
 }
@@ -186,8 +194,8 @@ for (const m of wpPostmeta) {
           objectId: toInt(m.post_id),
           objectType: 'article',
           key: m.meta_key || '',
-          value: m.meta_value ? { raw: m.meta_value } : {},
-        },
+          value: m.meta_value ? { raw: m.meta_value } : {}
+        }
       })
     } catch (error) {
       console.warn(`Skipping post meta for post ${m.post_id}:`, error.message)
@@ -199,7 +207,7 @@ async function migrateMedia() {
   console.log('🖼️ Migrating media (attachments)...')
 
   const wpMedia = await mysql.as_posts.findMany({
-    where: { post_type: 'attachment' },
+    where: { post_type: 'attachment' }
   })
 
   for (const m of wpMedia) {
@@ -211,10 +219,10 @@ async function migrateMedia() {
         type: m.post_mime_type.split('/')[0],
         meta: {
           mime: m.post_mime_type,
-          description: m.post_content,
+          description: m.post_content
         },
         createdAt: m.post_date,
-        updatedAt: m.post_modified,
+        updatedAt: m.post_modified
       },
       create: {
         id: toInt(m.ID),
@@ -223,11 +231,11 @@ async function migrateMedia() {
         type: m.post_mime_type.split('/')[0],
         meta: {
           mime: m.post_mime_type,
-          description: m.post_content,
+          description: m.post_content
         },
         createdAt: m.post_date,
-        updatedAt: m.post_modified,
-      },
+        updatedAt: m.post_modified
+      }
     })
   }
 }
@@ -245,7 +253,7 @@ async function migrateComments() {
         content: c.comment_content,
         status: c.comment_approved === '1' ? 'approved' : 'pending',
         createdAt: c.comment_date,
-        updatedAt: c.comment_date_gmt,
+        updatedAt: c.comment_date_gmt
       },
       create: {
         id: toInt(c.comment_ID),
@@ -254,8 +262,8 @@ async function migrateComments() {
         content: c.comment_content,
         status: c.comment_approved === '1' ? 'approved' : 'pending',
         createdAt: c.comment_date,
-        updatedAt: c.comment_date_gmt,
-      },
+        updatedAt: c.comment_date_gmt
+      }
     })
   }
 }
@@ -270,8 +278,8 @@ for (const m of wpCommentmeta) {
           objectId: toInt(m.comment_id),
           objectType: 'comment',
           key: m.meta_key || '',
-          value: m.meta_value ? { raw: m.meta_value } : {},
-        },
+          value: m.meta_value ? { raw: m.meta_value } : {}
+        }
       })
     } catch (error) {
       console.warn(`Skipping comment meta for comment ${m.comment_id}:`, error.message)
@@ -288,14 +296,14 @@ async function migrateTerms() {
       where: { slug: t.slug },
       update: {
         name: { en: t.name },
-        group: Number(t.term_group),
+        group: Number(t.term_group)
       },
       create: {
         id: toInt(t.term_id),
         slug: t.slug,
         name: { en: t.name },
-        group: Number(t.term_group),
-      },
+        group: Number(t.term_group)
+      }
     })
   }
 
@@ -310,15 +318,15 @@ async function migrateTerms() {
           termId: toInt(tx.term_id),
           taxonomy: tx.taxonomy,
           description: { en: tx.description },
-          count: Number(tx.count),
+          count: Number(tx.count)
         },
         create: {
           id: toInt(tx.term_taxonomy_id),
           termId: toInt(tx.term_id),
           taxonomy: tx.taxonomy,
           description: { en: tx.description },
-          count: Number(tx.count),
-        },
+          count: Number(tx.count)
+        }
       })
     }
   }
@@ -327,13 +335,15 @@ async function migrateTerms() {
   for (const tx of wpTax) {
     if (toInt(tx.parent) !== 0) {
       const parentExists = await pg.termTaxonomy.findUnique({ where: { id: toInt(tx.parent) } })
-      const termTaxonomyExists = await pg.termTaxonomy.findUnique({ where: { id: toInt(tx.term_taxonomy_id) } })
+      const termTaxonomyExists = await pg.termTaxonomy.findUnique({
+        where: { id: toInt(tx.term_taxonomy_id) }
+      })
       if (parentExists && termTaxonomyExists) {
         await pg.termTaxonomy.update({
           where: { id: toInt(tx.term_taxonomy_id) },
           data: {
-            parentId: toInt(tx.parent),
-          },
+            parentId: toInt(tx.parent)
+          }
         })
       }
     }
@@ -343,61 +353,62 @@ async function migrateTerms() {
   // Za termRelationship, doda upsert ili createMany sa skipDuplicates
   const wpRel = await mysql.as_term_relationships.findMany()
   for (const r of wpRel) {
-    const termTaxonomyExists = await pg.termTaxonomy.findUnique({ where: { id: toInt(r.term_taxonomy_id) } })
+    const termTaxonomyExists = await pg.termTaxonomy.findUnique({
+      where: { id: toInt(r.term_taxonomy_id) }
+    })
     const articleExists = await pg.article.findUnique({ where: { id: toInt(r.object_id) } })
     if (termTaxonomyExists && articleExists) {
       await pg.termRelationship.upsert({
         where: {
           articleId_termTaxonomyId: {
             articleId: toInt(r.object_id),
-            termTaxonomyId: toInt(r.term_taxonomy_id),
-          },
+            termTaxonomyId: toInt(r.term_taxonomy_id)
+          }
         },
         update: {},
         create: {
           articleId: toInt(r.object_id),
-          termTaxonomyId: toInt(r.term_taxonomy_id),
-        },
+          termTaxonomyId: toInt(r.term_taxonomy_id)
+        }
       })
     }
   }
 }
 
-
 async function migrateMenus() {
   console.log('📂 Migrating menus...')
 
   const menuTaxonomies = await mysql.as_term_taxonomy.findMany({
-    where: { taxonomy: 'nav_menu' },
+    where: { taxonomy: 'nav_menu' }
   })
 
   for (const tx of menuTaxonomies) {
-  const term = await mysql.as_terms.findUnique({
-    where: { term_id: toInt(tx.term_id) },
-  })
+    const term = await mysql.as_terms.findUnique({
+      where: { term_id: toInt(tx.term_id) }
+    })
 
-  if (!term) continue
+    if (!term) continue
 
-  const menuItems = await mysql.as_posts.findMany({
-    where: { post_type: 'nav_menu_item' },
-  })
+    const menuItems = await mysql.as_posts.findMany({
+      where: { post_type: 'nav_menu_item' }
+    })
 
-  const structuredItems: any[] = []
-  for (const i of menuItems) {
+    const structuredItems: any[] = []
+    for (const i of menuItems) {
       const metas = await mysql.as_postmeta.findMany({
-        where: { post_id: toInt(i.ID) },
+        where: { post_id: toInt(i.ID) }
       })
 
-      const objId = metas.find(m => m.meta_key === '_menu_item_object_id')?.meta_value
-      const url = metas.find(m => m.meta_key === '_menu_item_url')?.meta_value
-      const parent = metas.find(m => m.meta_key === '_menu_item_menu_item_parent')?.meta_value
+      const objId = metas.find((m) => m.meta_key === '_menu_item_object_id')?.meta_value
+      const url = metas.find((m) => m.meta_key === '_menu_item_url')?.meta_value
+      const parent = metas.find((m) => m.meta_key === '_menu_item_menu_item_parent')?.meta_value
 
       structuredItems.push({
         id: toInt(i.ID),
         title: i.post_title,
         objectId: objId ? Number(objId) : null,
         url: url || null,
-        parentId: parent ? Number(parent) : null,
+        parentId: parent ? Number(parent) : null
       })
     }
 
@@ -405,13 +416,13 @@ async function migrateMenus() {
       where: { slug: term.slug },
       update: {
         name: { en: term.name },
-        items: structuredItems,
+        items: structuredItems
       },
       create: {
         slug: term.slug,
         name: { en: term.name },
-        items: structuredItems,
-      },
+        items: structuredItems
+      }
     })
   }
 }
@@ -432,15 +443,15 @@ async function migrateSeo() {
         openGraph: {
           og_title: y.open_graph_title,
           og_description: y.open_graph_description,
-          og_image: y.open_graph_image,
+          og_image: y.open_graph_image
         },
         twitter: {
           title: y.twitter_title,
           description: y.twitter_description,
-          image: y.twitter_image,
+          image: y.twitter_image
         },
         createdAt: y.created_at,
-        updatedAt: y.updated_at,
+        updatedAt: y.updated_at
       },
       create: {
         id: toInt(y.id),
@@ -452,16 +463,16 @@ async function migrateSeo() {
         openGraph: {
           og_title: y.open_graph_title,
           og_description: y.open_graph_description,
-          og_image: y.open_graph_image,
+          og_image: y.open_graph_image
         },
         twitter: {
           title: y.twitter_title,
           description: y.twitter_description,
-          image: y.twitter_image,
+          image: y.twitter_image
         },
         createdAt: y.created_at,
-        updatedAt: y.updated_at,
-      },
+        updatedAt: y.updated_at
+      }
     })
   }
 }
@@ -470,7 +481,7 @@ async function migrateRevisions() {
   console.log('🕒 Migrating revisions...')
 
   const wpRevs = await mysql.as_posts.findMany({
-    where: { post_type: 'revision' },
+    where: { post_type: 'revision' }
   })
 
   for (const r of wpRevs) {
@@ -483,15 +494,15 @@ async function migrateRevisions() {
           articleId: toInt(r.post_parent),
           authorId: toInt(r.post_author),
           content: { en: r.post_content },
-          createdAt: r.post_date,
+          createdAt: r.post_date
         },
         create: {
           id: toInt(r.ID),
           articleId: toInt(r.post_parent),
           authorId: toInt(r.post_author),
           content: { en: r.post_content },
-          createdAt: r.post_date,
-        },
+          createdAt: r.post_date
+        }
       })
     }
   }
@@ -522,12 +533,12 @@ async function migrateSettings() {
     await pg.setting.upsert({
       where: { key: o.option_name },
       update: {
-        value: parsed,
+        value: parsed
       },
       create: {
         key: o.option_name,
-        value: parsed,
-      },
+        value: parsed
+      }
     })
   }
 }

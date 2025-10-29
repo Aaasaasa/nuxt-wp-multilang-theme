@@ -5,7 +5,6 @@ const prismaWpSingleton = () => new PrismaWpClient()
 type PrismaWpSingleton = ReturnType<typeof prismaWpSingleton>
 
 declare global {
-  // eslint-disable-next-line no-var
   var prismaWpGlobal: PrismaWpSingleton | undefined
 }
 

@@ -1,7 +1,6 @@
 <!-- layouts/default.vue -->
 <template>
   <div class="grid grid-cols-[auto_1fr] min-h-screen">
-
     <UTooltip>
       <div class="flex">
         <AppSidebar />
@@ -32,18 +31,15 @@ import AppHeader from '~/components/AppHeader.vue'
 import AppFooter from '~/components/AppFooter.vue'
 //import LayoutThemeSwitcher from '@/components/layout/ThemeSwitcher.vue'
 // import LayoutLanguageSwitcher from '@/components/layout/LanguageSwitcher.vue'
-import { useI18n, useLocalePath, useHead } from '#imports'
+import { useI18n, useHead } from '#imports'
 // import {  } from '#imports'
 const config = useRuntimeConfig()
 
-const { data: menu, error } = await useFetch(`${config.public.apiBase}/wp/menu`, {
+const { data: _menu } = await useFetch(`${config.public.apiBase}/wp/menu`, {
   query: { slug: 'main-menu' }
 })
 
-console.log('ADMIN MENU:', menu.value)
 // import { useHead } from '@unhead/vue'
-
-const localePath = useLocalePath()
 const { t } = useI18n()
 
 useHead({

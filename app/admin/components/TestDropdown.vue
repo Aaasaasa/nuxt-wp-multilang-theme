@@ -4,9 +4,7 @@ const items = [
     { label: 'Profile', icon: 'i-lucide-user', to: '/profile' },
     { label: 'Settings', icon: 'i-lucide-settings', to: '/settings' }
   ],
-  [
-    { label: 'Sign out', icon: 'i-lucide-log-out', to: '/logout' }
-  ]
+  [{ label: 'Sign out', icon: 'i-lucide-log-out', to: '/logout' }]
 ]
 </script>
 

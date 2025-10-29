@@ -24,7 +24,11 @@ const year = new Date().getFullYear()
 
         <!-- Right: Social & Language -->
         <div class="flex items-center gap-4">
-          <ULink to="https://github.com/Aaasaasa/nuxt-wp-multilang-theme" external aria-label="GitHub">
+          <ULink
+            to="https://github.com/Aaasaasa/nuxt-wp-multilang-theme"
+            external
+            aria-label="GitHub"
+          >
             <Github class="w-5 h-5 hover:text-primary transition-colors" />
           </ULink>
           <ULink to="https://x.com/Aaasaasa" external aria-label="X (Twitter)">

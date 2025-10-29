@@ -21,4 +21,3 @@ const items = [
   [{ label: 'Option B', icon: 'i-lucide-moon' }]
 ]
 </script>
-

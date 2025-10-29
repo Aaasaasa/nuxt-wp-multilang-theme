@@ -134,7 +134,9 @@ const loading = ref(false)
 
 const isEditing = computed(() => props.mode === 'edit' || !!props.post)
 
-const wordCount = computed(() => state.content.split(/\s+/).filter(word => word.length > 0).length)
+const wordCount = computed(
+  () => state.content.split(/\s+/).filter((word) => word.length > 0).length
+)
 
 const readingTime = computed(() => {
   const wordsPerMinute = 200
@@ -158,7 +160,7 @@ const getBadgeColor = () => {
 
 const stopPostWatcher = watch(
   () => props.post,
-  newPost => {
+  (newPost) => {
     if (newPost && isEditing.value) setState(newPost)
   },
   { immediate: true }
@@ -166,7 +168,7 @@ const stopPostWatcher = watch(
 
 const stopOpenWatcher = watch(
   () => open.value,
-  isOpen => {
+  (isOpen) => {
     if (isOpen) {
       if (!isEditing.value) {
         resetState()

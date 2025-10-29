@@ -2,7 +2,7 @@
 import { defineConfig } from '@prisma/config'
 
 export default defineConfig({
-  schema: './prisma/adapters',
+  schema: './prisma/adapters'
   // schemaDir: './prisma/adapters',
   // schemaBaseName: 'schema-postgres.prisma',
   // generators: [], // пусто, нема default генератора

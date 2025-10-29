@@ -46,11 +46,7 @@ const profileItems = [
     <!-- Profile dropdown -->
     <ClientOnly>
       <UDropdownMenu
-        :items="[
-          [{ label: user.name, slot: 'account', disabled: true }],
-          nav,
-          profileItems[0]
-        ]"
+        :items="[[{ label: user.name, slot: 'account', disabled: true }], nav, profileItems[0]]"
         class="ml-2"
       >
         <UAvatar :src="user.avatar" size="sm" />

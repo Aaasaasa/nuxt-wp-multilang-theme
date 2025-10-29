@@ -66,13 +66,48 @@ export default defineNuxtConfig({
   i18n: {
     langDir: 'locales',
     locales: [
-      { code: 'en', name: 'English', files: ['en/common.json', 'en/seo.json', 'en/email.json'], language: 'en-US' },
-      { code: 'de', name: 'Deutsch', files: ['de/common.json', 'de/seo.json', 'de/email.json'], language: 'de-DE' },
-      { code: 'sr', name: 'Српски', files: ['sr/common.json', 'sr/seo.json', 'sr/email.json'], language: 'sr-RS' },
-      { code: 'es', name: 'Español', files: ['es/common.json', 'es/seo.json', 'es/email.json'], language: 'es-ES' },
-      { code: 'fr', name: 'Français', files: ['fr/common.json', 'fr/seo.json', 'fr/email.json'], language: 'fr-FR' },
-      { code: 'it', name: 'Italiano', files: ['it/common.json', 'it/seo.json', 'it/email.json'], language: 'it-IT' },
-      { code: 'ru', name: 'Русский', files: ['ru/common.json', 'ru/seo.json', 'ru/email.json'], language: 'ru-RU' }
+      {
+        code: 'en',
+        name: 'English',
+        files: ['en/common.json', 'en/seo.json', 'en/email.json'],
+        language: 'en-US'
+      },
+      {
+        code: 'de',
+        name: 'Deutsch',
+        files: ['de/common.json', 'de/seo.json', 'de/email.json'],
+        language: 'de-DE'
+      },
+      {
+        code: 'sr',
+        name: 'Српски',
+        files: ['sr/common.json', 'sr/seo.json', 'sr/email.json'],
+        language: 'sr-RS'
+      },
+      {
+        code: 'es',
+        name: 'Español',
+        files: ['es/common.json', 'es/seo.json', 'es/email.json'],
+        language: 'es-ES'
+      },
+      {
+        code: 'fr',
+        name: 'Français',
+        files: ['fr/common.json', 'fr/seo.json', 'fr/email.json'],
+        language: 'fr-FR'
+      },
+      {
+        code: 'it',
+        name: 'Italiano',
+        files: ['it/common.json', 'it/seo.json', 'it/email.json'],
+        language: 'it-IT'
+      },
+      {
+        code: 'ru',
+        name: 'Русский',
+        files: ['ru/common.json', 'ru/seo.json', 'ru/email.json'],
+        language: 'ru-RU'
+      }
     ],
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
@@ -95,11 +130,7 @@ export default defineNuxtConfig({
   // Auto-imports (clean)
   // ========================================
   imports: {
-    dirs: [
-      'composables/**',
-      'server/utils/**',
-      'shared/**'
-    ]
+    dirs: ['composables/**', 'server/utils/**', 'shared/**']
   },
 
   // Zod auto-import (modern syntax)
@@ -133,7 +164,7 @@ export default defineNuxtConfig({
     serverAssets: [{ baseName: 'templates', dir: './templates' }],
     rollupConfig: {
       watch: {
-        exclude: ['data/**', 'data/mongo/**', '**/data/postgres/**', '**/data/mysql/**' ]
+        exclude: ['data/**', 'data/mongo/**', '**/data/postgres/**', '**/data/mysql/**']
       }
     }
   },
@@ -145,7 +176,8 @@ export default defineNuxtConfig({
     resolve: {
       alias: {
         //  '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js'
-        './prisma/generated/postgres-cms/index-browser.js': './node_modules/.prisma/client/index-browser.js'
+        './prisma/generated/postgres-cms/index-browser.js':
+          './node_modules/.prisma/client/index-browser.js'
       }
     },
     build: { chunkSizeWarningLimit: 600 },

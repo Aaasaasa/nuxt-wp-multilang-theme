@@ -6,7 +6,6 @@ const prismaMongoSingleton = () => new PrismaMongoClient()
 type PrismaMongoSingleton = ReturnType<typeof prismaMongoSingleton>
 
 declare global {
-  // eslint-disable-next-line no-var
   var prismaMongoGlobal: PrismaMongoSingleton | undefined
 }
 

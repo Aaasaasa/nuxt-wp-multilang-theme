@@ -1,7 +1,6 @@
 <!-- layouts/default.vue -->
 <template>
   <div class="grid grid-cols-[auto_1fr] min-h-screen">
-
     <UTooltip>
       <div class="flex">
         <AppSidebar />
