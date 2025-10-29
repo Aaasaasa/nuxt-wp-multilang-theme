@@ -10,7 +10,7 @@ Expert en développement backend Nuxt Server avec Nitro.
 - **Nitro**: Framework serveur universel
 - **Event Handlers**: `defineEventHandler()` typé
 - **APIs REST**: Endpoints avec validation Yup
-- **Prisma**: ORM singleton `@@/lib/prisma`
+- **Prisma**: ORM singletons in `server/lib/`
 - **Validation**: Yup schemas + messages i18n
 
 ## Structure Projet

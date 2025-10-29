@@ -5,6 +5,9 @@
  * Public routes are defined in the publicRoutes array below
  */
 
+import { ERROR_CODES } from '../constants/errors'
+import { unauthorizedError } from '../utils/response'
+
 export default defineEventHandler(async (event) => {
   const path = event.path || ''
   const method = event.method || 'GET'
@@ -29,7 +32,12 @@ export default defineEventHandler(async (event) => {
     { path: '/api/auth/forgot-password', methods: ['POST'] },
     { path: '/api/auth/reset-password', methods: ['POST'] },
     { pathPrefix: '/api/posts', methods: ['GET'] }, // Allow /api/posts and subpaths
-    { pathPrefix: '/api/docs', methods: ['GET'] } // Allow /api/docs and subpaths
+    { pathPrefix: '/api/articles', methods: ['GET'] }, // Allow /api/articles and subpaths
+    { pathPrefix: '/api/pages', methods: ['GET'] }, // Allow /api/pages and subpaths
+    { pathPrefix: '/api/portfolios', methods: ['GET'] }, // Allow /api/portfolios and subpaths
+    { pathPrefix: '/api/products', methods: ['GET'] }, // Allow /api/products and subpaths
+    { pathPrefix: '/api/docs', methods: ['GET'] }, // Allow /api/docs and subpaths
+    { pathPrefix: '/api/cookies', methods: ['GET', 'POST'] } // Allow cookie management for all users
   ]
 
   const isPublicRoute = publicRoutes.some((route) => {

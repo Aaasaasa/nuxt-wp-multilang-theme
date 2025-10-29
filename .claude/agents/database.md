@@ -24,7 +24,7 @@ shared/
 ```
 
 ## Patterns Essentiels
-- Client: `import prisma from '@@/lib/prisma'`
+- Client: `import prisma from '~/server/lib/prismaCms'`
 - Transactions pour opérations complexes
 - Error handling avec codes HTTP
 - DB de test isolée pour E2E

@@ -48,12 +48,13 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  metas      UserMeta[]
-  articles   Article[]
-  pages      Page[]
-  portfolios Portfolio[]
-  products   Product[]
-  comments   Comment[]
+  metas          UserMeta[]
+  articles       Article[]
+  pages          Page[]
+  portfolios     Portfolio[]
+  products       Product[]
+  comments       Comment[]
+  cookieConsents CookieConsent[]
 
   @@map("cms_users")
 }
@@ -338,6 +339,113 @@ model Menu {
   updatedAt DateTime @updatedAt
 
   @@map("cms_menus")
+}
+
+// --- Cookie Policy ---
+model CookieCategory {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique // essential, analytics, marketing, preferences, etc.
+  name        String
+  description String?
+  required    Boolean  @default(false) // Essential cookies can't be disabled
+  enabled     Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  translations CookieCategoryTranslation[]
+  cookies      Cookie[]
+
+  @@map("cms_cookie_categories")
+}
+
+model CookieCategoryTranslation {
+  id               Int     @id @default(autoincrement())
+  cookieCategoryId Int
+  lang             String
+  name             String
+  description      String?
+
+  category CookieCategory @relation(fields: [cookieCategoryId], references: [id])
+
+  @@unique([cookieCategoryId, lang])
+  @@map("cms_cookie_category_translations")
+}
+
+model Cookie {
+  id         Int      @id @default(autoincrement())
+  categoryId Int
+  name       String // Cookie name
+  domain     String? // .example.com
+  duration   String? // "30 days", "Session", "1 year"
+  purpose    String // What this cookie does
+  provider   String? // Google Analytics, Facebook, etc.
+  enabled    Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  category     CookieCategory      @relation(fields: [categoryId], references: [id])
+  translations CookieTranslation[]
+
+  @@map("cms_cookies")
+}
+
+model CookieTranslation {
+  id       Int     @id @default(autoincrement())
+  cookieId Int
+  lang     String
+  purpose  String
+  provider String?
+
+  cookie Cookie @relation(fields: [cookieId], references: [id])
+
+  @@unique([cookieId, lang])
+  @@map("cms_cookie_translations")
+}
+
+model CookiePolicy {
+  id        Int      @id @default(autoincrement())
+  version   String   @unique // "1.0", "1.1", etc.
+  isActive  Boolean  @default(false)
+  validFrom DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations CookiePolicyTranslation[]
+
+  @@map("cms_cookie_policies")
+}
+
+model CookiePolicyTranslation {
+  id             Int    @id @default(autoincrement())
+  cookiePolicyId Int
+  lang           String
+  title          String
+  content        String // Full policy text
+  bannerText     String // Short banner description
+  acceptText     String @default("Accept All")
+  rejectText     String @default("Reject All")
+  settingsText   String @default("Cookie Settings")
+
+  policy CookiePolicy @relation(fields: [cookiePolicyId], references: [id])
+
+  @@unique([cookiePolicyId, lang])
+  @@map("cms_cookie_policy_translations")
+}
+
+model CookieConsent {
+  id            String   @id @default(cuid()) // Browser fingerprint or user ID
+  userId        Int? // If logged in
+  categories    Json // {"essential": true, "analytics": false, etc.}
+  policyVersion String
+  ipAddress     String?
+  userAgent     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@map("cms_cookie_consents")
 }
 
 // --- Settings ---

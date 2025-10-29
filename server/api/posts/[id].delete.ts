@@ -1,36 +1,32 @@
-/**
- * @openapi
- * /api/posts/{id}:
- *   delete:
- *     summary: Delete a post (only by owner)
- *     tags: [Posts]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *           format: uuid
- *     responses:
- *       200:
- *         description: Post deleted successfully
- *       401:
- *         description: Unauthorized
- *       403:
- *         description: Forbidden - can only delete own posts
- *       404:
- *         description: Post not found
- */
+// server/api/posts/[id].delete.ts
+// DELETE /api/posts/:id - Post löschen
+
+import { deletePost } from '../../services/post.service'
+import { createApiResponse, notFoundError, unauthorizedError } from '../../utils/response'
+
 export default defineEventHandler(async (event) => {
-  // User is already authenticated by middleware and available in context
-  const user = event.context.user
+  try {
+    // Authentifizierung prüfen
+    const user = event.context.user
+    if (!user?.id) {
+      throw unauthorizedError('VALIDATION', 'Anmeldung erforderlich')
+    }
 
-  const { id } = await validateParams(event, idSchema)
+    const id = getRouterParam(event, 'id')
 
-  // Delete post using service (includes ownership check)
-  await deletePost(id, user.id)
+    if (!id) {
+      throw notFoundError('RESOURCE', 'Post ID ist erforderlich')
+    }
 
-  return createDeletedResponse()
+    // Post löschen (Service prüft Berechtigung)
+    await deletePost(id, user.id)
+
+    return createApiResponse(null, 204, 'Post erfolgreich gelöscht')
+  } catch (error) {
+    // Wenn bereits ein strukturierter Fehler, weitergeben
+    if (error && typeof error === 'object' && 'statusCode' in error) {
+      throw error
+    }
+    throw notFoundError('RESOURCE', 'Post nicht gefunden')
+  }
 })

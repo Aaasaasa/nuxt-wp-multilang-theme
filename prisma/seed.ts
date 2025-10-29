@@ -1,73 +1,39 @@
 // prisma/seed.ts
-import { PrismaClient } from './generated/postgres-cms' // path -> prisma/generated/postgres-cms
-import bcrypt from 'bcryptjs'
+// Master seed file for all databases in NuxtWP Multilang Theme
 
-const prisma = new PrismaClient()
+import seedPostgresCMS from './seed-data/postgres-seed'
+import seedMySQLWordPress from './seed-data/mysql-seed'
+import seedMongoAnalytics from './seed-data/mongo-seed'
 
 async function main() {
-  // Default superadmin credentials
-  const login = 'root'
-  const email = 'root@localhost'
-  const plainPassword = 'secret' // promeni posle na env var!
+  try {
+    process.stdout.write('🌱 Starting database seeding for NuxtWP Multilang Theme...\n\n')
 
-  // Hash password (bcryptjs)
-  const salt = await bcrypt.genSalt(10)
-  const hashed = await bcrypt.hash(plainPassword, salt)
+    // Seed PostgreSQL CMS
+    process.stdout.write('📊 Seeding PostgreSQL CMS database...\n')
+    await seedPostgresCMS()
+    process.stdout.write('✅ PostgreSQL CMS seeded successfully\n\n')
 
-  // Upsert user (safe: ne briše ništa, ako postoji - apdejtujemo samo lozinku/displayName/role ako je potrebno)
-  const user = await prisma.user.upsert({
-    where: { login }, // unique index na login
-    update: {
-      // Ne brisemo postojece, ovde samo osiguravamo da je superadmin i da ima aktuelnu lozinku
-      email,
-      displayName: 'root',
-      password: hashed,
-      role: 'SUPERADMIN',
-      isActive: true
-    },
-    create: {
-      login,
-      email,
-      displayName: 'root',
-      password: hashed,
-      role: 'SUPERADMIN',
-      isActive: true
-    }
-  })
+    // Seed MySQL WordPress
+    process.stdout.write('🔗 Seeding MySQL WordPress database...\n')
+    await seedMySQLWordPress()
+    process.stdout.write('✅ MySQL WordPress seeded successfully\n\n')
 
-  // eslint-disable-next-line no-console
-  console.log('✅ Upserted user:', {
-    id: user.id,
-    login: user.login,
-    email: user.email,
-    role: user.role
-  })
+    // Seed MongoDB Analytics
+    process.stdout.write('📈 Seeding MongoDB Analytics database...\n')
+    await seedMongoAnalytics()
+    process.stdout.write('✅ MongoDB Analytics seeded successfully\n\n')
 
-  // (Opcionalno) Add a UserMeta entry without deleting anything
-  await prisma.userMeta
-    .upsert({
-      where: { id: user.id }, // ako imaš drugačiji unique, možeš koristiti kombinaciju; ovde koristimo id kao primer
-      update: {},
-      create: {
-        userId: user.id,
-        key: 'seed',
-        value: { createdBy: 'seed', note: 'default superadmin created' }
-      }
-    })
-    .catch(() => {
-      // Ako upsert preko id ne radi zbog unique key-a, preskočiti silently
-    })
+    process.stdout.write('🎉 All databases seeded successfully!\n')
+    process.stdout.write('🚀 NuxtWP Multilang Theme is ready for development\n')
 
-  // eslint-disable-next-line no-console
-  console.log('✅ Seed finished (non-destructive).')
+  } catch (error) {
+    process.stderr.write(`❌ Seeding failed: ${error}\n`)
+    process.exit(1)
+  }
 }
 
-main()
-  .catch((e) => {
-    // eslint-disable-next-line no-console
-    console.error('Seed error:', e)
-    process.exit(1)
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
+// Execute seeding if this file is run directly
+if (require.main === module) {
+  main()
+}

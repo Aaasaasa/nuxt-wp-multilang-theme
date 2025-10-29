@@ -67,3 +67,7 @@ docker-volumes/**/data/
 
 # prisma
 prisma/generated
+
+# WordPress Media/Uploads (nicht versioniert)
+public/uploads/*
+!public/uploads/README.md

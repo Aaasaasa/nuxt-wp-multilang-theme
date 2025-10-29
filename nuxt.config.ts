@@ -1,7 +1,6 @@
 /* eslint-disable quotes */
 // nuxt.config.ts
 import packageJson from './package.json'
-import { resolve } from 'path'
 
 export default defineNuxtConfig({
   // ========================================
@@ -31,7 +30,7 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
 
     // Database & Backend
-    '@prisma/nuxt',
+    // '@prisma/nuxt', // Deaktiviert - verwende custom Multi-Database Setup
     'nuxt-auth-utils',
     'nuxt-nodemailer',
 
@@ -127,11 +126,81 @@ export default defineNuxtConfig({
   css: ['/assets/css/main.css'],
 
   // ========================================
-  // Auto-imports (clean)
+  // Image Optimization (Modern WebP/AVIF)
+  // ========================================
+  image: {
+    // Deaktiviere IPX für WordPress Bilder (sie sind bereits optimiert)
+    provider: 'none',
+
+    // Public directory für statische Dateien
+    dir: 'public',
+
+    // Responsive Breakpoints
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+    },
+
+    // IPX Konfiguration für bessere Performance
+    ipx: {
+      // Cache-Einstellungen für bessere Performance
+      maxAge: 60 * 60 * 24 * 365 // 1 Jahr Cache
+    },    // Presets für verschiedene Use Cases
+    presets: {
+      // Blog Post Featured Image
+      featured: {
+        modifiers: {
+          format: 'webp',
+          quality: 85,
+          width: 1200,
+          height: 630,
+          fit: 'cover'
+        }
+      },
+
+      // Thumbnail für Listen
+      thumbnail: {
+        modifiers: {
+          format: 'webp',
+          quality: 80,
+          width: 400,
+          height: 300,
+          fit: 'cover'
+        }
+      },
+
+      // Avatar/Profile Bilder
+      avatar: {
+        modifiers: {
+          format: 'webp',
+          quality: 90,
+          width: 128,
+          height: 128,
+          fit: 'cover'
+        }
+      }
+    }
+  },
+
+  // ========================================
+  // Auto-imports (Frontend only - no server code)
   // ========================================
   imports: {
-    dirs: ['composables/**', 'server/utils/**', 'shared/**']
+    dirs: ['composables/**'],
+    scan: true
   },
+
+  // ========================================
+  // Nuxt 4 Server Structure Blacklisting
+  // ========================================
+  ignore: [
+    'server/lib/**',        // Nuxt 4 server/lib/ mit Prisma Clients
+    'prisma/generated/**'   // Generierte Prisma Clients
+  ],
 
   // Zod auto-import (modern syntax)
   hooks: {
@@ -144,44 +213,44 @@ export default defineNuxtConfig({
   },
 
   // ========================================
-  // Nitro Configuration
+  // Nitro Configuration (Server only)
   // ========================================
   nitro: {
-    alias: {
-      '@pgClient': resolve('./prisma/generated/postgres-cms/index.js'),
-      '@wpClient': resolve('./prisma/generated/mysql/index.js'),
-      '@mongoClient': resolve('./prisma/generated/mongo/index.js')
-    },
+    // Aliases entfernt - verwende relative Imports in server/lib/ files
     imports: {
       dirs: [
-        'shared/**',
         'server/constants/**',
         'server/services/**',
-        'server/utils/**',
+        'server/utils/**',     // Nuxt 4 Konvention: utils OK
         'server/types/**'
+        // server/lib/** explizit NICHT - enthält Prisma Clients
       ]
     },
     serverAssets: [{ baseName: 'templates', dir: './templates' }],
     rollupConfig: {
       watch: {
-        exclude: ['data/**', 'data/mongo/**', '**/data/postgres/**', '**/data/mysql/**']
+        exclude: ['data/**', '**/node_modules/**']
       }
     }
   },
 
   // ========================================
-  // Vite Configuration
+  // Vite Configuration (Frontend only - no Prisma clients)
   // ========================================
   vite: {
-    resolve: {
-      alias: {
-        //  '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js'
-        './prisma/generated/postgres-cms/index-browser.js':
-          './node_modules/.prisma/client/index-browser.js'
-      }
-    },
     build: { chunkSizeWarningLimit: 600 },
-    server: { watch: { ignored: ['**/data/**', '**/node_modules/**', '**/.nuxt/**'] } }
+    server: {
+      watch: {
+        ignored: [
+          '**/data/**',
+          '**/node_modules/**',
+          '**/.nuxt/**'
+        ]
+      },
+      fs: {
+        strict: false
+      }
+    }
   },
 
   // ========================================
@@ -197,6 +266,7 @@ export default defineNuxtConfig({
         'img-src': ["'self'", 'data:', 'https:'],
         'object-src': ["'none'"],
         'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        'script-src-attr': ["'unsafe-inline'"], // Allow inline event handlers
         'style-src': ["'self'", 'https:', "'unsafe-inline'"],
         'upgrade-insecure-requests': false
       },
@@ -226,8 +296,8 @@ export default defineNuxtConfig({
       cors: true,
       headers: { 'Access-Control-Max-Age': '86400' }
     },
-    '/lab/**': { ssr: false },
-    '/admin/**': { ssr: false }
+    '/lab/**': { prerender: false },
+    '/admin/**': { prerender: false }
   },
 
   // ========================================

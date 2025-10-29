@@ -7,7 +7,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <header class="border-b bg-background">
+  <header class="border-b bg-white dark:bg-gray-900">
     <UContainer class="flex items-center justify-between h-14">
       <!-- Left: Logo + main nav -->
       <div class="flex items-center gap-8">

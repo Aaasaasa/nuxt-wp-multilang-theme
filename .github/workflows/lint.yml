@@ -1,33 +1,39 @@
-name: Lint Check
+name: Lint and Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  lint-and-typecheck:
+  lint:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [24.5.0]
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: 24.5.0
-          cache: 'pnpm'
-
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 10.17.1
-
-      - name: Install pnpm
-        run: npm install -g pnpm
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: pnpm install
+        run: yarn install --frozen-lockfile
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint
-        run: pnpm lint:ci
+      - name: Lint code
+        run: yarn lint
 
       - name: Type check
-        run: pnpm typecheck
+        run: yarn typecheck

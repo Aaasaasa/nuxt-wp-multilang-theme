@@ -1,39 +1,253 @@
 # 🧩 Component Architecture
 
-Vue 3 Composition API components with Nuxt UI Pro v4 integration, following consistent patterns for reusability and maintainability.
+Modern Vue 3 Composition API components with Nuxt UI integration, featuring responsive layout system and professional component patterns for the NuxtWP Multilang Theme.
 
 ## 🏗️ Component Structure
 
 ```
 app/components/
-├── features/
-│   └── post/
-│       ├── Card.vue         # Display components
-│       ├── CreateModal.vue  # Modal components with UAuthForm
-│       └── DeleteModal.vue  # Confirmation modals
-├── layout/
-│   └── PreferencesControls.vue  # Layout utility components
-└── ui/
-    └── form/               # Reusable form field components
-        ├── Input.vue
-        ├── Email.vue
-        ├── Password.vue
-        └── Textarea.vue
+├── features/                    # Feature-specific components
+│   ├── auth/                   # Authentication components
+│   ├── blog/                   # Blog and CMS components
+│   │   ├── ArticleCard.vue     # Article display components
+│   │   ├── CategoryFilter.vue  # Content filtering
+│   │   └── TagManager.vue      # Tag management
+│   └── admin/                  # Admin dashboard components
+├── layout/                     # Layout & Navigation (NEW v1.0)
+│   ├── AppSidebar.vue         # Modern sidebar navigation
+│   ├── AppFooter.vue          # Professional footer component
+│   └── PreferencesControls.vue # User preferences
+└── ui/                        # Reusable UI components
+    ├── form/                  # Form field components
+    │   ├── Input.vue
+    │   ├── Email.vue
+    │   ├── Password.vue
+    │   └── Textarea.vue
+    ├── navigation/            # Navigation components
+    └── content/              # Content display components
 ```
+
+### Layout Components (New in v1.0)
+
+#### AppSidebar.vue
+
+- **Mobile-first design** with hamburger menu and overlay
+- **Desktop panel mode** with toggle functionality
+- **Multi-language navigation** with i18n integration
+- **Admin section** for authenticated users
+- **Auto-close behavior** on route changes and outside clicks
+
+#### AppFooter.vue
+
+- **Author attribution** (Aleksandar Stajic) with professional branding
+- **CMS-ready structure** with dynamic content sections
+- **Social media integration** with configurable links
+- **Legal sections** (Privacy, Terms, Copyright)
+- **Responsive grid layout** with mobile optimization
 
 ## 🎯 Component Patterns
 
-### 1. Props & Events Pattern
+### 1. Layout Component Pattern
 
-**Implementation**: See components in `app/components/features/post/` for complete prop and event type definitions.
+**Modern Responsive Layout with Sidebar Integration**
 
-### 2. v-model Pattern
+```vue
+<!-- app/layouts/default.vue -->
+<template>
+  <div class="min-h-screen flex">
+    <!-- Sidebar Component -->
+    <AppSidebar v-model="sidebarOpen" />
 
-**Implementation**: See `app/components/ui/form/` for v-model patterns and `app/components/features/post/CreateModal.vue` for named models.
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col">
+      <UMain>
+        <UHeader>
+          <!-- Sidebar toggle button -->
+          <template #title>
+            <div class="flex items-center">
+              <UButton icon="i-lucide-menu" @click="toggleSidebar" class="mr-3" />
+              <h1>{{ appName }}</h1>
+            </div>
+          </template>
+        </UHeader>
 
-### 3. Composable Integration
+        <!-- Page Content -->
+        <slot />
 
-**Implementation**: See components for composable integration patterns with useI18n, useNotifications, and form composables.
+        <!-- Modern Footer -->
+        <AppFooter />
+      </UMain>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+// Explicit imports for layout components
+import AppSidebar from '~/components/layout/AppSidebar.vue'
+import AppFooter from '~/components/layout/AppFooter.vue'
+
+const sidebarOpen = ref(false)
+const toggleSidebar = () => (sidebarOpen.value = !sidebarOpen.value)
+</script>
+```
+
+### 2. Sidebar Navigation Pattern
+
+**Responsive Sidebar with Mobile/Desktop Modes**
+
+```vue
+<!-- app/components/layout/AppSidebar.vue -->
+<template>
+  <div>
+    <!-- Mobile Overlay -->
+    <div
+      v-if="sidebarOpen"
+      class="fixed inset-0 bg-black/50 lg:hidden z-40"
+      @click="sidebarOpen = false"
+    />
+
+    <!-- Sidebar Panel -->
+    <aside
+      :class="[
+        'fixed left-0 top-0 h-full bg-white dark:bg-gray-900',
+        'lg:translate-x-0 lg:static',
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      ]"
+      style="width: 280px"
+    >
+      <!-- Navigation Items -->
+      <nav class="p-4 space-y-2">
+        <UButton
+          v-for="item in navigationItems"
+          :key="item.href"
+          :to="item.href"
+          :icon="item.icon"
+          class="w-full justify-start"
+          @click="sidebarOpen = false"
+        >
+          {{ item.label }}
+        </UButton>
+      </nav>
+    </aside>
+  </div>
+</template>
+```
+
+### 3. Footer Component Pattern
+
+**Professional Footer with Author Attribution**
+
+```vue
+<!-- app/components/layout/AppFooter.vue -->
+<template>
+  <footer class="bg-gray-50 dark:bg-gray-900 border-t">
+    <div class="container mx-auto px-6 py-12">
+      <!-- Main Footer Content -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- About Section -->
+        <div class="md:col-span-2">
+          <h3 class="text-lg font-semibold mb-4">About NuxtWP</h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">
+            A modern multilingual WordPress-inspired theme built with Nuxt 4.
+          </p>
+          <p class="text-sm text-gray-500">Created by <strong>Aleksandar Stajic</strong></p>
+        </div>
+
+        <!-- Navigation Links -->
+        <div>
+          <h4 class="font-medium mb-4">Navigation</h4>
+          <ul class="space-y-2 text-sm">
+            <li v-for="link in footerLinks" :key="link.href">
+              <NuxtLink :to="link.href" class="hover:text-primary-600">
+                {{ link.label }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="mt-8 pt-8 border-t text-center">
+        <p class="text-sm text-gray-500">
+          © {{ currentYear }} Aleksandar Stajic. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+</template>
+```
+
+### 4. Props & Events Pattern
+
+**Type-safe Component Communication**
+
+```vue
+<script setup lang="ts">
+interface Props {
+  modelValue?: boolean
+  items?: NavigationItem[]
+  variant?: 'default' | 'compact'
+}
+
+interface NavigationItem {
+  label: string
+  href: string
+  icon: string
+  badge?: string
+  children?: NavigationItem[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: false,
+  variant: 'default'
+})
+
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+  navigate: [item: NavigationItem]
+}>()
+</script>
+```
+
+### 5. Composable Integration Pattern
+
+**Reactive State Management with Composables**
+
+```vue
+<script setup lang="ts">
+// Authentication state
+const { loggedIn, user } = useUserSession()
+
+// Internationalization
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
+
+// Route reactivity
+const route = useRoute()
+
+// Close sidebar on route change
+watch(
+  () => route.path,
+  () => {
+    sidebarOpen.value = false
+  }
+)
+
+// Navigation items with i18n
+const navigationItems = computed(() => [
+  {
+    label: t('navigation.home'),
+    href: localePath('/'),
+    icon: 'i-lucide-home'
+  },
+  {
+    label: t('navigation.blog'),
+    href: localePath('/blog'),
+    icon: 'i-lucide-book-open'
+  }
+])
+</script>
+```
 
 ## 🎨 Component Categories
 

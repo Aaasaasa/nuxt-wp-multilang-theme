@@ -1,191 +1,534 @@
-# Nuxt Boilerplate - still not working version - in development
+# NuxtWP Multilang Theme - Production Ready
 
-A modern **Nuxt 4** production-ready boilerplate with TypeScript, Nuxt UI, Prisma, and PostgreSQL.
+A modern **Nuxt 4** multilingual WordPress-inspired theme with advanced features, modern UI components, and multi-database support. Created by **Aleksandar Stajic**.
 
-![Screenshot](./ public/screenshot.png)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Nuxt](https://img.shields.io/badge/nuxt-4.1.3-00DC82.svg)
+![TypeScript](https://img.shields.io/badge/typescript-5.6-blue.svg)
 
 ## 🚀 Features
 
-- **🔧 Nuxt 4** with Vue 3 Composition API and TypeScript
-- **🎨 Nuxt UI** components with Tailwind CSS
-- **🗄️ Prisma ORM** with PostgreSQL and Docker setup
-- **🌍 Internationalization** (French/English/German/Србски) with auto-detection
-- **📚 API Documentation** with OpenAPI/Swagger (dev-only)
-- **🛡️ Security** hardening with CORS, CSP, and rate limiting
-- **🧪 Testing** with Vitest (unit) and Playwright (E2E)
-- **✨ Code Quality** with ESLint, Prettier, and Husky hooks
-- **🐳 Docker** support for easy deployment
+### Core Framework
+
+- **🔧 Nuxt 4.1.3** with Vue 3 Composition API and TypeScript ES Modules
+- **🎨 Nuxt UI** components with Tailwind CSS and custom CSS variables
+- **� Modern Layout System** with responsive sidebar navigation and mobile-first design
+- **🖥️ AppSidebar & AppFooter** - Professional layout components with CMS integration
+
+### Database & Backend
+
+- **🗄️ Multi-Database Prisma Setup** - PostgreSQL (CMS), MySQL (WordPress), MongoDB
+- **⚡ Prisma Client Generation** - Automated multi-schema client generation
+- **🔄 Database Migrations** - Structured migration system with multi-environment support
+- **📊 Prisma Studio Integration** - Visual database management interface
+- **🔗 WordPress Migration** - Complete WordPress-to-PostgreSQL migration with term relationships
+- **🎯 Content APIs** - RESTful APIs for Articles, Pages, Portfolios with full CMS features
+
+### Internationalization & Content
+
+- **🌍 Advanced i18n** - 7 languages (EN, DE, SR, ES, FR, IT, RU) with smart detection
+- **📚 WordPress-like CMS** - Article/Page/Portfolio management with Prisma backend
+- **📚 Blog System** - Complete blog functionality with categories and tags integration
+- **🎨 Portfolio System** - Professional portfolio projects with custom taxonomies
+- **🔗 Term Relationships** - Advanced category/tag system with 224+ content connections
+- **📸 Media Management** - WebP optimization and featured images support
+- **🎯 SEO Optimization** - Built-in SEO patterns and meta management
+
+### Security & Quality
+
+- **🛡️ Production Security** - CORS, CSP, HSTS, rate limiting, and security headers
+- **🔐 Authentication System** - Full auth with user sessions and admin areas
+- **🧪 Comprehensive Testing** - Vitest (unit) and Playwright (E2E) with coverage
+- **✨ Code Quality** - ESLint, Prettier, Commitlint, and Husky hooks
+
+### Development & Deployment
+
+- **📦 Yarn Package Management** - Consistent dependency management across environments
+- **🐳 Docker Support** - Multi-service containerization with development databases
+- **🔧 GitHub Actions** - Automated CI/CD with linting, testing, and deployment
+- **📱 Responsive Design** - Mobile-first approach with modern CSS Grid and Flexbox
 
 ## ⚡ Quick Start
 
 ### Prerequisites
 
 - Node.js ≥ 22.0.0
-- npm ≥ 10.0.0
-- Docker (for PostgreSQL)
+- Yarn ≥ 1.22.0 (Package Manager)
+- Docker (for multi-database setup)
 
 ### Setup
 
 1. **Clone and install**
 
    ```bash
-   git clone <repository-url> my-project
-   cd my-project
+   git clone https://github.com/Aaasaasa/nuxt-wp-multilang-theme.git
+   cd nuxt-wp-multilang-theme
    ./rename-project.sh my-awesome-project  # Optional: Rename project
-   npm install
+   yarn install
    cp .env.example .env
    ```
 
-2. **Start database**
+2. **Start multi-database environment**
 
-```bash
-docker compose up -d          # Start PostgreSQL
-npx prisma migrate dev        # Run database migrations
+   ```bash
+   docker compose up -d              # Start PostgreSQL, MySQL, MongoDB, Redis
+   yarn prisma:generate              # Generate all Prisma clients
+   yarn prisma:migrate              # Run database migrations
+   ```
 
-// Example for Prisma generation:
-// prisma generate --schema=prisma/schema-postgres.prisma
-// prisma generate --schema=prisma/schema-mysql.prisma
-// prisma generate --schema=prisma/schema-mongo.prisma
-// Prisma Client for MongoDB, MySQL, and PostgreSQL
-// is automatically generated if the corresponding schemas exist.
-// Database connection environment variables should be defined in the .env file.
-npx prisma db push            # Push schema changes (development)
-npx prisma studio             # Open Prisma Studio (http://localhost:5555)
-npx prisma generate           # Generate Prisma Client
-npx prisma migrate reset       # Reset database (use with caution)
-npx prisma migrate deploy      # Deploy migrations to production
-npx prisma db seed            # Seed database with initial data (if applicable)
-npx prisma introspect         # Introspect existing database schema
-npx prisma format             # Format Prisma schema
-npx prisma validate           # Validate Prisma schema
-npx prisma version            # Check Prisma version
-```
+3. **Configure environment variables**
 
-> Note: Ensure PostgreSQL is running on `localhost:5432` or update `.env` accordingly. 3. **Run development server**
+   ```bash
+   # Copy and configure your environment
+   cp .env.example .env
 
-```bash
-npm run dev
-```
+   # Essential variables:
+   DATABASE_URL="postgresql://..."              # PostgreSQL for CMS
+   MYSQL_DATABASE_URL="mysql://..."             # MySQL for WordPress integration
+   MONGODB_DATABASE_URL="mongodb://..."         # MongoDB for analytics
+   NUXT_SECRET_KEY="your-secret-key"            # Authentication secret
+   ```
+
+4. **Run development server**
+
+   ```bash
+   yarn dev --port 4000              # Start on port 4000
+   # or
+   yarn dev                          # Start on default port 3000
+   ```
 
 ### 🌐 Access Points
 
-- **Application**: http://localhost:3000
-- **API Documentation**: http://localhost:3000/api/docs/ui
-- **Database Admin**: http://localhost:5555 (Prisma Studio)
+- **Main Application**: http://localhost:4000 (or 3000)
+- **Admin Dashboard**: http://localhost:4000/admin
+- **Prisma Studio**: http://localhost:5555 (Database Admin)
+- **API Documentation**: http://localhost:4000/api/docs (Development)
+- **Database Adminer**: http://localhost:8080 (Multi-DB Admin)
 
-The app includes a simple **Posts** example to demonstrate the full stack.
+### 🎯 Key Features Demo
+
+- **Sidebar Navigation**: Click the hamburger menu to explore responsive sidebar
+- **Multi-language**: Switch languages using the locale selector in header
+- **Blog System**: Navigate to `/blog` to see WordPress-like article management
+- **Admin Area**: Access `/admin` for CMS functionality (requires authentication)
+- **Modern Footer**: Scroll down to see the new footer with author attribution
 
 ## 🛠️ Development Commands
 
 ### Development
 
 ```bash
-npm run dev                   # Start development server
-npm run build                 # Build for production
-npm run preview               # Preview production build
-npm run lint                  # Run ESLint + Prettier
+yarn dev                      # Start development server
+yarn build                    # Build for production
+yarn preview                  # Preview production build
+yarn lint                     # Run ESLint + Prettier
+yarn lint:ci                  # CI-optimized linting
+yarn typecheck                # TypeScript type checking
 ```
 
 ### Testing
 
 ```bash
-npm run test                  # Run all tests (unit + E2E)
-npm run test:unit             # Run unit tests only
-npm run test:e2e              # Run E2E tests only
-npm run test:unit:coverage    # Run tests with coverage
+yarn test                     # Run all tests (unit + E2E)
+yarn test:unit                # Run unit tests only
+yarn test:e2e                 # Run E2E tests only
+yarn test:unit:coverage       # Run tests with coverage
 ```
 
-### Database
+### Database Management
 
 ```bash
-docker compose up -d          # Start PostgreSQL + Adminer
-npx prisma migrate dev        # Create and run migration
-npx prisma studio             # Open Prisma Studio
-npx prisma db push            # Push schema changes (dev)
+yarn prisma:generate          # Generate all Prisma clients
+yarn prisma:migrate           # Run database migrations
+yarn prisma:studio            # Open Prisma Studio
+yarn prisma:reset             # Reset databases (development only)
+yarn prisma:deploy            # Deploy migrations (production)
+yarn db:seed                  # Seed databases with sample data
 ```
 
-### Deployment
+### Code Quality & CI/CD
 
 ```bash
-npm run tag:patch             # Version bump + deploy (patch)
-npm run tag:minor             # Version bump + deploy (minor)
-npm run tag:major             # Version bump + deploy (major)
+yarn lint:fix                 # Auto-fix linting issues
+yarn format                   # Format code with Prettier
+yarn commitlint               # Validate commit messages
+yarn prepare                  # Setup Husky hooks
+yarn clean                    # Clean build artifacts
 ```
 
 ## 📁 Project Structure
 
 ```
-├── app/                      # Main Nuxt application
-│   ├── components/           # Vue components (auto-imported)
-│   ├── composables/          # Vue composables (auto-imported)
-│   ├── pages/                # File-based routing
-│   └── layouts/              # Layout components
-├── shared/                   # Shared utilities (auto-imported)
-│   ├── models/               # TypeScript type definitions
-│   ├── types/                # API and shared types
-│   └── utils/                # Utility functions
-├── server/                   # Server-side code
-│   ├── api/                  # API routes (auto-mapped)
-│   ├── middleware/           # Server middleware
-│   └── utils/                # Server utilities
-├── lib/                      # Core libraries (Prisma, Swagger)
-├── prisma/                   # Database schema and migrations
-├── tests/                    # Unit and E2E tests
-└── i18n/                     # Internationalization files
+├── app/                      # Main Nuxt 4 Application
+│   ├── components/           # Vue Components (Auto-imported)
+│   │   ├── features/         # Feature-specific components
+│   │   ├── layout/           # Layout components (AppSidebar, AppFooter)
+│   │   └── ui/               # Reusable UI components
+│   ├── composables/          # Vue Composables (Auto-imported)
+│   │   ├── features/         # Feature-specific composables
+│   │   ├── forms/            # Form handling composables
+│   │   └── stores/           # Pinia store composables
+│   ├── layouts/              # Layout Templates
+│   │   └── default.vue       # Main layout with sidebar & modern footer
+│   ├── pages/                # File-based Routing
+│   │   ├── blog/             # Blog system pages
+│   │   ├── admin/            # Admin dashboard pages
+│   │   └── auth/             # Authentication pages
+│   ├── assets/css/           # Styling
+│   │   └── main.css          # Main CSS with consolidated styles
+│   ├── middleware/           # Route Middleware
+│   └── plugins/              # Nuxt Plugins
+│
+├── app/admin/                # Separate Admin Application
+│   ├── components/           # Admin-specific components
+│   ├── pages/                # Admin dashboard pages
+│   ├── layouts/              # Admin layout templates
+│   └── nuxt.config.ts        # Admin-specific configuration
+│
+├── shared/                   # Shared Code (Auto-imported)
+│   ├── models/               # TypeScript Models & Interfaces
+│   ├── types/                # Shared Type Definitions
+│   ├── schemas/              # Validation Schemas (Zod)
+│   ├── constants/            # Application Constants
+│   └── utils/                # Utility Functions
+│
+├── server/                   # Server-side Code (Nitro)
+│   ├── api/                  # API Routes (Auto-mapped)
+│   │   ├── auth/             # Authentication endpoints
+│   │   ├── blog/             # Blog API endpoints
+│   │   └── admin/            # Admin API endpoints
+│   ├── middleware/           # Server Middleware
+│   ├── services/             # Business Logic Services
+│   ├── utils/                # Server Utilities
+│   └── types/                # Server-specific Types
+│
+├── lib/                      # Core Libraries
+│   └── prisma.ts             # Prisma Client Configuration
+│
+├── prisma/                   # Multi-Database Configuration
+│   ├── schema.prisma         # Main PostgreSQL Schema
+│   ├── mysql/                # MySQL schemas for WordPress
+│   ├── mongo/                # MongoDB schemas for analytics
+│   ├── postgres-cms/         # PostgreSQL CMS schemas
+│   ├── migrations/           # Database Migration History
+│   ├── seed-data/            # Sample Data for Development
+│   └── generated/            # Generated Prisma Clients
+│
+├── i18n/                     # Internationalization
+│   ├── localeDetector.ts     # Smart Language Detection
+│   └── locales/              # Translation Files (7 languages)
+│       ├── en/               # English translations
+│       ├── de/               # German translations
+│       ├── sr/               # Serbian translations
+│       └── ...               # + ES, FR, IT, RU
+│
+├── tests/                    # Testing Suite
+│   ├── unit/                 # Vitest Unit Tests
+│   ├── e2e/                  # Playwright E2E Tests
+│   └── setup/                # Test Configuration
+│
+├── docs/                     # Comprehensive Documentation
+│   ├── api.md                # API Documentation
+│   ├── component-architecture.md # Component Patterns
+│   ├── database-patterns.md  # Database Design Patterns
+│   ├── wordpress-migration.md # WordPress Migration Guide
+│   ├── internationalization.md # i18n Implementation Guide
+│   └── ...                   # + Security, SEO, Testing patterns
+│
+├── scripts/                  # Development Scripts
+├── .github/workflows/        # GitHub Actions CI/CD
+└── docker-compose.yml        # Multi-service Docker Setup
 ```
 
 ## 🔧 Tech Stack
 
-- **Frontend**: Nuxt 4, Vue 3 Composition API, TypeScript
-- **UI**: Nuxt UI, Tailwind CSS, Headless UI
-- **Backend**: Nitro, H3, OpenAPI/Swagger
-- **Database**: PostgreSQL, Prisma ORM v6
+### Frontend & UI
+
+- **Framework**: Nuxt 4.1.3 with Vue 3 Composition API
+- **Language**: TypeScript with ES Modules
+- **Styling**: Tailwind CSS 3.4+ with CSS Variables
+- **Components**: Nuxt UI with custom AppSidebar & AppFooter
+- **Icons**: Lucide Icons with auto-import support
+
+### Backend & API
+
+- **Server**: Nitro with H3 handlers
+- **API**: RESTful endpoints with OpenAPI/Swagger documentation
+- **Authentication**: nuxt-auth-utils with session management
+- **Email**: Nodemailer integration for transactional emails
+- **File Storage**: Built-in asset management
+
+### Database Layer
+
+- **Primary**: PostgreSQL with Prisma ORM v6
+- **CMS Database**: PostgreSQL for content management
+- **WordPress**: MySQL integration for WP compatibility
+- **Analytics**: MongoDB for logging and analytics
+- **Caching**: Redis for session and cache management
+- **Admin**: Prisma Studio + Adminer for database management
+
+### Internationalization
+
+- **Framework**: @nuxtjs/i18n with advanced features
+- **Languages**: 7 locales (EN, DE, SR, ES, FR, IT, RU)
+- **Detection**: Smart browser/cookie-based locale detection
+- **Routing**: Prefix-based routing with SEO optimization
+
+### Security & Performance
+
 - **Security**: nuxt-security (CORS, CSP, HSTS, rate limiting)
-- **Testing**: Vitest (unit), Playwright (E2E, multi-browser)
-- **Quality**: ESLint, Prettier, Husky, Conventional Commits
-- **DevOps**: Docker, GitHub Actions, Docker Registry
+- **Authentication**: Session-based auth with CSRF protection
+- **Headers**: Security headers with production-ready CSP
+- **Rate Limiting**: Configurable request throttling
+
+### Testing & Quality
+
+- **Unit Testing**: Vitest with coverage reporting
+- **E2E Testing**: Playwright (multi-browser support)
+- **Linting**: ESLint with TypeScript support
+- **Formatting**: Prettier with automated fixes
+- **Git Hooks**: Husky with conventional commits
+- **Type Checking**: TypeScript strict mode
+
+### Development & Deployment
+
+- **Package Manager**: Yarn for consistent dependency management
+- **Containerization**: Docker with multi-service compose
+- **CI/CD**: GitHub Actions with automated testing
+- **Monitoring**: Built-in error tracking and logging
+- **SEO**: @nuxtjs/seo with structured data support
 
 ## 🎛️ Configuration & Customization
 
-### Environment Setup
+### Environment Configuration
 
-- **Development**: Uses `localhost` origins, relaxed CSP
-- **Production**: Requires `CORS_ORIGIN` env var, strict security headers
+#### Development Environment
 
-### Rename Project
+- **Database**: Docker containers for all database services
+- **Security**: Relaxed CORS and CSP for development ease
+- **Hot Reload**: Full TypeScript and component hot reloading
+- **Debugging**: Integrated Prisma Studio and API documentation
+
+#### Production Environment
+
+- **Security**: Strict CSP, CORS, and security headers
+- **Performance**: Optimized builds with code splitting
+- **Monitoring**: Error tracking and performance monitoring
+- **Caching**: Redis-based caching and session management
+
+### Project Customization
+
+#### Rename Project
 
 ```bash
+# Use the built-in rename script
 ./rename-project.sh my-awesome-project
+
+# This updates:
+# - package.json name and description
+# - Docker service names
+# - Environment variable prefixes
+# - Documentation references
 ```
 
-### Remove Example Code
+#### Customize Layout Components
 
-1. Delete `shared/models/post.ts`
-2. Delete `server/api/posts/` directory
-3. Remove Post model from `prisma/schema.prisma`
-4. Run `npx prisma migrate dev` to apply changes
+```bash
+# AppSidebar customization
+app/components/layout/AppSidebar.vue
+
+# AppFooter customization
+app/components/layout/AppFooter.vue
+
+# Main layout
+app/layouts/default.vue
+```
+
+#### Database Schema Customization
+
+```bash
+# Main CMS schema
+prisma/schema.prisma
+
+# WordPress integration schema
+prisma/mysql/schema.prisma
+
+# Analytics schema
+prisma/mongo/schema.prisma
+
+# After changes, regenerate clients:
+yarn prisma:generate
+yarn prisma:migrate
+```
 
 ### Security Configuration
 
-The boilerplate includes production-ready security:
+#### Production Security Features
 
-- **CORS**: Configurable origins per environment
-- **CSP**: Content Security Policy with Nuxt-optimized directives
-- **Headers**: X-Frame-Options, HSTS, X-Content-Type-Options
-- **Rate Limiting**: 150 requests per 5-minute window
+- **CORS**: Environment-specific origin configuration
+- **CSP**: Content Security Policy with Nuxt 4 optimization
+- **Headers**: Complete security header suite (HSTS, X-Frame-Options, etc.)
+- **Rate Limiting**: 150 requests per 5-minute window (configurable)
+- **Authentication**: Secure session management with CSRF protection
+
+#### Security Environment Variables
+
+```bash
+# Required for production
+CORS_ORIGIN="https://yourdomain.com"
+NUXT_SECRET_KEY="your-256-bit-secret-key"
+RATE_LIMIT_MAX="150"
+RATE_LIMIT_WINDOW="300000"
+
+# Optional security enhancements
+CSP_REPORT_URI="https://yourdomain.com/csp-report"
+SECURITY_HEADERS_ENABLED="true"
+```
+
+### Advanced Customization
+
+#### Multi-Database Setup
+
+```bash
+# Configure multiple databases
+DATABASE_URL="postgresql://..."       # Main CMS
+MYSQL_DATABASE_URL="mysql://..."      # WordPress integration
+MONGODB_DATABASE_URL="mongodb://..."  # Analytics
+REDIS_URL="redis://..."               # Caching & sessions
+```
+
+#### Internationalization Customization
+
+```bash
+# Add new languages in nuxt.config.ts
+i18n: {
+  locales: [
+    // Add your custom locale
+    {
+      code: 'pt',
+      name: 'Português',
+      files: ['pt/common.json', 'pt/seo.json'],
+      language: 'pt-BR'
+    }
+  ]
+}
+
+# Create translation files
+i18n/locales/pt/common.json
+i18n/locales/pt/seo.json
+i18n/locales/pt/email.json
+```
 
 ## 📚 Resources & Documentation
 
-- **[Nuxt 4 Documentation](https://nuxt.com/)** - Framework documentation
-- **[Nuxt UI Components](https://ui.nuxt.com/)** - UI component library
-- **[Prisma Documentation](https://www.prisma.io/docs)** - Database ORM
+### Framework Documentation
+
+- **[Nuxt 4 Documentation](https://nuxt.com/)** - Latest Nuxt framework features
+- **[Vue 3 Composition API](https://vuejs.org/guide/introduction.html)** - Vue framework guide
+- **[Nuxt UI Components](https://ui.nuxt.com/)** - Complete UI component library
+- **[Tailwind CSS](https://tailwindcss.com/docs)** - Utility-first CSS framework
+
+### Database & Backend
+
+- **[Prisma Documentation](https://www.prisma.io/docs)** - Database ORM and migrations
+- **[Nitro Documentation](https://nitro.unjs.io/)** - Universal server framework
+- **[H3 Documentation](https://github.com/unjs/h3)** - HTTP framework for Nitro
+
+### Internationalization
+
+- **[@nuxtjs/i18n](https://i18n.nuxtjs.org/)** - Nuxt i18n module documentation
+- **[Vue I18n](https://vue-i18n.intlify.dev/)** - Vue internationalization
+
+### Testing & Quality
+
+- **[Vitest Documentation](https://vitest.dev/)** - Unit testing framework
+- **[Playwright Documentation](https://playwright.dev/)** - E2E testing framework
+- **[ESLint Rules](https://eslint.org/docs/rules/)** - Linting configuration
+
+### Project-Specific Documentation
+
+- **[docs/](./docs/)** - Comprehensive project documentation
+- **[WordPress Migration](./docs/wordpress-migration.md)** - Complete migration guide with 224 term relationships
+- **[API Documentation](./docs/api.md)** - API endpoints for Articles/Pages/Portfolios with examples
+- **[Component Architecture](./docs/component-architecture.md)** - Component design patterns
+- **[Database Patterns](./docs/database-patterns.md)** - Multi-database design with current migration status
+- **[Security Patterns](./docs/security-patterns.md)** - Security implementation guide
+
+## 📊 Current Project Status
+
+### WordPress Migration Results
+
+✅ **Successfully Migrated:**
+
+- **37 Articles** with full translations and featured images
+- **12 Pages** with complete content hierarchy
+- **10 Portfolio Projects** (Avada Portfolio integration)
+- **191 Terms** (Categories, Tags, Portfolio Categories/Tags)
+- **224 Term Relationships** connecting content with categories/tags
+- **Featured Images** with WebP optimization (33% converted)
+
+### Available Content APIs
+
+| Endpoint          | Status     | Features                                                       |
+| ----------------- | ---------- | -------------------------------------------------------------- |
+| `/api/articles`   | ✅ Live    | Categories/Tags (141 relations), Featured Images, Translations |
+| `/api/pages`      | ✅ Live    | Hierarchy, Menu Order, Featured Images (12 pages)              |
+| `/api/portfolios` | ✅ Live    | Portfolio Categories/Tags (83 relations), Featured Images      |
+| `/api/products`   | 🔄 Planned | E-commerce integration (schema ready)                          |
+
+### Content Distribution
+
+```bash
+# Articles with categories/tags: 141 relationships
+# Portfolio projects with categories/tags: 83 relationships
+# Pages (typically no categories): 0 relationships
+# Total term relationships: 224
+```
 
 ## 🤝 Contributing
 
-1. Follow conventional commit format
-2. Run tests before submitting: `npm test`
-3. Ensure code quality: `npm run lint`
-4. Update documentation if needed
+### Development Workflow
+
+1. **Fork & Clone**: Fork the repository and clone your fork
+2. **Branch**: Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Install**: Run `yarn install` to install dependencies
+4. **Develop**: Make your changes following the coding standards
+5. **Test**: Run `yarn test` to ensure all tests pass
+6. **Lint**: Run `yarn lint` to check code quality
+7. **Commit**: Use conventional commit format (enforced by Husky)
+8. **Push**: Push to your fork and create a Pull Request
+
+### Code Standards
+
+- **TypeScript**: Use strict TypeScript with proper typing
+- **Vue 3**: Prefer Composition API with `<script setup>` syntax
+- **Components**: Follow the established component architecture
+- **Styling**: Use Tailwind CSS classes, avoid custom CSS when possible
+- **Testing**: Write unit tests for utilities, E2E tests for user flows
+
+### Commit Message Format
+
+```bash
+# Format: type(scope): description
+feat(auth): add OAuth2 Google integration
+fix(sidebar): resolve mobile overlay z-index issue
+docs(readme): update installation instructions
+chore(deps): upgrade Nuxt to 4.1.3
+```
+
+### Pull Request Process
+
+1. Ensure your PR description clearly describes the problem and solution
+2. Include relevant issue numbers if applicable
+3. Update documentation if you change APIs or add features
+4. Make sure all CI checks pass (linting, testing, type checking)
+5. Request review from project maintainers
+
+### Getting Help
+
+- **Issues**: Use GitHub Issues for bug reports and feature requests
+- **Discussions**: Use GitHub Discussions for questions and community chat
+- **Email**: Contact Aleksandar Stajic for direct project inquiries
 
 ## Commit Roules Husky
 
@@ -244,6 +587,41 @@ rules: {
 },
 };
 
+## 👤 Author
+
+**Aleksandar Stajic**
+
+- GitHub: [@Aaasaasa](https://github.com/Aaasaasa)
+- Portfolio: Coming Soon
+- Email: Contact via GitHub
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Nuxt Team** - For the amazing Nuxt 4 framework
+- **Vue.js Team** - For Vue 3 and the Composition API
+- **Prisma Team** - For the excellent ORM and database tools
+- **Tailwind CSS** - For the utility-first CSS framework
+- **Community Contributors** - Thank you for your contributions and feedback
+
+## 📈 Project Status
+
+- ✅ **Core Framework**: Nuxt 4.1.3 with TypeScript
+- ✅ **Layout System**: Modern sidebar and footer components
+- ✅ **Multi-Database**: PostgreSQL, MySQL, MongoDB integration
+- ✅ **Internationalization**: 7 languages with smart detection
+- ✅ **Authentication**: Complete auth system with admin areas
+- ✅ **Testing**: Unit and E2E testing with coverage
+- ✅ **CI/CD**: GitHub Actions with automated workflows
+- 🔄 **Documentation**: Continuously improving
+- 🔄 **Blog System**: WordPress-like CMS functionality
+- 📋 **Admin Dashboard**: Full-featured admin interface
+
 ---
 
-**Built with ❤️ using Nuxt 4**
+**Built with ❤️ by Aleksandar Stajic using Nuxt 4**
+
+_NuxtWP Multilang Theme - A modern, multilingual, WordPress-inspired theme for Nuxt 4_

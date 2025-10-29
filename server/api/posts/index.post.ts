@@ -1,39 +1,47 @@
-/**
- * @openapi
- * /api/posts:
- *   post:
- *     summary: Create a new post
- *     tags: [Posts]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required: [title, content]
- *             properties:
- *               title:
- *                 type: string
- *               content:
- *                 type: string
- *     responses:
- *       201:
- *         description: Post created successfully
- *       400:
- *         description: Validation error
- *       401:
- *         description: Unauthorized
- */
+// server/api/posts/index.post.ts
+// POST /api/posts - Neuen Post erstellen
+
+import { createPost } from '../../services/post.service'
+import { createApiResponse, badRequestError, unauthorizedError } from '../../utils/response'
+
 export default defineEventHandler(async (event) => {
-  // User is already authenticated by middleware and available in context
-  const user = event.context.user
+  try {
+    // Authentifizierung prüfen
+    const user = event.context.user
+    if (!user?.id) {
+      throw unauthorizedError('VALIDATION', 'Anmeldung erforderlich')
+    }
 
-  const postData = await validateBody(event, createPostSchema)
+    // Request Body lesen
+    const body = await readBody(event)
 
-  // Create post using service
-  const post = await createPost(postData, user.id)
+    if (!body.title || !body.content) {
+      throw badRequestError('VALIDATION', 'Titel und Inhalt sind erforderlich')
+    }
 
-  return createCreatedResponse(post)
+    // Slug aus Titel generieren falls nicht vorhanden
+    const slug = body.slug || body.title.toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+
+    const postData = {
+      title: body.title,
+      slug,
+      content: body.content,
+      excerpt: body.excerpt,
+      featuredImage: body.featuredImage,
+      authorId: user.id,
+      status: body.status || 'DRAFT'
+    }
+
+    const post = await createPost(postData, user.id)
+
+    return createApiResponse(post, 201, 'Post erfolgreich erstellt')
+  } catch (error) {
+    // Wenn bereits ein strukturierter Fehler, weitergeben
+    if (error && typeof error === 'object' && 'statusCode' in error) {
+      throw error
+    }
+    throw badRequestError('VALIDATION', 'Fehler beim Erstellen des Posts')
+  }
 })

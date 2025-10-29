@@ -5,6 +5,7 @@
  */
 
 import { z } from 'zod'
+import { TEXT_FIELD_LIMITS, VALIDATION_PATTERNS } from '../constants/validation'
 
 // =============================================================================
 // DATABASE ENTITY

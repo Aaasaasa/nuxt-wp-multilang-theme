@@ -1,4 +1,4 @@
-import { generateSwaggerSpec, isSwaggerEnabled } from '~~/server/utils/lib/swagger'
+import { generateSwaggerSpec, isSwaggerEnabled } from '~~/server/lib/swagger'
 
 // Documentation endpoint - not included in Swagger
 export default defineEventHandler(async () => {

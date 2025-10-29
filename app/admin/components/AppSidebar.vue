@@ -38,7 +38,7 @@ function isActive(path: string) {
 <template>
   <aside
     :class="[
-      'h-screen border-r bg-background transition-all duration-200',
+      'h-screen border-r bg-white dark:bg-gray-900 transition-all duration-200',
       collapsed ? 'w-16' : 'w-56'
     ]"
   >

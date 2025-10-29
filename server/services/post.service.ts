@@ -1,5 +1,56 @@
 // server/services/post.service.ts
-import prismaCms from '~~/server/utils/lib/prismaCms'
+import prismaCms from '../lib/prismaCms'
+import { toPublicUser } from '~~/shared/models/user'
+import {
+  badRequestError,
+  serverError,
+  notFoundError,
+  forbiddenError
+} from '../utils/errors'
+import { ERROR_CODES } from '../constants/errors'
+import { PRISMA_ERRORS } from '../constants/prisma'
+
+// Types
+interface CreatePostData {
+  title: string
+  slug: string
+  content: string
+  excerpt?: string
+  featuredImage?: string
+  authorId: string
+  status?: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
+}
+
+interface UpdatePostData {
+  title?: string
+  slug?: string
+  content?: string
+  excerpt?: string
+  featuredImage?: string
+  status?: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
+}
+
+interface PostWithAuthor {
+  id: string
+  title: string
+  slug: string
+  content: string
+  excerpt: string | null
+  featuredImage: string | null
+  status: string
+  publishedAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+  author: {
+    id: string
+    username: string
+    email: string
+    firstName: string | null
+    lastName: string | null
+  }
+}
+
+const prisma = prismaCms
 
 /**
  * Post Service - Pure business logic without validation
@@ -43,19 +94,51 @@ export async function createPost(
  * Get all posts
  */
 export async function getAllPosts(): Promise<PostWithAuthor[]> {
-  const articles = await prismaCms.article.findMany({
-    include: {
-      author: true
-    },
-    orderBy: { createdAt: 'desc' }
-  })
+  try {
+    const articles = await prismaCms.article.findMany({
+      include: {
+        author: true,
+        translations: {
+          where: { lang: 'de' }, // Default language
+          take: 1
+        },
+        metas: {
+          where: { key: 'featured_image' }
+        }
+      },
+      orderBy: { createdAt: 'desc' }
+    })
 
-  return articles.map((article) => ({
-    ...article,
-    author: toPublicUser(article.authorId),
-    createdAt: article.createdAt.toISOString(),
-    updatedAt: article.updatedAt.toISOString()
-  }))
+    return articles.map((article) => {
+      const translation = article.translations[0] || {}
+
+      return {
+        id: article.id.toString(),
+        title: translation.title || 'Untitled',
+        slug: article.slug,
+        content: translation.content || '',
+        excerpt: translation.excerpt || null,
+        featuredImage: article.metas?.[0]?.value ?
+          (typeof article.metas[0].value === 'string' ? article.metas[0].value :
+           typeof article.metas[0].value === 'object' ? JSON.stringify(article.metas[0].value) :
+           String(article.metas[0].value)) : null,
+        status: article.status,
+        publishedAt: article.status === 'PUBLISHED' ? article.createdAt : null,
+        createdAt: article.createdAt,
+        updatedAt: article.updatedAt,
+        author: {
+          id: article.author.id.toString(),
+          username: article.author.login,
+          email: article.author.email,
+          firstName: null, // TODO: Extract from displayName
+          lastName: null
+        }
+      }
+    })
+  } catch (error) {
+    console.error('Database error in getAllPosts:', error)
+    throw new Error('Failed to fetch posts from database')
+  }
 }
 
 /**
@@ -78,6 +161,56 @@ export async function getPostById(id: string): Promise<PostWithAuthor | null> {
     author: toPublicUser(post.author),
     createdAt: post.createdAt.toISOString(),
     updatedAt: post.updatedAt.toISOString()
+  }
+}
+
+/**
+ * Get WordPress article by slug
+ */
+export async function getPostBySlug(slug: string): Promise<PostWithAuthor | null> {
+  try {
+    const article = await prismaCms.article.findFirst({
+      where: { slug },
+      include: {
+        author: true,
+        translations: {
+          where: { lang: 'de' }, // Default language
+          take: 1
+        },
+        metas: {
+          where: { key: 'featured_image' }
+        }
+      }
+    })
+
+    if (!article) {
+      return null
+    }
+
+    const translation = article.translations[0] || {}
+
+    return {
+      id: article.id.toString(),
+      title: translation.title || 'Untitled',
+      slug: article.slug,
+      content: translation.content || '',
+      excerpt: translation.excerpt || null,
+      featuredImage: article.metas?.[0]?.value ? String(article.metas[0].value) : null,
+      status: article.status,
+      publishedAt: article.status === 'PUBLISHED' ? article.createdAt : null,
+      createdAt: article.createdAt,
+      updatedAt: article.updatedAt,
+      author: {
+        id: article.author.id.toString(),
+        username: article.author.login,
+        email: article.author.email,
+        firstName: null, // TODO: Extract from displayName
+        lastName: null
+      }
+    }
+  } catch (error) {
+    console.error('Database error in getPostBySlug:', error)
+    return null
   }
 }
 
