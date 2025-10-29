@@ -130,7 +130,8 @@ This is a modern, multilingual WordPress-inspired theme built with Nuxt 4. Featu
 This theme represents the pinnacle of modern web development, combining the best of Nuxt.js with WordPress-like content management capabilities.
 
 Built with ❤️ using modern technologies and best practices.`,
-              excerpt: 'Introduction to the NuxtWP Multilang Theme - a modern multilingual CMS built with Nuxt 4.'
+              excerpt:
+                'Introduction to the NuxtWP Multilang Theme - a modern multilingual CMS built with Nuxt 4.'
             },
             {
               lang: 'de',
@@ -151,7 +152,8 @@ Dies ist ein modernes, mehrsprachiges WordPress-inspiriertes Theme, das mit Nuxt
 ## Erstellt von Aleksandar Stajic
 
 Dieses Theme repräsentiert den Höhepunkt moderner Webentwicklung und kombiniert das Beste von Nuxt.js mit WordPress-ähnlichen Content-Management-Fähigkeiten.`,
-              excerpt: 'Einführung in das NuxtWP Multilang Theme - ein modernes mehrsprachiges CMS mit Nuxt 4.'
+              excerpt:
+                'Einführung in das NuxtWP Multilang Theme - ein modernes mehrsprachiges CMS mit Nuxt 4.'
             },
             {
               lang: 'sr',
@@ -172,15 +174,13 @@ Ovo je moderna, višejezična tema inspirisana WordPress-om, razvijena sa Nuxt 4
 ## Kreirao Aleksandar Stajić
 
 Ova tema predstavlja vrh moderne web razvojačke arhitekture.`,
-              excerpt: 'Uvod u NuxtWP Multilang Theme - moderan višejezični CMS napravljen sa Nuxt 4.'
+              excerpt:
+                'Uvod u NuxtWP Multilang Theme - moderan višejezični CMS napravljen sa Nuxt 4.'
             }
           ]
         },
         terms: {
-          create: [
-            { termTaxonomyId: techCategory.id },
-            { termTaxonomyId: nuxtTag.id }
-          ]
+          create: [{ termTaxonomyId: techCategory.id }, { termTaxonomyId: nuxtTag.id }]
         }
       }
     })
@@ -255,10 +255,7 @@ Diese Architektur bietet optimale Performance und Skalierbarkeit bei gleichzeiti
           ]
         },
         terms: {
-          create: [
-            { termTaxonomyId: techCategory.id },
-            { termTaxonomyId: webDevCategory.id }
-          ]
+          create: [{ termTaxonomyId: techCategory.id }, { termTaxonomyId: webDevCategory.id }]
         }
       }
     })
@@ -317,7 +314,8 @@ Die Lücke zwischen modernen JavaScript-Frameworks und traditionellen Content-Ma
 ## Kontakt
 
 Für Anfragen zum Theme besuchen Sie bitte unser GitHub-Repository oder kontaktieren Sie das Entwicklungsteam.`,
-              excerpt: 'Erfahren Sie mehr über die Vision und Technologie hinter dem NuxtWP Multilang Theme.'
+              excerpt:
+                'Erfahren Sie mehr über die Vision und Technologie hinter dem NuxtWP Multilang Theme.'
             }
           ]
         }
@@ -422,18 +420,34 @@ A production-ready, multilingual CMS that combines modern development practices 
     // Create site settings
     await prisma.setting.createMany({
       data: [
-        { key: 'site_title', value: { en: 'NuxtWP Multilang Theme', de: 'NuxtWP Multilang Theme', sr: 'NuxtWP Multilang Tema' } },
-        { key: 'site_description', value: { en: 'Modern multilingual WordPress-inspired theme', de: 'Modernes mehrsprachiges WordPress-inspiriertes Theme' } },
+        {
+          key: 'site_title',
+          value: {
+            en: 'NuxtWP Multilang Theme',
+            de: 'NuxtWP Multilang Theme',
+            sr: 'NuxtWP Multilang Tema'
+          }
+        },
+        {
+          key: 'site_description',
+          value: {
+            en: 'Modern multilingual WordPress-inspired theme',
+            de: 'Modernes mehrsprachiges WordPress-inspiriertes Theme'
+          }
+        },
         { key: 'site_author', value: 'Aleksandar Stajic' },
         { key: 'site_version', value: '1.0.0' },
         { key: 'default_language', value: 'en' },
         { key: 'supported_languages', value: ['en', 'de', 'sr', 'es', 'fr', 'it', 'ru'] },
-        { key: 'theme_settings', value: {
-          primaryColor: '#3b82f6',
-          sidebarWidth: '280px',
-          footerStyle: 'modern',
-          headerStyle: 'fixed'
-        } }
+        {
+          key: 'theme_settings',
+          value: {
+            primaryColor: '#3b82f6',
+            sidebarWidth: '280px',
+            footerStyle: 'modern',
+            headerStyle: 'fixed'
+          }
+        }
       ]
     })
 
@@ -448,7 +462,6 @@ A production-ready, multilingual CMS that combines modern development practices 
     process.stdout.write('- 1 product\n')
     process.stdout.write('- 1 navigation menu\n')
     process.stdout.write('- 7 site settings\n')
-
   } catch (error) {
     process.stderr.write(`Error seeding PostgreSQL: ${error}\n`)
     throw error
@@ -458,11 +471,10 @@ A production-ready, multilingual CMS that combines modern development practices 
 }
 
 if (require.main === module) {
-  seedPostgresCMS()
-    .catch((error) => {
-      process.stderr.write(`Seed failed: ${error}\n`)
-      process.exit(1)
-    })
+  seedPostgresCMS().catch((error) => {
+    process.stderr.write(`Seed failed: ${error}\n`)
+    process.exit(1)
+  })
 }
 
 export default seedPostgresCMS

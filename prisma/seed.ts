@@ -26,7 +26,6 @@ async function main() {
 
     process.stdout.write('🎉 All databases seeded successfully!\n')
     process.stdout.write('🚀 NuxtWP Multilang Theme is ready for development\n')
-
   } catch (error) {
     process.stderr.write(`❌ Seeding failed: ${error}\n`)
     process.exit(1)

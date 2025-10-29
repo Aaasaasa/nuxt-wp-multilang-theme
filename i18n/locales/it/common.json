@@ -1,83 +1,66 @@
 {
   "actions": {
+    "continueNow": "Continue now",
     "delete": "Delete",
     "edit": "Edit",
     "loadMore": "Load more",
-    "refresh": "Refresh",
+    "profile": "Profile",
     "reset": "Reset",
-    "viewPosts": "View posts"
+    "viewPosts": "View articolos"
   },
   "app": {
     "description": "A simple and efficient starting point",
-    "footer": "Made by Aleksandar Stajic",
+    "footer": "Created by William Fontaine",
     "name": "Nuxt Boilerplate"
   },
-  "error": {
-    "404": {
-      "message": "The page you are looking for does not exist.",
-      "title": "Page not found"
-    },
-    "actions": {
-      "back": "Back",
-      "home": "Home"
-    },
-    "generic": {
-      "message": "An unexpected error occurred.",
-      "title": "An error occurred"
-    }
-  },
-  "hero": {
-    "modernInterface": "Modern and intuitive interface",
-    "subtitle": "A simple and efficient starting point",
-    "title": "Nuxt Boilerplate"
-  },
-  "postForm": {
+  "articleForm": {
     "actions": {
       "create": {
         "autoSaveInfo": "Changes will be saved automatically",
-        "cancel": "Cancel",
-        "description": "Fill in the fields below to create a post.",
+        "cancel": "Annulla",
+        "description": "Fill in the fields below to create an articolo.",
         "error": {
-          "message": "An error occurred while creating the post",
-          "title": "Failed to create post"
+          "message": "An error occurred while creating the article",
+          "title": "Failed to create articolo"
         },
-        "submit": "Create post",
+        "loginRequired": "Accedi to create an article",
+        "submit": "Create articolo",
         "success": {
-          "message": "Your post has been created successfully",
-          "title": "Post created successfully"
+          "message": "Your articolo has been created successfully",
+          "title": "Article created successfully"
         },
-        "title": "Create new post"
+        "title": "Create new articolo"
       },
       "delete": {
-        "cancel": "Cancel",
+        "cancel": "Annulla",
         "confirm": "Delete",
-        "description": "Are you sure you want to delete this post? This action is irreversible.",
+        "description": "Are you sure you want to Elimina this article? This action is irreversible.",
         "error": {
-          "message": "An error occurred while deleting the post",
-          "title": "Failed to delete post"
+          "message": "An error occurred while deleting the article",
+          "title": "Failed to Elimina article"
         },
-        "info": "This action will permanently delete the post",
+        "info": "This action will permanently Elimina the article",
         "success": {
-          "message": "Your post has been deleted successfully",
-          "title": "Post deleted successfully"
+          "message": "Your article has been Eliminad successfully",
+          "title": "Post Eliminad successfully"
         },
-        "title": "Delete post",
-        "tooltip": "Delete this post"
+        "title": "Delete article"
       },
       "edit": {
         "autoSaveInfo": "Changes will be saved automatically",
-        "cancel": "Cancel",
-        "description": "Edit your post content here.",
+        "cancel": "Annulla",
+        "description": "Edit your article content here.",
         "error": {
-          "message": "An error occurred while updating the post",
-          "title": "Failed to update post"
+          "message": "An error occurred while updating the article",
+          "title": "Failed to update articolo"
         },
+        "loginRequired": "Sign in to Modifica a article",
         "save": "Save changes",
         "success": {
-          "message": "Your post has been updated successfully",
+          "message": "Your articolo has been updated successfully",
           "title": "Post updated successfully"
         },
-        "title": "Edit post"
+        "title": "Edit article"
       }
     },
     "analytics": {
@@ -92,10 +75,14 @@
         "short": "Short"
       }
     },
+    "error": {
+      "notFound": "The article could not be found or has been Eliminad",
+      "unauthorized": "You don't have permission to perform this action"
+    },
     "fields": {
       "content": {
-        "label": "Post content",
-        "placeholder": "Write your post content here",
+        "label": "Article content",
+        "placeholder": "Write your articolo content here",
         "validation": {
           "maxLength": "Content cannot exceed 1000 characters",
           "minLength": "Content must contain at least 10 characters",
@@ -106,8 +93,8 @@
         "label": "Created on {date} at {time}"
       },
       "title": {
-        "label": "Post title",
-        "placeholder": "Enter post title",
+        "label": "Article title",
+        "placeholder": "Enter articolo title",
         "validation": {
           "maxLength": "Title cannot exceed 100 characters",
           "minLength": "Title must contain at least 3 characters",
@@ -119,13 +106,276 @@
       }
     }
   },
+  "auth": {
+    "forgotPassword": {
+      "backToLogin": "Indietro to login",
+      "cancel": "Annulla",
+      "description": "Reset your password",
+      "email": {
+        "label": "Indirizzo e-mail",
+        "placeholder": "Enter your email address",
+        "validation": {
+          "invalid": "Indirizzo e-mail is not valid",
+          "maxLength": "Indirizzo e-mail cannot exceed 254 characters",
+          "required": "Indirizzo e-mail is required"
+        }
+      },
+      "error": {
+        "generic": "Unable to send password Ripristina email",
+        "title": "Errore",
+        "tooManyRequests": "Too many requests. Try again in {minutes}min {seconds}s."
+      },
+      "remembered": "Remember your password?",
+      "submit": "Send Ripristina link",
+      "subtitle": "Enter your email address to receive a Ripristina link",
+      "success": {
+        "message": "If the email address exists in our system, you will receive a Ripristina link shortly.",
+        "title": "Email sent"
+      },
+      "title": "Forgot password"
+    },
+    "login": {
+      "autoSaveInfo": "Your information will be processed securely",
+      "backToHome": "Indietro to home",
+      "cancel": "Annulla",
+      "didntReceiveEmail": "Didn't receive the email?",
+      "email": {
+        "label": "Indirizzo e-mail",
+        "placeholder": "Enter your email address",
+        "validation": {
+          "invalid": "Indirizzo e-mail is not valid",
+          "maxLength": "Indirizzo e-mail cannot exceed 254 characters",
+          "required": "Indirizzo e-mail is required"
+        }
+      },
+      "error": {
+        "emailNotVerified": "Your email is not verified. Check your inbox or request a new link.",
+        "invalidCredentials": "Invalid email or password",
+        "title": "Accesso error"
+      },
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "validation": {
+          "maxLength": "Password cannot exceed 128 characters",
+          "minLength": "Password must be at least 8 characters long",
+          "required": "Password is required"
+        }
+      },
+      "rateLimit": {
+        "tooManyAttempts": "Too many failed attempts. Try again in {minutes}min {seconds}s.",
+        "warning": "Last attempt before blocking | {count} attempt remaining | {count} attempts remaining"
+      },
+      "register": "Registrati",
+      "resendVerification": "Resend verification",
+      "submit": "Accedi",
+      "subtitle": "Accedi to your account",
+      "success": {
+        "message": "You are now signed in",
+        "title": "Accesso successful"
+      },
+      "title": "Accesso"
+    },
+    "logout": {
+      "success": {
+        "message": "You have been logged out",
+        "title": "Disconnetti successful"
+      },
+      "title": "Disconnetti"
+    },
+    "register": {
+      "autoSaveInfo": "Your information will be processed securely",
+      "backToHome": "Indietro to home",
+      "cancel": "Annulla",
+      "confirmPassword": {
+        "label": "Confirm password",
+        "placeholder": "Confirm your password",
+        "validation": {
+          "match": "Passwords do not match",
+          "required": "Password confirmation is required"
+        }
+      },
+      "email": {
+        "label": "Indirizzo e-mail",
+        "placeholder": "Enter your email address",
+        "validation": {
+          "invalid": "Indirizzo e-mail is not valid",
+          "maxLength": "Indirizzo e-mail cannot exceed 254 characters",
+          "required": "Indirizzo e-mail is required"
+        }
+      },
+      "error": {
+        "emailExists": "This email address is already in use",
+        "generic": "An error occurred during registration",
+        "invalidEmail": "The email address is invalid. Please check and try again.",
+        "title": "Registration error",
+        "validation": "Invalid input data. Please check and try again."
+      },
+      "hasAccount": "Already have an account?",
+      "login": "Accedi",
+      "name": {
+        "label": "Full Nuxt Boilerplate",
+        "placeholder": "Enter your full Nuxt Boilerplate",
+        "validation": {
+          "maxLength": "Name cannot exceed 50 characters",
+          "minLength": "Name must be at least 2 characters long",
+          "required": "Name is required"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "validation": {
+          "maxLength": "Password cannot exceed 128 characters",
+          "minLength": "Password must be at least 8 characters long",
+          "pattern": "Password must include: 1 uppercase letter, 1 lowercase letter, and 1 number",
+          "required": "Password is required"
+        }
+      },
+      "submit": "Registrati",
+      "subtitle": "Create your account",
+      "success": {
+        "emailSent": "A verification email has been sent to {email}. Check your inbox.",
+        "message": "A verification email has been sent to you. Check your inbox.",
+        "title": "Registration successful"
+      },
+      "terms": {
+        "and": "and",
+        "prefix": "By signing up, you agree to our",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
+      },
+      "title": "Registrati"
+    },
+    "resendVerification": {
+      "alreadyVerified": "Already verified?",
+      "backToLogin": "Indietro to login",
+      "cancel": "Annulla",
+      "email": {
+        "label": "Indirizzo e-mail",
+        "placeholder": "Enter your email address",
+        "validation": {
+          "invalid": "Indirizzo e-mail is not valid",
+          "maxLength": "Indirizzo e-mail cannot exceed 254 characters",
+          "required": "Indirizzo e-mail is required"
+        }
+      },
+      "error": {
+        "alreadyVerified": "This email address is already verified.",
+        "generic": "Unable to send verification email",
+        "title": "Errore",
+        "tooManyRequests": "Too many requests. Try again in {minutes}min {seconds}s.",
+        "userNotFound": "No account found with this email address."
+      },
+      "submit": "Resend email",
+      "subtitle": "Enter your email address to receive a new verification link",
+      "success": {
+        "message": "A new verification email has been sent if an account exists with this address.",
+        "title": "Email sent"
+      },
+      "title": "Resend verification"
+    },
+    "resetPassword": {
+      "backToLogin": "Indietro to login",
+      "cancel": "Annulla",
+      "confirmPassword": {
+        "label": "Confirm password",
+        "placeholder": "Confirm your new password",
+        "validation": {
+          "match": "Passwords do not match",
+          "required": "Password confirmation is required"
+        }
+      },
+      "description": "Choose a new password",
+      "error": {
+        "generic": "Unable to Ripristina password",
+        "invalidToken": "This Ripristina link is invalid or has expired.",
+        "title": "Errore"
+      },
+      "password": {
+        "label": "New password",
+        "placeholder": "Enter your new password",
+        "validation": {
+          "maxLength": "Password cannot exceed 128 characters",
+          "minLength": "Password must be at least 8 characters long",
+          "pattern": "Password must include: 1 uppercase letter, 1 lowercase letter, and 1 number",
+          "required": "Password is required"
+        }
+      },
+      "remembered": "Remember your password?",
+      "submit": "Reset password",
+      "subtitle": "Enter your new password",
+      "success": {
+        "loginButton": "Accedi",
+        "message": "Your password has been Ripristina successfully. You can now sign in.",
+        "title": "Password Ripristina"
+      },
+      "title": "Reset password",
+      "token": {
+        "validation": {
+          "required": "Token is required"
+        }
+      }
+    },
+    "verifyEmail": {
+      "cancel": "Indietro to home",
+      "error": {
+        "generic": "An unexpected error occurred. Please try again.",
+        "invalidToken": "The verification link is invalid or corrupted.",
+        "resendLink": "Request new link",
+        "retry": "Try again",
+        "title": "Verification failed",
+        "tokenExpired": "This verification link has expired. Please request a new one.",
+        "tokenNotFound": "This verification link doesn't exist or has already been used.",
+        "validationError": "The verification data is invalid. Please request a new link."
+      },
+      "loading": {
+        "subtitle": "Please wait while we verify your email address...",
+        "title": "Verifying your email"
+      },
+      "noToken": {
+        "backButton": "Indietro to login",
+        "resendButton": "Request new link",
+        "subtitle": "You need to access this page via the link received in your verification email.",
+        "title": "Verification link missing"
+      },
+      "success": {
+        "message": "Your email address has been verified and you are now signed in.",
+        "redirecting": "Automatically redirecting in {seconds} seconds...",
+        "subtitle": "Congratulations! Your email address has been confirmed and your account is now active.",
+        "title": "Email verified successfully!"
+      },
+      "title": "Email verification"
+    }
+  },
+  "error": {
+    "404": {
+      "message": "The page you are looking for does not exist.",
+      "title": "Pagina not found"
+    },
+    "actions": {
+      "back": "Indietro",
+      "home": "Home"
+    },
+    "generic": {
+      "message": "An unexpected error occurred.",
+      "title": "An error occurred"
+    }
+  },
+  "hero": {
+    "modernInterface": "Modern and intuitive interface",
+    "subtitle": "A simple and efficient starting point",
+    "title": "Nuxt Boilerplate"
+  },
   "posts": {
     "empty": {
-      "subtitle": "Start by creating your first post.",
-      "title": "No posts"
+      "subtitle": "Start by creating your first articolo.",
+      "title": "Nessun articolo"
     },
-    "subtitle": "Discover and manage your post collection",
-    "title": "My posts",
+    "subtitle": "Discover and manage your articolo collection",
+    "title": "My articolos",
     "type": "Article"
   },
   "preferences": {
@@ -139,13 +389,11 @@
       "grid": "Grid",
       "label": "Display mode",
       "list": "List"
-    },
-    "items": "items"
+    }
   },
   "stats": {
-    "subtitle": "Data overview",
     "title": "Statistics",
-    "totalPosts": "Total posts"
+    "totalPosts": "Total articolos"
   },
   "categories": {
     "title": "Categorie",
@@ -153,21 +401,21 @@
     "cached": "In cache"
   },
   "articles": {
-    "count": "Nessun articolo | {count} articolo | {count} articoli",
-    "noArticles": "Nessun articolo trovato",
-    "noArticlesInCategory": "Nessun articolo trovato in questa categoria"
+    "count": "Nessun articolo | {count} article | {count} articles",
+    "noArticles": "Nessun articolo found",
+    "noArticlesInCategory": "Nessun articolo found in this category"
   },
   "cache": {
-    "fromRedis": "Caricato dalla cache"
+    "fromRedis": "Loaded from cache"
   },
   "navigation": {
-    "backToHome": "Torna alla Home",
+    "backToHome": "Indietro to Home",
     "previousPage": "Pagina Precedente",
     "nextPage": "Pagina Successiva",
     "page": "Pagina"
   },
   "language": {
     "title": "Lingua",
-    "switchTo": "Passa a {language}"
+    "switchTo": "Switch to {language}"
   }
 }

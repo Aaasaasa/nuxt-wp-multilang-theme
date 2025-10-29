@@ -5,7 +5,7 @@ const client = new Client({
   port: 5432,
   database: 'nuxt_pg_cms_db',
   user: 'usrcms',
-  password: 'Utorak30Sep',
+  password: 'Utorak30Sep'
 })
 
 async function main(): Promise<void> {
@@ -116,10 +116,15 @@ async function main(): Promise<void> {
 
     console.log('\\n📊 Final Summary:')
     for (const row of summaryResult.rows) {
-      console.log(`   ${row.content_type}: ${row.total_with_media_id}/${row.total_with_featured_images} linked to media table`)
+      console.log(
+        `   ${row.content_type}: ${row.total_with_media_id}/${row.total_with_featured_images} linked to media table`
+      )
     }
 
-    const totalUpdated = (articlesResult.rowCount || 0) + (pagesResult.rowCount || 0) + (portfoliosResult.rowCount || 0)
+    const totalUpdated =
+      (articlesResult.rowCount || 0) +
+      (pagesResult.rowCount || 0) +
+      (portfoliosResult.rowCount || 0)
 
     console.log('\\n🎉 Featured Images System upgrade completed!')
     console.log(`📊 Total updated: ${totalUpdated} featured images`)
@@ -129,7 +134,6 @@ async function main(): Promise<void> {
     console.log('   ✅ Better performance with proper indexes')
     console.log('   ✅ Backward compatibility maintained')
     console.log('   ✅ Eliminates duplicate/missing images issues')
-
   } catch (error) {
     console.error('❌ Upgrade failed:', (error as Error).message)
   } finally {

@@ -70,16 +70,13 @@ export function useCategories() {
       limit?: number
     }
   ) => {
-    const { data, error } = await useFetch<CategoryWithArticles>(
-      `/api/categories/${slug}`,
-      {
-        query: {
-          lang: locale.value,
-          page: options?.page || 1,
-          limit: options?.limit || 10
-        }
+    const { data, error } = await useFetch<CategoryWithArticles>(`/api/categories/${slug}`, {
+      query: {
+        lang: locale.value,
+        page: options?.page || 1,
+        limit: options?.limit || 10
       }
-    )
+    })
 
     if (error.value) {
       console.error(`❌ Error fetching category "${slug}":`, error.value)

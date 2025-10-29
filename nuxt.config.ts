@@ -142,14 +142,14 @@ export default defineNuxtConfig({
       md: 768,
       lg: 1024,
       xl: 1280,
-      xxl: 1536,
+      xxl: 1536
     },
 
     // IPX Konfiguration für bessere Performance
     ipx: {
       // Cache-Einstellungen für bessere Performance
       maxAge: 60 * 60 * 24 * 365 // 1 Jahr Cache
-    },    // Presets für verschiedene Use Cases
+    }, // Presets für verschiedene Use Cases
     presets: {
       // Blog Post Featured Image
       featured: {
@@ -198,8 +198,8 @@ export default defineNuxtConfig({
   // Nuxt 4 Server Structure Blacklisting
   // ========================================
   ignore: [
-    'server/lib/**',        // Nuxt 4 server/lib/ mit Prisma Clients
-    'prisma/generated/**'   // Generierte Prisma Clients
+    'server/lib/**', // Nuxt 4 server/lib/ mit Prisma Clients
+    'prisma/generated/**' // Generierte Prisma Clients
   ],
 
   // Zod auto-import (modern syntax)
@@ -221,7 +221,7 @@ export default defineNuxtConfig({
       dirs: [
         'server/constants/**',
         'server/services/**',
-        'server/utils/**',     // Nuxt 4 Konvention: utils OK
+        'server/utils/**', // Nuxt 4 Konvention: utils OK
         'server/types/**'
         // server/lib/** explizit NICHT - enthält Prisma Clients
       ]
@@ -229,7 +229,13 @@ export default defineNuxtConfig({
     serverAssets: [{ baseName: 'templates', dir: './templates' }],
     rollupConfig: {
       watch: {
-        exclude: ['data/**', '**/node_modules/**']
+        exclude: [
+          'data/**',
+          '**/node_modules/**',
+          'prisma/generated/**',
+          'generated/**',
+          '.nuxt/**'
+        ]
       }
     }
   },
@@ -244,7 +250,9 @@ export default defineNuxtConfig({
         ignored: [
           '**/data/**',
           '**/node_modules/**',
-          '**/.nuxt/**'
+          '**/.nuxt/**',
+          '**/prisma/generated/**',
+          '**/generated/**'
         ]
       },
       fs: {

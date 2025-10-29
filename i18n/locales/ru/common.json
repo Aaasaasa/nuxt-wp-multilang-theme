@@ -1,96 +1,66 @@
 {
-  "dashboard": {
-    "title": "Admin Dashboard",
-    "subtitle": "Manage your content and settings",
-    "quickStats": "Quick Stats"
-  },
-  "stats": {
-    "users": "Users",
-    "posts": "Posts",
-    "comments": "Comments",
-    "subtitle": "Data overview",
-    "title": "Statistics",
-    "totalPosts": "Total posts"
-  },
   "actions": {
+    "continueNow": "Continue now",
     "delete": "Delete",
     "edit": "Edit",
     "loadMore": "Load more",
-    "refresh": "Refresh",
+    "profile": "Profile",
     "reset": "Reset",
-    "viewPosts": "View posts"
+    "viewPosts": "View статьяs"
   },
   "app": {
     "description": "A simple and efficient starting point",
-    "footer": "Made by Aleksandar Stajic",
+    "footer": "Created by William Fontaine",
     "name": "Nuxt Boilerplate"
   },
-  "error": {
-    "404": {
-      "message": "The page you are looking for does not exist.",
-      "title": "Page not found"
-    },
-    "actions": {
-      "back": "Back",
-      "home": "Home"
-    },
-    "generic": {
-      "message": "An unexpected error occurred.",
-      "title": "An error occurred"
-    }
-  },
-  "hero": {
-    "modernInterface": "Modern and intuitive interface",
-    "subtitle": "A simple and efficient starting point",
-    "title": "Nuxt Boilerplate"
-  },
-  "postForm": {
+  "articleForm": {
     "actions": {
       "create": {
         "autoSaveInfo": "Changes will be saved automatically",
-        "cancel": "Cancel",
-        "description": "Fill in the fields below to create a post.",
+        "cancel": "Отмена",
+        "description": "Fill in the fields below to create an статья.",
         "error": {
-          "message": "An error occurred while creating the post",
-          "title": "Failed to create post"
+          "message": "An error occurred while creating the article",
+          "title": "Failed to create статья"
         },
-        "submit": "Create post",
+        "loginRequired": "Войти to create an article",
+        "submit": "Create статья",
         "success": {
-          "message": "Your post has been created successfully",
-          "title": "Post created successfully"
+          "message": "Your статья has been created successfully",
+          "title": "Article created successfully"
         },
-        "title": "Create new post"
+        "title": "Create new статья"
       },
       "delete": {
-        "cancel": "Cancel",
+        "cancel": "Отмена",
         "confirm": "Delete",
-        "description": "Are you sure you want to delete this post? This action is irreversible.",
+        "description": "Are you sure you want to Удалить this article? This action is irreversible.",
         "error": {
-          "message": "An error occurred while deleting the post",
-          "title": "Failed to delete post"
+          "message": "An error occurred while deleting the article",
+          "title": "Failed to Удалить article"
         },
-        "info": "This action will permanently delete the post",
+        "info": "This action will permanently Удалить the article",
         "success": {
-          "message": "Your post has been deleted successfully",
-          "title": "Post deleted successfully"
+          "message": "Your article has been Удалитьd successfully",
+          "title": "Post Удалитьd successfully"
         },
-        "title": "Delete post",
-        "tooltip": "Delete this post"
+        "title": "Delete article"
       },
       "edit": {
         "autoSaveInfo": "Changes will be saved automatically",
-        "cancel": "Cancel",
-        "description": "Edit your post content here.",
+        "cancel": "Отмена",
+        "description": "Edit your article content here.",
         "error": {
-          "message": "An error occurred while updating the post",
-          "title": "Failed to update post"
+          "message": "An error occurred while updating the article",
+          "title": "Failed to update статья"
         },
+        "loginRequired": "Sign in to Редактировать a article",
         "save": "Save changes",
         "success": {
-          "message": "Your post has been updated successfully",
+          "message": "Your статья has been updated successfully",
           "title": "Post updated successfully"
         },
-        "title": "Edit post"
+        "title": "Edit article"
       }
     },
     "analytics": {
@@ -105,10 +75,14 @@
         "short": "Short"
       }
     },
+    "error": {
+      "notFound": "The article could not be found or has been Удалитьd",
+      "unauthorized": "You don't have permission to perform this action"
+    },
     "fields": {
       "content": {
-        "label": "Post content",
-        "placeholder": "Write your post content here",
+        "label": "Article content",
+        "placeholder": "Write your статья content here",
         "validation": {
           "maxLength": "Content cannot exceed 1000 characters",
           "minLength": "Content must contain at least 10 characters",
@@ -119,8 +93,8 @@
         "label": "Created on {date} at {time}"
       },
       "title": {
-        "label": "Post title",
-        "placeholder": "Enter post title",
+        "label": "Article title",
+        "placeholder": "Enter статья title",
         "validation": {
           "maxLength": "Title cannot exceed 100 characters",
           "minLength": "Title must contain at least 3 characters",
@@ -132,13 +106,276 @@
       }
     }
   },
+  "auth": {
+    "forgotPassword": {
+      "backToLogin": "Назад to login",
+      "cancel": "Отмена",
+      "description": "Reset your password",
+      "email": {
+        "label": "Адрес электронной почты",
+        "placeholder": "Enter your email address",
+        "validation": {
+          "invalid": "Адрес электронной почты is not valid",
+          "maxLength": "Адрес электронной почты cannot exceed 254 characters",
+          "required": "Адрес электронной почты is required"
+        }
+      },
+      "error": {
+        "generic": "Unable to send password Сбросить email",
+        "title": "Ошибка",
+        "tooManyRequests": "Too many requests. Try again in {minutes}min {seconds}s."
+      },
+      "remembered": "Remember your password?",
+      "submit": "Send Сбросить link",
+      "subtitle": "Enter your email address to receive a Сбросить link",
+      "success": {
+        "message": "If the email address exists in our system, you will receive a Сбросить link shortly.",
+        "title": "Email sent"
+      },
+      "title": "Forgot password"
+    },
+    "login": {
+      "autoSaveInfo": "Your information will be processed securely",
+      "backToHome": "Назад to home",
+      "cancel": "Отмена",
+      "didntReceiveEmail": "Didn't receive the email?",
+      "email": {
+        "label": "Адрес электронной почты",
+        "placeholder": "Enter your email address",
+        "validation": {
+          "invalid": "Адрес электронной почты is not valid",
+          "maxLength": "Адрес электронной почты cannot exceed 254 characters",
+          "required": "Адрес электронной почты is required"
+        }
+      },
+      "error": {
+        "emailNotVerified": "Your email is not verified. Check your inbox or request a new link.",
+        "invalidCredentials": "Invalid email or password",
+        "title": "Вход error"
+      },
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "password": {
+        "label": "Пароль",
+        "placeholder": "Enter your password",
+        "validation": {
+          "maxLength": "Пароль cannot exceed 128 characters",
+          "minLength": "Пароль must be at least 8 characters long",
+          "required": "Пароль is required"
+        }
+      },
+      "rateLimit": {
+        "tooManyAttempts": "Too many failed attempts. Try again in {minutes}min {seconds}s.",
+        "warning": "Last attempt before blocking | {count} attempt remaining | {count} attempts remaining"
+      },
+      "register": "Зарегистрироваться",
+      "resendVerification": "Resend verification",
+      "submit": "Войти",
+      "subtitle": "Войти to your account",
+      "success": {
+        "message": "You are now signed in",
+        "title": "Вход successful"
+      },
+      "title": "Вход"
+    },
+    "logout": {
+      "success": {
+        "message": "You have been logged out",
+        "title": "Выход successful"
+      },
+      "title": "Выход"
+    },
+    "register": {
+      "autoSaveInfo": "Your information will be processed securely",
+      "backToHome": "Назад to home",
+      "cancel": "Отмена",
+      "confirmPassword": {
+        "label": "Confirm password",
+        "placeholder": "Confirm your password",
+        "validation": {
+          "match": "Парольs do not match",
+          "required": "Пароль confirmation is required"
+        }
+      },
+      "email": {
+        "label": "Адрес электронной почты",
+        "placeholder": "Enter your email address",
+        "validation": {
+          "invalid": "Адрес электронной почты is not valid",
+          "maxLength": "Адрес электронной почты cannot exceed 254 characters",
+          "required": "Адрес электронной почты is required"
+        }
+      },
+      "error": {
+        "emailExists": "This email address is already in use",
+        "generic": "An error occurred during registration",
+        "invalidEmail": "The email address is invalid. Please check and try again.",
+        "title": "Registration error",
+        "validation": "Invalid input data. Please check and try again."
+      },
+      "hasAccount": "Already have an account?",
+      "login": "Войти",
+      "name": {
+        "label": "Full Nuxt Boilerplate",
+        "placeholder": "Enter your full Nuxt Boilerplate",
+        "validation": {
+          "maxLength": "Name cannot exceed 50 characters",
+          "minLength": "Name must be at least 2 characters long",
+          "required": "Name is required"
+        }
+      },
+      "password": {
+        "label": "Пароль",
+        "placeholder": "Enter your password",
+        "validation": {
+          "maxLength": "Пароль cannot exceed 128 characters",
+          "minLength": "Пароль must be at least 8 characters long",
+          "pattern": "Пароль must include: 1 uppercase letter, 1 lowercase letter, and 1 number",
+          "required": "Пароль is required"
+        }
+      },
+      "submit": "Зарегистрироваться",
+      "subtitle": "Create your account",
+      "success": {
+        "emailSent": "A verification email has been sent to {email}. Check your inbox.",
+        "message": "A verification email has been sent to you. Check your inbox.",
+        "title": "Registration successful"
+      },
+      "terms": {
+        "and": "and",
+        "prefix": "By signing up, you agree to our",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
+      },
+      "title": "Зарегистрироваться"
+    },
+    "resendVerification": {
+      "alreadyVerified": "Already verified?",
+      "backToLogin": "Назад to login",
+      "cancel": "Отмена",
+      "email": {
+        "label": "Адрес электронной почты",
+        "placeholder": "Enter your email address",
+        "validation": {
+          "invalid": "Адрес электронной почты is not valid",
+          "maxLength": "Адрес электронной почты cannot exceed 254 characters",
+          "required": "Адрес электронной почты is required"
+        }
+      },
+      "error": {
+        "alreadyVerified": "This email address is already verified.",
+        "generic": "Unable to send verification email",
+        "title": "Ошибка",
+        "tooManyRequests": "Too many requests. Try again in {minutes}min {seconds}s.",
+        "userNotFound": "No account found with this email address."
+      },
+      "submit": "Resend email",
+      "subtitle": "Enter your email address to receive a new verification link",
+      "success": {
+        "message": "A new verification email has been sent if an account exists with this address.",
+        "title": "Email sent"
+      },
+      "title": "Resend verification"
+    },
+    "resetPassword": {
+      "backToLogin": "Назад to login",
+      "cancel": "Отмена",
+      "confirmPassword": {
+        "label": "Confirm password",
+        "placeholder": "Confirm your new password",
+        "validation": {
+          "match": "Парольs do not match",
+          "required": "Пароль confirmation is required"
+        }
+      },
+      "description": "Choose a new password",
+      "error": {
+        "generic": "Unable to Сбросить password",
+        "invalidToken": "This Сбросить link is invalid or has expired.",
+        "title": "Ошибка"
+      },
+      "password": {
+        "label": "New password",
+        "placeholder": "Enter your new password",
+        "validation": {
+          "maxLength": "Пароль cannot exceed 128 characters",
+          "minLength": "Пароль must be at least 8 characters long",
+          "pattern": "Пароль must include: 1 uppercase letter, 1 lowercase letter, and 1 number",
+          "required": "Пароль is required"
+        }
+      },
+      "remembered": "Remember your password?",
+      "submit": "Reset password",
+      "subtitle": "Enter your new password",
+      "success": {
+        "loginButton": "Войти",
+        "message": "Your password has been Сбросить successfully. You can now sign in.",
+        "title": "Password Сбросить"
+      },
+      "title": "Reset password",
+      "token": {
+        "validation": {
+          "required": "Token is required"
+        }
+      }
+    },
+    "verifyEmail": {
+      "cancel": "Назад to home",
+      "error": {
+        "generic": "An unexpected error occurred. Please try again.",
+        "invalidToken": "The verification link is invalid or corrupted.",
+        "resendLink": "Request new link",
+        "retry": "Try again",
+        "title": "Verification failed",
+        "tokenExpired": "This verification link has expired. Please request a new one.",
+        "tokenNotFound": "This verification link doesn't exist or has already been used.",
+        "validationError": "The verification data is invalid. Please request a new link."
+      },
+      "loading": {
+        "subtitle": "Please wait while we verify your email address...",
+        "title": "Verifying your email"
+      },
+      "noToken": {
+        "backButton": "Назад to login",
+        "resendButton": "Request new link",
+        "subtitle": "You need to access this page via the link received in your verification email.",
+        "title": "Verification link missing"
+      },
+      "success": {
+        "message": "Your email address has been verified and you are now signed in.",
+        "redirecting": "Automatically redirecting in {seconds} seconds...",
+        "subtitle": "Congratulations! Your email address has been confirmed and your account is now active.",
+        "title": "Email verified successfully!"
+      },
+      "title": "Email verification"
+    }
+  },
+  "error": {
+    "404": {
+      "message": "The page you are looking for does not exist.",
+      "title": "Страница not found"
+    },
+    "actions": {
+      "back": "Назад",
+      "home": "Главная"
+    },
+    "generic": {
+      "message": "An unexpected error occurred.",
+      "title": "An error occurred"
+    }
+  },
+  "hero": {
+    "modernInterface": "Modern and intuitive interface",
+    "subtitle": "A simple and efficient starting point",
+    "title": "Nuxt Boilerplate"
+  },
   "posts": {
     "empty": {
-      "subtitle": "Start by creating your first post.",
-      "title": "No posts"
+      "subtitle": "Start by creating your first статья.",
+      "title": "Нет статей"
     },
-    "subtitle": "Discover and manage your post collection",
-    "title": "My posts",
+    "subtitle": "Discover and manage your статья collection",
+    "title": "My статьяs",
     "type": "Article"
   },
   "preferences": {
@@ -152,8 +389,11 @@
       "grid": "Grid",
       "label": "Display mode",
       "list": "List"
-    },
-    "items": "items"
+    }
+  },
+  "stats": {
+    "title": "Statistics",
+    "totalPosts": "Total статьяs"
   },
   "categories": {
     "title": "Категории",
@@ -161,21 +401,21 @@
     "cached": "Кэшировано"
   },
   "articles": {
-    "count": "Нет статей | {count} статья | {count} статей",
-    "noArticles": "Статьи не найдены",
-    "noArticlesInCategory": "В этой категории нет статей"
+    "count": "Нет статей | {count} article | {count} articles",
+    "noArticles": "Нет статей found",
+    "noArticlesInCategory": "Нет статей found in this category"
   },
   "cache": {
-    "fromRedis": "Загружено из кэша"
+    "fromRedis": "Loaded from cache"
   },
   "navigation": {
-    "backToHome": "Вернуться на главную",
+    "backToHome": "Назад to Home",
     "previousPage": "Предыдущая страница",
     "nextPage": "Следующая страница",
     "page": "Страница"
   },
   "language": {
     "title": "Язык",
-    "switchTo": "Переключить на {language}"
+    "switchTo": "Switch to {language}"
   }
 }

@@ -102,9 +102,12 @@ const toggleSidebar = () => {
 }
 
 // Close sidebar when route changes
-watch(() => route.path, () => {
-  sidebarOpen.value = false
-})
+watch(
+  () => route.path,
+  () => {
+    sidebarOpen.value = false
+  }
+)
 
 const handleLogout = async () => {
   try {

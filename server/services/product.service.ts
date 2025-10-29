@@ -54,10 +54,13 @@ export async function getAllProducts(): Promise<ProductWithVendor[]> {
         slug: product.slug,
         description: translation.description || '',
         excerpt: null, // Products don't have excerpts in this schema
-        featuredImage: product.metas?.[0]?.value ?
-          (typeof product.metas[0].value === 'string' ? product.metas[0].value :
-           typeof product.metas[0].value === 'object' ? JSON.stringify(product.metas[0].value) :
-           String(product.metas[0].value)) : null,
+        featuredImage: product.metas?.[0]?.value
+          ? typeof product.metas[0].value === 'string'
+            ? product.metas[0].value
+            : typeof product.metas[0].value === 'object'
+              ? JSON.stringify(product.metas[0].value)
+              : String(product.metas[0].value)
+          : null,
         price: product.price,
         currency: product.currency,
         stock: product.stock,
@@ -108,10 +111,13 @@ export async function getProductBySlug(slug: string): Promise<ProductWithVendor 
       slug: product.slug,
       description: translation.description || '',
       excerpt: null, // Products don't have excerpts in this schema
-      featuredImage: product.metas?.[0]?.value ?
-        (typeof product.metas[0].value === 'string' ? product.metas[0].value :
-         typeof product.metas[0].value === 'object' ? JSON.stringify(product.metas[0].value) :
-         String(product.metas[0].value)) : null,
+      featuredImage: product.metas?.[0]?.value
+        ? typeof product.metas[0].value === 'string'
+          ? product.metas[0].value
+          : typeof product.metas[0].value === 'object'
+            ? JSON.stringify(product.metas[0].value)
+            : String(product.metas[0].value)
+        : null,
       price: product.price,
       currency: product.currency,
       stock: product.stock,

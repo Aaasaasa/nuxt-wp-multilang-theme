@@ -50,11 +50,7 @@ const imageClasses = computed(() => {
     avatar: 'w-12 h-12 object-cover rounded-full'
   }
 
-  return [
-    baseClasses,
-    presetClasses[props.preset],
-    props.class
-  ].filter(Boolean).join(' ')
+  return [baseClasses, presetClasses[props.preset], props.class].filter(Boolean).join(' ')
 })
 
 // Responsive Sizes für verschiedene Presets

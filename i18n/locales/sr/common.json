@@ -1,421 +1,421 @@
 {
   "actions": {
-    "continueNow": "Настави сада",
-    "delete": "Избриши",
-    "edit": "Измени",
-    "loadMore": "Учитај више",
-    "profile": "Профил",
-    "reset": "Ресетуј",
-    "viewPosts": "Прикажи чланке"
+    "continueNow": "Continue now",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loadMore": "Load more",
+    "profile": "Profile",
+    "reset": "Reset",
+    "viewPosts": "View чланакs"
   },
   "app": {
-    "description": "Једноставна и ефикасна полазна тачка",
-    "footer": "Направио Александар Стајић",
+    "description": "A simple and efficient starting point",
+    "footer": "Created by William Fontaine",
     "name": "Nuxt Boilerplate"
   },
   "articleForm": {
     "actions": {
       "create": {
-        "autoSaveInfo": "Промене ће бити аутоматски сачуване",
+        "autoSaveInfo": "Changes will be saved automatically",
         "cancel": "Откажи",
-        "description": "Попуните поља да бисте креирали чланак.",
+        "description": "Fill in the fields below to create an чланак.",
         "error": {
-          "message": "Дошло је до грешке при креирању чланка",
-          "title": "Креирање чланка није успело"
+          "message": "An error occurred while creating the article",
+          "title": "Failed to create чланак"
         },
-        "loginRequired": "Пријавите се да бисте креирали чланак",
-        "submit": "Креирај чланак",
+        "loginRequired": "Пријави се to create an article",
+        "submit": "Create чланак",
         "success": {
-          "message": "Ваш чланак је успешно креиран",
-          "title": "Чланак успешно креиран"
+          "message": "Your чланак has been created successfully",
+          "title": "Article created successfully"
         },
-        "title": "Креирај нови чланак"
+        "title": "Create new чланак"
       },
       "delete": {
         "cancel": "Откажи",
-        "confirm": "Избриши",
-        "description": "Да ли сте сигурни да желите да избришете овај чланак? Ова акција је неповратна.",
+        "confirm": "Delete",
+        "description": "Are you sure you want to Обриши this article? This action is irreversible.",
         "error": {
-          "message": "Дошло је до грешке при брисању чланка",
-          "title": "Брисање чланка није успело"
+          "message": "An error occurred while deleting the article",
+          "title": "Failed to Обриши article"
         },
-        "info": "Ова акција ће трајно избрисати чланак",
+        "info": "This action will permanently Обриши the article",
         "success": {
-          "message": "Ваш чланак је успешно избрисан",
-          "title": "Чланак успешно избрисан"
+          "message": "Your article has been Обришиd successfully",
+          "title": "Post Обришиd successfully"
         },
-        "title": "Избриши чланак"
+        "title": "Delete article"
       },
       "edit": {
-        "autoSaveInfo": "Промене ће бити аутоматски сачуване",
+        "autoSaveInfo": "Changes will be saved automatically",
         "cancel": "Откажи",
-        "description": "Измените садржај вашег чланка.",
+        "description": "Edit your article content here.",
         "error": {
-          "message": "Дошло је до грешке при ажурирању чланка",
-          "title": "Ажурирање чланка није успело"
+          "message": "An error occurred while updating the article",
+          "title": "Failed to update чланак"
         },
-        "loginRequired": "Пријавите се да бисте изменили чланак",
-        "save": "Сачувај промене",
+        "loginRequired": "Sign in to Уреди a article",
+        "save": "Save changes",
         "success": {
-          "message": "Ваш чланак је успешно ажуриран",
-          "title": "Чланак успешно ажуриран"
+          "message": "Your чланак has been updated successfully",
+          "title": "Post updated successfully"
         },
-        "title": "Измени чланак"
+        "title": "Edit article"
       }
     },
     "analytics": {
-      "characterCount": "Нема карактера | {count} карактер | {count} карактера",
-      "readingTime": "{count} минут читања | {count} минута читања",
-      "wordCount": "Нема речи | {count} реч | {count} речи"
+      "characterCount": "No characters | {count} character | {count} characters",
+      "readingTime": "{count} minute read | {count} minutes read",
+      "wordCount": "No words | {count} word | {count} words"
     },
     "badgeLabels": {
       "length": {
-        "long": "Дугачко",
-        "medium": "Средње",
-        "short": "Кратко"
+        "long": "Long",
+        "medium": "Medium",
+        "short": "Short"
       }
     },
     "error": {
-      "notFound": "Чланак није пронађен или је избрисан",
-      "unauthorized": "Немате дозволу за ову акцију"
+      "notFound": "The article could not be found or has been Обришиd",
+      "unauthorized": "You don't have permission to perform this action"
     },
     "fields": {
       "content": {
-        "label": "Садржај чланка",
-        "placeholder": "Напишите садржај чланка овде",
+        "label": "Article content",
+        "placeholder": "Write your чланак content here",
         "validation": {
-          "maxLength": "Садржај не може прећи 1000 карактера",
-          "minLength": "Садржај мора садржати најмање 10 карактера",
-          "required": "Садржај је обавезан"
+          "maxLength": "Content cannot exceed 1000 characters",
+          "minLength": "Content must contain at least 10 characters",
+          "required": "Content is required"
         }
       },
       "createdAt": {
-        "label": "Креирано {date} у {time}"
+        "label": "Created on {date} at {time}"
       },
       "title": {
-        "label": "Наслов чланка",
-        "placeholder": "Унесите наслов чланка",
+        "label": "Article title",
+        "placeholder": "Enter чланак title",
         "validation": {
-          "maxLength": "Наслов не може прећи 100 карактера",
-          "minLength": "Наслов мора садржати најмање 3 карактера",
-          "required": "Наслов је обавезан"
+          "maxLength": "Title cannot exceed 100 characters",
+          "minLength": "Title must contain at least 3 characters",
+          "required": "Title is required"
         }
       },
       "updatedAt": {
-        "label": "Измењено {date} у {time}"
+        "label": "Modified on {date} at {time}"
       }
     }
   },
   "auth": {
     "forgotPassword": {
-      "backToLogin": "Назад на пријаву",
+      "backToLogin": "Назад to login",
       "cancel": "Откажи",
-      "description": "Ресетујте вашу лозинку",
+      "description": "Reset your password",
       "email": {
-        "label": "Е-маил адреса",
-        "placeholder": "Унесите е-маил адресу",
+        "label": "Имејл адреса",
+        "placeholder": "Enter your email address",
         "validation": {
-          "invalid": "Е-маил адреса није валидна",
-          "maxLength": "Е-маил адреса не може прећи 254 карактера",
-          "required": "Е-маил адреса је обавезна"
+          "invalid": "Имејл адреса is not valid",
+          "maxLength": "Имејл адреса cannot exceed 254 characters",
+          "required": "Имејл адреса is required"
         }
       },
       "error": {
-        "generic": "Слање е-маила за ресетовање лозинке није успело",
+        "generic": "Unable to send password Ресетуј email",
         "title": "Грешка",
-        "tooManyRequests": "Превише захтева. Покушајте поново за {minutes}мин {seconds}с."
+        "tooManyRequests": "Too many requests. Try again in {minutes}min {seconds}s."
       },
-      "remembered": "Сетили сте се лозинке?",
-      "submit": "Пошаљи линк за ресетовање",
-      "subtitle": "Унесите е-маил адресу да бисте добили линк за ресетовање",
+      "remembered": "Remember your password?",
+      "submit": "Send Ресетуј link",
+      "subtitle": "Enter your email address to receive a Ресетуј link",
       "success": {
-        "message": "Ако е-маил адреса постоји у нашем систему, ускоро ћете добити линк за ресетовање.",
-        "title": "Е-маил послат"
+        "message": "If the email address exists in our system, you will receive a Ресетуј link shortly.",
+        "title": "Email sent"
       },
-      "title": "Заборављена лозинка"
+      "title": "Forgot password"
     },
     "login": {
-      "autoSaveInfo": "Ваше информације ће бити безбедно обрађене",
-      "backToHome": "Назад на почетну",
+      "autoSaveInfo": "Your information will be processed securely",
+      "backToHome": "Назад to home",
       "cancel": "Откажи",
-      "didntReceiveEmail": "Нисте примили е-маил?",
+      "didntReceiveEmail": "Didn't receive the email?",
       "email": {
-        "label": "Е-маил адреса",
-        "placeholder": "Унесите е-маил адресу",
+        "label": "Имејл адреса",
+        "placeholder": "Enter your email address",
         "validation": {
-          "invalid": "Е-маил адреса није валидна",
-          "maxLength": "Е-маил адреса не може прећи 254 карактера",
-          "required": "Е-маил адреса је обавезна"
+          "invalid": "Имејл адреса is not valid",
+          "maxLength": "Имејл адреса cannot exceed 254 characters",
+          "required": "Имејл адреса is required"
         }
       },
       "error": {
-        "emailNotVerified": "Ваш е-маил није верификован. Проверите ваш inbox или затражите нови линк.",
-        "invalidCredentials": "Неисправан е-маил или лозинка",
-        "title": "Грешка при пријави"
+        "emailNotVerified": "Your email is not verified. Check your inbox or request a new link.",
+        "invalidCredentials": "Invalid email or password",
+        "title": "Пријава error"
       },
-      "forgotPassword": "Заборављена лозинка?",
-      "noAccount": "Немате налог?",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
       "password": {
         "label": "Лозинка",
-        "placeholder": "Унесите лозинку",
+        "placeholder": "Enter your password",
         "validation": {
-          "maxLength": "Лозинка не може прећи 128 карактера",
-          "minLength": "Лозинка мора бити дуга најмање 8 карактера",
-          "required": "Лозинка је обавезна"
+          "maxLength": "Лозинка cannot exceed 128 characters",
+          "minLength": "Лозинка must be at least 8 characters long",
+          "required": "Лозинка is required"
         }
       },
       "rateLimit": {
-        "tooManyAttempts": "Превише неуспешних покушаја. Покушајте поново за {minutes}мин {seconds}с.",
-        "warning": "Последњи покушај пре блокирања | Преостао {count} покушај | Преостало {count} покушаја"
+        "tooManyAttempts": "Too many failed attempts. Try again in {minutes}min {seconds}s.",
+        "warning": "Last attempt before blocking | {count} attempt remaining | {count} attempts remaining"
       },
       "register": "Региструј се",
-      "resendVerification": "Пошаљи верификацију поново",
+      "resendVerification": "Resend verification",
       "submit": "Пријави се",
-      "subtitle": "Пријавите се на ваш налог",
+      "subtitle": "Пријави се to your account",
       "success": {
-        "message": "Сада сте пријављени",
-        "title": "Успешна пријава"
+        "message": "You are now signed in",
+        "title": "Пријава successful"
       },
       "title": "Пријава"
     },
     "logout": {
       "success": {
-        "message": "Одјављени сте",
-        "title": "Успешна одјава"
+        "message": "You have been logged out",
+        "title": "Одјава successful"
       },
       "title": "Одјава"
     },
     "register": {
-      "autoSaveInfo": "Ваше информације ће бити безбедно обрађене",
-      "backToHome": "Назад на почетну",
+      "autoSaveInfo": "Your information will be processed securely",
+      "backToHome": "Назад to home",
       "cancel": "Откажи",
       "confirmPassword": {
-        "label": "Потврдите лозинку",
-        "placeholder": "Потврдите вашу лозинку",
+        "label": "Confirm password",
+        "placeholder": "Confirm your password",
         "validation": {
-          "match": "Лозинке се не подударају",
-          "required": "Потврда лозинке је обавезна"
+          "match": "Лозинкаs do not match",
+          "required": "Лозинка confirmation is required"
         }
       },
       "email": {
-        "label": "Е-маил адреса",
-        "placeholder": "Унесите е-маил адресу",
+        "label": "Имејл адреса",
+        "placeholder": "Enter your email address",
         "validation": {
-          "invalid": "Е-маил адреса није валидна",
-          "maxLength": "Е-маил адреса не може прећи 254 карактера",
-          "required": "Е-маил адреса је обавезна"
+          "invalid": "Имејл адреса is not valid",
+          "maxLength": "Имејл адреса cannot exceed 254 characters",
+          "required": "Имејл адреса is required"
         }
       },
       "error": {
-        "emailExists": "Ова е-маил адреса се већ користи",
-        "generic": "Дошло је до грешке при регистрацији",
-        "invalidEmail": "Е-маил адреса је неисправна. Молимо проверите и покушајте поново.",
-        "title": "Грешка при регистрацији",
-        "validation": "Неисправни улазни подаци. Молимо проверите и покушајте поново."
+        "emailExists": "This email address is already in use",
+        "generic": "An error occurred during registration",
+        "invalidEmail": "The email address is invalid. Please check and try again.",
+        "title": "Registration error",
+        "validation": "Invalid input data. Please check and try again."
       },
-      "hasAccount": "Већ имате налог?",
+      "hasAccount": "Already have an account?",
       "login": "Пријави се",
       "name": {
-        "label": "Пуно име",
-        "placeholder": "Унесите ваше пуно име",
+        "label": "Full Nuxt Boilerplate",
+        "placeholder": "Enter your full Nuxt Boilerplate",
         "validation": {
-          "maxLength": "Име не може прећи 50 карактера",
-          "minLength": "Име мора бити дуго најмање 2 карактера",
-          "required": "Име је обавезно"
+          "maxLength": "Name cannot exceed 50 characters",
+          "minLength": "Name must be at least 2 characters long",
+          "required": "Name is required"
         }
       },
       "password": {
         "label": "Лозинка",
-        "placeholder": "Унесите лозинку",
+        "placeholder": "Enter your password",
         "validation": {
-          "maxLength": "Лозинка не може прећи 128 карактера",
-          "minLength": "Лозинка мора бити дуга најмање 8 карактера",
-          "pattern": "Лозинка мора садржати: 1 велико слово, 1 мало слово и 1 број",
-          "required": "Лозинка је обавезна"
+          "maxLength": "Лозинка cannot exceed 128 characters",
+          "minLength": "Лозинка must be at least 8 characters long",
+          "pattern": "Лозинка must include: 1 uppercase letter, 1 lowercase letter, and 1 number",
+          "required": "Лозинка is required"
         }
       },
       "submit": "Региструј се",
-      "subtitle": "Креирајте ваш налог",
+      "subtitle": "Create your account",
       "success": {
-        "emailSent": "Верификациони е-маил је послат на {email}. Проверите ваш inbox.",
-        "message": "Верификациони е-маил вам је послат. Проверите ваш inbox.",
-        "title": "Успешна регистрација"
+        "emailSent": "A verification email has been sent to {email}. Check your inbox.",
+        "message": "A verification email has been sent to you. Check your inbox.",
+        "title": "Registration successful"
       },
       "terms": {
-        "and": "и",
-        "prefix": "Регистрацијом, прихватате наше",
-        "privacy": "Политику приватности",
-        "terms": "Услове коришћења"
+        "and": "and",
+        "prefix": "By signing up, you agree to our",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
       },
-      "title": "Регистрација"
+      "title": "Региструј се"
     },
     "resendVerification": {
-      "alreadyVerified": "Већ верификовано?",
-      "backToLogin": "Назад на пријаву",
+      "alreadyVerified": "Already verified?",
+      "backToLogin": "Назад to login",
       "cancel": "Откажи",
       "email": {
-        "label": "Е-маил адреса",
-        "placeholder": "Унесите е-маил адресу",
+        "label": "Имејл адреса",
+        "placeholder": "Enter your email address",
         "validation": {
-          "invalid": "Е-маил адреса није валидна",
-          "maxLength": "Е-маил адреса не може прећи 254 карактера",
-          "required": "Е-маил адреса је обавезна"
+          "invalid": "Имејл адреса is not valid",
+          "maxLength": "Имејл адреса cannot exceed 254 characters",
+          "required": "Имејл адреса is required"
         }
       },
       "error": {
-        "alreadyVerified": "Ова е-маил адреса је већ верификована.",
-        "generic": "Слање верификационог е-маила није успело",
+        "alreadyVerified": "This email address is already verified.",
+        "generic": "Unable to send verification email",
         "title": "Грешка",
-        "tooManyRequests": "Превише захтева. Покушајте поново за {minutes}мин {seconds}с.",
-        "userNotFound": "Налог са овом е-маил адресом није пронађен."
+        "tooManyRequests": "Too many requests. Try again in {minutes}min {seconds}s.",
+        "userNotFound": "No account found with this email address."
       },
-      "submit": "Пошаљи е-маил поново",
-      "subtitle": "Унесите е-маил адресу да бисте добили нови верификациони линк",
+      "submit": "Resend email",
+      "subtitle": "Enter your email address to receive a new verification link",
       "success": {
-        "message": "Нови верификациони е-маил је послат ако налог са овом адресом постоји.",
-        "title": "Е-маил послат"
+        "message": "A new verification email has been sent if an account exists with this address.",
+        "title": "Email sent"
       },
-      "title": "Пошаљи верификацију поново"
+      "title": "Resend verification"
     },
     "resetPassword": {
-      "backToLogin": "Назад на пријаву",
+      "backToLogin": "Назад to login",
       "cancel": "Откажи",
       "confirmPassword": {
-        "label": "Потврдите лозинку",
-        "placeholder": "Потврдите вашу нову лозинку",
+        "label": "Confirm password",
+        "placeholder": "Confirm your new password",
         "validation": {
-          "match": "Лозинке се не подударају",
-          "required": "Потврда лозинке је обавезна"
+          "match": "Лозинкаs do not match",
+          "required": "Лозинка confirmation is required"
         }
       },
-      "description": "Изаберите нову лозинку",
+      "description": "Choose a new password",
       "error": {
-        "generic": "Ресетовање лозинке није успело",
-        "invalidToken": "Овај линк за ресетовање је неисправан или је истекао.",
+        "generic": "Unable to Ресетуј password",
+        "invalidToken": "This Ресетуј link is invalid or has expired.",
         "title": "Грешка"
       },
       "password": {
-        "label": "Нова лозинка",
-        "placeholder": "Унесите нову лозинку",
+        "label": "New password",
+        "placeholder": "Enter your new password",
         "validation": {
-          "maxLength": "Лозинка не може прећи 128 карактера",
-          "minLength": "Лозинка мора бити дуга најмање 8 карактера",
-          "pattern": "Лозинка мора садржати: 1 велико слово, 1 мало слово и 1 број",
-          "required": "Лозинка је обавезна"
+          "maxLength": "Лозинка cannot exceed 128 characters",
+          "minLength": "Лозинка must be at least 8 characters long",
+          "pattern": "Лозинка must include: 1 uppercase letter, 1 lowercase letter, and 1 number",
+          "required": "Лозинка is required"
         }
       },
-      "remembered": "Сетили сте се лозинке?",
-      "submit": "Ресетуј лозинку",
-      "subtitle": "Унесите вашу нову лозинку",
+      "remembered": "Remember your password?",
+      "submit": "Reset password",
+      "subtitle": "Enter your new password",
       "success": {
         "loginButton": "Пријави се",
-        "message": "Ваша лозинка је успешно ресетована. Сада можете да се пријавите.",
-        "title": "Лозинка ресетована"
+        "message": "Your password has been Ресетуј successfully. You can now sign in.",
+        "title": "Password Ресетуј"
       },
-      "title": "Ресетовање лозинке",
+      "title": "Reset password",
       "token": {
         "validation": {
-          "required": "Токен је обавезан"
+          "required": "Token is required"
         }
       }
     },
     "verifyEmail": {
-      "cancel": "Назад на почетну",
+      "cancel": "Назад to home",
       "error": {
-        "generic": "Дошло је до неочекиване грешке. Молимо покушајте поново.",
-        "invalidToken": "Верификациони линк је неисправан или оштећен.",
-        "resendLink": "Затражи нови линк",
-        "retry": "Покушај поново",
-        "title": "Верификација није успела",
-        "tokenExpired": "Овај верификациони линк је истекао. Молимо затражите нови.",
-        "tokenNotFound": "Овај верификациони линк не постоји или је већ коришћен.",
-        "validationError": "Верификациони подаци су неисправни. Молимо затражите нови линк."
+        "generic": "An unexpected error occurred. Please try again.",
+        "invalidToken": "The verification link is invalid or corrupted.",
+        "resendLink": "Request new link",
+        "retry": "Try again",
+        "title": "Verification failed",
+        "tokenExpired": "This verification link has expired. Please request a new one.",
+        "tokenNotFound": "This verification link doesn't exist or has already been used.",
+        "validationError": "The verification data is invalid. Please request a new link."
       },
       "loading": {
-        "subtitle": "Молимо сачекајте док верификујемо вашу е-маил адресу...",
-        "title": "Верификовање е-маила"
+        "subtitle": "Please wait while we verify your email address...",
+        "title": "Verifying your email"
       },
       "noToken": {
-        "backButton": "Назад на пријаву",
-        "resendButton": "Затражи нови линк",
-        "subtitle": "Морате приступити овој страници преко линка који сте примили у верификационом е-маилу.",
-        "title": "Верификациони линк недостаје"
+        "backButton": "Назад to login",
+        "resendButton": "Request new link",
+        "subtitle": "You need to access this page via the link received in your verification email.",
+        "title": "Verification link missing"
       },
       "success": {
-        "message": "Ваша е-маил адреса је верификована и сада сте пријављени.",
-        "redirecting": "Аутоматско преусмеравање за {seconds} секунди...",
-        "subtitle": "Честитамо! Ваша е-маил адреса је потврђена и ваш налог је сада активан.",
-        "title": "Е-маил успешно верификован!"
+        "message": "Your email address has been verified and you are now signed in.",
+        "redirecting": "Automatically redirecting in {seconds} seconds...",
+        "subtitle": "Congratulations! Your email address has been confirmed and your account is now active.",
+        "title": "Email verified successfully!"
       },
-      "title": "Верификација е-маила"
+      "title": "Email verification"
     }
   },
   "error": {
     "404": {
-      "message": "Страница коју тражите не постоји.",
-      "title": "Страница није пронађена"
+      "message": "The page you are looking for does not exist.",
+      "title": "Страна not found"
     },
     "actions": {
       "back": "Назад",
       "home": "Почетна"
     },
     "generic": {
-      "message": "Дошло је до неочекиване грешке.",
-      "title": "Дошло је до грешке"
+      "message": "An unexpected error occurred.",
+      "title": "An error occurred"
     }
   },
   "hero": {
-    "modernInterface": "Модеран и интуитиван интерфејс",
-    "subtitle": "Једноставна и ефикасна полазна тачка",
+    "modernInterface": "Modern and intuitive interface",
+    "subtitle": "A simple and efficient starting point",
     "title": "Nuxt Boilerplate"
   },
   "posts": {
     "empty": {
-      "subtitle": "Почните креирањем вашег првог чланка.",
+      "subtitle": "Start by creating your first чланак.",
       "title": "Нема чланака"
     },
-    "subtitle": "Откријте и управљајте вашом колекцијом чланака",
-    "title": "Моји чланци",
-    "type": "Чланак"
+    "subtitle": "Discover and manage your чланак collection",
+    "title": "My чланакs",
+    "type": "Article"
   },
   "preferences": {
-    "current": "Тренутна конфигурација",
+    "current": "Current configuration",
     "detailLevel": {
-      "compact": "Компактно",
-      "extended": "Проширено",
-      "label": "Ниво детаља"
+      "compact": "Compact",
+      "extended": "Extended",
+      "label": "Detail level"
     },
     "displayMode": {
-      "grid": "Мрежа",
-      "label": "Режим приказа",
-      "list": "Листа"
+      "grid": "Grid",
+      "label": "Display mode",
+      "list": "List"
     }
   },
   "stats": {
-    "title": "Статистика",
-    "totalPosts": "Укупно чланака"
+    "title": "Statistics",
+    "totalPosts": "Total чланакs"
   },
   "categories": {
     "title": "Категорије",
-    "all": "Сви чланци",
+    "all": "Сви Чланци",
     "cached": "Кеширано"
   },
   "articles": {
-    "count": "Нема чланака | {count} чланак | {count} чланака",
-    "noArticles": "Нема пронађених чланака",
-    "noArticlesInCategory": "Нема чланака у овој категорији"
+    "count": "Нема чланака | {count} article | {count} articles",
+    "noArticles": "Нема чланака found",
+    "noArticlesInCategory": "Нема чланака found in this category"
   },
   "cache": {
-    "fromRedis": "Учитано из кеша"
+    "fromRedis": "Loaded from cache"
   },
   "navigation": {
-    "backToHome": "Назад на почетну",
+    "backToHome": "Назад to Home",
     "previousPage": "Претходна страна",
     "nextPage": "Следећа страна",
     "page": "Страна"
   },
   "language": {
     "title": "Језик",
-    "switchTo": "Пребаци на {language}"
+    "switchTo": "Switch to {language}"
   }
 }

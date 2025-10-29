@@ -12,13 +12,13 @@ export default defineEventHandler(async () => {
     port: 5432,
     database: 'nuxt_pg_cms_db',
     user: 'usrcms',
-    password: 'Utorak30Sep',
+    password: 'Utorak30Sep'
   })
 
   try {
     await client.connect()
 
-    const mediaResolver = new MediaResolver(client)    // Get articles with featured images
+    const mediaResolver = new MediaResolver(client) // Get articles with featured images
     const result = await client.query(`
       SELECT
         a.id,
@@ -51,7 +51,10 @@ export default defineEventHandler(async () => {
             // Parse JSON if it's a JSON object, otherwise use as string
             if (typeof article.featured_image === 'object') {
               featuredImageData = article.featured_image
-            } else if (typeof article.featured_image === 'string' && article.featured_image.startsWith('{')) {
+            } else if (
+              typeof article.featured_image === 'string' &&
+              article.featured_image.startsWith('{')
+            ) {
               featuredImageData = JSON.parse(article.featured_image)
             } else {
               featuredImageData = article.featured_image
@@ -91,7 +94,6 @@ export default defineEventHandler(async () => {
       total: articlesWithMedia.length,
       message: 'Articles retrieved successfully'
     }
-
   } catch (error) {
     return {
       success: false,

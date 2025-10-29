@@ -148,14 +148,19 @@ const getTextExcerpt = (htmlContent: string) => {
             </time>
             <span class="mx-2">•</span>
             <Icon name="i-lucide-user" class="w-4 h-4 mr-1" />
-            <span>{{ article.author?.username || article.author?.firstName || 'Unknown Author' }}</span>
+            <span>{{
+              article.author?.username || article.author?.firstName || 'Unknown Author'
+            }}</span>
           </div>
 
           <h2 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
             {{ getArticleTitle(article) }}
           </h2>
 
-          <div v-if="getArticleExcerpt(article)" class="text-gray-600 mb-4 line-clamp-3 prose prose-sm max-w-none">
+          <div
+            v-if="getArticleExcerpt(article)"
+            class="text-gray-600 mb-4 line-clamp-3 prose prose-sm max-w-none"
+          >
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div v-html="getArticleExcerpt(article)" />
           </div>

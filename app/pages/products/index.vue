@@ -27,12 +27,7 @@
             <p class="text-red-600 dark:text-red-400 mb-6">
               {{ $t('shop.error.message', 'Unable to load products at the moment.') }}
             </p>
-            <UButton
-              to="/"
-              color="error"
-              variant="solid"
-              icon="i-lucide-arrow-left"
-            >
+            <UButton to="/" color="error" variant="solid" icon="i-lucide-arrow-left">
               {{ $t('shop.error.backToHome', 'Back to Home') }}
             </UButton>
           </div>
@@ -49,13 +44,20 @@
             {{ $t('shop.title', 'Shop') }}
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            {{ $t('shop.subtitle', 'Entdecken Sie unser Sortiment an hochwertigen Produkten und Dienstleistungen.') }}
+            {{
+              $t(
+                'shop.subtitle',
+                'Entdecken Sie unser Sortiment an hochwertigen Produkten und Dienstleistungen.'
+              )
+            }}
           </p>
 
           <!-- Product Count -->
           <div class="mt-6">
             <UBadge
-              :label="$t('shop.productCount', `{count} Produkte verfügbar`, { count: products.length })"
+              :label="
+                $t('shop.productCount', `{count} Produkte verfügbar`, { count: products.length })
+              "
               color="primary"
               variant="soft"
             />
@@ -63,7 +65,10 @@
         </div>
 
         <!-- Products Grid -->
-        <div v-if="products.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div
+          v-if="products.length > 0"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        >
           <UCard
             v-for="product in products"
             :key="product.id"
@@ -78,21 +83,28 @@
                   :alt="product.title"
                   class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   loading="lazy"
-                  @error="$event.target.style.display='none'"
+                  @error="$event.target.style.display = 'none'"
                 />
                 <!-- Fallback placeholder if no image -->
                 <div
                   class="absolute inset-0 bg-linear-to-br from-primary-100 to-primary-200 dark:from-primary-900 dark:to-primary-800 flex items-center justify-center"
                   :class="{ 'z-10': !product.featuredImage }"
                 >
-                  <UIcon name="i-lucide-shopping-bag" class="w-12 h-12 text-primary-400 dark:text-primary-600" />
+                  <UIcon
+                    name="i-lucide-shopping-bag"
+                    class="w-12 h-12 text-primary-400 dark:text-primary-600"
+                  />
                 </div>
 
                 <!-- Stock Badge -->
                 <div class="absolute top-2 right-2">
                   <UBadge
                     :color="product.stock > 0 ? 'success' : 'error'"
-                    :label="product.stock > 0 ? $t('shop.inStock', 'Auf Lager') : $t('shop.outOfStock', 'Ausverkauft')"
+                    :label="
+                      product.stock > 0
+                        ? $t('shop.inStock', 'Auf Lager')
+                        : $t('shop.outOfStock', 'Ausverkauft')
+                    "
                     size="xs"
                   />
                 </div>
@@ -100,11 +112,16 @@
 
               <!-- Content -->
               <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2">
+                <h3
+                  class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2"
+                >
                   {{ product.title }}
                 </h3>
 
-                <div v-if="product.description" class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2 text-sm">
+                <div
+                  v-if="product.description"
+                  class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2 text-sm"
+                >
                   {{ product.description.replace(/<[^>]*>/g, '') }}
                 </div>
 
@@ -120,7 +137,9 @@
                 </div>
 
                 <!-- Meta Info -->
-                <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
+                <div
+                  class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4"
+                >
                   <div class="flex items-center">
                     <UIcon name="i-lucide-calendar" class="w-3 h-3 mr-1" />
                     <time :datetime="product.createdAt">
@@ -171,23 +190,18 @@
             {{ $t('shop.empty.title', 'Keine Produkte verfügbar') }}
           </h3>
           <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
-            {{ $t('shop.empty.message', 'Unser Shop ist derzeit leer. Schauen Sie später wieder vorbei oder kontaktieren Sie uns für mehr Informationen.') }}
+            {{
+              $t(
+                'shop.empty.message',
+                'Unser Shop ist derzeit leer. Schauen Sie später wieder vorbei oder kontaktieren Sie uns für mehr Informationen.'
+              )
+            }}
           </p>
           <div class="flex gap-4 justify-center">
-            <UButton
-              to="/kontakt"
-              color="primary"
-              variant="solid"
-              icon="i-lucide-mail"
-            >
+            <UButton to="/kontakt" color="primary" variant="solid" icon="i-lucide-mail">
               {{ $t('shop.empty.contact', 'Kontakt aufnehmen') }}
             </UButton>
-            <UButton
-              to="/"
-              color="neutral"
-              variant="outline"
-              icon="i-lucide-arrow-left"
-            >
+            <UButton to="/" color="neutral" variant="outline" icon="i-lucide-arrow-left">
               {{ $t('shop.empty.backToHome', 'Zur Startseite') }}
             </UButton>
           </div>
@@ -242,7 +256,7 @@ const addToCart = (product: any) => {
     color: 'success',
     icon: 'i-lucide-check'
   })
-}// SEO Meta
+} // SEO Meta
 useSeoMeta({
   title: 'Shop - Unsere Produkte',
   description: 'Entdecken Sie unser Sortiment an hochwertigen Produkten und Dienstleistungen.',

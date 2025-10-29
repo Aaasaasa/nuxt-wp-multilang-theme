@@ -1,399 +1,399 @@
 {
   "actions": {
-    "continueNow": "Jetzt fortfahren",
-    "delete": "Löschen",
-    "edit": "Bearbeiten",
-    "loadMore": "Mehr laden",
-    "profile": "Profil",
-    "reset": "Zurücksetzen",
-    "viewPosts": "Artikel anzeigen"
+    "continueNow": "Continue now",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loadMore": "Load more",
+    "profile": "Profile",
+    "reset": "Reset",
+    "viewPosts": "View Artikels"
   },
   "app": {
-    "description": "Ein einfacher und effizienter Ausgangspunkt",
-    "footer": "Erstellt von Aleksandar Stajic",
+    "description": "A simple and efficient starting point",
+    "footer": "Created by William Fontaine",
     "name": "Nuxt Boilerplate"
   },
   "articleForm": {
     "actions": {
       "create": {
-        "autoSaveInfo": "Änderungen werden automatisch gespeichert",
+        "autoSaveInfo": "Changes will be saved automatically",
         "cancel": "Abbrechen",
-        "description": "Füllen Sie die Felder aus, um einen Artikel zu erstellen.",
+        "description": "Fill in the fields below to create an Artikel.",
         "error": {
-          "message": "Beim Erstellen des Artikels ist ein Fehler aufgetreten",
-          "title": "Artikel konnte nicht erstellt werden"
+          "message": "An error occurred while creating the article",
+          "title": "Failed to create Artikel"
         },
-        "loginRequired": "Melden Sie sich an, um einen Artikel zu erstellen",
-        "submit": "Artikel erstellen",
+        "loginRequired": "Anmelden to create an article",
+        "submit": "Create Artikel",
         "success": {
-          "message": "Ihr Artikel wurde erfolgreich erstellt",
-          "title": "Artikel erfolgreich erstellt"
+          "message": "Your Artikel has been created successfully",
+          "title": "Article created successfully"
         },
-        "title": "Neuen Artikel erstellen"
+        "title": "Create new Artikel"
       },
       "delete": {
         "cancel": "Abbrechen",
-        "confirm": "Löschen",
-        "description": "Sind Sie sicher, dass Sie diesen Artikel löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirm": "Delete",
+        "description": "Are you sure you want to Löschen this article? This action is irreversible.",
         "error": {
-          "message": "Beim Löschen des Artikels ist ein Fehler aufgetreten",
-          "title": "Artikel konnte nicht gelöscht werden"
+          "message": "An error occurred while deleting the article",
+          "title": "Failed to Löschen article"
         },
-        "info": "Diese Aktion löscht den Artikel dauerhaft",
+        "info": "This action will permanently Löschen the article",
         "success": {
-          "message": "Ihr Artikel wurde erfolgreich gelöscht",
-          "title": "Artikel erfolgreich gelöscht"
+          "message": "Your article has been Löschend successfully",
+          "title": "Post Löschend successfully"
         },
-        "title": "Artikel löschen"
+        "title": "Delete article"
       },
       "edit": {
-        "autoSaveInfo": "Änderungen werden automatisch gespeichert",
+        "autoSaveInfo": "Changes will be saved automatically",
         "cancel": "Abbrechen",
-        "description": "Bearbeiten Sie den Inhalt Ihres Artikels.",
+        "description": "Edit your article content here.",
         "error": {
-          "message": "Beim Aktualisieren des Artikels ist ein Fehler aufgetreten",
-          "title": "Artikel konnte nicht aktualisiert werden"
+          "message": "An error occurred while updating the article",
+          "title": "Failed to update Artikel"
         },
-        "loginRequired": "Melden Sie sich an, um einen Artikel zu bearbeiten",
-        "save": "Änderungen speichern",
+        "loginRequired": "Sign in to Bearbeiten a article",
+        "save": "Save changes",
         "success": {
-          "message": "Ihr Artikel wurde erfolgreich aktualisiert",
-          "title": "Artikel erfolgreich aktualisiert"
+          "message": "Your Artikel has been updated successfully",
+          "title": "Post updated successfully"
         },
-        "title": "Artikel bearbeiten"
+        "title": "Edit article"
       }
     },
     "analytics": {
-      "characterCount": "Keine Zeichen | {count} Zeichen | {count} Zeichen",
-      "readingTime": "{count} Minute Lesezeit | {count} Minuten Lesezeit",
-      "wordCount": "Keine Wörter | {count} Wort | {count} Wörter"
+      "characterCount": "No characters | {count} character | {count} characters",
+      "readingTime": "{count} minute read | {count} minutes read",
+      "wordCount": "No words | {count} word | {count} words"
     },
     "badgeLabels": {
       "length": {
-        "long": "Lang",
-        "medium": "Mittel",
-        "short": "Kurz"
+        "long": "Long",
+        "medium": "Medium",
+        "short": "Short"
       }
     },
     "error": {
-      "notFound": "Der Artikel wurde nicht gefunden oder wurde gelöscht",
-      "unauthorized": "Sie haben keine Berechtigung für diese Aktion"
+      "notFound": "The article could not be found or has been Löschend",
+      "unauthorized": "You don't have permission to perform this action"
     },
     "fields": {
       "content": {
-        "label": "Artikelinhalt",
-        "placeholder": "Schreiben Sie Ihren Artikelinhalt hier",
+        "label": "Article content",
+        "placeholder": "Write your Artikel content here",
         "validation": {
-          "maxLength": "Inhalt darf 1000 Zeichen nicht überschreiten",
-          "minLength": "Inhalt muss mindestens 10 Zeichen enthalten",
-          "required": "Inhalt ist erforderlich"
+          "maxLength": "Content cannot exceed 1000 characters",
+          "minLength": "Content must contain at least 10 characters",
+          "required": "Content is required"
         }
       },
       "createdAt": {
-        "label": "Erstellt am {date} um {time}"
+        "label": "Created on {date} at {time}"
       },
       "title": {
-        "label": "Artikeltitel",
-        "placeholder": "Artikeltitel eingeben",
+        "label": "Article title",
+        "placeholder": "Enter Artikel title",
         "validation": {
-          "maxLength": "Titel darf 100 Zeichen nicht überschreiten",
-          "minLength": "Titel muss mindestens 3 Zeichen enthalten",
-          "required": "Titel ist erforderlich"
+          "maxLength": "Title cannot exceed 100 characters",
+          "minLength": "Title must contain at least 3 characters",
+          "required": "Title is required"
         }
       },
       "updatedAt": {
-        "label": "Geändert am {date} um {time}"
+        "label": "Modified on {date} at {time}"
       }
     }
   },
   "auth": {
     "forgotPassword": {
-      "backToLogin": "Zurück zur Anmeldung",
+      "backToLogin": "Zurück to login",
       "cancel": "Abbrechen",
-      "description": "Passwort zurücksetzen",
+      "description": "Reset your password",
       "email": {
         "label": "E-Mail-Adresse",
-        "placeholder": "E-Mail-Adresse eingeben",
+        "placeholder": "Enter your email address",
         "validation": {
-          "invalid": "E-Mail-Adresse ist ungültig",
-          "maxLength": "E-Mail-Adresse darf 254 Zeichen nicht überschreiten",
-          "required": "E-Mail-Adresse ist erforderlich"
+          "invalid": "E-Mail-Adresse is not valid",
+          "maxLength": "E-Mail-Adresse cannot exceed 254 characters",
+          "required": "E-Mail-Adresse is required"
         }
       },
       "error": {
-        "generic": "Passwort-Reset-E-Mail konnte nicht gesendet werden",
+        "generic": "Unable to send password Zurücksetzen email",
         "title": "Fehler",
-        "tooManyRequests": "Zu viele Anfragen. Versuchen Sie es in {minutes}min {seconds}s erneut."
+        "tooManyRequests": "Too many requests. Try again in {minutes}min {seconds}s."
       },
-      "remembered": "Passwort wieder eingefallen?",
-      "submit": "Reset-Link senden",
-      "subtitle": "Geben Sie Ihre E-Mail-Adresse ein, um einen Reset-Link zu erhalten",
+      "remembered": "Remember your password?",
+      "submit": "Send Zurücksetzen link",
+      "subtitle": "Enter your email address to receive a Zurücksetzen link",
       "success": {
-        "message": "Wenn die E-Mail-Adresse in unserem System existiert, erhalten Sie in Kürze einen Reset-Link.",
-        "title": "E-Mail gesendet"
+        "message": "If the email address exists in our system, you will receive a Zurücksetzen link shortly.",
+        "title": "Email sent"
       },
-      "title": "Passwort vergessen"
+      "title": "Forgot password"
     },
     "login": {
-      "autoSaveInfo": "Ihre Informationen werden sicher verarbeitet",
-      "backToHome": "Zurück zur Startseite",
+      "autoSaveInfo": "Your information will be processed securely",
+      "backToHome": "Zurück to home",
       "cancel": "Abbrechen",
-      "didntReceiveEmail": "E-Mail nicht erhalten?",
+      "didntReceiveEmail": "Didn't receive the email?",
       "email": {
         "label": "E-Mail-Adresse",
-        "placeholder": "E-Mail-Adresse eingeben",
+        "placeholder": "Enter your email address",
         "validation": {
-          "invalid": "E-Mail-Adresse ist ungültig",
-          "maxLength": "E-Mail-Adresse darf 254 Zeichen nicht überschreiten",
-          "required": "E-Mail-Adresse ist erforderlich"
+          "invalid": "E-Mail-Adresse is not valid",
+          "maxLength": "E-Mail-Adresse cannot exceed 254 characters",
+          "required": "E-Mail-Adresse is required"
         }
       },
       "error": {
-        "emailNotVerified": "Ihre E-Mail ist nicht verifiziert. Überprüfen Sie Ihren Posteingang oder fordern Sie einen neuen Link an.",
-        "invalidCredentials": "Ungültige E-Mail oder Passwort",
-        "title": "Anmeldefehler"
+        "emailNotVerified": "Your email is not verified. Check your inbox or request a new link.",
+        "invalidCredentials": "Invalid email or password",
+        "title": "Anmeldung error"
       },
-      "forgotPassword": "Passwort vergessen?",
-      "noAccount": "Noch kein Konto?",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
       "password": {
         "label": "Passwort",
-        "placeholder": "Passwort eingeben",
+        "placeholder": "Enter your password",
         "validation": {
-          "maxLength": "Passwort darf 128 Zeichen nicht überschreiten",
-          "minLength": "Passwort muss mindestens 8 Zeichen lang sein",
-          "required": "Passwort ist erforderlich"
+          "maxLength": "Passwort cannot exceed 128 characters",
+          "minLength": "Passwort must be at least 8 characters long",
+          "required": "Passwort is required"
         }
       },
       "rateLimit": {
-        "tooManyAttempts": "Zu viele fehlgeschlagene Versuche. Versuchen Sie es in {minutes}min {seconds}s erneut.",
-        "warning": "Letzter Versuch vor Sperrung | {count} Versuch übrig | {count} Versuche übrig"
+        "tooManyAttempts": "Too many failed attempts. Try again in {minutes}min {seconds}s.",
+        "warning": "Last attempt before blocking | {count} attempt remaining | {count} attempts remaining"
       },
       "register": "Registrieren",
-      "resendVerification": "Verifizierung erneut senden",
+      "resendVerification": "Resend verification",
       "submit": "Anmelden",
-      "subtitle": "Melden Sie sich bei Ihrem Konto an",
+      "subtitle": "Anmelden to your account",
       "success": {
-        "message": "Sie sind jetzt angemeldet",
-        "title": "Anmeldung erfolgreich"
+        "message": "You are now signed in",
+        "title": "Anmeldung successful"
       },
       "title": "Anmeldung"
     },
     "logout": {
       "success": {
-        "message": "Sie wurden abgemeldet",
-        "title": "Abmeldung erfolgreich"
+        "message": "You have been logged out",
+        "title": "Abmelden successful"
       },
       "title": "Abmelden"
     },
     "register": {
-      "autoSaveInfo": "Ihre Informationen werden sicher verarbeitet",
-      "backToHome": "Zurück zur Startseite",
+      "autoSaveInfo": "Your information will be processed securely",
+      "backToHome": "Zurück to home",
       "cancel": "Abbrechen",
       "confirmPassword": {
-        "label": "Passwort bestätigen",
-        "placeholder": "Passwort bestätigen",
+        "label": "Confirm password",
+        "placeholder": "Confirm your password",
         "validation": {
-          "match": "Passwörter stimmen nicht überein",
-          "required": "Passwortbestätigung ist erforderlich"
+          "match": "Passworts do not match",
+          "required": "Passwort confirmation is required"
         }
       },
       "email": {
         "label": "E-Mail-Adresse",
-        "placeholder": "E-Mail-Adresse eingeben",
+        "placeholder": "Enter your email address",
         "validation": {
-          "invalid": "E-Mail-Adresse ist ungültig",
-          "maxLength": "E-Mail-Adresse darf 254 Zeichen nicht überschreiten",
-          "required": "E-Mail-Adresse ist erforderlich"
+          "invalid": "E-Mail-Adresse is not valid",
+          "maxLength": "E-Mail-Adresse cannot exceed 254 characters",
+          "required": "E-Mail-Adresse is required"
         }
       },
       "error": {
-        "emailExists": "Diese E-Mail-Adresse wird bereits verwendet",
-        "generic": "Ein Fehler ist bei der Registrierung aufgetreten",
-        "invalidEmail": "Die E-Mail-Adresse ist ungültig. Bitte überprüfen Sie Ihre Eingabe.",
-        "title": "Registrierungsfehler",
-        "validation": "Ungültige Eingabedaten. Bitte überprüfen Sie Ihre Eingabe."
+        "emailExists": "This email address is already in use",
+        "generic": "An error occurred during registration",
+        "invalidEmail": "The email address is invalid. Please check and try again.",
+        "title": "Registration error",
+        "validation": "Invalid input data. Please check and try again."
       },
-      "hasAccount": "Bereits ein Konto?",
+      "hasAccount": "Already have an account?",
       "login": "Anmelden",
       "name": {
-        "label": "Vollständiger Name",
-        "placeholder": "Vollständigen Namen eingeben",
+        "label": "Full Nuxt Boilerplate",
+        "placeholder": "Enter your full Nuxt Boilerplate",
         "validation": {
-          "maxLength": "Name darf 50 Zeichen nicht überschreiten",
-          "minLength": "Name muss mindestens 2 Zeichen lang sein",
-          "required": "Name ist erforderlich"
+          "maxLength": "Name cannot exceed 50 characters",
+          "minLength": "Name must be at least 2 characters long",
+          "required": "Name is required"
         }
       },
       "password": {
         "label": "Passwort",
-        "placeholder": "Passwort eingeben",
+        "placeholder": "Enter your password",
         "validation": {
-          "maxLength": "Passwort darf 128 Zeichen nicht überschreiten",
-          "minLength": "Passwort muss mindestens 8 Zeichen lang sein",
-          "pattern": "Passwort muss enthalten: 1 Großbuchstabe, 1 Kleinbuchstabe und 1 Zahl",
-          "required": "Passwort ist erforderlich"
+          "maxLength": "Passwort cannot exceed 128 characters",
+          "minLength": "Passwort must be at least 8 characters long",
+          "pattern": "Passwort must include: 1 uppercase letter, 1 lowercase letter, and 1 number",
+          "required": "Passwort is required"
         }
       },
       "submit": "Registrieren",
-      "subtitle": "Erstellen Sie Ihr Konto",
+      "subtitle": "Create your account",
       "success": {
-        "emailSent": "Eine Verifizierungs-E-Mail wurde an {email} gesendet. Überprüfen Sie Ihren Posteingang.",
-        "message": "Eine Verifizierungs-E-Mail wurde an Sie gesendet. Überprüfen Sie Ihren Posteingang.",
-        "title": "Registrierung erfolgreich"
+        "emailSent": "A verification email has been sent to {email}. Check your inbox.",
+        "message": "A verification email has been sent to you. Check your inbox.",
+        "title": "Registration successful"
       },
       "terms": {
-        "and": "und",
-        "prefix": "Mit der Registrierung stimmen Sie unseren",
-        "privacy": "Datenschutzrichtlinien",
-        "terms": "Nutzungsbedingungen"
+        "and": "and",
+        "prefix": "By signing up, you agree to our",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
       },
-      "title": "Registrierung"
+      "title": "Registrieren"
     },
     "resendVerification": {
-      "alreadyVerified": "Bereits verifiziert?",
-      "backToLogin": "Zurück zur Anmeldung",
+      "alreadyVerified": "Already verified?",
+      "backToLogin": "Zurück to login",
       "cancel": "Abbrechen",
       "email": {
         "label": "E-Mail-Adresse",
-        "placeholder": "E-Mail-Adresse eingeben",
+        "placeholder": "Enter your email address",
         "validation": {
-          "invalid": "E-Mail-Adresse ist ungültig",
-          "maxLength": "E-Mail-Adresse darf 254 Zeichen nicht überschreiten",
-          "required": "E-Mail-Adresse ist erforderlich"
+          "invalid": "E-Mail-Adresse is not valid",
+          "maxLength": "E-Mail-Adresse cannot exceed 254 characters",
+          "required": "E-Mail-Adresse is required"
         }
       },
       "error": {
-        "alreadyVerified": "Diese E-Mail-Adresse ist bereits verifiziert.",
-        "generic": "Verifizierungs-E-Mail konnte nicht gesendet werden",
+        "alreadyVerified": "This email address is already verified.",
+        "generic": "Unable to send verification email",
         "title": "Fehler",
-        "tooManyRequests": "Zu viele Anfragen. Versuchen Sie es in {minutes}min {seconds}s erneut.",
-        "userNotFound": "Kein Konto mit dieser E-Mail-Adresse gefunden."
+        "tooManyRequests": "Too many requests. Try again in {minutes}min {seconds}s.",
+        "userNotFound": "No account found with this email address."
       },
-      "submit": "E-Mail erneut senden",
-      "subtitle": "Geben Sie Ihre E-Mail-Adresse ein, um einen neuen Verifizierungslink zu erhalten",
+      "submit": "Resend email",
+      "subtitle": "Enter your email address to receive a new verification link",
       "success": {
-        "message": "Eine neue Verifizierungs-E-Mail wurde gesendet, falls ein Konto mit dieser Adresse existiert.",
-        "title": "E-Mail gesendet"
+        "message": "A new verification email has been sent if an account exists with this address.",
+        "title": "Email sent"
       },
-      "title": "Verifizierung erneut senden"
+      "title": "Resend verification"
     },
     "resetPassword": {
-      "backToLogin": "Zurück zur Anmeldung",
+      "backToLogin": "Zurück to login",
       "cancel": "Abbrechen",
       "confirmPassword": {
-        "label": "Passwort bestätigen",
-        "placeholder": "Neues Passwort bestätigen",
+        "label": "Confirm password",
+        "placeholder": "Confirm your new password",
         "validation": {
-          "match": "Passwörter stimmen nicht überein",
-          "required": "Passwortbestätigung ist erforderlich"
+          "match": "Passworts do not match",
+          "required": "Passwort confirmation is required"
         }
       },
-      "description": "Wählen Sie ein neues Passwort",
+      "description": "Choose a new password",
       "error": {
-        "generic": "Passwort konnte nicht zurückgesetzt werden",
-        "invalidToken": "Dieser Reset-Link ist ungültig oder abgelaufen.",
+        "generic": "Unable to Zurücksetzen password",
+        "invalidToken": "This Zurücksetzen link is invalid or has expired.",
         "title": "Fehler"
       },
       "password": {
-        "label": "Neues Passwort",
-        "placeholder": "Neues Passwort eingeben",
+        "label": "New password",
+        "placeholder": "Enter your new password",
         "validation": {
-          "maxLength": "Passwort darf 128 Zeichen nicht überschreiten",
-          "minLength": "Passwort muss mindestens 8 Zeichen lang sein",
-          "pattern": "Passwort muss enthalten: 1 Großbuchstabe, 1 Kleinbuchstabe und 1 Zahl",
-          "required": "Passwort ist erforderlich"
+          "maxLength": "Passwort cannot exceed 128 characters",
+          "minLength": "Passwort must be at least 8 characters long",
+          "pattern": "Passwort must include: 1 uppercase letter, 1 lowercase letter, and 1 number",
+          "required": "Passwort is required"
         }
       },
-      "remembered": "Passwort wieder eingefallen?",
-      "submit": "Passwort zurücksetzen",
-      "subtitle": "Geben Sie Ihr neues Passwort ein",
+      "remembered": "Remember your password?",
+      "submit": "Reset password",
+      "subtitle": "Enter your new password",
       "success": {
         "loginButton": "Anmelden",
-        "message": "Ihr Passwort wurde erfolgreich zurückgesetzt. Sie können sich jetzt anmelden.",
-        "title": "Passwort zurückgesetzt"
+        "message": "Your password has been Zurücksetzen successfully. You can now sign in.",
+        "title": "Password Zurücksetzen"
       },
-      "title": "Passwort zurücksetzen",
+      "title": "Reset password",
       "token": {
         "validation": {
-          "required": "Token ist erforderlich"
+          "required": "Token is required"
         }
       }
     },
     "verifyEmail": {
-      "cancel": "Zurück zur Startseite",
+      "cancel": "Zurück to home",
       "error": {
-        "generic": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
-        "invalidToken": "Der Verifizierungslink ist ungültig oder beschädigt.",
-        "resendLink": "Neuen Link anfordern",
-        "retry": "Erneut versuchen",
-        "title": "Verifizierung fehlgeschlagen",
-        "tokenExpired": "Dieser Verifizierungslink ist abgelaufen. Bitte fordern Sie einen neuen an.",
-        "tokenNotFound": "Dieser Verifizierungslink existiert nicht oder wurde bereits verwendet.",
-        "validationError": "Die Verifizierungsdaten sind ungültig. Bitte fordern Sie einen neuen Link an."
+        "generic": "An unexpected error occurred. Please try again.",
+        "invalidToken": "The verification link is invalid or corrupted.",
+        "resendLink": "Request new link",
+        "retry": "Try again",
+        "title": "Verification failed",
+        "tokenExpired": "This verification link has expired. Please request a new one.",
+        "tokenNotFound": "This verification link doesn't exist or has already been used.",
+        "validationError": "The verification data is invalid. Please request a new link."
       },
       "loading": {
-        "subtitle": "Bitte warten Sie, während wir Ihre E-Mail-Adresse verifizieren...",
-        "title": "E-Mail wird verifiziert"
+        "subtitle": "Please wait while we verify your email address...",
+        "title": "Verifying your email"
       },
       "noToken": {
-        "backButton": "Zurück zur Anmeldung",
-        "resendButton": "Neuen Link anfordern",
-        "subtitle": "Sie müssen auf diese Seite über den Link zugreifen, den Sie in Ihrer Verifizierungs-E-Mail erhalten haben.",
-        "title": "Verifizierungslink fehlt"
+        "backButton": "Zurück to login",
+        "resendButton": "Request new link",
+        "subtitle": "You need to access this page via the link received in your verification email.",
+        "title": "Verification link missing"
       },
       "success": {
-        "message": "Ihre E-Mail-Adresse wurde verifiziert und Sie sind jetzt angemeldet.",
-        "redirecting": "Automatische Weiterleitung in {seconds} Sekunden...",
-        "subtitle": "Herzlichen Glückwunsch! Ihre E-Mail-Adresse wurde bestätigt und Ihr Konto ist jetzt aktiv.",
-        "title": "E-Mail erfolgreich verifiziert!"
+        "message": "Your email address has been verified and you are now signed in.",
+        "redirecting": "Automatically redirecting in {seconds} seconds...",
+        "subtitle": "Congratulations! Your email address has been confirmed and your account is now active.",
+        "title": "Email verified successfully!"
       },
-      "title": "E-Mail-Verifizierung"
+      "title": "Email verification"
     }
   },
   "error": {
     "404": {
-      "message": "Die gesuchte Seite existiert nicht.",
-      "title": "Seite nicht gefunden"
+      "message": "The page you are looking for does not exist.",
+      "title": "Seite not found"
     },
     "actions": {
       "back": "Zurück",
       "home": "Startseite"
     },
     "generic": {
-      "message": "Ein unerwarteter Fehler ist aufgetreten.",
-      "title": "Ein Fehler ist aufgetreten"
+      "message": "An unexpected error occurred.",
+      "title": "An error occurred"
     }
   },
   "hero": {
-    "modernInterface": "Moderne und intuitive Benutzeroberfläche",
-    "subtitle": "Ein einfacher und effizienter Ausgangspunkt",
+    "modernInterface": "Modern and intuitive interface",
+    "subtitle": "A simple and efficient starting point",
     "title": "Nuxt Boilerplate"
   },
   "posts": {
     "empty": {
-      "subtitle": "Beginnen Sie mit der Erstellung Ihres ersten Artikels.",
+      "subtitle": "Start by creating your first Artikel.",
       "title": "Keine Artikel"
     },
-    "subtitle": "Entdecken und verwalten Sie Ihre Artikelsammlung",
-    "title": "Meine Artikel",
-    "type": "Artikel"
+    "subtitle": "Discover and manage your Artikel collection",
+    "title": "My Artikels",
+    "type": "Article"
   },
   "preferences": {
-    "current": "Aktuelle Konfiguration",
+    "current": "Current configuration",
     "detailLevel": {
-      "compact": "Kompakt",
-      "extended": "Erweitert",
-      "label": "Detailgrad"
+      "compact": "Compact",
+      "extended": "Extended",
+      "label": "Detail level"
     },
     "displayMode": {
-      "grid": "Raster",
-      "label": "Anzeigemodus",
-      "list": "Liste"
+      "grid": "Grid",
+      "label": "Display mode",
+      "list": "List"
     }
   },
   "stats": {
-    "title": "Statistiken",
-    "totalPosts": "Gesamt Artikel"
+    "title": "Statistics",
+    "totalPosts": "Total Artikels"
   },
   "categories": {
     "title": "Kategorien",
@@ -401,21 +401,21 @@
     "cached": "Zwischengespeichert"
   },
   "articles": {
-    "count": "Kein Artikel | {count} Artikel | {count} Artikel",
-    "noArticles": "Keine Artikel gefunden",
-    "noArticlesInCategory": "Keine Artikel in dieser Kategorie gefunden"
+    "count": "Keine Artikel | {count} article | {count} articles",
+    "noArticles": "Keine Artikel found",
+    "noArticlesInCategory": "Keine Artikel found in this category"
   },
   "cache": {
-    "fromRedis": "Aus Cache geladen"
+    "fromRedis": "Loaded from cache"
   },
   "navigation": {
-    "backToHome": "Zurück zur Startseite",
+    "backToHome": "Zurück to Home",
     "previousPage": "Vorherige Seite",
     "nextPage": "Nächste Seite",
     "page": "Seite"
   },
   "language": {
     "title": "Sprache",
-    "switchTo": "Wechseln zu {language}"
+    "switchTo": "Switch to {language}"
   }
 }

@@ -106,7 +106,7 @@ export default defineEventHandler(async (event) => {
     ])
 
     // 4️⃣ Formatiere Ergebnisse
-    const formattedArticles = articles.map(article => ({
+    const formattedArticles = articles.map((article) => ({
       id: article.id,
       slug: article.slug,
       title: article.translations[0]?.title || article.slug,
@@ -138,7 +138,6 @@ export default defineEventHandler(async (event) => {
     console.log(`💾 Category "${slug}" cached in Redis for 30min`)
 
     return result
-
   } catch (error) {
     console.error(`❌ Error fetching category "${slug}":`, error)
     throw createError({

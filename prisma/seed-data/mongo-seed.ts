@@ -104,7 +104,11 @@ async function seedMongoAnalytics() {
         actions: [
           { type: 'page_view', path: '/', timestamp: new Date('2024-12-01T11:00:00Z') },
           { type: 'page_view', path: '/products', timestamp: new Date('2024-12-01T11:10:00Z') },
-          { type: 'contact_form', formId: 'contact-main', timestamp: new Date('2024-12-01T11:15:00Z') }
+          {
+            type: 'contact_form',
+            formId: 'contact-main',
+            timestamp: new Date('2024-12-01T11:15:00Z')
+          }
         ],
         device: 'mobile',
         browser: 'Safari',
@@ -205,7 +209,8 @@ async function seedMongoAnalytics() {
       {
         level: 'ERROR',
         message: 'Database connection timeout',
-        stack: 'Error: Database connection timeout\n    at PrismaClient.connect (/app/lib/prisma.ts:45:12)',
+        stack:
+          'Error: Database connection timeout\n    at PrismaClient.connect (/app/lib/prisma.ts:45:12)',
         path: '/api/articles',
         method: 'GET',
         statusCode: 500,
@@ -270,7 +275,6 @@ async function seedMongoAnalytics() {
     process.stdout.write('- 5 performance metrics\n')
     process.stdout.write('- 3 search logs\n')
     process.stdout.write('- 3 error logs\n')
-
   } catch (error) {
     process.stderr.write(`Error seeding MongoDB: ${error}\n`)
     throw error
@@ -280,11 +284,10 @@ async function seedMongoAnalytics() {
 }
 
 if (require.main === module) {
-  seedMongoAnalytics()
-    .catch((error) => {
-      process.stderr.write(`Seed failed: ${error}\n`)
-      process.exit(1)
-    })
+  seedMongoAnalytics().catch((error) => {
+    process.stderr.write(`Seed failed: ${error}\n`)
+    process.exit(1)
+  })
 }
 
 export default seedMongoAnalytics

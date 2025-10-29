@@ -1,4 +1,4 @@
-import { PrismaClient as PrismaWpClient } from '@@/prisma/generated/mysql/index.js'
+import { PrismaClient as PrismaWpClient } from '../../prisma/generated/mysql/index.js'
 
 const prismaWpSingleton = () => new PrismaWpClient()
 

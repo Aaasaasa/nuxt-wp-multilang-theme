@@ -28,7 +28,7 @@ const ATTACHMENT_ID_TO_PATH: Record<string, string> = {
   '13785': '2024/05/cdn-setup.webp',
   '13780': '2024/05/monitoring-tools.webp',
   '13775': '2024/04/load-balancing.webp',
-  '13770': '2024/04/docker-containers.webp',
+  '13770': '2024/04/docker-containers.webp'
 }
 
 /**
@@ -49,9 +49,10 @@ async function convertThumbnailIds() {
 
   for (const meta of articleThumbnails) {
     try {
-      const thumbnailId = typeof meta.value === 'object' && meta.value && 'raw' in meta.value
-        ? (meta.value as any).raw
-        : meta.value?.toString()
+      const thumbnailId =
+        typeof meta.value === 'object' && meta.value && 'raw' in meta.value
+          ? (meta.value as any).raw
+          : meta.value?.toString()
 
       if (!thumbnailId) continue
 
@@ -104,9 +105,10 @@ async function convertThumbnailIds() {
 
   for (const meta of pageThumbnails) {
     try {
-      const thumbnailId = typeof meta.value === 'object' && meta.value && 'raw' in meta.value
-        ? (meta.value as any).raw
-        : meta.value?.toString()
+      const thumbnailId =
+        typeof meta.value === 'object' && meta.value && 'raw' in meta.value
+          ? (meta.value as any).raw
+          : meta.value?.toString()
 
       if (!thumbnailId) continue
 
@@ -158,9 +160,10 @@ async function convertThumbnailIds() {
 
   for (const meta of portfolioThumbnails) {
     try {
-      const thumbnailId = typeof meta.value === 'object' && meta.value && 'raw' in meta.value
-        ? (meta.value as any).raw
-        : meta.value?.toString()
+      const thumbnailId =
+        typeof meta.value === 'object' && meta.value && 'raw' in meta.value
+          ? (meta.value as any).raw
+          : meta.value?.toString()
 
       if (!thumbnailId) continue
 
@@ -212,7 +215,7 @@ async function convertThumbnailIds() {
 async function analyzeThumbnailIds() {
   console.log('🔍 Analysiere vorhandene _thumbnail_id Werte...')
 
-  const allThumbnails: Array<{ type: string, slug: string, thumbnailId: string }> = []
+  const allThumbnails: Array<{ type: string; slug: string; thumbnailId: string }> = []
 
   // Articles
   const articleThumbnails = await pg.articleMeta.findMany({
@@ -221,9 +224,10 @@ async function analyzeThumbnailIds() {
   })
 
   for (const meta of articleThumbnails) {
-    const thumbnailId = typeof meta.value === 'object' && meta.value && 'raw' in meta.value
-      ? (meta.value as any).raw
-      : meta.value?.toString()
+    const thumbnailId =
+      typeof meta.value === 'object' && meta.value && 'raw' in meta.value
+        ? (meta.value as any).raw
+        : meta.value?.toString()
 
     if (thumbnailId) {
       allThumbnails.push({
@@ -241,9 +245,10 @@ async function analyzeThumbnailIds() {
   })
 
   for (const meta of pageThumbnails) {
-    const thumbnailId = typeof meta.value === 'object' && meta.value && 'raw' in meta.value
-      ? (meta.value as any).raw
-      : meta.value?.toString()
+    const thumbnailId =
+      typeof meta.value === 'object' && meta.value && 'raw' in meta.value
+        ? (meta.value as any).raw
+        : meta.value?.toString()
 
     if (thumbnailId) {
       allThumbnails.push({
@@ -261,9 +266,10 @@ async function analyzeThumbnailIds() {
   })
 
   for (const meta of portfolioThumbnails) {
-    const thumbnailId = typeof meta.value === 'object' && meta.value && 'raw' in meta.value
-      ? (meta.value as any).raw
-      : meta.value?.toString()
+    const thumbnailId =
+      typeof meta.value === 'object' && meta.value && 'raw' in meta.value
+        ? (meta.value as any).raw
+        : meta.value?.toString()
 
     if (thumbnailId) {
       allThumbnails.push({
@@ -275,13 +281,13 @@ async function analyzeThumbnailIds() {
   }
 
   console.log('\n📊 Gefundene Thumbnail IDs:')
-  allThumbnails.forEach(item => {
+  allThumbnails.forEach((item) => {
     const mapped = ATTACHMENT_ID_TO_PATH[item.thumbnailId] ? '✅' : '❌'
     console.log(`${mapped} ${item.type.padEnd(10)} ${item.slug.padEnd(30)} ID: ${item.thumbnailId}`)
   })
 
-  const uniqueIds = [...new Set(allThumbnails.map(t => t.thumbnailId))]
-  const mappedIds = uniqueIds.filter(id => ATTACHMENT_ID_TO_PATH[id])
+  const uniqueIds = [...new Set(allThumbnails.map((t) => t.thumbnailId))]
+  const mappedIds = uniqueIds.filter((id) => ATTACHMENT_ID_TO_PATH[id])
 
   console.log(`\n📈 Summary:`)
   console.log(`   Total Items: ${allThumbnails.length}`)
@@ -315,7 +321,9 @@ async function main() {
     console.log('📊 Results:')
     console.log(`   Converted: ${results.converted}`)
     console.log(`   Errors: ${results.errors}`)
-    console.log(`   Success Rate: ${((results.converted / (results.converted + results.errors)) * 100).toFixed(1)}%`)
+    console.log(
+      `   Success Rate: ${((results.converted / (results.converted + results.errors)) * 100).toFixed(1)}%`
+    )
 
     if (analysis.uniqueIds.length > analysis.mappedIds.length) {
       console.log('\n📝 Next Steps:')
@@ -323,7 +331,6 @@ async function main() {
       console.log('   2. Führe Script erneut aus')
       console.log('   3. Oder erstelle echte WordPress Bild-Dateien in public/uploads/')
     }
-
   } catch (error) {
     console.error('❌ Fix Fehler:', error)
     process.exit(1)

@@ -1,5 +1,5 @@
 // server/lib/prismaMongo.ts
-import { PrismaClient as PrismaMongoClient } from '@@/prisma/generated/mongo/index.js'
+import { PrismaClient as PrismaMongoClient } from '../../prisma/generated/mongo/index.js'
 
 const prismaMongoSingleton = () => new PrismaMongoClient()
 

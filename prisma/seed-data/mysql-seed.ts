@@ -147,7 +147,8 @@ async function seedMySQLWordPress() {
 <p>Built with ❤️ using modern technologies and best practices.</p>
 <!-- /wp:paragraph -->`,
         post_title: 'Welcome to NuxtWP Multilang Theme',
-        post_excerpt: 'Introduction to the NuxtWP Multilang Theme - a modern multilingual CMS built with Nuxt 4.',
+        post_excerpt:
+          'Introduction to the NuxtWP Multilang Theme - a modern multilingual CMS built with Nuxt 4.',
         post_status: 'publish',
         comment_status: 'open',
         ping_status: 'open',
@@ -317,7 +318,11 @@ async function seedMySQLWordPress() {
         { option_name: 'siteurl', option_value: 'http://localhost', autoload: 'yes' },
         { option_name: 'home', option_value: 'http://localhost', autoload: 'yes' },
         { option_name: 'blogname', option_value: 'NuxtWP Multilang Theme', autoload: 'yes' },
-        { option_name: 'blogdescription', option_value: 'Modern multilingual WordPress-inspired theme', autoload: 'yes' },
+        {
+          option_name: 'blogdescription',
+          option_value: 'Modern multilingual WordPress-inspired theme',
+          autoload: 'yes'
+        },
         { option_name: 'admin_email', option_value: 'admin@nuxtwo.com', autoload: 'yes' },
         { option_name: 'default_role', option_value: 'subscriber', autoload: 'yes' },
         { option_name: 'template', option_value: 'nuxtwo-theme', autoload: 'yes' },
@@ -339,7 +344,6 @@ async function seedMySQLWordPress() {
     process.stdout.write('- 2 WordPress posts\n')
     process.stdout.write('- 1 WordPress page\n')
     process.stdout.write('- 14 WordPress options\n')
-
   } catch (error) {
     process.stderr.write(`Error seeding MySQL: ${error}\n`)
     throw error
@@ -349,11 +353,10 @@ async function seedMySQLWordPress() {
 }
 
 if (require.main === module) {
-  seedMySQLWordPress()
-    .catch((error) => {
-      process.stderr.write(`Seed failed: ${error}\n`)
-      process.exit(1)
-    })
+  seedMySQLWordPress().catch((error) => {
+    process.stderr.write(`Seed failed: ${error}\n`)
+    process.exit(1)
+  })
 }
 
 export default seedMySQLWordPress

@@ -10,16 +10,10 @@
         >
           Akzeptieren
         </button>
-        <button
-          @click="testReject"
-          class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm"
-        >
+        <button @click="testReject" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm">
           Ablehnen
         </button>
-        <button
-          @click="testClose"
-          class="bg-gray-500 hover:bg-gray-600 px-3 py-1 rounded text-sm"
-        >
+        <button @click="testClose" class="bg-gray-500 hover:bg-gray-600 px-3 py-1 rounded text-sm">
           Schließen
         </button>
       </div>
@@ -35,13 +29,17 @@ const debugInfo = ref('')
 const cookieManager = useCookieManager()
 
 const updateDebug = () => {
-  debugInfo.value = JSON.stringify({
-    showBanner: cookieManager.showBanner.value,
-    isLoaded: cookieManager.isLoaded.value,
-    consent: cookieManager.consent.value ? 'exists' : 'null',
-    categories: cookieManager.cookieCategories.value.length,
-    policy: cookieManager.cookiePolicy.value ? 'exists' : 'null'
-  }, null, 2)
+  debugInfo.value = JSON.stringify(
+    {
+      showBanner: cookieManager.showBanner.value,
+      isLoaded: cookieManager.isLoaded.value,
+      consent: cookieManager.consent.value ? 'exists' : 'null',
+      categories: cookieManager.cookieCategories.value.length,
+      policy: cookieManager.cookiePolicy.value ? 'exists' : 'null'
+    },
+    null,
+    2
+  )
 }
 
 const testAccept = async () => {

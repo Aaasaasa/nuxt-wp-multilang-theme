@@ -63,30 +63,32 @@ const sidebarItems = computed<SidebarItem[]>(() => {
 
 // Admin items for logged in users
 const adminItems = computed<SidebarItem[]>(() =>
-  loggedIn.value ? [
-    {
-      label: t('navigation.admin', 'Admin'),
-      href: '/admin',
-      icon: 'i-lucide-settings',
-      children: [
+  loggedIn.value
+    ? [
         {
-          label: t('navigation.dashboard', 'Dashboard'),
-          href: '/admin/dashboard',
-          icon: 'i-lucide-layout-dashboard'
-        },
-        {
-          label: t('navigation.posts', 'Posts'),
-          href: '/admin/posts',
-          icon: 'i-lucide-file-text'
-        },
-        {
-          label: t('navigation.users', 'Users'),
-          href: '/admin/users',
-          icon: 'i-lucide-users'
+          label: t('navigation.admin', 'Admin'),
+          href: '/admin',
+          icon: 'i-lucide-settings',
+          children: [
+            {
+              label: t('navigation.dashboard', 'Dashboard'),
+              href: '/admin/dashboard',
+              icon: 'i-lucide-layout-dashboard'
+            },
+            {
+              label: t('navigation.posts', 'Posts'),
+              href: '/admin/posts',
+              icon: 'i-lucide-file-text'
+            },
+            {
+              label: t('navigation.users', 'Users'),
+              href: '/admin/users',
+              icon: 'i-lucide-users'
+            }
+          ]
         }
       ]
-    }
-  ] : []
+    : []
 )
 
 // Props for controlling sidebar
@@ -190,7 +192,10 @@ onMounted(() => {
                 @click="sidebarOpen = false"
               >
                 {{ item.label }}
-                <span v-if="item.badge" class="ml-auto text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">
+                <span
+                  v-if="item.badge"
+                  class="ml-auto text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded"
+                >
                   {{ item.badge }}
                 </span>
                 <!-- Show dropdown indicator for items with children -->
@@ -225,7 +230,9 @@ onMounted(() => {
         <div v-if="!menuLoading" class="pt-2 border-t border-gray-200 dark:border-gray-800">
           <p class="text-xs text-gray-400 dark:text-gray-500 px-3">
             <UIcon
-              :name="wordpressMenuItems.length > 0 ? 'i-lucide-check-circle' : 'i-lucide-alert-circle'"
+              :name="
+                wordpressMenuItems.length > 0 ? 'i-lucide-check-circle' : 'i-lucide-alert-circle'
+              "
               :class="wordpressMenuItems.length > 0 ? 'text-green-500' : 'text-amber-500'"
               class="inline w-3 h-3 mr-1"
             />
@@ -234,7 +241,10 @@ onMounted(() => {
         </div>
 
         <!-- Admin Section -->
-        <div v-if="adminItems.length > 0" class="pt-4 border-t border-gray-200 dark:border-gray-800">
+        <div
+          v-if="adminItems.length > 0"
+          class="pt-4 border-t border-gray-200 dark:border-gray-800"
+        >
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 px-3">
             {{ t('navigation.admin', 'Admin') }}
           </p>
@@ -273,7 +283,9 @@ onMounted(() => {
       </nav>
 
       <!-- Footer -->
-      <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800">
+      <div
+        class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800"
+      >
         <div class="text-xs text-gray-500 dark:text-gray-400 text-center">
           <p>NuxtWP Theme</p>
           <p>v{{ $config.public.version || '1.0.0' }}</p>

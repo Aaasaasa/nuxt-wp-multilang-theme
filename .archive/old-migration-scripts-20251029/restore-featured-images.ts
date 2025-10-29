@@ -30,7 +30,7 @@ async function getWordPressFeaturedImages() {
   console.log('🔍 Hole WordPress Featured Images...')
 
   // Hole alle _thumbnail_id Metadaten
-  const featuredImageMetas = await mysql.$queryRawUnsafe(`
+  const featuredImageMetas = (await mysql.$queryRawUnsafe(`
     SELECT
       pm.post_id,
       pm.meta_value as attachment_id,
@@ -41,7 +41,7 @@ async function getWordPressFeaturedImages() {
     AND pm.meta_value != ''
     AND p.post_status = 'publish'
     ORDER BY p.ID
-  `) as any[]
+  `)) as any[]
 
   console.log(`📊 Found ${featuredImageMetas.length} featured images in WordPress`)
 
@@ -51,13 +51,13 @@ async function getWordPressFeaturedImages() {
   for (const meta of featuredImageMetas) {
     try {
       // Hole attachment URL
-      const attachmentUrl = await mysql.$queryRawUnsafe(`
+      const attachmentUrl = (await mysql.$queryRawUnsafe(`
         SELECT meta_value as file_path
         FROM ${getTableName('postmeta')}
         WHERE post_id = ${meta.attachment_id}
         AND meta_key = '_wp_attached_file'
         LIMIT 1
-      `) as any[]
+      `)) as any[]
 
       if (attachmentUrl.length > 0) {
         const filePath = attachmentUrl[0].file_path
@@ -89,13 +89,13 @@ async function updatePostgresFeaturedImages(imageUrls: Map<string, string>) {
   await pg.$executeRaw`DELETE FROM cms_portfolio_meta WHERE key = 'featured_image' AND value::text LIKE '%featured-%'`
 
   // Hole alle WordPress posts die zu Articles migriert wurden
-  const wpPosts = await mysql.$queryRawUnsafe(`
+  const wpPosts = (await mysql.$queryRawUnsafe(`
     SELECT ID, post_name, post_type
     FROM ${getTableName('posts')}
     WHERE post_status = 'publish'
     AND post_type IN ('post', 'page', 'avada_portfolio')
     ORDER BY ID
-  `) as any[]
+  `)) as any[]
 
   for (const wpPost of wpPosts) {
     const imageKey = `${wpPost.ID}_${wpPost.post_type}`
@@ -137,9 +137,7 @@ async function updatePostgresFeaturedImages(imageUrls: Map<string, string>) {
           console.log(`✅ Article "${wpPost.post_name}" → ${imageUrl}`)
           updatedCount++
         }
-      }
-
-      else if (wpPost.post_type === 'page') {
+      } else if (wpPost.post_type === 'page') {
         // Update Page
         const page = await pg.page.findUnique({
           where: { slug: wpPost.post_name }
@@ -171,9 +169,7 @@ async function updatePostgresFeaturedImages(imageUrls: Map<string, string>) {
           console.log(`✅ Page "${wpPost.post_name}" → ${imageUrl}`)
           updatedCount++
         }
-      }
-
-      else if (wpPost.post_type === 'avada_portfolio') {
+      } else if (wpPost.post_type === 'avada_portfolio') {
         // Update Portfolio
         const portfolio = await pg.portfolio.findUnique({
           where: { slug: wpPost.post_name }
@@ -206,7 +202,6 @@ async function updatePostgresFeaturedImages(imageUrls: Map<string, string>) {
           updatedCount++
         }
       }
-
     } catch (error) {
       console.warn(`⚠️ Error updating ${wpPost.post_type} ${wpPost.post_name}:`, error)
     }
@@ -244,7 +239,7 @@ async function checkMissingImages(imageUrls: Map<string, string>) {
 
   if (missingImages.length > 0) {
     console.log('\n⚠️ Missing Images:')
-    missingImages.slice(0, 10).forEach(img => console.log(`   ${img}`))
+    missingImages.slice(0, 10).forEach((img) => console.log(`   ${img}`))
     if (missingImages.length > 10) {
       console.log(`   ... und ${missingImages.length - 10} weitere`)
     }
@@ -289,7 +284,6 @@ async function main() {
     } else {
       console.log('\n✅ All images available - Featured Images should display correctly!')
     }
-
   } catch (error) {
     console.error('❌ Restore Fehler:', error)
     process.exit(1)

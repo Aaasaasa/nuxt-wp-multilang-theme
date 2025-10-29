@@ -48,7 +48,9 @@ export class MediaResolver {
   /**
    * Resolve featured image for content item
    */
-  async resolveFeaturedImage(featuredImageData: string | FeaturedImageData | null): Promise<ResolvedMedia | null> {
+  async resolveFeaturedImage(
+    featuredImageData: string | FeaturedImageData | null
+  ): Promise<ResolvedMedia | null> {
     if (!featuredImageData) return null
 
     let mediaId: number | null = null
@@ -86,7 +88,8 @@ export class MediaResolver {
    */
   async resolveByMediaId(mediaId: number): Promise<ResolvedMedia | null> {
     try {
-      const result = await this.client.query(`
+      const result = await this.client.query(
+        `
         SELECT
           m.id,
           m.filename,
@@ -110,14 +113,15 @@ export class MediaResolver {
         LEFT JOIN cms_media_sizes ms ON ms.media_id = m.id
         WHERE m.id = $1
         GROUP BY m.id, m.filename, m.file_path, m.mime_type, m.width, m.height, m.alt_text
-      `, [mediaId])
+      `,
+        [mediaId]
+      )
 
       if (result.rows.length === 0) return null
 
       const media = result.rows[0] as MediaRecord & { sizes: MediaSize[] }
 
       return this.formatMediaResponse(media, media.sizes || [])
-
     } catch (error) {
       console.error('Error resolving media by ID:', error)
       return null
@@ -129,7 +133,8 @@ export class MediaResolver {
    */
   async resolveByPath(filePath: string): Promise<ResolvedMedia | null> {
     try {
-      const result = await this.client.query(`
+      const result = await this.client.query(
+        `
         SELECT
           m.id,
           m.filename,
@@ -154,14 +159,15 @@ export class MediaResolver {
         WHERE m.file_path = $1
         GROUP BY m.id, m.filename, m.file_path, m.mime_type, m.width, m.height, m.alt_text
         LIMIT 1
-      `, [filePath])
+      `,
+        [filePath]
+      )
 
       if (result.rows.length === 0) return null
 
       const media = result.rows[0] as MediaRecord & { sizes: MediaSize[] }
 
       return this.formatMediaResponse(media, media.sizes || [])
-
     } catch (error) {
       console.error('Error resolving media by path:', error)
       return null
@@ -177,7 +183,7 @@ export class MediaResolver {
     }
 
     // Build sizes map from available variants
-    sizes.forEach(size => {
+    sizes.forEach((size) => {
       if (size.size_name === 'thumbnail') {
         sizesMap.thumbnail = size.file_path
       } else if (size.size_name === 'medium') {
@@ -216,7 +222,9 @@ export class MediaResolver {
   /**
    * Batch resolve multiple featured images
    */
-  async resolveBatch(items: Array<{ id: number, featuredImage: any }>): Promise<Array<{ id: number, media: ResolvedMedia | null }>> {
+  async resolveBatch(
+    items: Array<{ id: number; featuredImage: any }>
+  ): Promise<Array<{ id: number; media: ResolvedMedia | null }>> {
     const results = []
 
     for (const item of items) {

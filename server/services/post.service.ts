@@ -1,15 +1,10 @@
 // server/services/post.service.ts
 import prismaCms from '../lib/prismaCms'
 import { toPublicUser } from '~~/shared/models/user'
-import {
-  badRequestError,
-  serverError,
-  notFoundError,
-  forbiddenError
-} from '../utils/errors'
+import { badRequestError, serverError, notFoundError, forbiddenError } from '../utils/errors'
 import { ERROR_CODES } from '../constants/errors'
 import { PRISMA_ERRORS } from '../constants/prisma'
-import { MediaResolver } from '../utils/mediaResolver'// Types
+import { MediaResolver } from '../utils/mediaResolver' // Types
 interface CreatePostData {
   title: string
   slug: string

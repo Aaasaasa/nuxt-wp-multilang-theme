@@ -52,10 +52,12 @@ export async function getAllPortfolios(): Promise<PortfolioWithAuthor[]> {
     const portfoliosWithMedia = await Promise.all(
       portfolios.map(async (portfolio) => {
         const translation = portfolio.translations[0] || {}
-        const featuredImageMeta = portfolio.metas?.find(m => m.key === 'featured_image')
+        const featuredImageMeta = portfolio.metas?.find((m) => m.key === 'featured_image')
 
         // Resolve featured image
-        const resolvedMedia = await mediaResolver.resolveFeaturedImage(featuredImageMeta?.value as any)
+        const resolvedMedia = await mediaResolver.resolveFeaturedImage(
+          featuredImageMeta?.value as any
+        )
 
         return {
           id: portfolio.id.toString(),
@@ -113,7 +115,7 @@ export async function getPortfolioBySlug(slug: string): Promise<PortfolioWithAut
     }
 
     const translation = portfolio.translations[0] || {}
-    const featuredImageMeta = portfolio.metas?.find(m => m.key === 'featured_image')
+    const featuredImageMeta = portfolio.metas?.find((m) => m.key === 'featured_image')
 
     // Resolve featured image
     const resolvedMedia = await mediaResolver.resolveFeaturedImage(featuredImageMeta?.value as any)

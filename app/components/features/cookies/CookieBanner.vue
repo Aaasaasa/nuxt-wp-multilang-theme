@@ -16,23 +16,24 @@
 
         <!-- Description -->
         <div class="cookie-banner__description">
-          <p>{{ cookiePolicy?.bannerText || 'Diese Website verwendet Cookies, um Ihnen die bestmögliche Erfahrung zu bieten.' }}</p>
+          <p>
+            {{
+              cookiePolicy?.bannerText ||
+              'Diese Website verwendet Cookies, um Ihnen die bestmögliche Erfahrung zu bieten.'
+            }}
+          </p>
         </div>
 
         <!-- Categories (if detailed view) -->
         <div v-if="showDetails" class="cookie-banner__categories">
-          <div
-            v-for="category in cookieCategories"
-            :key="category.id"
-            class="cookie-category"
-          >
+          <div v-for="category in cookieCategories" :key="category.id" class="cookie-category">
             <label class="cookie-category__label">
               <input
                 v-model="selectedCategories[category.key]"
                 type="checkbox"
                 :disabled="category.required"
                 class="cookie-category__checkbox"
-              >
+              />
               <div class="cookie-category__info">
                 <span class="cookie-category__name">{{ category.name }}</span>
                 <span v-if="category.required" class="cookie-category__required">
@@ -51,11 +52,7 @@
                   {{ category.cookies.length }} Cookie(s) anzeigen
                 </summary>
                 <div class="cookie-list__content">
-                  <div
-                    v-for="cookie in category.cookies"
-                    :key="cookie.id"
-                    class="cookie-item"
-                  >
+                  <div v-for="cookie in category.cookies" :key="cookie.id" class="cookie-item">
                     <h4 class="cookie-item__name">{{ cookie.name }}</h4>
                     <p class="cookie-item__purpose">{{ cookie.purpose }}</p>
                     <div class="cookie-item__meta">
@@ -125,12 +122,8 @@
 
         <!-- Links -->
         <div class="cookie-banner__links">
-          <NuxtLink to="/privacy" class="cookie-banner__link">
-            Datenschutzerklärung
-          </NuxtLink>
-          <NuxtLink to="/cookies" class="cookie-banner__link">
-            Cookie-Richtlinie
-          </NuxtLink>
+          <NuxtLink to="/privacy" class="cookie-banner__link"> Datenschutzerklärung </NuxtLink>
+          <NuxtLink to="/cookies" class="cookie-banner__link"> Cookie-Richtlinie </NuxtLink>
         </div>
       </div>
     </div>
@@ -161,13 +154,17 @@ const cookiePolicy = computed(() => cookieManager.cookiePolicy.value)
 const cookieCategories = computed(() => cookieManager.cookieCategories.value)
 
 // Initialize selected categories when categories load
-watch(cookieCategories, (categories) => {
-  if (categories.length && Object.keys(selectedCategories.value).length === 0) {
-    categories.forEach((category: any) => {
-      selectedCategories.value[category.key] = category.required
-    })
-  }
-}, { immediate: true })
+watch(
+  cookieCategories,
+  (categories) => {
+    if (categories.length && Object.keys(selectedCategories.value).length === 0) {
+      categories.forEach((category: any) => {
+        selectedCategories.value[category.key] = category.required
+      })
+    }
+  },
+  { immediate: true }
+)
 
 // Methods
 const handleAcceptAll = async () => {

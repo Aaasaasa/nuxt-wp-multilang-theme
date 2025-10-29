@@ -34,23 +34,15 @@
               {{ $t('product.error.title', 'Produkt nicht gefunden') }}
             </h1>
             <p class="text-red-600 dark:text-red-400 mb-6">
-              {{ $t('product.error.message', 'Das gewünschte Produkt konnte nicht gefunden werden.') }}
+              {{
+                $t('product.error.message', 'Das gewünschte Produkt konnte nicht gefunden werden.')
+              }}
             </p>
             <div class="flex gap-4 justify-center">
-              <UButton
-                to="/products"
-                color="error"
-                variant="solid"
-                icon="i-lucide-arrow-left"
-              >
+              <UButton to="/products" color="error" variant="solid" icon="i-lucide-arrow-left">
                 {{ $t('product.error.backToShop', 'Zurück zum Shop') }}
               </UButton>
-              <UButton
-                to="/"
-                color="neutral"
-                variant="outline"
-                icon="i-lucide-home"
-              >
+              <UButton to="/" color="neutral" variant="outline" icon="i-lucide-home">
                 {{ $t('product.error.backToHome', 'Zur Startseite') }}
               </UButton>
             </div>
@@ -64,11 +56,17 @@
       <div class="max-w-7xl mx-auto">
         <!-- Breadcrumb -->
         <nav class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-8">
-          <ULink to="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+          <ULink
+            to="/"
+            class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+          >
             {{ $t('breadcrumb.home', 'Startseite') }}
           </ULink>
           <UIcon name="i-lucide-chevron-right" class="w-4 h-4" />
-          <ULink to="/products" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+          <ULink
+            to="/products"
+            class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+          >
             {{ $t('breadcrumb.shop', 'Shop') }}
           </ULink>
           <UIcon name="i-lucide-chevron-right" class="w-4 h-4" />
@@ -82,28 +80,37 @@
           <!-- Product Image -->
           <div class="space-y-6">
             <!-- Main Image -->
-            <div class="relative aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+            <div
+              class="relative aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800"
+            >
               <img
                 v-if="product.featuredImage"
                 :src="product.featuredImage"
                 :alt="product.title"
                 class="w-full h-full object-cover"
                 loading="lazy"
-                @error="$event.target.style.display='none'"
+                @error="$event.target.style.display = 'none'"
               />
               <!-- Fallback placeholder -->
               <div
                 class="absolute inset-0 bg-linear-to-br from-primary-100 to-primary-200 dark:from-primary-900 dark:to-primary-800 flex items-center justify-center"
                 :class="{ 'z-10': !product.featuredImage }"
               >
-                <UIcon name="i-lucide-shopping-bag" class="w-24 h-24 text-primary-400 dark:text-primary-600" />
+                <UIcon
+                  name="i-lucide-shopping-bag"
+                  class="w-24 h-24 text-primary-400 dark:text-primary-600"
+                />
               </div>
 
               <!-- Stock Badge -->
               <div class="absolute top-4 right-4">
                 <UBadge
                   :color="product.stock > 0 ? 'success' : 'error'"
-                  :label="product.stock > 0 ? $t('product.inStock', 'Auf Lager') : $t('product.outOfStock', 'Ausverkauft')"
+                  :label="
+                    product.stock > 0
+                      ? $t('product.inStock', 'Auf Lager')
+                      : $t('product.outOfStock', 'Ausverkauft')
+                  "
                   size="lg"
                 />
               </div>
@@ -134,13 +141,17 @@
               <div class="grid grid-cols-2 gap-4 text-sm">
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-user" class="w-4 h-4 text-gray-500" />
-                  <span class="text-gray-600 dark:text-gray-400">{{ $t('product.vendor', 'Anbieter') }}:</span>
+                  <span class="text-gray-600 dark:text-gray-400"
+                    >{{ $t('product.vendor', 'Anbieter') }}:</span
+                  >
                   <span class="font-medium">{{ product.vendor.displayName }}</span>
                 </div>
 
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-calendar" class="w-4 h-4 text-gray-500" />
-                  <span class="text-gray-600 dark:text-gray-400">{{ $t('product.created', 'Erstellt') }}:</span>
+                  <span class="text-gray-600 dark:text-gray-400"
+                    >{{ $t('product.created', 'Erstellt') }}:</span
+                  >
                   <time :datetime="product.createdAt" class="font-medium">
                     {{ formatDate(product.createdAt) }}
                   </time>
@@ -148,13 +159,17 @@
 
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-package" class="w-4 h-4 text-gray-500" />
-                  <span class="text-gray-600 dark:text-gray-400">{{ $t('product.sku', 'Artikelnummer') }}:</span>
+                  <span class="text-gray-600 dark:text-gray-400"
+                    >{{ $t('product.sku', 'Artikelnummer') }}:</span
+                  >
                   <span class="font-medium">{{ product.slug.toUpperCase() }}</span>
                 </div>
 
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-coins" class="w-4 h-4 text-gray-500" />
-                  <span class="text-gray-600 dark:text-gray-400">{{ $t('product.currency', 'Währung') }}:</span>
+                  <span class="text-gray-600 dark:text-gray-400"
+                    >{{ $t('product.currency', 'Währung') }}:</span
+                  >
                   <span class="font-medium">{{ product.currency }}</span>
                 </div>
               </div>
@@ -171,7 +186,11 @@
                 class="w-full"
                 @click="addToCart(product)"
               >
-                {{ product.stock > 0 ? $t('product.addToCart', 'In den Warenkorb') : $t('product.outOfStock', 'Ausverkauft') }}
+                {{
+                  product.stock > 0
+                    ? $t('product.addToCart', 'In den Warenkorb')
+                    : $t('product.outOfStock', 'Ausverkauft')
+                }}
               </UButton>
 
               <div class="flex gap-3">
@@ -329,25 +348,33 @@ const shareProduct = async () => {
 }
 
 // 404 redirect if product not found
-watch([product, pending], ([newProduct, isPending]) => {
-  if (!isPending && !newProduct && !error.value) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Produkt nicht gefunden'
-    })
-  }
-}, { immediate: true })
+watch(
+  [product, pending],
+  ([newProduct, isPending]) => {
+    if (!isPending && !newProduct && !error.value) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Produkt nicht gefunden'
+      })
+    }
+  },
+  { immediate: true }
+)
 
 // SEO Meta
 useSeoMeta({
-  title: computed(() => product.value ? `${product.value.title} - Shop` : 'Produkt nicht gefunden'),
+  title: computed(() =>
+    product.value ? `${product.value.title} - Shop` : 'Produkt nicht gefunden'
+  ),
   description: computed(() => {
     if (product.value?.description) {
       return product.value.description.replace(/<[^>]*>/g, '').substring(0, 160)
     }
     return 'Produktdetails und Informationen'
   }),
-  ogTitle: computed(() => product.value ? `${product.value.title} - Shop` : 'Produkt nicht gefunden'),
+  ogTitle: computed(() =>
+    product.value ? `${product.value.title} - Shop` : 'Produkt nicht gefunden'
+  ),
   ogDescription: computed(() => {
     if (product.value?.description) {
       return product.value.description.replace(/<[^>]*>/g, '').substring(0, 160)

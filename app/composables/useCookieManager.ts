@@ -63,7 +63,9 @@ export const useCookieManager = () => {
         fingerprint: fingerprint.slice(-50)
       }
 
-      return btoa(JSON.stringify(data)).replace(/[^a-zA-Z0-9]/g, '').slice(0, 32)
+      return btoa(JSON.stringify(data))
+        .replace(/[^a-zA-Z0-9]/g, '')
+        .slice(0, 32)
     }
     return 'ssr-fallback-' + Date.now()
   }
@@ -181,9 +183,12 @@ export const useCookieManager = () => {
   // API calls with fallback
   const fetchCookiePolicy = async () => {
     try {
-      const { data } = await $fetch<{ success: boolean; data: CookiePolicy }>('/api/cookies/policy', {
-        query: { lang: locale.value }
-      })
+      const { data } = await $fetch<{ success: boolean; data: CookiePolicy }>(
+        '/api/cookies/policy',
+        {
+          query: { lang: locale.value }
+        }
+      )
       cookiePolicy.value = data
       return data
     } catch {
@@ -196,9 +201,12 @@ export const useCookieManager = () => {
 
   const fetchCookieCategories = async () => {
     try {
-      const { data } = await $fetch<{ success: boolean; data: CookieCategory[] }>('/api/cookies/categories', {
-        query: { lang: locale.value }
-      })
+      const { data } = await $fetch<{ success: boolean; data: CookieCategory[] }>(
+        '/api/cookies/categories',
+        {
+          query: { lang: locale.value }
+        }
+      )
       cookieCategories.value = data
       return data
     } catch {
@@ -257,9 +265,9 @@ export const useCookieManager = () => {
     Object.entries(categories).forEach(([category, accepted]) => {
       if (!accepted && category !== 'essential') {
         // Remove category-specific cookies
-        const categoryData = cookieCategories.value.find(c => c.key === category)
+        const categoryData = cookieCategories.value.find((c) => c.key === category)
         if (categoryData) {
-          categoryData.cookies.forEach(cookie => {
+          categoryData.cookies.forEach((cookie) => {
             // Remove the cookie
             document.cookie = `${cookie.name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
             if (cookie.domain) {
@@ -295,7 +303,7 @@ export const useCookieManager = () => {
       window.dataLayer = window.dataLayer || []
 
       // Define gtag function
-      window.gtag = function(...args: any[]) {
+      window.gtag = function (...args: any[]) {
         window.dataLayer.push(args)
       }
 
@@ -320,7 +328,7 @@ export const useCookieManager = () => {
   // Convenience methods
   const acceptAll = async () => {
     const categories: Record<string, boolean> = {}
-    cookieCategories.value.forEach(category => {
+    cookieCategories.value.forEach((category) => {
       categories[category.key] = true
     })
     await saveConsent(categories)
@@ -328,7 +336,7 @@ export const useCookieManager = () => {
 
   const rejectAll = async () => {
     const categories: Record<string, boolean> = {}
-    cookieCategories.value.forEach(category => {
+    cookieCategories.value.forEach((category) => {
       // Essential cookies are always accepted
       categories[category.key] = category.required
     })
@@ -346,7 +354,7 @@ export const useCookieManager = () => {
   const rejectCategory = async (categoryKey: string) => {
     if (!consent.value) return
 
-    const category = cookieCategories.value.find(c => c.key === categoryKey)
+    const category = cookieCategories.value.find((c) => c.key === categoryKey)
     if (category?.required) return // Can't reject essential cookies
 
     const newCategories = { ...consent.value.categories }
@@ -364,10 +372,7 @@ export const useCookieManager = () => {
     if (isLoaded.value) return
 
     // Load cookie policy and categories
-    await Promise.all([
-      fetchCookiePolicy(),
-      fetchCookieCategories()
-    ])
+    await Promise.all([fetchCookiePolicy(), fetchCookieCategories()])
 
     // Load existing consent
     const storedConsent = loadConsentFromStorage()

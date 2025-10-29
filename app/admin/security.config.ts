@@ -8,16 +8,16 @@ export default defineSecurityConfig({
     contentSecurityPolicy: isDev
       ? false
       : {
-          'default-src': ['\'self\''],
-          'img-src': ['\'self\'', 'data:', 'https:'],
-          'style-src': ['\'self\'', '\'unsafe-inline\''],
-          'script-src': ['\'self\''],
-          'font-src': ['\'self\'', 'data:'],
-          'connect-src': ['\'self\'', 'https:'],
-          'object-src': ['\'none\''],
-          'frame-ancestors': ['\'none\''],
-          'base-uri': ['\'self\''],
-          'form-action': ['\'self\'']
+          'default-src': ["'self'"],
+          'img-src': ["'self'", 'data:', 'https:'],
+          'style-src': ["'self'", "'unsafe-inline'"],
+          'script-src': ["'self'"],
+          'font-src': ["'self'", 'data:'],
+          'connect-src': ["'self'", 'https:'],
+          'object-src': ["'none'"],
+          'frame-ancestors': ["'none'"],
+          'base-uri': ["'self'"],
+          'form-action': ["'self'"]
         },
     xFrameOptions: 'DENY',
     xContentTypeOptions: 'nosniff',

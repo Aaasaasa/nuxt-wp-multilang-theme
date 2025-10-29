@@ -1,12 +1,7 @@
 // server/services/page.service.ts
 import prismaCms from '../lib/prismaCms'
 import { toPublicUser } from '~~/shared/models/user'
-import {
-  badRequestError,
-  serverError,
-  notFoundError,
-  forbiddenError
-} from '../utils/errors'
+import { badRequestError, serverError, notFoundError, forbiddenError } from '../utils/errors'
 import { ERROR_CODES } from '../constants/errors'
 
 // Types
@@ -63,10 +58,13 @@ export async function getAllPages(): Promise<PageWithAuthor[]> {
         slug: page.slug,
         content: translation.content || '',
         excerpt: translation.excerpt || null,
-        featuredImage: page.metas?.[0]?.value ?
-          (typeof page.metas[0].value === 'string' ? page.metas[0].value :
-           typeof page.metas[0].value === 'object' ? JSON.stringify(page.metas[0].value) :
-           String(page.metas[0].value)) : null,
+        featuredImage: page.metas?.[0]?.value
+          ? typeof page.metas[0].value === 'string'
+            ? page.metas[0].value
+            : typeof page.metas[0].value === 'object'
+              ? JSON.stringify(page.metas[0].value)
+              : String(page.metas[0].value)
+          : null,
         status: page.status,
         menuOrder: page.menuOrder,
         publishedAt: page.status === 'PUBLISHED' ? page.createdAt : null,
@@ -118,10 +116,13 @@ export async function getPageBySlug(slug: string): Promise<PageWithAuthor | null
       slug: page.slug,
       content: translation.content || '',
       excerpt: translation.excerpt || null,
-      featuredImage: page.metas?.[0]?.value ?
-        (typeof page.metas[0].value === 'string' ? page.metas[0].value :
-         typeof page.metas[0].value === 'object' ? JSON.stringify(page.metas[0].value) :
-         String(page.metas[0].value)) : null,
+      featuredImage: page.metas?.[0]?.value
+        ? typeof page.metas[0].value === 'string'
+          ? page.metas[0].value
+          : typeof page.metas[0].value === 'object'
+            ? JSON.stringify(page.metas[0].value)
+            : String(page.metas[0].value)
+        : null,
       status: page.status,
       menuOrder: page.menuOrder,
       publishedAt: page.status === 'PUBLISHED' ? page.createdAt : null,

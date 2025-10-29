@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
   # ========= Nuxt App =========
@@ -10,10 +10,10 @@ services:
       target: dev
     container_name: nuxt_app
     ports:
-      - "4000:4000"
+      - '4000:4000'
     environment:
       NODE_ENV: development
-      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_USEPOLLING: 'true'
       POSTGRES_URL: postgres://usrcms:Utorak30Sep@postgres:5432/nuxt_pg_cms_db
       MYSQL_URL: mysql://rooth3wp:Freitag0605@mysql:3306/sta3wp
       REDIS_URL: redis://redis:6379
@@ -27,7 +27,7 @@ services:
       - redis
       - mongodb
     restart: unless-stopped
-    command: ["yarn", "dev"]
+    command: ['yarn', 'dev']
 
   # ========= PostgreSQL =========
 
@@ -40,7 +40,7 @@ services:
       POSTGRES_PASSWORD: Utorak30Sep
       POSTGRES_DB: nuxt_pg_cms_db
     ports:
-      - "5432:5432" # 👈 host=5432, container=5432
+      - '5432:5432' # 👈 host=5432, container=5432
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
       - ./.docker/postgres/init:/docker-entrypoint-initdb.d
@@ -57,7 +57,7 @@ services:
       MYSQL_USER: rooth3wp
       MYSQL_PASSWORD: Freitag0605
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - ./data/mysql:/var/lib/mysql
       - ./.docker/mysql/init:/docker-entrypoint-initdb.d
@@ -68,7 +68,7 @@ services:
     image: phpmyadmin:latest
     restart: unless-stopped
     ports:
-      - "8081:80"
+      - '8081:80'
     environment:
       PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD: root
@@ -82,7 +82,7 @@ services:
     container_name: nuxt_redis
     restart: unless-stopped
     ports:
-      - "6379:6379"
+      - '6379:6379'
     volumes:
       - ./data/redis:/data
       - ./.docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
@@ -94,7 +94,7 @@ services:
     container_name: nuxt_mongo
     restart: unless-stopped
     ports:
-      - "27017:27017"
+      - '27017:27017'
     volumes:
       - ./data/mongo:/data/db
       - ./.docker/mongodb/init:/docker-entrypoint-initdb.d
@@ -108,7 +108,7 @@ services:
     image: adminer
     restart: unless-stopped
     ports:
-      - "8082:8080"
+      - '8082:8080'
 
   # ========= DuckDB =========
   #  DuckDB nije service – mountaš lokalni fajl iz .docker/duckdb/

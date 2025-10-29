@@ -21,7 +21,7 @@ export const getPostgresClient = async () => {
       postgresClient = globalThis.__prismaPostgres
     } else {
       try {
-                const { PrismaClient } = await import('@@/prisma/generated/postgres-cms/index.js')
+        const { PrismaClient } = await import('../../prisma/generated/postgres-cms/index.js')
         postgresClient = new PrismaClient({
           datasources: {
             pgCMSdb: {
