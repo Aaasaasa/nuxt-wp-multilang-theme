@@ -28,6 +28,7 @@ A modern **Nuxt 4** multilingual WordPress-inspired theme with advanced features
 
 - **🌍 Advanced i18n** - 7 languages (EN, DE, SR, ES, FR, IT, RU) with smart detection
 - **📚 WordPress-like CMS** - Article/Page/Portfolio management with Prisma backend
+- **🍽️ Dynamic Menu System** - WordPress menu integration with hierarchical navigation and API
 - **📚 Blog System** - Complete blog functionality with categories and tags integration
 - **🎨 Portfolio System** - Professional portfolio projects with custom taxonomies
 - **🔗 Term Relationships** - Advanced category/tag system with 224+ content connections

@@ -58,7 +58,7 @@ async function clearCMS() {
       cms_product_meta, cms_product_translations, cms_products,
       cms_comment_meta, cms_comments,
       cms_term_relationships, cms_term_taxonomies, cms_terms,
-      cms_menus, cms_settings
+      "MenuItem", "Menu", cms_settings
     RESTART IDENTITY CASCADE
   `)
 
@@ -562,37 +562,326 @@ async function migrateTermRelationships() {
 }
 
 /**
- * 7) MIGRATE SETTINGS
+ * 7) MIGRATE MENUS
+ */
+async function migrateMenus() {
+  console.log('🍽️ Migriere WordPress Menüs...')
+
+  // Get WordPress menus
+  const wpMenus = await mysql.$queryRawUnsafe(`
+    SELECT t.term_id, t.name, t.slug, tt.description
+    FROM ${getTableName('terms')} t
+    LEFT JOIN ${getTableName('term_taxonomy')} tt ON t.term_id = tt.term_id
+    WHERE tt.taxonomy = 'nav_menu'
+    ORDER BY t.term_id
+  `) as any[]
+
+  console.log(`📄 Gefunden: ${wpMenus.length} WordPress Menüs`)
+
+  let menusImported = 0
+  let itemsImported = 0
+
+  for (const wpMenu of wpMenus) {
+    try {
+      // Create menu
+      const pgMenu = await pg.menu.create({
+        data: {
+          name: wpMenu.slug || wpMenu.name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+          location: wpMenu.slug || 'menu-' + wpMenu.term_id,
+          isActive: true
+        }
+      })
+      menusImported++
+
+      // Get menu items with corrected meta keys
+      const wpMenuItems = await mysql.$queryRawUnsafe(`
+        SELECT
+          tr.object_id,
+          p.post_title,
+          p.post_name,
+          p.post_type,
+          p.menu_order,
+          pm_parent.meta_value as menu_item_parent,
+          pm_type.meta_value as menu_item_type,
+          pm_object_id.meta_value as menu_item_object_id,
+          pm_object.meta_value as menu_item_object,
+          pm_url.meta_value as menu_item_url,
+          pm_target.meta_value as menu_item_target,
+          pm_attr_title.meta_value as menu_item_attr_title,
+          pm_classes.meta_value as menu_item_classes,
+          pm_xfn.meta_value as menu_item_xfn,
+          pm_description.meta_value as menu_item_description
+        FROM ${getTableName('term_relationships')} tr
+        LEFT JOIN ${getTableName('posts')} p ON tr.object_id = p.ID
+        LEFT JOIN ${getTableName('postmeta')} pm_parent ON p.ID = pm_parent.post_id AND pm_parent.meta_key = '_menu_item_menu_item_parent'
+        LEFT JOIN ${getTableName('postmeta')} pm_type ON p.ID = pm_type.post_id AND pm_type.meta_key = '_menu_item_type'
+        LEFT JOIN ${getTableName('postmeta')} pm_object_id ON p.ID = pm_object_id.post_id AND pm_object_id.meta_key = '_menu_item_object_id'
+        LEFT JOIN ${getTableName('postmeta')} pm_object ON p.ID = pm_object.post_id AND pm_object.meta_key = '_menu_item_object'
+        LEFT JOIN ${getTableName('postmeta')} pm_url ON p.ID = pm_url.post_id AND pm_url.meta_key = '_menu_item_url'
+        LEFT JOIN ${getTableName('postmeta')} pm_target ON p.ID = pm_target.post_id AND pm_target.meta_key = '_menu_item_target'
+        LEFT JOIN ${getTableName('postmeta')} pm_attr_title ON p.ID = pm_attr_title.post_id AND pm_attr_title.meta_key = '_menu_item_attr_title'
+        LEFT JOIN ${getTableName('postmeta')} pm_classes ON p.ID = pm_classes.post_id AND pm_classes.meta_key = '_menu_item_classes'
+        LEFT JOIN ${getTableName('postmeta')} pm_xfn ON p.ID = pm_xfn.post_id AND pm_xfn.meta_key = '_menu_item_xfn'
+        LEFT JOIN ${getTableName('postmeta')} pm_description ON p.ID = pm_description.post_id AND pm_description.meta_key = '_menu_item_description'
+        WHERE tr.term_taxonomy_id = (
+          SELECT term_taxonomy_id FROM ${getTableName('term_taxonomy')}
+          WHERE term_id = ${wpMenu.term_id} AND taxonomy = 'nav_menu'
+        )
+        AND p.post_type = 'nav_menu_item'
+        AND p.post_status = 'publish'
+        ORDER BY p.menu_order ASC, p.ID ASC
+      `) as any[]
+
+      console.log(`   Menu "${wpMenu.name}": ${wpMenuItems.length} Items`)
+
+      // Create menu items in two passes: first root items, then child items
+      const wpIdToPgIdMap = new Map<string, number>()
+
+      // First pass: Create root items (no parent)
+      for (const wpItem of wpMenuItems) {
+        if (wpItem.menu_item_parent && wpItem.menu_item_parent !== '0') {
+          continue // Skip child items for now
+        }
+
+        try {
+          // Use post title or attr_title for menu item title
+          let title = wpItem.menu_item_attr_title || wpItem.post_title || 'Menu Item'
+          let url = null
+          let route = null
+          let target = wpItem.menu_item_target || '_self'
+          let cssClass = wpItem.menu_item_classes || null
+          let order = parseInt(wpItem.menu_order) || 0
+
+          console.log(`     Processing menu item: "${title}" (type: ${wpItem.menu_item_type}, object: ${wpItem.menu_item_object})`)
+
+          // Determine URL based on menu item type
+          if (wpItem.menu_item_type === 'custom') {
+            url = wpItem.menu_item_url
+          } else if (wpItem.menu_item_type === 'post_type') {
+            // Get the referenced post/page by object_id
+            const objectId = parseInt(wpItem.menu_item_object_id) || 0
+            if (objectId > 0) {
+              const refPost = await mysql.$queryRawUnsafe(`
+                SELECT post_name, post_type FROM ${getTableName('posts')}
+                WHERE ID = ${objectId} LIMIT 1
+              `) as any[]
+
+              if (refPost.length > 0) {
+                const post = refPost[0]
+                if (post.post_type === 'post') {
+                  route = `/articles/${post.post_name}`
+                } else if (post.post_type === 'page') {
+                  route = `/${post.post_name}`  // Direct URL ohne "pages" prefix
+                } else if (post.post_type === 'avada_portfolio') {
+                  route = `/portfolio/${post.post_name}`
+                }
+
+                // If no title was set, use the referenced post's title
+                if (!wpItem.menu_item_attr_title && !wpItem.post_title) {
+                  const titlePost = await mysql.$queryRawUnsafe(`
+                    SELECT post_title FROM ${getTableName('posts')}
+                    WHERE ID = ${objectId} LIMIT 1
+                  `) as any[]
+                  if (titlePost.length > 0) {
+                    title = titlePost[0].post_title || 'Menu Item'
+                  }
+                }
+              }
+            }
+          } else if (wpItem.menu_item_type === 'taxonomy') {
+            // Get taxonomy term info
+            const objectId = parseInt(wpItem.menu_item_object_id) || 0
+            if (objectId > 0) {
+              const termInfo = await mysql.$queryRawUnsafe(`
+                SELECT t.slug, t.name FROM ${getTableName('terms')} t
+                WHERE t.term_id = ${objectId} LIMIT 1
+              `) as any[]
+
+              if (termInfo.length > 0) {
+                const term = termInfo[0]
+                route = `/category/${term.slug}`
+
+                // Use term name if no title set
+                if (!wpItem.menu_item_attr_title && !wpItem.post_title) {
+                  title = term.name || 'Menu Item'
+                }
+              }
+            }
+          }
+
+          const pgItem = await pg.menuItem.create({
+            data: {
+              menuId: pgMenu.id,
+              parentId: null, // Root item
+              title,
+              url,
+              route,
+              target,
+              cssClass,
+              order,
+              isActive: true
+            }
+          })
+
+          // Map WordPress ID to PostgreSQL ID
+          wpIdToPgIdMap.set(wpItem.object_id.toString(), pgItem.id)
+          itemsImported++
+
+        } catch (error) {
+          console.log(`⚠️  Skipping root menu item "${wpItem.post_title}":`, error instanceof Error ? error.message : error)
+        }
+      }
+
+      // Second pass: Create child items
+      for (const wpItem of wpMenuItems) {
+        if (!wpItem.menu_item_parent || wpItem.menu_item_parent === '0') {
+          continue // Skip root items - already created
+        }
+
+        try {
+          // Use post title or attr_title for menu item title
+          let title = wpItem.menu_item_attr_title || wpItem.post_title || 'Menu Item'
+          let url = null
+          let route = null
+          let target = wpItem.menu_item_target || '_self'
+          let cssClass = wpItem.menu_item_classes || null
+          let order = parseInt(wpItem.menu_order) || 0
+
+          console.log(`     Processing child menu item: "${title}" (type: ${wpItem.menu_item_type}, object: ${wpItem.menu_item_object})`)
+
+          // Determine URL based on menu item type
+          if (wpItem.menu_item_type === 'custom') {
+            url = wpItem.menu_item_url
+          } else if (wpItem.menu_item_type === 'post_type') {
+            // Get the referenced post/page by object_id
+            const objectId = parseInt(wpItem.menu_item_object_id) || 0
+            if (objectId > 0) {
+              const refPost = await mysql.$queryRawUnsafe(`
+                SELECT post_name, post_type FROM ${getTableName('posts')}
+                WHERE ID = ${objectId} LIMIT 1
+              `) as any[]
+
+              if (refPost.length > 0) {
+                const post = refPost[0]
+                if (post.post_type === 'post') {
+                  route = `/articles/${post.post_name}`
+                } else if (post.post_type === 'page') {
+                  route = `/${post.post_name}`  // Direct URL ohne "pages" prefix
+                } else if (post.post_type === 'avada_portfolio') {
+                  route = `/portfolio/${post.post_name}`
+                }
+
+                // If no title was set, use the referenced post's title
+                if (!wpItem.menu_item_attr_title && !wpItem.post_title) {
+                  const titlePost = await mysql.$queryRawUnsafe(`
+                    SELECT post_title FROM ${getTableName('posts')}
+                    WHERE ID = ${objectId} LIMIT 1
+                  `) as any[]
+                  if (titlePost.length > 0) {
+                    title = titlePost[0].post_title || 'Menu Item'
+                  }
+                }
+              }
+            }
+          } else if (wpItem.menu_item_type === 'taxonomy') {
+            // Get taxonomy term info
+            const objectId = parseInt(wpItem.menu_item_object_id) || 0
+            if (objectId > 0) {
+              const termInfo = await mysql.$queryRawUnsafe(`
+                SELECT t.slug, t.name FROM ${getTableName('terms')} t
+                WHERE t.term_id = ${objectId} LIMIT 1
+              `) as any[]
+
+              if (termInfo.length > 0) {
+                const term = termInfo[0]
+                route = `/category/${term.slug}`
+
+                // Use term name if no title set
+                if (!wpItem.menu_item_attr_title && !wpItem.post_title) {
+                  title = term.name || 'Menu Item'
+                }
+              }
+            }
+          }
+
+          // Find parent ID in our mapping
+          const parentPgId = wpIdToPgIdMap.get(wpItem.menu_item_parent)
+
+          if (parentPgId) {
+            await pg.menuItem.create({
+              data: {
+                menuId: pgMenu.id,
+                parentId: parentPgId,
+                title,
+                url,
+                route,
+                target,
+                cssClass,
+                order,
+                isActive: true
+              }
+            })
+            itemsImported++
+          } else {
+            console.log(`⚠️  Parent not found for menu item "${wpItem.post_title}" (parent: ${wpItem.menu_item_parent})`)
+          }
+
+        } catch (error) {
+          console.log(`⚠️  Skipping child menu item "${wpItem.post_title}":`, error instanceof Error ? error.message : error)
+        }
+      }    } catch (error) {
+      console.log(`⚠️  Skipping menu "${wpMenu.name}":`, error instanceof Error ? error.message : error)
+    }
+  }
+
+  console.log(`🍽️ ${menusImported} Menüs und ${itemsImported} Menu Items importiert`)
+}
+
+/**
+ * 8) MIGRATE SETTINGS
  */
 async function migrateSettings() {
   console.log('⚙️  Migriere WordPress Einstellungen...')
 
-  const importantOptions = ['blogname', 'blogdescription', 'admin_email', 'users_can_register']
-  let imported = 0
+  const importantOptions = [
+    'blogname',
+    'blogdescription',
+    'admin_email',
+    'date_format',
+    'time_format',
+    'start_of_week'
+  ]
 
+  let imported = 0
   for (const optionName of importantOptions) {
     try {
       const wpOption = await mysql.$queryRawUnsafe(`
-        SELECT * FROM ${getTableName('options')} WHERE option_name = '${optionName}' LIMIT 1
+        SELECT option_value
+        FROM ${getTableName('options')}
+        WHERE option_name = '${optionName}'
+        LIMIT 1
       `) as any[]
 
-      if (wpOption.length > 0) {
-        let value = wpOption[0].option_value
+      if (!wpOption || wpOption.length === 0) continue
 
-        // Try to parse JSON
-        try {
-          value = JSON.parse(value)
-        } catch {
-          // Keep as string if not JSON
-        }
+      if (wpOption[0].option_value === null || wpOption[0].option_value === '') continue
 
-        await pg.setting.upsert({
-          where: { key: optionName },
-          update: { value },
-          create: { key: optionName, value }
-        })
-        imported++
+      // Handle different value types
+      let value = wpOption[0].option_value
+
+      // Try to parse JSON
+      try {
+        value = JSON.parse(value)
+      } catch {
+        // Keep as string if not JSON
       }
+
+      await pg.setting.upsert({
+        where: { key: optionName },
+        update: { value },
+        create: { key: optionName, value }
+      })
+      imported++
     } catch (error) {
       console.log(`❌ Fehler beim Importieren von Einstellung ${optionName}:`, error)
     }
@@ -616,6 +905,7 @@ async function main() {
     await migrateContent()
     await migrateComments()
     await migrateTermRelationships()
+    await migrateMenus()
     await migrateSettings()
 
     console.log('\n📊 Migration erfolgreich abgeschlossen! ✅')

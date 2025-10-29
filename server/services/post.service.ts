@@ -9,8 +9,7 @@ import {
 } from '../utils/errors'
 import { ERROR_CODES } from '../constants/errors'
 import { PRISMA_ERRORS } from '../constants/prisma'
-
-// Types
+import { MediaResolver } from '../utils/mediaResolver'// Types
 interface CreatePostData {
   title: string
   slug: string
@@ -109,34 +108,41 @@ export async function getAllPosts(): Promise<PostWithAuthor[]> {
       orderBy: { createdAt: 'desc' }
     })
 
-    return articles.map((article) => {
-      const translation = article.translations[0] || {}
+    const mediaResolver = new MediaResolver(prismaCms)
 
-      return {
-        id: article.id.toString(),
-        title: translation.title || 'Untitled',
-        slug: article.slug,
-        content: translation.content || '',
-        excerpt: translation.excerpt || null,
-        featuredImage: article.metas?.[0]?.value ?
-          (typeof article.metas[0].value === 'string' ? article.metas[0].value :
-           typeof article.metas[0].value === 'object' ? JSON.stringify(article.metas[0].value) :
-           String(article.metas[0].value)) : null,
-        status: article.status,
-        publishedAt: article.status === 'PUBLISHED' ? article.createdAt : null,
-        createdAt: article.createdAt,
-        updatedAt: article.updatedAt,
-        author: {
-          id: article.author.id.toString(),
-          username: article.author.login,
-          email: article.author.email,
-          firstName: null, // TODO: Extract from displayName
-          lastName: null
+    // Process articles sequentially to handle async media resolution
+    const processedArticles = await Promise.all(
+      articles.map(async (article) => {
+        const translation = article.translations[0] || {}
+
+        // Resolve featured image using MediaResolver
+        const featuredImageData = article.metas?.[0]?.value
+        const resolvedMedia = await mediaResolver.resolveFeaturedImage(featuredImageData as any)
+
+        return {
+          id: article.id.toString(),
+          title: translation.title || 'Untitled',
+          slug: article.slug,
+          content: translation.content || '',
+          excerpt: translation.excerpt || null,
+          featuredImage: resolvedMedia?.sizes?.original || null,
+          status: article.status,
+          publishedAt: article.status === 'PUBLISHED' ? article.createdAt : null,
+          createdAt: article.createdAt,
+          updatedAt: article.updatedAt,
+          author: {
+            id: article.author.id.toString(),
+            username: article.author.login,
+            email: article.author.email,
+            firstName: null, // TODO: Extract from displayName
+            lastName: null
+          }
         }
-      }
-    })
+      })
+    )
+
+    return processedArticles
   } catch (error) {
-    console.error('Database error in getAllPosts:', error)
     throw new Error('Failed to fetch posts from database')
   }
 }
@@ -188,6 +194,11 @@ export async function getPostBySlug(slug: string): Promise<PostWithAuthor | null
     }
 
     const translation = article.translations[0] || {}
+    const mediaResolver = new MediaResolver(prismaCms)
+
+    // Resolve featured image using MediaResolver
+    const featuredImageData = article.metas?.[0]?.value
+    const resolvedMedia = await mediaResolver.resolveFeaturedImage(featuredImageData as any)
 
     return {
       id: article.id.toString(),
@@ -195,7 +206,7 @@ export async function getPostBySlug(slug: string): Promise<PostWithAuthor | null
       slug: article.slug,
       content: translation.content || '',
       excerpt: translation.excerpt || null,
-      featuredImage: article.metas?.[0]?.value ? String(article.metas[0].value) : null,
+      featuredImage: resolvedMedia?.sizes?.original || null,
       status: article.status,
       publishedAt: article.status === 'PUBLISHED' ? article.createdAt : null,
       createdAt: article.createdAt,
@@ -208,8 +219,7 @@ export async function getPostBySlug(slug: string): Promise<PostWithAuthor | null
         lastName: null
       }
     }
-  } catch (error) {
-    console.error('Database error in getPostBySlug:', error)
+  } catch {
     return null
   }
 }

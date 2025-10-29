@@ -1,18 +1,29 @@
 <script setup lang="ts">
-interface SidebarItem {
-  label: string
-  href: string
-  icon: string
-  badge?: string
-  children?: SidebarItem[]
-}
-
 const { loggedIn } = useUserSession()
 const localePath = useLocalePath()
 const { t } = useI18n()
 
-// Define sidebar navigation items
-const sidebarItems = computed<SidebarItem[]>(() => [
+// Load WordPress menu from API using our composable
+const { getMenuAsSidebarItems } = useMenu()
+
+// Load menu data
+const wordpressMenuItems = ref<SidebarItem[]>([])
+const menuLoading = ref(true)
+
+// Fetch menu on component mount
+onMounted(async () => {
+  try {
+    const items = await getMenuAsSidebarItems('main-menu')
+    wordpressMenuItems.value = items
+  } catch {
+    // Silent fallback to default items
+  } finally {
+    menuLoading.value = false
+  }
+})
+
+// Fallback sidebar items if menu loading fails
+const fallbackItems = computed<SidebarItem[]>(() => [
   {
     label: t('navigation.home', 'Home'),
     href: localePath('/'),
@@ -44,6 +55,11 @@ const sidebarItems = computed<SidebarItem[]>(() => [
     icon: 'i-lucide-mail'
   }
 ])
+
+// Use WordPress menu if available, otherwise fallback
+const sidebarItems = computed<SidebarItem[]>(() => {
+  return wordpressMenuItems.value.length > 0 ? wordpressMenuItems.value : fallbackItems.value
+})
 
 // Admin items for logged in users
 const adminItems = computed<SidebarItem[]>(() =>
@@ -150,24 +166,71 @@ onMounted(() => {
 
       <!-- Navigation -->
       <nav class="p-4 space-y-2">
+        <!-- Loading State -->
+        <div v-if="menuLoading" class="space-y-1">
+          <div class="animate-pulse space-y-2">
+            <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          </div>
+        </div>
+
         <!-- Main Navigation -->
-        <div class="space-y-1">
+        <div v-else class="space-y-1">
           <template v-for="item in sidebarItems" :key="item.href">
-            <UButton
-              :to="item.href"
-              :icon="item.icon"
-              color="neutral"
-              variant="ghost"
-              size="sm"
-              class="w-full justify-start"
-              @click="sidebarOpen = false"
-            >
-              {{ item.label }}
-              <span v-if="item.badge" class="ml-auto text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">
-                {{ item.badge }}
-              </span>
-            </UButton>
+            <div>
+              <!-- Main Menu Item -->
+              <UButton
+                :to="item.href"
+                :icon="item.icon"
+                color="neutral"
+                variant="ghost"
+                size="sm"
+                class="w-full justify-start"
+                @click="sidebarOpen = false"
+              >
+                {{ item.label }}
+                <span v-if="item.badge" class="ml-auto text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">
+                  {{ item.badge }}
+                </span>
+                <!-- Show dropdown indicator for items with children -->
+                <UIcon
+                  v-if="item.children && item.children.length > 0"
+                  name="i-lucide-chevron-down"
+                  class="ml-auto w-4 h-4"
+                />
+              </UButton>
+
+              <!-- Sub-menu items -->
+              <div v-if="item.children && item.children.length > 0" class="ml-6 mt-1 space-y-1">
+                <UButton
+                  v-for="child in item.children"
+                  :key="child.href"
+                  :to="child.href"
+                  :icon="child.icon"
+                  color="neutral"
+                  variant="ghost"
+                  size="xs"
+                  class="w-full justify-start text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  @click="sidebarOpen = false"
+                >
+                  {{ child.label }}
+                </UButton>
+              </div>
+            </div>
           </template>
+        </div>
+
+        <!-- WordPress Menu Status -->
+        <div v-if="!menuLoading" class="pt-2 border-t border-gray-200 dark:border-gray-800">
+          <p class="text-xs text-gray-400 dark:text-gray-500 px-3">
+            <UIcon
+              :name="wordpressMenuItems.length > 0 ? 'i-lucide-check-circle' : 'i-lucide-alert-circle'"
+              :class="wordpressMenuItems.length > 0 ? 'text-green-500' : 'text-amber-500'"
+              class="inline w-3 h-3 mr-1"
+            />
+            {{ wordpressMenuItems.length > 0 ? 'WordPress Menu' : 'Fallback Menu' }}
+          </p>
         </div>
 
         <!-- Admin Section -->

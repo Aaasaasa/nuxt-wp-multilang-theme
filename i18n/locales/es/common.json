@@ -146,5 +146,28 @@
     "subtitle": "Data overview",
     "title": "Statistics",
     "totalPosts": "Total posts"
+  },
+  "categories": {
+    "title": "Categorías",
+    "all": "Todos los Artículos",
+    "cached": "En caché"
+  },
+  "articles": {
+    "count": "Sin artículos | {count} artículo | {count} artículos",
+    "noArticles": "No se encontraron artículos",
+    "noArticlesInCategory": "No se encontraron artículos en esta categoría"
+  },
+  "cache": {
+    "fromRedis": "Cargado desde caché"
+  },
+  "navigation": {
+    "backToHome": "Volver al Inicio",
+    "previousPage": "Página Anterior",
+    "nextPage": "Página Siguiente",
+    "page": "Página"
+  },
+  "language": {
+    "title": "Idioma",
+    "switchTo": "Cambiar a {language}"
   }
 }

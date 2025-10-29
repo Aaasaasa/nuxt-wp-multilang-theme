@@ -88,6 +88,7 @@ model Page {
   metas        PageMeta[]
   comments     Comment[]
   terms        TermRelationship[]
+  menuItems    MenuItem[]
 
   @@map("cms_pages")
 }
@@ -134,6 +135,7 @@ model Article {
   metas        ArticleMeta[]
   comments     Comment[]
   terms        TermRelationship[]
+  menuItems    MenuItem[]
 
   @@map("cms_articles")
 }
@@ -177,6 +179,7 @@ model Portfolio {
   metas        PortfolioMeta[]
   comments     Comment[]
   terms        TermRelationship[]
+  menuItems    MenuItem[]
 
   @@map("cms_portfolios")
 }
@@ -329,16 +332,18 @@ model TermRelationship {
   @@map("cms_term_relationships")
 }
 
-// --- Menus ---
+// --- Navigation Menus ---
 model Menu {
   id        Int      @id @default(autoincrement())
-  slug      String   @unique
-  name      String
-  items     Json
+  name      String   @unique // "main", "footer", "sidebar"
+  location  String // Where the menu appears
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("cms_menus")
+  items MenuItem[]
+
+  @@map("Menu")
 }
 
 // --- Cookie Policy ---
@@ -446,6 +451,34 @@ model CookieConsent {
   user User? @relation(fields: [userId], references: [id])
 
   @@map("cms_cookie_consents")
+}
+
+model MenuItem {
+  id       Int     @id @default(autoincrement())
+  menuId   Int
+  parentId Int? // For nested menus
+  title    String
+  url      String? // External URL
+  route    String? // Internal route
+  target   String  @default("_self") // "_blank", "_self"
+  cssClass String?
+  icon     String? // Icon name (e.g., "home", "user")
+  order    Int     @default(0)
+  isActive Boolean @default(true)
+
+  // Content relationships (optional)
+  articleId   Int?
+  pageId      Int?
+  portfolioId Int?
+
+  menu      Menu       @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  parent    MenuItem?  @relation("MenuItemHierarchy", fields: [parentId], references: [id])
+  children  MenuItem[] @relation("MenuItemHierarchy")
+  article   Article?   @relation(fields: [articleId], references: [id])
+  page      Page?      @relation(fields: [pageId], references: [id])
+  portfolio Portfolio? @relation(fields: [portfolioId], references: [id])
+
+  @@map("MenuItem")
 }
 
 // --- Settings ---

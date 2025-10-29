@@ -1,5 +1,6 @@
 // server/services/portfolio.service.ts
 import prismaCms from '../lib/prismaCms'
+import { MediaResolver } from '../utils/mediaResolver'
 
 // Types
 interface PortfolioWithAuthor {
@@ -31,11 +32,13 @@ interface PortfolioWithAuthor {
  */
 export async function getAllPortfolios(): Promise<PortfolioWithAuthor[]> {
   try {
+    const mediaResolver = new MediaResolver(prismaCms)
+
     const portfolios = await prismaCms.portfolio.findMany({
       include: {
         author: true,
         translations: {
-          where: { lang: 'de' },
+          where: { lang: 'de' }, // Default language
           take: 1
         },
         metas: {
@@ -45,33 +48,98 @@ export async function getAllPortfolios(): Promise<PortfolioWithAuthor[]> {
       orderBy: { createdAt: 'desc' }
     })
 
-    return portfolios.map((portfolio) => {
-      const translation = portfolio.translations[0] || {}
+    // Resolve featured images asynchronously
+    const portfoliosWithMedia = await Promise.all(
+      portfolios.map(async (portfolio) => {
+        const translation = portfolio.translations[0] || {}
+        const featuredImageMeta = portfolio.metas?.find(m => m.key === 'featured_image')
 
-      return {
-        id: portfolio.id.toString(),
-        title: translation.title || 'Untitled',
-        slug: portfolio.slug,
-        content: translation.content || '',
-        excerpt: translation.excerpt || null,
-        featuredImage: portfolio.metas?.[0]?.value ?
-          (typeof portfolio.metas[0].value === 'string' ? portfolio.metas[0].value :
-           typeof portfolio.metas[0].value === 'object' ? JSON.stringify(portfolio.metas[0].value) :
-           String(portfolio.metas[0].value)) : null,
-        status: portfolio.status,
-        publishedAt: portfolio.status === 'PUBLISHED' ? portfolio.createdAt : null,
-        createdAt: portfolio.createdAt,
-        updatedAt: portfolio.updatedAt,
-        author: {
-          id: portfolio.author.id.toString(),
-          username: portfolio.author.login,
-          email: portfolio.author.email,
-          firstName: null,
-          lastName: null
+        // Resolve featured image
+        const resolvedMedia = await mediaResolver.resolveFeaturedImage(featuredImageMeta?.value as any)
+
+        return {
+          id: portfolio.id.toString(),
+          title: translation.title || 'Untitled',
+          slug: portfolio.slug,
+          content: translation.content || '',
+          excerpt: translation.excerpt || null,
+          featuredImage: resolvedMedia?.url || null,
+          status: portfolio.status,
+          publishedAt: portfolio.status === 'PUBLISHED' ? portfolio.createdAt : null,
+          createdAt: portfolio.createdAt,
+          updatedAt: portfolio.updatedAt,
+          author: {
+            id: portfolio.author.id.toString(),
+            username: portfolio.author.login,
+            email: portfolio.author.email,
+            firstName: null,
+            lastName: null
+          }
+        }
+      })
+    )
+
+    return portfoliosWithMedia
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Database error in getAllPortfolios:', error)
+    throw new Error('Failed to fetch portfolios from database')
+  }
+}
+
+/**
+ * Get portfolio by slug
+ */
+export async function getPortfolioBySlug(slug: string): Promise<PortfolioWithAuthor | null> {
+  try {
+    const mediaResolver = new MediaResolver(prismaCms)
+
+    const portfolio = await prismaCms.portfolio.findFirst({
+      where: { slug },
+      include: {
+        author: true,
+        translations: {
+          where: { lang: 'de' }, // Default language
+          take: 1
+        },
+        metas: {
+          where: { key: 'featured_image' }
         }
       }
     })
+
+    if (!portfolio) {
+      return null
+    }
+
+    const translation = portfolio.translations[0] || {}
+    const featuredImageMeta = portfolio.metas?.find(m => m.key === 'featured_image')
+
+    // Resolve featured image
+    const resolvedMedia = await mediaResolver.resolveFeaturedImage(featuredImageMeta?.value as any)
+
+    return {
+      id: portfolio.id.toString(),
+      title: translation.title || 'Untitled',
+      slug: portfolio.slug,
+      content: translation.content || '',
+      excerpt: translation.excerpt || null,
+      featuredImage: resolvedMedia?.url || null,
+      status: portfolio.status,
+      publishedAt: portfolio.status === 'PUBLISHED' ? portfolio.createdAt : null,
+      createdAt: portfolio.createdAt,
+      updatedAt: portfolio.updatedAt,
+      author: {
+        id: portfolio.author.id.toString(),
+        username: portfolio.author.login,
+        email: portfolio.author.email,
+        firstName: null,
+        lastName: null
+      }
+    }
   } catch (error) {
-    throw new Error('Failed to fetch portfolios from database')
+    // eslint-disable-next-line no-console
+    console.error('Database error in getPortfolioBySlug:', error)
+    return null
   }
 }

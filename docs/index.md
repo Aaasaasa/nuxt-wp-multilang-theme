@@ -4,6 +4,24 @@ Comprehensive implementation guide and advanced usage patterns for the NuxtWP Mu
 
 > For quick setup and basic commands, see [README.md](../README.md) and [CLAUDE.md](../CLAUDE.md)
 
+## 🎯 What's New in v1.2.0
+
+### Shop System & E-Commerce
+
+- **Complete Shop System**: Products/Shop implementation with e-commerce features
+- **Product APIs**: Full REST APIs for product management and display
+- **Service Layer**: Business logic for products with vendor relationships
+- **Frontend Pages**: Shop overview and product detail pages with responsive design
+- **Stock Management**: Inventory tracking with visual stock indicators
+- **Price Formatting**: Localized currency display with multi-currency support
+
+### Enhanced Content Management
+
+- **Menu System**: Hierarchical navigation with WordPress menu import
+- **URL Structure**: Optimized routing without "pages" prefix for cleaner URLs
+- **Media Pipeline**: 100% WebP conversion with DB-migration-safe cleanup
+- **Portfolio System**: Complete overview and detail pages with navigation
+
 ## 🎯 What's New in v1.1.0
 
 ### WordPress Migration & Content APIs
@@ -11,7 +29,7 @@ Comprehensive implementation guide and advanced usage patterns for the NuxtWP Mu
 - **Complete WordPress Migration**: Successfully migrated 37 articles, 12 pages, 10 portfolios from WordPress
 - **Term Relationships**: 224 category/tag connections linking content with taxonomies
 - **Content APIs**: Full RESTful APIs for Articles, Pages, Portfolios with service layer architecture
-- **WebP Optimization**: Featured images with progressive WebP conversion (33% complete)
+- **WebP Optimization**: Featured images with progressive WebP conversion (100% complete)
 - **Portfolio Support**: Avada Portfolio post type integration with custom taxonomies
 
 ### Content Management System
@@ -67,9 +85,11 @@ Comprehensive implementation guide and advanced usage patterns for the NuxtWP Mu
 
 ### Content Management
 
-- **[� Content APIs](./content-apis.md)** - Articles, Pages, Portfolios APIs with 224 term relationships
+- **[📝 Content APIs](./content-apis.md)** - Articles, Pages, Portfolios APIs with 224 term relationships
 - **[🔄 WordPress Migration](./wordpress-migration.md)** - Complete migration guide with term relationships
-- **[�📚 CMS Integration](./cms-patterns.md)** - WordPress-like content management with Prisma
+- **[🍽️ Menu System](./menu-system.md)** - WordPress menu integration with hierarchical navigation
+- **[🛍️ Shop System](./shop-system.md)** - Complete e-commerce with products, pricing, and inventory
+- **[📊 CMS Integration](./cms-patterns.md)** - WordPress-like content management with Prisma
 - **[📝 Blog System](./blog-patterns.md)** - Article management, categories, and tags
 - **[🖼️ Media Management](./media-patterns.md)** - File uploads, image optimization, and WebP conversion
 - **[👥 User Management](./user-patterns.md)** - Authentication, roles, and permissions

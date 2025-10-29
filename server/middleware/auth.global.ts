@@ -36,6 +36,7 @@ export default defineEventHandler(async (event) => {
     { pathPrefix: '/api/pages', methods: ['GET'] }, // Allow /api/pages and subpaths
     { pathPrefix: '/api/portfolios', methods: ['GET'] }, // Allow /api/portfolios and subpaths
     { pathPrefix: '/api/products', methods: ['GET'] }, // Allow /api/products and subpaths
+    { pathPrefix: '/api/menus', methods: ['GET'] }, // Allow /api/menus and subpaths
     { pathPrefix: '/api/docs', methods: ['GET'] }, // Allow /api/docs and subpaths
     { pathPrefix: '/api/cookies', methods: ['GET', 'POST'] } // Allow cookie management for all users
   ]

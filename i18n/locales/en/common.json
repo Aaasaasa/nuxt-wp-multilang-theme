@@ -394,5 +394,28 @@
   "stats": {
     "title": "Statistics",
     "totalPosts": "Total articles"
+  },
+  "categories": {
+    "title": "Categories",
+    "all": "All Articles",
+    "cached": "Cached"
+  },
+  "articles": {
+    "count": "No articles | {count} article | {count} articles",
+    "noArticles": "No articles found",
+    "noArticlesInCategory": "No articles found in this category"
+  },
+  "cache": {
+    "fromRedis": "Loaded from cache"
+  },
+  "navigation": {
+    "backToHome": "Back to Home",
+    "previousPage": "Previous Page",
+    "nextPage": "Next Page",
+    "page": "Page"
+  },
+  "language": {
+    "title": "Language",
+    "switchTo": "Switch to {language}"
   }
 }

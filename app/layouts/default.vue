@@ -48,6 +48,9 @@
               {{ t('auth.login.title') }}
             </UButton>
 
+            <!-- Language Switcher -->
+            <LanguageSwitcher />
+
             <UColorModeButton />
             <UButton
               color="neutral"
@@ -82,6 +85,7 @@ import AppSidebar from '~/components/layout/AppSidebar.vue'
 import AppFooter from '~/components/layout/AppFooter.vue'
 import CookieBanner from '~/components/features/cookies/CookieBanner.vue'
 import SimpleCookieBanner from '~/components/debug/SimpleCookieBanner.vue'
+import LanguageSwitcher from '~/components/features/LanguageSwitcher.vue'
 
 const { loggedIn, user, clear } = useUserSession()
 const { t } = useI18n()

@@ -154,5 +154,28 @@
       "list": "List"
     },
     "items": "items"
+  },
+  "categories": {
+    "title": "Категории",
+    "all": "Все Статьи",
+    "cached": "Кэшировано"
+  },
+  "articles": {
+    "count": "Нет статей | {count} статья | {count} статей",
+    "noArticles": "Статьи не найдены",
+    "noArticlesInCategory": "В этой категории нет статей"
+  },
+  "cache": {
+    "fromRedis": "Загружено из кэша"
+  },
+  "navigation": {
+    "backToHome": "Вернуться на главную",
+    "previousPage": "Предыдущая страница",
+    "nextPage": "Следующая страница",
+    "page": "Страница"
+  },
+  "language": {
+    "title": "Язык",
+    "switchTo": "Переключить на {language}"
   }
 }
