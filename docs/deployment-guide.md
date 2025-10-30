@@ -1,5 +1,17 @@
 # 🚀 Deployment Guide
 
+> ⚠️ **PRODUCTION DEPLOYMENT - ADVANCED KNOWLEDGE REQUIRED**
+>
+> Dieses Projekt ist **NICHT "Deploy and Forget"**. Sie benötigen:
+>
+> - **DevOps-Erfahrung** mit Docker, Nginx/HAProxy, SSL/TLS
+> - **PostgreSQL Production Management** (Backups, Monitoring, Tuning)
+> - **Redis Production Setup** (Persistence, Memory Management)
+> - **Sicherheits-Expertise** (CORS, CSP, Rate Limiting, Headers)
+> - **CI/CD Pipeline Knowledge** (GitHub Actions, Deployment Strategies)
+>
+> **Multi-Database Warnung**: Wenn Sie MySQL/MongoDB verwenden, multipliziert sich die Komplexität! PostgreSQL-only wird **DRINGEND empfohlen** für die meisten Use Cases.
+
 Production deployment strategies and configuration for the Nuxt 4 boilerplate with database, security, and CI/CD considerations.
 
 ## 🏗️ Production Build

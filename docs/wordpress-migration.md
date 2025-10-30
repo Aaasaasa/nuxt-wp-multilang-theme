@@ -1,5 +1,28 @@
 # WordPress Migration zu NuxtWP
 
+> 🚨 **KRITISCHE WARNUNG - NUR FÜR EXPERTEN**
+>
+> Diese WordPress-Migration ist ein **hochkomplexes, einmaliges Migrationstool** und **KEIN Feature für Endanwender**!
+>
+> **Voraussetzungen:**
+>
+> - Tiefes Verständnis von WordPress-Datenbank-Schema (wp_posts, wp_terms, wp_postmeta, etc.)
+> - Expertise in Prisma Multi-Schema Setup und Migrations
+> - Erfahrung mit MySQL → PostgreSQL Datentyp-Konvertierungen
+> - Fähigkeit, SQL-Dumps zu bereinigen und anzupassen
+> - Docker/Docker Compose Kenntnisse für Datenbank-Container
+>
+> **Risiken:**
+>
+> - **Datenverlust** bei falscher Konfiguration
+> - **Encoding-Probleme** (UTF-8, Umlaute, Sonderzeichen)
+> - **Beziehungs-Inkonsistenzen** bei komplexen Term-Hierarchien
+> - **Performance-Probleme** bei großen Datenmengen (>10.000 Posts)
+>
+> ⚠️ **Verwenden Sie diese Migration NUR, wenn Sie genau wissen, was Sie tun!**
+>
+> **Support:** Dieses Tool wird "as-is" bereitgestellt. Keine Support-Garantie für Migrations-Probleme.
+
 Dokumentation für die Migration von WordPress-Daten zu PostgreSQL im NuxtWP Multilang Theme.
 
 ## 🚀 Quick Start Migration

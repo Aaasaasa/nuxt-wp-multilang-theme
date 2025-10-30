@@ -1,5 +1,5 @@
 // server/lib/prisma-utils.ts - Multi-Database Prisma Clients for NuxtWP Theme
-// PostgreSQL (CMS), MySQL (WordPress), MongoDB (Analytics)
+// PostgreSQL (CMS), MySQL (Legacy WP Migration), MongoDB (Analytics)
 // Server-side utilities for database connections
 
 // Singleton instances for each database
@@ -21,7 +21,7 @@ export const getPostgresClient = async () => {
       postgresClient = globalThis.__prismaPostgres
     } else {
       try {
-        const { PrismaClient } = await import('../../prisma/generated/postgres-cms')
+        const { PrismaClient } = await import('@@/prisma/generated/postgres-cms')
         postgresClient = new PrismaClient({
           datasources: {
             pgCMSdb: {
@@ -42,14 +42,14 @@ export const getPostgresClient = async () => {
   return postgresClient
 }
 
-// MySQL WordPress Client
+// MySQL Legacy Migration Client
 export const getMySQLClient = async () => {
   if (!mysqlClient) {
     if (process.env.NODE_ENV !== 'production' && globalThis.__prismaMysql) {
       mysqlClient = globalThis.__prismaMysql
     } else {
       try {
-        const { PrismaClient } = await import('../../prisma/generated/mysql')
+        const { PrismaClient } = await import('@@/prisma/generated/mysql')
         mysqlClient = new PrismaClient({
           datasources: {
             mysql: {
@@ -77,7 +77,7 @@ export const getMongoClient = async () => {
       mongoClient = globalThis.__prismaMongo
     } else {
       try {
-        const { PrismaClient } = await import('../../prisma/generated/mongo')
+        const { PrismaClient } = await import('@@/prisma/generated/mongo')
         mongoClient = new PrismaClient({
           datasources: {
             mongo: {

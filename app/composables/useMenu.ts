@@ -1,5 +1,5 @@
 /**
- * Composable for WordPress Menu API integration
+ * Composable for CMS Menu API integration
  * Provides menu loading functionality with caching and error handling
  */
 
@@ -56,14 +56,19 @@ export const getMenuIcon = (title: string): string => {
 }
 
 /**
- * Convert WordPress menu items to sidebar format
+ * Convert CMS menu items to sidebar format
  */
-export const convertMenuItemToSidebar = (item: MenuItem): SidebarItem => ({
-  label: item.title,
-  href: item.route || item.url || '#',
-  icon: getMenuIcon(item.title),
-  children: item.children?.map(convertMenuItemToSidebar)
-})
+export const convertMenuItemToSidebar = (item: MenuItem): SidebarItem => {
+  const localePath = useLocalePath()
+  const href = item.route || item.url || '#'
+
+  return {
+    label: item.title,
+    href: href.startsWith('/') ? localePath(href) : href, // Only use localePath for internal routes
+    icon: getMenuIcon(item.title),
+    children: item.children?.map(convertMenuItemToSidebar)
+  }
+}
 
 /**
  * Main menu composable

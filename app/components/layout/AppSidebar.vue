@@ -1,25 +1,36 @@
 <script setup lang="ts">
 const { loggedIn } = useUserSession()
 const localePath = useLocalePath()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
-// Load WordPress menu from API using our composable
+// Load CMS menu from API using our composable
 const { getMenuAsSidebarItems } = useMenu()
 
 // Load menu data
-const wordpressMenuItems = ref<SidebarItem[]>([])
+const cmsMenuItems = ref<SidebarItem[]>([])
 const menuLoading = ref(true)
 
-// Fetch menu on component mount
-onMounted(async () => {
+// Fetch menu on component mount AND when locale changes
+const loadMenu = async () => {
+  menuLoading.value = true
   try {
     const items = await getMenuAsSidebarItems('main-menu')
-    wordpressMenuItems.value = items
+    cmsMenuItems.value = items
   } catch {
     // Silent fallback to default items
   } finally {
     menuLoading.value = false
   }
+}
+
+// Load on mount
+onMounted(() => {
+  loadMenu()
+})
+
+// Reload menu when locale changes
+watch(locale, () => {
+  loadMenu()
 })
 
 // Fallback sidebar items if menu loading fails
@@ -56,9 +67,9 @@ const fallbackItems = computed<SidebarItem[]>(() => [
   }
 ])
 
-// Use WordPress menu if available, otherwise fallback
+// Use CMS menu if available, otherwise fallback
 const sidebarItems = computed<SidebarItem[]>(() => {
-  return wordpressMenuItems.value.length > 0 ? wordpressMenuItems.value : fallbackItems.value
+  return cmsMenuItems.value.length > 0 ? cmsMenuItems.value : fallbackItems.value
 })
 
 // Admin items for logged in users
@@ -66,22 +77,22 @@ const adminItems = computed<SidebarItem[]>(() =>
   loggedIn.value ? [
     {
       label: t('navigation.admin', 'Admin'),
-      href: '/admin',
+      href: localePath('/admin'),
       icon: 'i-lucide-settings',
       children: [
         {
           label: t('navigation.dashboard', 'Dashboard'),
-          href: '/admin/dashboard',
+          href: localePath('/admin/dashboard'),
           icon: 'i-lucide-layout-dashboard'
         },
         {
           label: t('navigation.posts', 'Posts'),
-          href: '/admin/posts',
+          href: localePath('/admin/posts'),
           icon: 'i-lucide-file-text'
         },
         {
           label: t('navigation.users', 'Users'),
-          href: '/admin/users',
+          href: localePath('/admin/users'),
           icon: 'i-lucide-users'
         }
       ]
@@ -180,16 +191,14 @@ onMounted(() => {
           <template v-for="item in sidebarItems" :key="item.href">
             <div>
               <!-- Main Menu Item -->
-              <UButton
+              <NuxtLink
                 :to="item.href"
-                :icon="item.icon"
-                color="neutral"
-                variant="ghost"
-                size="sm"
-                class="w-full justify-start"
+                class="flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                :hreflang="locale"
                 @click="sidebarOpen = false"
               >
-                {{ item.label }}
+                <UIcon v-if="item.icon" :name="item.icon" class="w-4 h-4 shrink-0" />
+                <span class="flex-1">{{ item.label }}</span>
                 <span v-if="item.badge" class="ml-auto text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">
                   {{ item.badge }}
                 </span>
@@ -197,39 +206,37 @@ onMounted(() => {
                 <UIcon
                   v-if="item.children && item.children.length > 0"
                   name="i-lucide-chevron-down"
-                  class="ml-auto w-4 h-4"
+                  class="w-4 h-4 shrink-0"
                 />
-              </UButton>
+              </NuxtLink>
 
               <!-- Sub-menu items -->
               <div v-if="item.children && item.children.length > 0" class="ml-6 mt-1 space-y-1">
-                <UButton
+                <NuxtLink
                   v-for="child in item.children"
                   :key="child.href"
                   :to="child.href"
-                  :icon="child.icon"
-                  color="neutral"
-                  variant="ghost"
-                  size="xs"
-                  class="w-full justify-start text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  class="flex items-center gap-2 px-3 py-1.5 text-xs rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  :hreflang="locale"
                   @click="sidebarOpen = false"
                 >
-                  {{ child.label }}
-                </UButton>
+                  <UIcon v-if="child.icon" :name="child.icon" class="w-3 h-3 shrink-0" />
+                  <span>{{ child.label }}</span>
+                </NuxtLink>
               </div>
             </div>
           </template>
         </div>
 
-        <!-- WordPress Menu Status -->
+        <!-- CMS Menu Status -->
         <div v-if="!menuLoading" class="pt-2 border-t border-gray-200 dark:border-gray-800">
           <p class="text-xs text-gray-400 dark:text-gray-500 px-3">
             <UIcon
-              :name="wordpressMenuItems.length > 0 ? 'i-lucide-check-circle' : 'i-lucide-alert-circle'"
-              :class="wordpressMenuItems.length > 0 ? 'text-green-500' : 'text-amber-500'"
+              :name="cmsMenuItems.length > 0 ? 'i-lucide-check-circle' : 'i-lucide-alert-circle'"
+              :class="cmsMenuItems.length > 0 ? 'text-green-500' : 'text-amber-500'"
               class="inline w-3 h-3 mr-1"
             />
-            {{ wordpressMenuItems.length > 0 ? 'WordPress Menu' : 'Fallback Menu' }}
+            {{ cmsMenuItems.length > 0 ? 'Aaasaasa CMS Menu' : 'Fallback Menu' }}
           </p>
         </div>
 
@@ -240,33 +247,29 @@ onMounted(() => {
           </p>
           <template v-for="item in adminItems" :key="item.href">
             <!-- Admin parent item -->
-            <UButton
+            <NuxtLink
               :to="item.href"
-              :icon="item.icon"
-              color="neutral"
-              variant="ghost"
-              size="sm"
-              class="w-full justify-start"
+              class="flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+              :hreflang="locale"
               @click="sidebarOpen = false"
             >
-              {{ item.label }}
-            </UButton>
+              <UIcon v-if="item.icon" :name="item.icon" class="w-4 h-4 shrink-0" />
+              <span>{{ item.label }}</span>
+            </NuxtLink>
 
             <!-- Admin sub-items -->
             <div v-if="item.children" class="ml-6 mt-1 space-y-1">
-              <UButton
+              <NuxtLink
                 v-for="child in item.children"
                 :key="child.href"
                 :to="child.href"
-                :icon="child.icon"
-                color="neutral"
-                variant="ghost"
-                size="xs"
-                class="w-full justify-start"
+                class="flex items-center gap-2 px-3 py-1.5 text-xs rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                :hreflang="locale"
                 @click="sidebarOpen = false"
               >
-                {{ child.label }}
-              </UButton>
+                <UIcon v-if="child.icon" :name="child.icon" class="w-3 h-3 shrink-0" />
+                <span>{{ child.label }}</span>
+              </NuxtLink>
             </div>
           </template>
         </div>

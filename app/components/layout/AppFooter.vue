@@ -31,8 +31,8 @@ interface FooterContent {
 // This will later come from CMS/Backend API
 const footerContent: FooterContent = {
   branding: {
-    name: 'NuxtWP Multilang Theme',
-    tagline: 'Modern multilingual CMS with Nuxt & WordPress integration'
+    name: 'Aaasaasa Nuxt 4 CMS Theme created by Aleksandar Stajić',
+    tagline: 'Modern multilingual CMS with Nuxt & WordPress migration'
   },
   author: {
     name: 'Aleksandar Stajic',
@@ -196,7 +196,7 @@ const currentYear = new Date().getFullYear()
           </p>
           <p class="text-xs">
             {{ $t('footer.allRightsReserved', 'All rights reserved.') }}
-            {{ $t('footer.poweredBy', 'Powered by Nuxt & WordPress.') }}
+            {{ $t('footer.poweredBy', 'Powered by Nuxt 4.') }}
           </p>
         </div>
 

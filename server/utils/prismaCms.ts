@@ -1,7 +1,7 @@
 // server/utils/prismaCms.ts - PostgreSQL CMS Client (Singleton)
 // Primary database for all CMS content (posts, pages, users, etc.)
 
-import { PrismaClient as PrismaCmsClient } from '@prisma/cms'
+import { PrismaClient as PrismaCmsClient } from '@@/prisma/generated/postgres-cms/index.js'
 
 // Global singleton for hot reload in development
 declare const globalThis: {

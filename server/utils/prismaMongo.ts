@@ -1,7 +1,7 @@
 // server/utils/prismaMongo.ts - MongoDB Analytics Client (Singleton)
 // Analytics, logs, session data
 
-import { PrismaClient as PrismaMongoClient } from '@prisma/mongo'
+import { PrismaClient as PrismaMongoClient } from '@@/prisma/generated/mongo'
 
 // Global singleton for hot reload in development
 declare const globalThis: {

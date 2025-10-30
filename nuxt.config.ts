@@ -129,7 +129,7 @@ export default defineNuxtConfig({
   // Image Optimization (Modern WebP/AVIF)
   // ========================================
   image: {
-    // Deaktiviere IPX für WordPress Bilder (sie sind bereits optimiert)
+    // Deaktiviere IPX für CMS Bilder (sie sind bereits optimiert)
     provider: 'none',
 
     // Public directory für statische Dateien
@@ -216,11 +216,6 @@ export default defineNuxtConfig({
   // Nitro Configuration (Server only)
   // ========================================
   nitro: {
-    alias: {
-      '@prisma/cms': './prisma/generated/postgres-cms/index.js',
-      '@prisma/mysql': './prisma/generated/mysql/index.js',
-      '@prisma/mongo': './prisma/generated/mongo/index.js'
-    },
     imports: {
       dirs: [
         'server/constants/**',
@@ -244,7 +239,11 @@ export default defineNuxtConfig({
       }
     }
   },
-
+  alias: {
+      '@prisma/cms': './prisma/generated/postgres-cms/index.js',
+      '@prisma/mysql': './prisma/generated/mysql/index.js',
+      '@prisma/mongo': './prisma/generated/mongo/index.js'
+    },
   // ========================================
   // Vite Configuration (Frontend only - no Prisma clients)
   // ========================================

@@ -1,7 +1,7 @@
-// server/utils/prismaWp.ts - MySQL WordPress Client (Singleton)
-// Legacy database for WordPress content migration
+// server/utils/prismaWp.ts - MySQL Legacy Migration Client (Singleton)
+// Legacy database for WordPress content migration (kept for data import scripts)
 
-import { PrismaClient as PrismaWpClient } from '@prisma/mysql'
+import { PrismaClient as PrismaWpClient } from '@@/prisma/generated/mysql'
 
 // Global singleton for hot reload in development
 declare const globalThis: {

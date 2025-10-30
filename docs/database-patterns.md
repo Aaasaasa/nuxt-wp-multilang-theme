@@ -1,5 +1,18 @@
 # 🗃️ Multi-Database Architecture
 
+> ⚠️ **EXPERT-LEVEL COMPLEXITY WARNING**
+>
+> This multi-database setup is **NOT for beginners**. It requires:
+>
+> - **Production PostgreSQL** knowledge (schemas, migrations, multi-tenancy)
+> - **Prisma Multi-Schema** expertise (client generation, separation concerns)
+> - **Docker/Docker Compose** for local development databases
+> - Understanding of **connection pooling**, **transactions**, and **data consistency**
+>
+> **MySQL/WordPress Client**: This is a **migration-only** data source. Do NOT use in production unless you fully understand the implications of running multiple database systems simultaneously.
+>
+> **Recommended**: Start with PostgreSQL-only. Add MySQL/MongoDB only if you have specific migration or analytics requirements.
+
 Advanced multi-database system using Prisma ORM with PostgreSQL, MySQL, and MongoDB integration for comprehensive CMS and analytics capabilities.
 
 ## 🏗️ Multi-Database Architecture

@@ -1,4 +1,4 @@
-import type { PrismaClient as PrismaCmsClient } from '@prisma/cms'
+import type { PrismaClient as PrismaCmsClient } from '@@/prisma/generated/postgres-cms'
 import prismaCms from '../utils/prismaCms'
 
 export class CookieService {

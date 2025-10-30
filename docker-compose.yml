@@ -1,9 +1,27 @@
 version: "3.9"
 
+# 🎯 DOCKER PROFILES - Selektive Datenbank-Aktivierung
+#
+# Nur PostgreSQL (Minimum):
+#   docker-compose up -d postgres redis
+#
+# Mit MySQL für WordPress Migration:
+#   docker-compose --profile migration up -d
+#
+# Mit MongoDB für Analytics:
+#   docker-compose --profile analytics up -d
+#
+# Full Stack (alle DBs):
+#   docker-compose --profile migration --profile analytics up -d
+#
+# Oder alles auf einmal:
+#   docker-compose --profile all up -d
+
 services:
   # ========= Nuxt App =========
 
   nuxt:
+    profiles: ["all"] # Optional - nur wenn Full Stack gewünscht
     build:
       context: .
       dockerfile: Dockerfile
@@ -23,13 +41,11 @@ services:
       - /app/node_modules
     depends_on:
       - postgres
-      - mysql
       - redis
-      - mongodb
     restart: unless-stopped
     command: ["yarn", "dev"]
 
-  # ========= PostgreSQL =========
+  # ========= PostgreSQL (REQUIRED - Always Available) =========
 
   postgres:
     image: postgres:16
@@ -45,9 +61,10 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
       - ./.docker/postgres/init:/docker-entrypoint-initdb.d
 
-  # ========= MySQL =========
+  # ========= MySQL (OPTIONAL - Only for WordPress Migration) =========
 
   mysql:
+    profiles: ["migration", "all"] # 👈 Nur mit --profile migration
     image: mysql:8.3
     container_name: nuxt_mysql
     restart: unless-stopped
@@ -62,9 +79,10 @@ services:
       - ./data/mysql:/var/lib/mysql
       - ./.docker/mysql/init:/docker-entrypoint-initdb.d
 
-  # ========= phpMyAdmin =========
+  # ========= phpMyAdmin (OPTIONAL - Only with MySQL) =========
 
   phpmyadmin:
+    profiles: ["migration", "all"] # 👈 Nur mit --profile migration
     image: phpmyadmin:latest
     restart: unless-stopped
     ports:
@@ -75,7 +93,7 @@ services:
     depends_on:
       - mysql
 
-  # ========= Redis =========
+  # ========= Redis (RECOMMENDED - For Caching) =========
 
   redis:
     image: redis:7
@@ -87,9 +105,10 @@ services:
       - ./data/redis:/data
       - ./.docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
 
-  # ========= MongoDB =========
+  # ========= MongoDB (OPTIONAL - Only for Analytics) =========
 
   mongodb:
+    profiles: ["analytics", "all"] # 👈 Nur mit --profile analytics
     image: mongo:7
     container_name: nuxt_mongo
     restart: unless-stopped
@@ -102,9 +121,10 @@ services:
       MONGO_INITDB_ROOT_USERNAME: aleks
       MONGO_INITDB_ROOT_PASSWORD: yourpassword
 
-  # ========= Adminer =========
+  # ========= Adminer (OPTIONAL - Database GUI) =========
 
   adminer:
+    profiles: ["migration", "analytics", "all"] # 👈 Nur wenn DBs aktiv
     image: adminer
     restart: unless-stopped
     ports:

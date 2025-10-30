@@ -86,7 +86,7 @@ export class MediaResolver {
    */
   async resolveByMediaId(mediaId: number): Promise<ResolvedMedia | null> {
     try {
-      const result = await this.client.query(`
+      const result = await this.client.$queryRaw`
         SELECT
           m.id,
           m.filename,
@@ -108,13 +108,13 @@ export class MediaResolver {
           ) as sizes
         FROM cms_media m
         LEFT JOIN cms_media_sizes ms ON ms.media_id = m.id
-        WHERE m.id = $1
+        WHERE m.id = ${mediaId}
         GROUP BY m.id, m.filename, m.file_path, m.mime_type, m.width, m.height, m.alt_text
-      `, [mediaId])
+      ` as MediaRecord[]
 
-      if (result.rows.length === 0) return null
+      if (!result || result.length === 0) return null
 
-      const media = result.rows[0] as MediaRecord & { sizes: MediaSize[] }
+      const media = result[0] as MediaRecord & { sizes: MediaSize[] }
 
       return this.formatMediaResponse(media, media.sizes || [])
 
@@ -129,7 +129,7 @@ export class MediaResolver {
    */
   async resolveByPath(filePath: string): Promise<ResolvedMedia | null> {
     try {
-      const result = await this.client.query(`
+      const result = await this.client.$queryRaw`
         SELECT
           m.id,
           m.filename,
@@ -151,14 +151,14 @@ export class MediaResolver {
           ) as sizes
         FROM cms_media m
         LEFT JOIN cms_media_sizes ms ON ms.media_id = m.id
-        WHERE m.file_path = $1
+        WHERE m.file_path = ${filePath}
         GROUP BY m.id, m.filename, m.file_path, m.mime_type, m.width, m.height, m.alt_text
         LIMIT 1
-      `, [filePath])
+      ` as MediaRecord[]
 
-      if (result.rows.length === 0) return null
+      if (!result || result.length === 0) return null
 
-      const media = result.rows[0] as MediaRecord & { sizes: MediaSize[] }
+      const media = result[0] as MediaRecord & { sizes: MediaSize[] }
 
       return this.formatMediaResponse(media, media.sizes || [])
 

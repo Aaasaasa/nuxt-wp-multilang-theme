@@ -1,7 +1,7 @@
 // app/components/features/LanguageSwitcher.vue
 
 <template>
-  <UDropdownMenu :items="languageMenuItems">
+  <UDropdownMenu v-if="currentLocale" :items="languageMenuItems">
     <UButton
       color="neutral"
       variant="ghost"
@@ -20,25 +20,30 @@ const { locale, locales, setLocale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 
 const currentLocale = computed(() => {
-  return locales.value.find((l) => l.code === locale.value) || locales.value[0]
+  const found = locales.value.find((l) => l.code === locale.value)
+  return found || locales.value[0] || null
 })
 
-const languageMenuItems = computed<DropdownMenuItem[][]>(() => [
-  [
-    {
-      label: currentLocale.value.name,
-      type: 'label',
-      icon: 'i-lucide-globe'
-    }
-  ],
-  locales.value.map((loc) => ({
-    label: loc.name,
-    icon: locale.value === loc.code ? 'i-lucide-check' : undefined,
-    disabled: locale.value === loc.code,
-    onSelect: () => {
-      setLocale(loc.code)
-      navigateTo(switchLocalePath(loc.code))
-    }
-  }))
-])
+const languageMenuItems = computed<DropdownMenuItem[][]>(() => {
+  if (!currentLocale.value) return []
+
+  return [
+    [
+      {
+        label: currentLocale.value.name,
+        type: 'label',
+        icon: 'i-lucide-globe'
+      }
+    ],
+    locales.value.map((loc) => ({
+      label: loc.name,
+      icon: locale.value === loc.code ? 'i-lucide-check' : undefined,
+      disabled: locale.value === loc.code,
+      onSelect: () => {
+        setLocale(loc.code)
+        navigateTo(switchLocalePath(loc.code))
+      }
+    }))
+  ]
+})
 </script>
