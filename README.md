@@ -655,7 +655,7 @@ Building this platform **solo** required mastery of:
 
 - Node.js ≥ 22.0.0
 - Yarn ≥ 1.22.0 (Package Manager)
-- Docker (für Datenbanken - **optional**: externe DBs möglich)
+- Docker (for databases - **optional**: external DBs supported)
 
 ### Setup
 
@@ -669,12 +669,12 @@ Building this platform **solo** required mastery of:
    cp .env.example .env
    ```
 
-2. **🎯 Wählen Sie Ihr Setup** (siehe [Flexible Database Setup](#-flexible-database-setup))
+2. **🎯 Choose Your Setup** (see [Flexible Database Setup](#-flexible-database-setup))
 
-   **Option A: Minimum Setup (Empfohlen für Start)**
+   **Option A: Minimum Setup (Recommended for Start)**
 
    ```bash
-   # Nur PostgreSQL + Redis (ausreichend für CMS)
+   # Only PostgreSQL + Redis (sufficient for CMS)
    docker compose up -d postgres redis
    yarn prisma:generate
    yarn prisma:migrate
@@ -701,18 +701,18 @@ Building this platform **solo** required mastery of:
 3. **Configure environment variables**
 
    ```bash
-   # Essential variables (anpassen an Ihr Setup):
+   # Essential variables (adjust to your setup):
 
    # PostgreSQL (REQUIRED)
    DATABASE_URL="postgresql://usrcms:Utorak30Sep@localhost:5432/nuxt_pg_cms_db"
 
-   # MySQL (nur wenn --profile migration)
+   # MySQL (only if --profile migration)
    MYSQL_DATABASE_URL="mysql://rooth3wp:Freitag0605@localhost:3306/sta3wp"
 
-   # MongoDB (nur wenn --profile analytics)
+   # MongoDB (only if --profile analytics)
    MONGODB_DATABASE_URL="mongodb://aleks:yourpassword@localhost:27017"
 
-   # Redis (empfohlen für Caching)
+   # Redis (recommended for caching)
    REDIS_URL="redis://localhost:6379"
 
    # Authentication
@@ -729,21 +729,21 @@ Building this platform **solo** required mastery of:
 
 ## 🎯 Flexible Database Setup
 
-### Minimum (Empfohlen für Anfang)
+### Minimum (Recommended for Start)
 
-**Was läuft**: PostgreSQL + Redis  
-**Aufwand**: ⭐⚫⚫⚫⚫  
-**Geeignet für**: Normale CMS-Projekte, Blogs, Websites
+**What Runs**: PostgreSQL + Redis  
+**Effort**: ⭐⚫⚫⚫⚫  
+**Suitable For**: Standard CMS projects, Blogs, Websites
 
 ```bash
 docker compose up -d postgres redis
 ```
 
-### Mit WordPress Migration
+### With WordPress Migration
 
-**Was läuft**: PostgreSQL + MySQL + Redis  
-**Aufwand**: ⭐⭐⭐⚫⚫  
-**Geeignet für**: Einmalige WordPress-Daten-Migration (siehe [WordPress Migration Warnung](docs/wordpress-migration.md))
+**What Runs**: PostgreSQL + MySQL + Redis  
+**Effort**: ⭐⭐⭐⚫⚫  
+**Suitable For**: One-time WordPress data migration (see [WordPress Migration Warning](docs/wordpress-migration.md))
 
 ```bash
 docker compose --profile migration up -d
@@ -751,9 +751,9 @@ docker compose --profile migration up -d
 
 ### Full Analytics Stack
 
-**Was läuft**: PostgreSQL + MongoDB + Redis  
-**Aufwand**: ⭐⭐⭐⚫⚫  
-**Geeignet für**: Projekte mit erweiterten Analytics und Logging
+**What Runs**: PostgreSQL + MongoDB + Redis  
+**Effort**: ⭐⭐⭐⚫⚫  
+**Suitable For**: Projects with advanced analytics and logging
 
 ```bash
 docker compose --profile analytics up -d

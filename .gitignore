@@ -37,10 +37,17 @@ lerna-debug.log*
 .env.*
 !.env.example
 
-# Database
+# --- Database Files ---
 *.sqlite
 *.sqlite3
 *.db
+*.sql
+!prisma/migrations/**/*.sql
+!prisma/adapters/migrations/**/*.sql
+!prisma/postgres-cms/migrations/**/*.sql
+!prisma/mysql/migrations/**/*.sql
+!prisma/mongo/migrations/**/*.sql
+temp_query.sql
 
 # Testing
 coverage
@@ -63,11 +70,46 @@ Thumbs.db
 .fleet
 
 *.secret
+# --- Data Directories (Database Volumes) ---
+data/
+data/postgres/**
+data/mysql/**
+data/mongo/**
+data/redis/**
+volumes/
 docker-volumes/**/data/
+# Backup files
+*.backup
+*.bak
+*.dump
+*~
+*.swp
+*.swo
 
 # prisma
 prisma/generated
 
-# WordPress Media/Uploads (nicht versioniert)
-public/uploads/*
+# --- Uploads (außer README) ---
+public/uploads/**/*
 !public/uploads/README.md
+# Ignore all images in uploads
+public/uploads/**/*.jpg
+public/uploads/**/*.jpeg
+public/uploads/**/*.png
+public/uploads/**/*.gif
+public/uploads/**/*.webp
+public/uploads/**/*.svg
+public/uploads/**/*.ico
+# Ignore uploads from WordPress migration years
+public/uploads/2014/**
+public/uploads/2015/**
+public/uploads/2016/**
+public/uploads/2017/**
+public/uploads/2018/**
+public/uploads/2019/**
+public/uploads/2020/**
+public/uploads/2021/**
+public/uploads/2022/**
+public/uploads/2023/**
+public/uploads/2024/**
+public/uploads/2025/**
