@@ -1,3 +1,5 @@
+// app/components/features/LanguageSwitcher.vue
+
 <template>
   <UDropdownMenu :items="languageMenuItems">
     <UButton

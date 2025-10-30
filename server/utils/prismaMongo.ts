@@ -1,17 +1,25 @@
-// server/lib/prismaMongo.ts
-// server/lib/prismaMongo.ts
-import { PrismaClient as PrismaMongoClient } from '../../prisma/mongo'
+// server/utils/prismaMongo.ts - MongoDB Analytics Client (Singleton)
+// Analytics, logs, session data
 
-const prismaMongoSingleton = () => new PrismaMongoClient()
+import { PrismaClient as PrismaMongoClient } from '@prisma/mongo'
 
-type PrismaMongoSingleton = ReturnType<typeof prismaMongoSingleton>
+// Global singleton for hot reload in development
+declare const globalThis: {
+  __prismaMongo?: PrismaMongoClient
+} & typeof global
 
-declare global {
-  var prismaMongoGlobal: PrismaMongoSingleton | undefined
+const prismaMongoClient =
+  globalThis.__prismaMongo ||
+  new PrismaMongoClient({
+    datasources: {
+      mongo: {
+        url: process.env.MONGO_URL || process.env.MONGODB_DATABASE_URL
+      }
+    }
+  })
+
+if (process.env.NODE_ENV !== 'production') {
+  globalThis.__prismaMongo = prismaMongoClient
 }
 
-const prismaMongo = globalThis.prismaMongoGlobal ?? prismaMongoSingleton()
-
-if (process.env.NODE_ENV !== 'production') globalThis.prismaMongoGlobal = prismaMongo
-
-export default prismaMongo
+export default prismaMongoClient

@@ -1,15 +1,25 @@
-import { PrismaClient as PrismaWpClient } from '../../prisma/mysql'
+// server/utils/prismaWp.ts - MySQL WordPress Client (Singleton)
+// Legacy database for WordPress content migration
 
-const prismaWpSingleton = () => new PrismaWpClient()
+import { PrismaClient as PrismaWpClient } from '@prisma/mysql'
 
-type PrismaWpSingleton = ReturnType<typeof prismaWpSingleton>
+// Global singleton for hot reload in development
+declare const globalThis: {
+  __prismaWp?: PrismaWpClient
+} & typeof global
 
-declare global {
-  var prismaWpGlobal: PrismaWpSingleton | undefined
+const prismaWpClient =
+  globalThis.__prismaWp ||
+  new PrismaWpClient({
+    datasources: {
+      mysql: {
+        url: process.env.MYSQL_URL || process.env.MYSQL_DATABASE_URL
+      }
+    }
+  })
+
+if (process.env.NODE_ENV !== 'production') {
+  globalThis.__prismaWp = prismaWpClient
 }
 
-const prismaWp = globalThis.prismaWpGlobal ?? prismaWpSingleton()
-
-if (process.env.NODE_ENV !== 'production') globalThis.prismaWpGlobal = prismaWp
-
-export default prismaWp
+export default prismaWpClient

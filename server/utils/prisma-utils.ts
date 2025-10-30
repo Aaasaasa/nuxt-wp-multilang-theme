@@ -21,7 +21,7 @@ export const getPostgresClient = async () => {
       postgresClient = globalThis.__prismaPostgres
     } else {
       try {
-        const { PrismaClient } = await import('@prisma/cms')
+        const { PrismaClient } = await import('../../prisma/generated/postgres-cms')
         postgresClient = new PrismaClient({
           datasources: {
             pgCMSdb: {
@@ -49,7 +49,7 @@ export const getMySQLClient = async () => {
       mysqlClient = globalThis.__prismaMysql
     } else {
       try {
-        const { PrismaClient } = await import('@prisma/mysql')
+        const { PrismaClient } = await import('../../prisma/generated/mysql')
         mysqlClient = new PrismaClient({
           datasources: {
             mysql: {
@@ -77,7 +77,7 @@ export const getMongoClient = async () => {
       mongoClient = globalThis.__prismaMongo
     } else {
       try {
-        const { PrismaClient } = await import('@prisma/mongo')
+        const { PrismaClient } = await import('../../prisma/generated/mongo')
         mongoClient = new PrismaClient({
           datasources: {
             mongo: {

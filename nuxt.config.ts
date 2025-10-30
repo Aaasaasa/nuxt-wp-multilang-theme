@@ -142,14 +142,14 @@ export default defineNuxtConfig({
       md: 768,
       lg: 1024,
       xl: 1280,
-      xxl: 1536,
+      xxl: 1536
     },
 
     // IPX Konfiguration für bessere Performance
     ipx: {
       // Cache-Einstellungen für bessere Performance
       maxAge: 60 * 60 * 24 * 365 // 1 Jahr Cache
-    },    // Presets für verschiedene Use Cases
+    }, // Presets für verschiedene Use Cases
     presets: {
       // Blog Post Featured Image
       featured: {
@@ -198,8 +198,8 @@ export default defineNuxtConfig({
   // Nuxt 4 Server Structure Blacklisting
   // ========================================
   ignore: [
-    'server/lib/**',        // Nuxt 4 server/lib/ mit Prisma Clients
-    'prisma/generated/**'   // Generierte Prisma Clients
+    'server/lib/**', // Nuxt 4 server/lib/ mit Prisma Clients
+    'prisma/generated/**' // Generierte Prisma Clients
   ],
 
   // Zod auto-import (modern syntax)
@@ -216,14 +216,25 @@ export default defineNuxtConfig({
   // Nitro Configuration (Server only)
   // ========================================
   nitro: {
-    // Aliases entfernt - verwende relative Imports in server/lib/ files
+    alias: {
+      '@prisma/cms': './prisma/generated/postgres-cms/index.js',
+      '@prisma/mysql': './prisma/generated/mysql/index.js',
+      '@prisma/mongo': './prisma/generated/mongo/index.js'
+    },
     imports: {
       dirs: [
         'server/constants/**',
         'server/services/**',
-        'server/utils/**',     // Nuxt 4 Konvention: utils OK
         'server/types/**'
-        // server/lib/** explizit NICHT - enthält Prisma Clients
+        // server/utils/** mit Prisma Clients manuell importieren
+        // server/lib/** NICHT verwenden
+      ],
+      // Explizit Prisma-Clients ausschließen
+      exclude: [
+        'server/utils/prismaCms.ts',
+        'server/utils/prismaWp.ts',
+        'server/utils/prismaMongo.ts',
+        'server/utils/prisma-utils.ts'
       ]
     },
     serverAssets: [{ baseName: 'templates', dir: './templates' }],
@@ -241,11 +252,7 @@ export default defineNuxtConfig({
     build: { chunkSizeWarningLimit: 600 },
     server: {
       watch: {
-        ignored: [
-          '**/data/**',
-          '**/node_modules/**',
-          '**/.nuxt/**'
-        ]
+        ignored: ['**/data/**', '**/node_modules/**', '**/.nuxt/**']
       },
       fs: {
         strict: false
