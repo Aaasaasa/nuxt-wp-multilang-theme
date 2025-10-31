@@ -1,6 +1,5 @@
 // server/services/portfolio.service.ts
 import prismaCms from '../utils/prismaCms'
-import { MediaResolver } from '../utils/mediaResolver'
 
 // Types
 interface PortfolioWithAuthor {
@@ -16,10 +15,9 @@ interface PortfolioWithAuthor {
   updatedAt: Date
   author: {
     id: string
-    username: string
+    login: string
     email: string
-    firstName: string | null
-    lastName: string | null
+    displayName: string
   }
 }
 
@@ -32,8 +30,6 @@ interface PortfolioWithAuthor {
  */
 export async function getAllPortfolios(): Promise<PortfolioWithAuthor[]> {
   try {
-    const mediaResolver = new MediaResolver(prismaCms)
-
     const portfolios = await prismaCms.portfolio.findMany({
       include: {
         author: true,
@@ -42,42 +38,50 @@ export async function getAllPortfolios(): Promise<PortfolioWithAuthor[]> {
           take: 1
         },
         metas: {
-          where: { key: 'featured_image' }
+          where: { key: 'featured_image' },
+          include: {
+            Media: {
+              include: {
+                sizes: true
+              }
+            }
+          }
         }
       },
       orderBy: { createdAt: 'desc' }
     })
 
-    // Resolve featured images asynchronously
-    const portfoliosWithMedia = await Promise.all(
-      portfolios.map(async (portfolio) => {
-        const translation = portfolio.translations[0] || {}
-        const featuredImageMeta = portfolio.metas?.find(m => m.key === 'featured_image')
+    // Map portfolios with featured images
+    const portfoliosWithMedia = portfolios.map((portfolio) => {
+      const translation = portfolio.translations[0] || {}
+      const featuredImageMeta = portfolio.metas?.find(m => m.key === 'featured_image')
 
-        // Resolve featured image
-        const resolvedMedia = await mediaResolver.resolveFeaturedImage(featuredImageMeta?.value as any)
+      // Build featured image URL from Media relation (capital M)
+      let featuredImage = null
+      if (featuredImageMeta?.Media) {
+        featuredImage = featuredImageMeta.Media.filePath
+      }
 
-        return {
-          id: portfolio.id.toString(),
-          title: translation.title || 'Untitled',
-          slug: portfolio.slug,
-          content: translation.content || '',
-          excerpt: translation.excerpt || null,
-          featuredImage: resolvedMedia?.url || null,
-          status: portfolio.status,
-          publishedAt: portfolio.status === 'PUBLISHED' ? portfolio.createdAt : null,
-          createdAt: portfolio.createdAt,
-          updatedAt: portfolio.updatedAt,
-          author: {
-            id: portfolio.author.id.toString(),
-            username: portfolio.author.login,
-            email: portfolio.author.email,
-            firstName: null,
-            lastName: null
-          }
+      return {
+        id: portfolio.id.toString(),
+        title: translation.title || 'Untitled',
+        slug: portfolio.slug,
+        content: translation.content || '',
+        excerpt: translation.excerpt || null,
+        featuredImage,
+        status: portfolio.status,
+        publishedAt: portfolio.status === 'PUBLISHED' ? portfolio.createdAt : null,
+        createdAt: portfolio.createdAt,
+        updatedAt: portfolio.updatedAt,
+        author: {
+          id: portfolio.author.id.toString(),
+          username: portfolio.author.displayName, // Show displayName instead of login
+          email: portfolio.author.email,
+          firstName: portfolio.author.firstName || null,
+          lastName: portfolio.author.lastName || null
         }
-      })
-    )
+      }
+    })
 
     return portfoliosWithMedia
   } catch (error) {
@@ -92,8 +96,6 @@ export async function getAllPortfolios(): Promise<PortfolioWithAuthor[]> {
  */
 export async function getPortfolioBySlug(slug: string): Promise<PortfolioWithAuthor | null> {
   try {
-    const mediaResolver = new MediaResolver(prismaCms)
-
     const portfolio = await prismaCms.portfolio.findFirst({
       where: { slug },
       include: {
@@ -103,7 +105,14 @@ export async function getPortfolioBySlug(slug: string): Promise<PortfolioWithAut
           take: 1
         },
         metas: {
-          where: { key: 'featured_image' }
+          where: { key: 'featured_image' },
+          include: {
+            Media: {
+              include: {
+                sizes: true
+              }
+            }
+          }
         }
       }
     })
@@ -115,8 +124,11 @@ export async function getPortfolioBySlug(slug: string): Promise<PortfolioWithAut
     const translation = portfolio.translations[0] || {}
     const featuredImageMeta = portfolio.metas?.find(m => m.key === 'featured_image')
 
-    // Resolve featured image
-    const resolvedMedia = await mediaResolver.resolveFeaturedImage(featuredImageMeta?.value as any)
+    // Build featured image URL from Media relation (capital M)
+    let featuredImage = null
+    if (featuredImageMeta?.Media) {
+      featuredImage = featuredImageMeta.Media.filePath
+    }
 
     return {
       id: portfolio.id.toString(),
@@ -124,17 +136,17 @@ export async function getPortfolioBySlug(slug: string): Promise<PortfolioWithAut
       slug: portfolio.slug,
       content: translation.content || '',
       excerpt: translation.excerpt || null,
-      featuredImage: resolvedMedia?.url || null,
+      featuredImage,
       status: portfolio.status,
       publishedAt: portfolio.status === 'PUBLISHED' ? portfolio.createdAt : null,
       createdAt: portfolio.createdAt,
       updatedAt: portfolio.updatedAt,
       author: {
         id: portfolio.author.id.toString(),
-        username: portfolio.author.login,
+        username: portfolio.author.displayName, // Show displayName instead of login
         email: portfolio.author.email,
-        firstName: null,
-        lastName: null
+        firstName: portfolio.author.firstName || null,
+        lastName: portfolio.author.lastName || null
       }
     }
   } catch (error) {

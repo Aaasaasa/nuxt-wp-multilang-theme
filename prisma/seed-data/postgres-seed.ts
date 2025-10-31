@@ -1,74 +1,118 @@
 // prisma/seed-data/postgres-seed.ts
 // PostgreSQL CMS Seed Data for NuxtWP Multilang Theme
 
-import { getPostgresClient } from '../../server/lib/prisma-utils'
+import { PrismaClient as PostgresCMSClient } from '../generated/postgres-cms'
+import seedRBAC from './rbac-seed'
+
+const prismaCMS = new PostgresCMSClient()
 
 async function seedPostgresCMS() {
-  const prisma = await getPostgresClient()
-
-  if (!prisma) {
-    throw new Error('PostgreSQL client not available')
-  }
-
   try {
+    // ==========================================
+    // STEP 1: SEED RBAC SYSTEM FIRST
+    // ==========================================
+    const _rbacData = await seedRBAC()
+
+    // ==========================================
+    // STEP 2: CREATE DEMO USERS
+    // ==========================================
+    // eslint-disable-next-line no-console
+    console.log('👤 Creating Demo Users...')
+
     // Clean existing data (in development only)
     if (process.env.NODE_ENV !== 'production') {
-      await prisma.termRelationship.deleteMany()
-      await prisma.termTaxonomy.deleteMany()
-      await prisma.term.deleteMany()
-      await prisma.comment.deleteMany()
-      await prisma.articleTranslation.deleteMany()
-      await prisma.article.deleteMany()
-      await prisma.pageTranslation.deleteMany()
-      await prisma.page.deleteMany()
-      await prisma.portfolioTranslation.deleteMany()
-      await prisma.portfolio.deleteMany()
-      await prisma.productTranslation.deleteMany()
-      await prisma.product.deleteMany()
-      await prisma.userMeta.deleteMany()
-      await prisma.user.deleteMany()
-      await prisma.setting.deleteMany()
-      await prisma.menu.deleteMany()
+      await prismaCMS.termRelationship.deleteMany()
+      await prismaCMS.termTaxonomy.deleteMany()
+      await prismaCMS.term.deleteMany()
+      await prismaCMS.comment.deleteMany()
+      await prismaCMS.articleTranslation.deleteMany()
+      await prismaCMS.article.deleteMany()
+      await prismaCMS.pageTranslation.deleteMany()
+      await prismaCMS.page.deleteMany()
+      await prismaCMS.portfolioTranslation.deleteMany()
+      await prismaCMS.portfolio.deleteMany()
+      await prismaCMS.productTranslation.deleteMany()
+      await prismaCMS.product.deleteMany()
+      await prismaCMS.userMeta.deleteMany()
+      await prismaCMS.employeeRole.deleteMany()
+      await prismaCMS.employee.deleteMany()
+      await prismaCMS.user.deleteMany()
+      await prismaCMS.setting.deleteMany()
+      await prismaCMS.menu.deleteMany()
     }
 
     // Create admin user
-    const _adminUser = await prisma.user.create({
+    const _adminUser = await prismaCMS.user.create({
       data: {
         login: 'admin',
-        email: 'admin@nuxtwo.com',
-        password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        displayName: 'Administrator',
-        role: 'SUPERADMIN'
+        email: 'admin@example.com',
+        password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password: "password"
+        displayName: 'Admin User',
+        firstName: 'Admin',
+        lastName: 'User',
+        role: 'SUPERADMIN',
+        emailVerified: true
       }
     })
 
-    // Create author user
-    const authorUser = await prisma.user.create({
+    // Create demo author user
+    const authorUser = await prismaCMS.user.create({
       data: {
-        login: 'aleksandar',
-        email: 'aleksandar@stajic.com',
-        password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        displayName: 'Aleksandar Stajic',
-        role: 'AUTHOR'
+        login: 'demo_author',
+        email: 'author@example.com',
+        password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password: "password"
+        displayName: 'Demo Author',
+        firstName: 'John',
+        lastName: 'Smith',
+        role: 'AUTHOR',
+        emailVerified: true
+      }
+    })
+
+    // Create demo vendor user
+    const _vendorUser = await prismaCMS.user.create({
+      data: {
+        login: 'demo_vendor',
+        email: 'vendor@example.com',
+        password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password: "password"
+        displayName: 'Demo Vendor',
+        firstName: 'Jane',
+        lastName: 'Doe',
+        role: 'VENDOR',
+        emailVerified: true
+      }
+    })
+
+    // Create demo customer user
+    const _customerUser = await prismaCMS.user.create({
+      data: {
+        login: 'demo_customer',
+        email: 'customer@example.com',
+        password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password: "password"
+        displayName: 'Demo Customer',
+        firstName: 'Bob',
+        lastName: 'Johnson',
+        role: 'CUSTOMER',
+        emailVerified: true
       }
     })
 
     // Create categories (terms)
-    const techTerm = await prisma.term.create({
+    const techTerm = await prismaCMS.term.create({
       data: {
         slug: 'technology',
         name: 'Technology'
       }
     })
 
-    const webDevTerm = await prisma.term.create({
+    const webDevTerm = await prismaCMS.term.create({
       data: {
         slug: 'web-development',
         name: 'Web Development'
       }
     })
 
-    const nuxtTerm = await prisma.term.create({
+    const nuxtTerm = await prismaCMS.term.create({
       data: {
         slug: 'nuxt',
         name: 'Nuxt.js'
@@ -76,7 +120,7 @@ async function seedPostgresCMS() {
     })
 
     // Create taxonomies
-    const techCategory = await prisma.termTaxonomy.create({
+    const techCategory = await prismaCMS.termTaxonomy.create({
       data: {
         termId: techTerm.id,
         taxonomy: 'category',
@@ -84,7 +128,7 @@ async function seedPostgresCMS() {
       }
     })
 
-    const webDevCategory = await prisma.termTaxonomy.create({
+    const webDevCategory = await prismaCMS.termTaxonomy.create({
       data: {
         termId: webDevTerm.id,
         taxonomy: 'category',
@@ -93,7 +137,7 @@ async function seedPostgresCMS() {
       }
     })
 
-    const nuxtTag = await prisma.termTaxonomy.create({
+    const nuxtTag = await prismaCMS.termTaxonomy.create({
       data: {
         termId: nuxtTerm.id,
         taxonomy: 'tag',
@@ -102,7 +146,7 @@ async function seedPostgresCMS() {
     })
 
     // Create sample articles
-    const _article1 = await prisma.article.create({
+    const _article1 = await prismaCMS.article.create({
       data: {
         slug: 'welcome-to-nuxtwo-multilang-theme',
         status: 'PUBLISHED',
@@ -185,7 +229,7 @@ Ova tema predstavlja vrh moderne web razvojačke arhitekture.`,
       }
     })
 
-    const _article2 = await prisma.article.create({
+    const _article2 = await prismaCMS.article.create({
       data: {
         slug: 'multi-database-architecture',
         status: 'PUBLISHED',
@@ -264,7 +308,7 @@ Diese Architektur bietet optimale Performance und Skalierbarkeit bei gleichzeiti
     })
 
     // Create sample pages
-    const _aboutPage = await prisma.page.create({
+    const _aboutPage = await prismaCMS.page.create({
       data: {
         slug: 'about',
         status: 'PUBLISHED',
@@ -325,7 +369,7 @@ Für Anfragen zum Theme besuchen Sie bitte unser GitHub-Repository oder kontakti
     })
 
     // Create sample portfolio items
-    const _portfolioItem = await prisma.portfolio.create({
+    const _portfolioItem = await prismaCMS.portfolio.create({
       data: {
         slug: 'nuxtwo-theme-showcase',
         status: 'PUBLISHED',
@@ -367,7 +411,7 @@ A production-ready, multilingual CMS that combines modern development practices 
     })
 
     // Create sample product
-    const _product = await prisma.product.create({
+    const _product = await prismaCMS.product.create({
       data: {
         slug: 'nuxtwo-pro-license',
         price: 99.99,
@@ -403,24 +447,16 @@ A production-ready, multilingual CMS that combines modern development practices 
       }
     })
 
-    // Create main navigation menu
-    await prisma.menu.create({
+    // Create main navigation menu (simplified for now, can be populated via admin)
+    await prismaCMS.menu.create({
       data: {
-        slug: 'main-navigation',
-        name: 'Main Navigation',
-        items: {
-          home: { label: 'Home', href: '/', icon: 'i-lucide-home' },
-          blog: { label: 'Blog', href: '/blog', icon: 'i-lucide-book-open' },
-          portfolio: { label: 'Portfolio', href: '/portfolio', icon: 'i-lucide-briefcase' },
-          products: { label: 'Products', href: '/products', icon: 'i-lucide-shopping-cart' },
-          about: { label: 'About', href: '/about', icon: 'i-lucide-user' },
-          contact: { label: 'Contact', href: '/contact', icon: 'i-lucide-mail' }
-        }
+        name: 'main-navigation',
+        location: 'header'
       }
     })
 
     // Create site settings
-    await prisma.setting.createMany({
+    await prismaCMS.setting.createMany({
       data: [
         { key: 'site_title', value: { en: 'NuxtWP Multilang Theme', de: 'NuxtWP Multilang Theme', sr: 'NuxtWP Multilang Tema' } },
         { key: 'site_description', value: { en: 'Modern multilingual WordPress-inspired theme', de: 'Modernes mehrsprachiges WordPress-inspiriertes Theme' } },
@@ -453,16 +489,8 @@ A production-ready, multilingual CMS that combines modern development practices 
     process.stderr.write(`Error seeding PostgreSQL: ${error}\n`)
     throw error
   } finally {
-    await prisma.$disconnect()
+    await prismaCMS.$disconnect()
   }
-}
-
-if (require.main === module) {
-  seedPostgresCMS()
-    .catch((error) => {
-      process.stderr.write(`Seed failed: ${error}\n`)
-      process.exit(1)
-    })
 }
 
 export default seedPostgresCMS

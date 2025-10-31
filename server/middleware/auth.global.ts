@@ -31,6 +31,7 @@ export default defineEventHandler(async (event) => {
     { path: '/api/auth/resend-verification', methods: ['POST'] },
     { path: '/api/auth/forgot-password', methods: ['POST'] },
     { path: '/api/auth/reset-password', methods: ['POST'] },
+    { pathPrefix: '/api/dev', methods: ['GET'] }, // Allow dev/health endpoints
     { pathPrefix: '/api/posts', methods: ['GET'] }, // Allow /api/posts and subpaths
     { pathPrefix: '/api/articles', methods: ['GET'] }, // Allow /api/articles and subpaths
     { pathPrefix: '/api/pages', methods: ['GET'] }, // Allow /api/pages and subpaths

@@ -175,7 +175,7 @@ useSeoMeta({
 
               <div v-if="page.author" class="flex items-center">
                 <UIcon name="i-lucide-user" class="w-4 h-4 mr-2" />
-                <span>{{ page.author.username || page.author.displayName || 'Unknown Author' }}</span>
+                <span>{{ page.author.displayName || page.author.username || 'Unknown Author' }}</span>
               </div>
 
               <div v-if="page.status" class="flex items-center">

@@ -9,7 +9,8 @@ import {
 } from '../utils/errors'
 import { ERROR_CODES } from '../constants/errors'
 import { PRISMA_ERRORS } from '../constants/prisma'
-import { MediaResolver } from '../utils/mediaResolver'// Types
+
+// Types
 interface CreatePostData {
   title: string
   slug: string
@@ -42,10 +43,9 @@ interface PostWithAuthor {
   updatedAt: Date
   author: {
     id: string
-    username: string
+    login: string
     email: string
-    firstName: string | null
-    lastName: string | null
+    displayName: string
   }
 }
 
@@ -102,47 +102,59 @@ export async function getAllPosts(): Promise<PostWithAuthor[]> {
           take: 1
         },
         metas: {
-          where: { key: 'featured_image' }
+          where: { key: 'featured_image' },
+          include: {
+            Media: {
+              include: {
+                sizes: true
+              }
+            }
+          }
         }
       },
       orderBy: { createdAt: 'desc' }
     })
 
-    const mediaResolver = new MediaResolver(prismaCms)
+    // Process articles with featured images
+    const processedArticles = articles.map((article) => {
+      const translation = article.translations[0] || {}
+      const featuredImageMeta = article.metas?.[0]
 
-    // Process articles sequentially to handle async media resolution
-    const processedArticles = await Promise.all(
-      articles.map(async (article) => {
-        const translation = article.translations[0] || {}
+      // Build featured image URL from Media relation (capital M)
+      let featuredImage = null
+      if (featuredImageMeta?.Media) {
+        const media = featuredImageMeta.Media
+        featuredImage = media.filePath // Use original image path
+        // Optionally, select a specific size:
+        // const mediumSize = media.sizes.find(s => s.sizeName === 'medium')
+        // featuredImage = mediumSize?.filePath || media.filePath
+      }
 
-        // Resolve featured image using MediaResolver
-        const featuredImageData = article.metas?.[0]?.value
-        const resolvedMedia = await mediaResolver.resolveFeaturedImage(featuredImageData as any)
-
-        return {
-          id: article.id.toString(),
-          title: translation.title || 'Untitled',
-          slug: article.slug,
-          content: translation.content || '',
-          excerpt: translation.excerpt || null,
-          featuredImage: resolvedMedia?.sizes?.original || null,
-          status: article.status,
-          publishedAt: article.status === 'PUBLISHED' ? article.createdAt : null,
-          createdAt: article.createdAt,
-          updatedAt: article.updatedAt,
-          author: {
-            id: article.author.id.toString(),
-            username: article.author.login,
-            email: article.author.email,
-            firstName: null, // TODO: Extract from displayName
-            lastName: null
-          }
+      return {
+        id: article.id.toString(),
+        title: translation.title || 'Untitled',
+        slug: article.slug,
+        content: translation.content || '',
+        excerpt: translation.excerpt || null,
+        featuredImage,
+        status: article.status,
+        publishedAt: article.status === 'PUBLISHED' ? article.createdAt : null,
+        createdAt: article.createdAt,
+        updatedAt: article.updatedAt,
+        author: {
+          id: article.author.id.toString(),
+          username: article.author.displayName, // Show displayName instead of login
+          email: article.author.email,
+          firstName: article.author.firstName || null,
+          lastName: article.author.lastName || null
         }
-      })
-    )
+      }
+    })
 
     return processedArticles
-  } catch (error) {
+  } catch (error: any) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to fetch posts:', error.message)
     throw new Error('Failed to fetch posts from database')
   }
 }
@@ -213,10 +225,10 @@ export async function getPostBySlug(slug: string): Promise<PostWithAuthor | null
       updatedAt: article.updatedAt,
       author: {
         id: article.author.id.toString(),
-        username: article.author.login,
+        username: article.author.displayName, // Show displayName instead of login
         email: article.author.email,
-        firstName: null, // TODO: Extract from displayName
-        lastName: null
+        firstName: article.author.firstName || null,
+        lastName: article.author.lastName || null
       }
     }
   } catch {

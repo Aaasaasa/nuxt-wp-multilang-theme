@@ -34,7 +34,25 @@ export const MenuService = {
         include: {
           items: {
             where: { isActive: true },
-            orderBy: { order: 'asc' }
+            orderBy: { order: 'asc' },
+            include: {
+              page: {
+                include: {
+                  translations: {
+                    where: { lang: 'de' },
+                    take: 1
+                  }
+                }
+              },
+              article: {
+                include: {
+                  translations: {
+                    where: { lang: 'de' },
+                    take: 1
+                  }
+                }
+              }
+            }
           }
         }
       })
@@ -96,10 +114,18 @@ export const MenuService = {
     return rootItems.map((item: any) => {
       const children = allItems.filter((child: any) => child.parentId === item.id)
 
+      // Build URL from page/article if not set
+      let url = item.url || ''
+      if (!url && item.page?.translations?.[0]?.slug) {
+        url = `/${item.page.translations[0].slug}`
+      } else if (!url && item.article?.translations?.[0]?.slug) {
+        url = `/blog/${item.article.translations[0].slug}`
+      }
+
       return {
         id: item.id,
         title: item.title,
-        url: item.url,
+        url: url || item.route,
         route: item.route,
         target: item.target,
         cssClass: item.cssClass,

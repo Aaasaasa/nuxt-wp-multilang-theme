@@ -24,10 +24,9 @@ interface PageWithAuthor {
   updatedAt: Date
   author: {
     id: string
-    username: string
+    login: string
     email: string
-    firstName: string | null
-    lastName: string | null
+    displayName: string
   }
 }
 
@@ -48,7 +47,14 @@ export async function getAllPages(): Promise<PageWithAuthor[]> {
           take: 1
         },
         metas: {
-          where: { key: 'featured_image' }
+          where: { key: 'featured_image' },
+          include: {
+            Media: {
+              include: {
+                sizes: true
+              }
+            }
+          }
         }
       },
       orderBy: { menuOrder: 'asc' }
@@ -56,6 +62,13 @@ export async function getAllPages(): Promise<PageWithAuthor[]> {
 
     return pages.map((page) => {
       const translation = page.translations[0] || {}
+      const featuredImageMeta = page.metas?.[0]
+
+      // Build featured image URL from Media relation (capital M)
+      let featuredImage = null
+      if (featuredImageMeta?.Media) {
+        featuredImage = featuredImageMeta.Media.filePath
+      }
 
       return {
         id: page.id.toString(),
@@ -63,10 +76,7 @@ export async function getAllPages(): Promise<PageWithAuthor[]> {
         slug: page.slug,
         content: translation.content || '',
         excerpt: translation.excerpt || null,
-        featuredImage: page.metas?.[0]?.value ?
-          (typeof page.metas[0].value === 'string' ? page.metas[0].value :
-           typeof page.metas[0].value === 'object' ? JSON.stringify(page.metas[0].value) :
-           String(page.metas[0].value)) : null,
+        featuredImage,
         status: page.status,
         menuOrder: page.menuOrder,
         publishedAt: page.status === 'PUBLISHED' ? page.createdAt : null,
@@ -74,14 +84,15 @@ export async function getAllPages(): Promise<PageWithAuthor[]> {
         updatedAt: page.updatedAt,
         author: {
           id: page.author.id.toString(),
-          username: page.author.login,
+          username: page.author.displayName, // Show displayName instead of login
           email: page.author.email,
-          firstName: null, // TODO: Extract from displayName
-          lastName: null
+          firstName: page.author.firstName || null,
+          lastName: page.author.lastName || null
         }
       }
     })
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Database error in getAllPages:', error)
     throw new Error('Failed to fetch pages from database')
   }
@@ -101,7 +112,14 @@ export async function getPageBySlug(slug: string): Promise<PageWithAuthor | null
           take: 1
         },
         metas: {
-          where: { key: 'featured_image' }
+          where: { key: 'featured_image' },
+          include: {
+            Media: {
+              include: {
+                sizes: true
+              }
+            }
+          }
         }
       }
     })
@@ -111,6 +129,13 @@ export async function getPageBySlug(slug: string): Promise<PageWithAuthor | null
     }
 
     const translation = page.translations[0] || {}
+    const featuredImageMeta = page.metas?.[0]
+
+    // Build featured image URL from Media relation (capital M)
+    let featuredImage = null
+    if (featuredImageMeta?.Media) {
+      featuredImage = featuredImageMeta.Media.filePath
+    }
 
     return {
       id: page.id.toString(),
@@ -118,10 +143,7 @@ export async function getPageBySlug(slug: string): Promise<PageWithAuthor | null
       slug: page.slug,
       content: translation.content || '',
       excerpt: translation.excerpt || null,
-      featuredImage: page.metas?.[0]?.value ?
-        (typeof page.metas[0].value === 'string' ? page.metas[0].value :
-         typeof page.metas[0].value === 'object' ? JSON.stringify(page.metas[0].value) :
-         String(page.metas[0].value)) : null,
+      featuredImage,
       status: page.status,
       menuOrder: page.menuOrder,
       publishedAt: page.status === 'PUBLISHED' ? page.createdAt : null,
@@ -129,13 +151,14 @@ export async function getPageBySlug(slug: string): Promise<PageWithAuthor | null
       updatedAt: page.updatedAt,
       author: {
         id: page.author.id.toString(),
-        username: page.author.login,
+        username: page.author.displayName, // Show displayName instead of login
         email: page.author.email,
-        firstName: null, // TODO: Extract from displayName
-        lastName: null
+        firstName: page.author.firstName || null,
+        lastName: page.author.lastName || null
       }
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Database error in getPageBySlug:', error)
     return null
   }

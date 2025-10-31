@@ -88,7 +88,7 @@ const formatDate = (dateString: string) => {
 
           <template v-if="showAuthor && article.author">
             <Icon name="i-lucide-user" class="w-4 h-4 mr-1" />
-            <span>{{ article.author.name || 'Unknown Author' }}</span>
+            <span>{{ article.author.displayName || article.author.name || 'Unknown Author' }}</span>
           </template>
         </div>
 

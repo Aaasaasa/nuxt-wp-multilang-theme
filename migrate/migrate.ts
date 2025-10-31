@@ -27,6 +27,28 @@ function mapStatus(status: string) {
 }
 
 /**
+ * Remove WordPress shortcodes from content
+ * Handles both self-closing [shortcode/] and opening/closing [shortcode]...[/shortcode]
+ */
+function stripShortcodes(content: string): string {
+  if (!content) return ''
+
+  // Remove fusion builder shortcodes and other common WP shortcodes
+  let cleaned = content
+
+  // Remove all shortcodes: [shortcode attributes]...[/shortcode] or [shortcode/]
+  cleaned = cleaned.replace(/\[fusion_[^\]]+\]/g, '') // Remove fusion builder opening tags
+  cleaned = cleaned.replace(/\[\/fusion_[^\]]+\]/g, '') // Remove fusion builder closing tags
+  cleaned = cleaned.replace(/\[[^\]]+\]/g, '') // Remove any remaining shortcodes
+
+  // Clean up excessive whitespace
+  cleaned = cleaned.replace(/\n{3,}/g, '\n\n') // Max 2 newlines
+  cleaned = cleaned.trim()
+
+  return cleaned
+}
+
+/**
  * Vrati WP post_type za dati post ID (za mapiranje comments/terms)
  */
 async function getWpPostTypeById(id: number): Promise<string | null> {
@@ -39,24 +61,60 @@ async function getWpPostTypeById(id: number): Promise<string | null> {
  */
 async function clearCMS() {
   console.log('🧹 Cleaning existing CMS tables...')
-  // Truncate redoslijedom koji sigurno prolazi uz CASCADE
-  await pg.$executeRawUnsafe(`
-    TRUNCATE TABLE
-      cms_user_meta, cms_users,
-      cms_page_meta, cms_page_translations, cms_pages,
-      cms_article_meta, cms_article_translations, cms_articles,
-      cms_portfolio_meta, cms_portfolio_translations, cms_portfolios,
-      cms_product_meta, cms_product_translations, cms_products,
-      cms_comment_meta, cms_comments,
-      cms_term_relationships, cms_term_taxonomies, cms_terms,
-      cms_menus, cms_settings
-    RESTART IDENTITY CASCADE
-  `)
+
+  // Truncate only tables that exist - use DELETE instead of TRUNCATE
+  // to avoid FK errors
+  console.log('  Deleting content relations...')
+  await pg.termRelationship.deleteMany()
+  await pg.commentMeta.deleteMany()
+  await pg.comment.deleteMany()
+  await pg.termTaxonomy.deleteMany()
+  await pg.term.deleteMany()
+
+  console.log('  Deleting media...')
+  await pg.mediaSize.deleteMany()
+  await pg.media.deleteMany()
+
+  console.log('  Deleting content metadata...')
+  await pg.articleMeta.deleteMany()
+  await pg.pageMeta.deleteMany()
+  await pg.portfolioMeta.deleteMany()
+  await pg.productMeta.deleteMany()
+
+  console.log('  Deleting content translations...')
+  await pg.articleTranslation.deleteMany()
+  await pg.pageTranslation.deleteMany()
+  await pg.portfolioTranslation.deleteMany()
+  await pg.productTranslation.deleteMany()
+
+  console.log('  Deleting content...')
+  await pg.article.deleteMany()
+  await pg.page.deleteMany()
+  await pg.portfolio.deleteMany()
+  await pg.product.deleteMany()
+
+  console.log('  Deleting users...')
+  await pg.userMeta.deleteMany()
+  await pg.employeeRole.deleteMany()
+  await pg.employee.deleteMany()
+  await pg.user.deleteMany()
+
+  console.log('  Deleting menus...')
+  await pg.menuItem.deleteMany()
+  await pg.menu.deleteMany()
+
+  console.log('  Deleting settings...')
+  await pg.setting.deleteMany()
+
+  console.log('  ✅ All CMS tables cleaned')
 }
 
 /**
  * 2) USERS + USER META
  */
+// Store WordPress ID → PostgreSQL ID mapping
+const userIdMap = new Map<number, number>()
+
 async function migrateUsers() {
   console.log('👥 Migrating users...')
 
@@ -82,6 +140,9 @@ async function migrateUsers() {
       }
     })
 
+    // Store the mapping: WordPress ID → PostgreSQL ID
+    userIdMap.set(Number(u.ID), user.id)
+
     const metas = await mysql.as_usermeta.findMany({ where: { user_id: u.ID } })
     if (metas.length) {
       await pg.userMeta.createMany({
@@ -99,20 +160,52 @@ async function migrateUsers() {
 /**
  * 3) PAGES, ARTICLES, PORTFOLIOS (+ translations + meta)
  */
+// Sanitize invalid MySQL dates (0000-00-00) from WordPress
+function sanitizeDate(date: Date | null | undefined): Date {
+  if (!date) return new Date()
+  const d = new Date(date)
+  // Check if date is invalid or before Unix epoch
+  if (isNaN(d.getTime()) || d.getFullYear() < 1970) {
+    return new Date()
+  }
+  return d
+}
+
+// Content ID mapping for menu items (WordPress ID → PostgreSQL ID)
+const pageIdMap = new Map<number, number>()
+const articleIdMap = new Map<number, number>()
+const portfolioIdMap = new Map<number, number>()
+
 async function migrateContent() {
   console.log('📝 Migrating pages, articles, portfolios...')
 
-  const wpPosts = await mysql.as_posts.findMany({
-    where: { post_type: { in: ['page', 'post', 'portfolio'] } }
-  })
+  // Use raw query with IF() to replace invalid MySQL dates (0000-00-00) with NOW()
+  // Skip auto-drafts and trash items
+  const wpPosts: any[] = await mysql.$queryRaw`
+    SELECT
+      ID, post_author,
+      IF(post_date < '1970-01-01', NOW(), post_date) as post_date,
+      post_content, post_title, post_excerpt,
+      post_status, post_name,
+      IF(post_modified < '1970-01-01', NOW(), post_modified) as post_modified,
+      post_type, menu_order, post_parent
+    FROM as_posts
+    WHERE post_type IN ('page', 'post', 'portfolio')
+      AND post_status NOT IN ('auto-draft', 'trash', 'inherit')
+      AND (post_name IS NOT NULL AND post_name != '')
+  `
 
   for (const p of wpPosts) {
+    // Map WordPress author ID to PostgreSQL user ID
+    const wpAuthorId = toInt(p.post_author) || 1
+    const pgAuthorId = userIdMap.get(wpAuthorId) || userIdMap.values().next().value || 1
+
     const base = {
       slug: p.post_name || `post-${String(p.ID)}`,
       status: mapStatus(p.post_status),
-      authorId: toInt(p.post_author) || 1,
-      createdAt: p.post_date,
-      updatedAt: p.post_modified
+      authorId: pgAuthorId,
+      createdAt: sanitizeDate(p.post_date),
+      updatedAt: sanitizeDate(p.post_modified)
     }
 
     const metas = await mysql.as_postmeta.findMany({ where: { post_id: p.ID } })
@@ -132,19 +225,23 @@ async function migrateContent() {
         }
       })
 
+      // Store WordPress ID → PostgreSQL ID mapping for menu items
+      pageIdMap.set(Number(p.ID), page.id)
+
+      // WordPress content is in German (de), not English
       await pg.pageTranslation.upsert({
-        where: { pageId_lang: { pageId: page.id, lang: 'en' } },
+        where: { pageId_lang: { pageId: page.id, lang: 'de' } },
         update: {
           title: p.post_title || '',
-          content: p.post_content || '',
-          excerpt: p.post_excerpt || ''
+          content: stripShortcodes(p.post_content || ''),
+          excerpt: stripShortcodes(p.post_excerpt || '')
         },
         create: {
           pageId: page.id,
-          lang: 'en',
+          lang: 'de',
           title: p.post_title || '',
-          content: p.post_content || '',
-          excerpt: p.post_excerpt || ''
+          content: stripShortcodes(p.post_content || ''),
+          excerpt: stripShortcodes(p.post_excerpt || '')
         }
       })
 
@@ -171,19 +268,23 @@ async function migrateContent() {
         create: base
       })
 
+      // Store WordPress ID → PostgreSQL ID mapping for menu items
+      articleIdMap.set(Number(p.ID), article.id)
+
+      // WordPress content is in German (de), not English
       await pg.articleTranslation.upsert({
-        where: { articleId_lang: { articleId: article.id, lang: 'en' } },
+        where: { articleId_lang: { articleId: article.id, lang: 'de' } },
         update: {
           title: p.post_title || '',
-          content: p.post_content || '',
-          excerpt: p.post_excerpt || ''
+          content: stripShortcodes(p.post_content || ''),
+          excerpt: stripShortcodes(p.post_excerpt || '')
         },
         create: {
           articleId: article.id,
-          lang: 'en',
+          lang: 'de',
           title: p.post_title || '',
-          content: p.post_content || '',
-          excerpt: p.post_excerpt || ''
+          content: stripShortcodes(p.post_content || ''),
+          excerpt: stripShortcodes(p.post_excerpt || '')
         }
       })
 
@@ -210,21 +311,25 @@ async function migrateContent() {
         create: base
       })
 
+      // Store WordPress ID → PostgreSQL ID mapping for menu items
+      portfolioIdMap.set(Number(p.ID), portfolio.id)
+
+      // WordPress content is in German (de), not English
       await pg.portfolioTranslation.upsert({
         where: {
-          portfolioId_lang: { portfolioId: portfolio.id, lang: 'en' }
+          portfolioId_lang: { portfolioId: portfolio.id, lang: 'de' }
         },
         update: {
           title: p.post_title || '',
-          content: p.post_content || '',
-          excerpt: p.post_excerpt || ''
+          content: stripShortcodes(p.post_content || ''),
+          excerpt: stripShortcodes(p.post_excerpt || '')
         },
         create: {
           portfolioId: portfolio.id,
-          lang: 'en',
+          lang: 'de',
           title: p.post_title || '',
-          content: p.post_content || '',
-          excerpt: p.post_excerpt || ''
+          content: stripShortcodes(p.post_content || ''),
+          excerpt: stripShortcodes(p.post_excerpt || '')
         }
       })
 
@@ -595,7 +700,7 @@ async function migrateMenus() {
     const term = await mysql.as_terms.findUnique({ where: { term_id: tx.term_id } })
     if (!term) continue
 
-    // Nađi sve nav_menu_item postove povezane s ovim menijem preko term_relationships
+    // Find all nav_menu_item posts linked to this menu
     const relItems = await mysql.as_term_relationships.findMany({
       where: { term_taxonomy_id: tx.term_taxonomy_id }
     })
@@ -603,9 +708,9 @@ async function migrateMenus() {
     const itemIds = relItems.map((r) => r.object_id)
     if (!itemIds.length) {
       await pg.menu.upsert({
-        where: { slug: term.slug },
-        update: { name: term.name, items: [] },
-        create: { slug: term.slug, name: term.name, items: [] }
+        where: { name: term.name },
+        update: { location: term.slug },
+        create: { name: term.name, location: term.slug }
       })
       continue
     }
@@ -614,30 +719,416 @@ async function migrateMenus() {
       where: { ID: { in: itemIds } }
     })
 
-    const structured: any[] = []
+    // Create or update menu
+    const menu = await pg.menu.upsert({
+      where: { name: term.name },
+      update: { location: term.slug },
+      create: { name: term.name, location: term.slug }
+    })
+
+    // Build menu item structure
+    const menuItemsData: any[] = []
     for (const i of items) {
       const metas = await mysql.as_postmeta.findMany({ where: { post_id: i.ID } })
       const objId = metas.find((m) => m.meta_key === '_menu_item_object_id')?.meta_value
       const url = metas.find((m) => m.meta_key === '_menu_item_url')?.meta_value
       const parent = metas.find((m) => m.meta_key === '_menu_item_menu_item_parent')?.meta_value
+      const type = metas.find((m) => m.meta_key === '_menu_item_type')?.meta_value
+      const object = metas.find((m) => m.meta_key === '_menu_item_object')?.meta_value
+      const menuOrder = metas.find((m) => m.meta_key === '_menu_item_menu_order')?.meta_value
 
-      structured.push({
-        id: toInt(i.ID),
-        title: i.post_title || '',
+      // Get title from linked post/page if empty
+      let title = i.post_title || ''
+      if (!title && type === 'post_type' && objId) {
+        const linkedPost = await mysql.as_posts.findUnique({ where: { ID: BigInt(objId) } })
+        title = linkedPost?.post_title || ''
+      }
+
+      menuItemsData.push({
+        wpId: toInt(i.ID),
+        title,
         objectId: objId ? Number(objId) : null,
         url: url || null,
-        parentId: parent ? Number(parent) : null,
-        type: metas.find((m) => m.meta_key === '_menu_item_type')?.meta_value || null,
-        object: metas.find((m) => m.meta_key === '_menu_item_object')?.meta_value || null
+        wpParentId: parent ? Number(parent) : null,
+        type: type || null,
+        object: object || null,
+        order: menuOrder ? Number(menuOrder) : 0
       })
     }
 
-    await pg.menu.upsert({
-      where: { slug: term.slug },
-      update: { name: term.name, items: structured },
-      create: { slug: term.slug, name: term.name, items: structured }
-    })
+    // Sort by menu order
+    menuItemsData.sort((a, b) => a.order - b.order)
+
+    // Create menu items with parent relationships
+    const wpIdToDbId = new Map<number, number>()
+
+    // First pass: create all items
+    for (const itemData of menuItemsData) {
+      // Map WordPress object IDs to PostgreSQL IDs
+      let pgPageId = null
+      let pgArticleId = null
+
+      if (itemData.type === 'post_type' && itemData.objectId) {
+        if (itemData.object === 'page') {
+          pgPageId = pageIdMap.get(itemData.objectId) || null
+        } else if (itemData.object === 'post') {
+          pgArticleId = articleIdMap.get(itemData.objectId) || null
+        }
+      }
+
+      const menuItem = await pg.menuItem.create({
+        data: {
+          menuId: menu.id,
+          title: itemData.title,
+          url: itemData.url || '',
+          order: itemData.order,
+          pageId: pgPageId,
+          articleId: pgArticleId
+        }
+      })
+      wpIdToDbId.set(itemData.wpId, menuItem.id)
+    }
+
+    // Second pass: update parent relationships
+    for (const itemData of menuItemsData) {
+      if (itemData.wpParentId && itemData.wpParentId !== 0) {
+        const dbParentId = wpIdToDbId.get(itemData.wpParentId)
+        if (dbParentId) {
+          const dbId = wpIdToDbId.get(itemData.wpId)
+          if (dbId) {
+            await pg.menuItem.update({
+              where: { id: dbId },
+              data: { parentId: dbParentId }
+            })
+          }
+        }
+      }
+    }
+
+    console.log(`  ✓ Migrated menu: ${term.name} (${menuItemsData.length} items)`)
   }
+}
+
+/**
+ * 7) MEDIA & ATTACHMENTS (WordPress wp_posts where post_type='attachment')
+ */
+async function migrateMedia() {
+  console.log('🖼️ Migrating media & attachments...')
+
+  // Get all WordPress attachments
+  const wpAttachments = await mysql.as_posts.findMany({
+    where: {
+      post_type: 'attachment',
+      post_status: { not: 'trash' }
+    },
+    orderBy: { ID: 'asc' }
+  })
+
+  console.log(`  Found ${wpAttachments.length} WordPress attachments`)
+
+  for (const att of wpAttachments) {
+    try {
+      // Get attachment metadata
+      const fileMeta = await mysql.as_postmeta.findFirst({
+        where: {
+          post_id: att.ID,
+          meta_key: '_wp_attached_file'
+        }
+      })
+
+      const metadataMeta = await mysql.as_postmeta.findFirst({
+        where: {
+          post_id: att.ID,
+          meta_key: '_wp_attachment_metadata'
+        }
+      })
+
+      const altMeta = await mysql.as_postmeta.findFirst({
+        where: {
+          post_id: att.ID,
+          meta_key: '_wp_attachment_image_alt'
+        }
+      })
+
+      if (!fileMeta?.meta_value) {
+        console.log(`  ⚠️ Skipping attachment ${att.ID} - no file path`)
+        continue
+      }
+
+      const filePath = `/uploads/${fileMeta.meta_value}`
+      const filename = filePath.split('/').pop() || 'unknown'
+
+      // Parse metadata JSON
+      let metadata: any = {}
+      let width: number | null = null
+      let height: number | null = null
+      let sizes: any = {}
+
+      if (metadataMeta?.meta_value) {
+        try {
+          // WordPress stores as PHP serialized or JSON
+          const metaStr = metadataMeta.meta_value
+          if (metaStr.startsWith('{')) {
+            metadata = JSON.parse(metaStr)
+          } else {
+            // Try to extract dimensions from serialized PHP
+            const widthMatch = metaStr.match(/"width";i:(\d+)/)
+            const heightMatch = metaStr.match(/"height";i:(\d+)/)
+            if (widthMatch) width = parseInt(widthMatch[1])
+            if (heightMatch) height = parseInt(heightMatch[1])
+
+            // Extract sizes array
+            const sizesMatch = metaStr.match(/"sizes";a:\d+:{(.+?)}/)
+            if (sizesMatch) {
+              // Parse size names (thumbnail, medium, large, etc.)
+              const sizeNames = metaStr.match(/"([^"]+)";a:/g)
+              if (sizeNames) {
+                sizes = {}
+                for (const sizeName of sizeNames) {
+                  const name = sizeName.match(/"([^"]+)"/)?.[1]
+                  if (name && ['thumbnail', 'medium', 'large', 'medium_large', 'full'].includes(name)) {
+                    sizes[name] = { file: filename, width: 0, height: 0 }
+                  }
+                }
+              }
+            }
+          }
+
+          if (metadata.width) width = metadata.width
+          if (metadata.height) height = metadata.height
+          if (metadata.sizes) sizes = metadata.sizes
+        } catch (e) {
+          console.log(`  ⚠️ Failed to parse metadata for attachment ${att.ID}`)
+        }
+      }
+
+      // Create media record
+      const media = await pg.media.create({
+        data: {
+          wpAttachmentId: Number(att.ID),
+          filename,
+          filePath,
+          mimeType: att.post_mime_type || 'application/octet-stream',
+          fileSize: null, // WordPress doesn't always store filesize
+          width,
+          height,
+          alt: altMeta?.meta_value || null,
+          caption: att.post_excerpt || null,
+          title: att.post_title,
+          uploadedBy: null, // Could map from post_author if needed
+          uploadedAt: att.post_date,
+          metadata: metadata
+        }
+      })
+
+      // Create size variants
+      if (sizes && typeof sizes === 'object') {
+        const sizeEntries = Object.entries(sizes)
+
+        for (const [sizeName, sizeData] of sizeEntries) {
+          const sd = sizeData as any
+          if (!sd.file) continue
+
+          const sizeFilePath = filePath.replace(filename, sd.file)
+
+          await pg.mediaSize.create({
+            data: {
+              mediaId: media.id,
+              sizeName,
+              filePath: sizeFilePath,
+              width: sd.width || null,
+              height: sd.height || null,
+              fileSize: sd.filesize || null
+            }
+          })
+        }
+      }
+
+      console.log(`  ✓ Imported media: ${filename} (WP ID: ${att.ID}, PG ID: ${media.id})`)
+    } catch (error) {
+      console.error(`  ❌ Error importing attachment ${att.ID}:`, error)
+    }
+  }
+
+  console.log(`  ✅ Media migration completed`)
+}
+
+/**
+ * 8) LINK FEATURED IMAGES to Articles/Pages/Portfolios
+ */
+async function linkFeaturedImages() {
+  console.log('🔗 Linking featured images...')
+
+  // Articles
+  const articleMetas = await mysql.as_postmeta.findMany({
+    where: {
+      meta_key: '_thumbnail_id'
+    }
+  })
+
+  for (const meta of articleMetas) {
+    const wpPost = await mysql.as_posts.findUnique({
+      where: { ID: meta.post_id }
+    })
+
+    if (!wpPost || wpPost.post_type !== 'post') continue
+
+    const pgArticle = await pg.article.findFirst({
+      where: { slug: wpPost.post_name }
+    })
+
+    if (!pgArticle) continue
+
+    const wpAttachmentId = Number(meta.meta_value)
+    const pgMedia = await pg.media.findFirst({
+      where: { wpAttachmentId }
+    })
+
+    if (!pgMedia) {
+      console.log(`  ⚠️ Featured image ${wpAttachmentId} not found for article ${wpPost.post_name}`)
+      continue
+    }
+
+    // Check if meta already exists
+    const existingMeta = await pg.articleMeta.findFirst({
+      where: {
+        articleId: pgArticle.id,
+        key: 'featured_image'
+      }
+    })
+
+    if (existingMeta) {
+      await pg.articleMeta.update({
+        where: { id: existingMeta.id },
+        data: { mediaId: pgMedia.id }
+      })
+    } else {
+      await pg.articleMeta.create({
+        data: {
+          articleId: pgArticle.id,
+          key: 'featured_image',
+          value: { wp_attachment_id: wpAttachmentId },
+          mediaId: pgMedia.id
+        }
+      })
+    }
+
+    console.log(`  ✓ Linked featured image to article: ${wpPost.post_name}`)
+  }
+
+  // Pages
+  const pageMetas = await mysql.as_postmeta.findMany({
+    where: {
+      meta_key: '_thumbnail_id'
+    }
+  })
+
+  for (const meta of pageMetas) {
+    const wpPost = await mysql.as_posts.findUnique({
+      where: { ID: meta.post_id }
+    })
+
+    if (!wpPost || wpPost.post_type !== 'page') continue
+
+    const pgPage = await pg.page.findFirst({
+      where: { slug: wpPost.post_name }
+    })
+
+    if (!pgPage) continue
+
+    const wpAttachmentId = Number(meta.meta_value)
+    const pgMedia = await pg.media.findFirst({
+      where: { wpAttachmentId }
+    })
+
+    if (!pgMedia) {
+      console.log(`  ⚠️ Featured image ${wpAttachmentId} not found for page ${wpPost.post_name}`)
+      continue
+    }
+
+    const existingMeta = await pg.pageMeta.findFirst({
+      where: {
+        pageId: pgPage.id,
+        key: 'featured_image'
+      }
+    })
+
+    if (existingMeta) {
+      await pg.pageMeta.update({
+        where: { id: existingMeta.id },
+        data: { mediaId: pgMedia.id }
+      })
+    } else {
+      await pg.pageMeta.create({
+        data: {
+          pageId: pgPage.id,
+          key: 'featured_image',
+          value: { wp_attachment_id: wpAttachmentId },
+          mediaId: pgMedia.id
+        }
+      })
+    }
+
+    console.log(`  ✓ Linked featured image to page: ${wpPost.post_name}`)
+  }
+
+  // Portfolios
+  const portfolioMetas = await mysql.as_postmeta.findMany({
+    where: {
+      meta_key: '_thumbnail_id'
+    }
+  })
+
+  for (const meta of portfolioMetas) {
+    const wpPost = await mysql.as_posts.findUnique({
+      where: { ID: meta.post_id }
+    })
+
+    if (!wpPost || wpPost.post_type !== 'portfolio') continue
+
+    const pgPortfolio = await pg.portfolio.findFirst({
+      where: { slug: wpPost.post_name }
+    })
+
+    if (!pgPortfolio) continue
+
+    const wpAttachmentId = Number(meta.meta_value)
+    const pgMedia = await pg.media.findFirst({
+      where: { wpAttachmentId }
+    })
+
+    if (!pgMedia) {
+      console.log(`  ⚠️ Featured image ${wpAttachmentId} not found for portfolio ${wpPost.post_name}`)
+      continue
+    }
+
+    const existingMeta = await pg.portfolioMeta.findFirst({
+      where: {
+        portfolioId: pgPortfolio.id,
+        key: 'featured_image'
+      }
+    })
+
+    if (existingMeta) {
+      await pg.portfolioMeta.update({
+        where: { id: existingMeta.id },
+        data: { mediaId: pgMedia.id }
+      })
+    } else {
+      await pg.portfolioMeta.create({
+        data: {
+          portfolioId: pgPortfolio.id,
+          key: 'featured_image',
+          value: { wp_attachment_id: wpAttachmentId },
+          mediaId: pgMedia.id
+        }
+      })
+    }
+
+    console.log(`  ✓ Linked featured image to portfolio: ${wpPost.post_name}`)
+  }
+
+  console.log(`  ✅ Featured images linked`)
 }
 
 /**
@@ -678,9 +1169,11 @@ async function main() {
   await migrateUsers()
   await migrateContent()
   await migrateProducts()
+  await migrateMedia()           // ✅ Import WordPress attachments
+  await linkFeaturedImages()     // ✅ Link featured images to content
   await migrateComments()
   await migrateTerms()
-  await migrateMenus()
+  await migrateMenus()           // ✅ Migrate WordPress menus
   await migrateSettings()
 
   console.log('✅ Migration completed!')

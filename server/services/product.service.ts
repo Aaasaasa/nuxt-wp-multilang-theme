@@ -16,7 +16,7 @@ interface ProductWithVendor {
   updatedAt: Date
   vendor: {
     id: string
-    username: string
+    login: string
     email: string
     displayName: string
   }
