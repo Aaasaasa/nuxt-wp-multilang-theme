@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# TODO: Add support for yarn - npm is currently not working with the monorepo setup - changed from monorepo to Nuxt 4 boilerplate
 # Script to rename the Nuxt boilerplate project
 # Usage: ./rename-project.sh <new-project-name>
 
