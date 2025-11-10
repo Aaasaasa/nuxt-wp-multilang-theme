@@ -6,7 +6,7 @@ const client = new Client({
   port: 5432,
   database: 'nuxt_pg_cms_db',
   user: 'usrcms',
-  password: 'Utorak30Sep',
+  password: 'Utorak30Sep'
 })
 
 interface ContentMeta {
@@ -83,7 +83,9 @@ async function updateFeaturedImagesToMediaIds(): Promise<void> {
 
           if (mediaByAttachment.rows.length > 0) {
             mediaId = mediaByAttachment.rows[0].id
-            console.log(`✓ Found media by attachment ID ${item.wpAttachmentId} -> media_id ${mediaId}`)
+            console.log(
+              `✓ Found media by attachment ID ${item.wpAttachmentId} -> media_id ${mediaId}`
+            )
           }
         }
 
@@ -125,7 +127,7 @@ async function updateFeaturedImagesToMediaIds(): Promise<void> {
               console.log(`✓ Found media by filename ${filename} -> media_id ${mediaId}`)
             }
           }
-        }        // Step 3: Update the meta record with media_id
+        } // Step 3: Update the meta record with media_id
         if (mediaId) {
           const metaUpdate = {
             media_id: mediaId,
@@ -163,14 +165,17 @@ async function updateFeaturedImagesToMediaIds(): Promise<void> {
           await client.query(updateQuery, updateParams)
           updated++
           console.log(`✅ Updated ${item.contentType} ${item.contentId} -> media_id ${mediaId}`)
-
         } else {
-          console.warn(`⚠️  No media found for ${item.contentType} ${item.contentId} (${item.currentFeaturedImage})`)
+          console.warn(
+            `⚠️  No media found for ${item.contentType} ${item.contentId} (${item.currentFeaturedImage})`
+          )
           failed++
         }
-
       } catch (error) {
-        console.error(`❌ Error updating ${item.contentType} ${item.contentId}:`, (error as Error).message)
+        console.error(
+          `❌ Error updating ${item.contentType} ${item.contentId}:`,
+          (error as Error).message
+        )
         failed++
       }
     }
@@ -179,7 +184,6 @@ async function updateFeaturedImagesToMediaIds(): Promise<void> {
     console.log(`   ✅ Successfully updated: ${updated}`)
     console.log(`   ❌ Failed updates: ${failed}`)
     console.log(`   📝 Total processed: ${contentItems.length}`)
-
   } catch (error) {
     console.error('❌ Error updating featured images:', (error as Error).message)
   }
@@ -213,7 +217,6 @@ async function addMediaIdColumns(): Promise<void> {
     }
 
     console.log('✅ Media ID columns and indexes added successfully')
-
   } catch (error) {
     console.error('❌ Error adding media_id columns:', (error as Error).message)
   }
@@ -246,7 +249,6 @@ async function updateMediaIdColumns(): Promise<void> {
     }
 
     console.log(`✅ Updated ${totalUpdated} meta records with media_id references`)
-
   } catch (error) {
     console.error('❌ Error updating media_id columns:', (error as Error).message)
   }
@@ -301,7 +303,9 @@ async function main(): Promise<void> {
 
     console.log('\\n📊 Final Summary:')
     for (const row of summaryResult.rows) {
-      console.log(`   ${row.content_type}: ${row.total_with_media_id}/${row.total_with_featured_images} linked to media table`)
+      console.log(
+        `   ${row.content_type}: ${row.total_with_media_id}/${row.total_with_featured_images} linked to media table`
+      )
     }
 
     console.log('\\n🎉 Featured Images System upgrade completed!')
@@ -311,7 +315,6 @@ async function main(): Promise<void> {
     console.log('   ✅ Better performance with proper indexes')
     console.log('   ✅ Backward compatibility maintained')
     console.log('   ✅ Eliminates duplicate/missing images issues')
-
   } catch (error) {
     console.error('❌ Upgrade failed:', (error as Error).message)
   } finally {

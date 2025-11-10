@@ -7,7 +7,8 @@
           Cookie-Einstellungen
         </h1>
         <p class="text-gray-600 dark:text-gray-400">
-          Verwalten Sie Ihre Cookie-Einstellungen und erfahren Sie mehr über die verwendeten Cookies.
+          Verwalten Sie Ihre Cookie-Einstellungen und erfahren Sie mehr über die verwendeten
+          Cookies.
         </p>
       </header>
 
@@ -27,11 +28,15 @@
             v-for="(accepted, category) in consent.categories"
             :key="category"
             class="text-center p-3 rounded-lg"
-            :class="accepted ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30'"
+            :class="
+              accepted ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30'
+            "
           >
             <Icon
               :name="accepted ? 'i-lucide-check' : 'i-lucide-x'"
-              :class="accepted ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+              :class="
+                accepted ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
+              "
               class="w-5 h-5 mx-auto mb-2"
             />
             <div class="text-sm font-medium capitalize">{{ category }}</div>
@@ -83,8 +88,10 @@
                     :disabled="category.required"
                     class="sr-only peer"
                     @change="updateCategory(category.key, $event)"
-                  >
-                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 peer-disabled:opacity-50"></div>
+                  />
+                  <div
+                    class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 peer-disabled:opacity-50"
+                  ></div>
                 </label>
               </div>
             </div>
@@ -92,9 +99,14 @@
             <!-- Cookies in this category -->
             <div v-if="category.cookies.length" class="border-t dark:border-gray-700 pt-4">
               <details class="group">
-                <summary class="flex items-center justify-between cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                <summary
+                  class="flex items-center justify-between cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                >
                   <span>{{ category.cookies.length }} Cookie(s) in dieser Kategorie</span>
-                  <Icon name="i-lucide-chevron-down" class="w-4 h-4 transition-transform group-open:rotate-180" />
+                  <Icon
+                    name="i-lucide-chevron-down"
+                    class="w-4 h-4 transition-transform group-open:rotate-180"
+                  />
                 </summary>
 
                 <div class="mt-4 space-y-4">
@@ -120,9 +132,7 @@
                       <div v-if="cookie.provider">
                         <strong>Anbieter:</strong> {{ cookie.provider }}
                       </div>
-                      <div v-if="cookie.domain">
-                        <strong>Domain:</strong> {{ cookie.domain }}
-                      </div>
+                      <div v-if="cookie.domain"><strong>Domain:</strong> {{ cookie.domain }}</div>
                     </div>
                   </div>
                 </div>
@@ -135,22 +145,22 @@
       <!-- Actions -->
       <div class="flex flex-col sm:flex-row gap-4 mt-8">
         <button
-          @click="acceptAll"
           class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors"
+          @click="acceptAll"
         >
           Alle akzeptieren
         </button>
 
         <button
-          @click="rejectAll"
           class="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg font-medium transition-colors"
+          @click="rejectAll"
         >
           Nur erforderliche
         </button>
 
         <button
-          @click="saveSettings"
           class="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-medium transition-colors"
+          @click="saveSettings"
         >
           Einstellungen speichern
         </button>
@@ -158,9 +168,7 @@
 
       <!-- Cookie Policy -->
       <div v-if="cookiePolicy" class="mt-12 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          Cookie-Richtlinie
-        </h2>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Cookie-Richtlinie</h2>
         <div class="prose dark:prose-invert max-w-none text-sm">
           <div v-html="cookiePolicy.content"></div>
         </div>

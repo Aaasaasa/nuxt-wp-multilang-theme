@@ -110,9 +110,9 @@ async function getReferencedImages(): Promise<ReferencedImage[]> {
   }
 
   // Remove duplicates
-  const uniqueImages = Array.from(
-    new Set(referencedImages.map(img => img.path))
-  ).map(path => referencedImages.find(img => img.path === path)!)
+  const uniqueImages = Array.from(new Set(referencedImages.map((img) => img.path))).map(
+    (path) => referencedImages.find((img) => img.path === path)!
+  )
 
   log('green', `✅ Found ${uniqueImages.length} referenced images`)
   return uniqueImages
@@ -220,7 +220,7 @@ async function cleanupMedia(): Promise<void> {
     }
 
     // Find files to delete
-    const filesToDelete = allFiles.filter(file => !keepPaths.has(file))
+    const filesToDelete = allFiles.filter((file) => !keepPaths.has(file))
 
     log('yellow', `📊 Cleanup Summary:`)
     console.log(`  Referenced images: ${referencedImages.length}`)
@@ -241,7 +241,8 @@ async function cleanupMedia(): Promise<void> {
         await unlink(fullPath)
         deletedCount++
 
-        if (deletedCount <= 10) { // Show first 10 deletions
+        if (deletedCount <= 10) {
+          // Show first 10 deletions
           log('red', `🗑️  Deleted: ${file}`)
         } else if (deletedCount === 11) {
           log('yellow', `   ... and ${filesToDelete.length - 10} more files`)
@@ -251,11 +252,10 @@ async function cleanupMedia(): Promise<void> {
       }
     }
 
-    const savedMB = Math.round(deletedSize / 1024 / 1024 * 100) / 100
+    const savedMB = Math.round((deletedSize / 1024 / 1024) * 100) / 100
     log('green', `✨ Cleanup completed!`)
     log('green', `   Deleted ${deletedCount} unused files`)
     log('green', `   Saved ${savedMB}MB of disk space`)
-
   } catch (error) {
     log('red', `❌ Error during cleanup: ${error}`)
     throw error

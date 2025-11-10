@@ -28,12 +28,7 @@
           <template #right>
             <!-- User menu when logged in -->
             <UDropdownMenu v-if="loggedIn" :items="items">
-              <UAvatar
-                :alt="user?.name"
-                :src="'https://i.pravatar.cc/150?u=' + user?.email"
-                size="sm"
-                class="cursor-pointer"
-              />
+              <UAvatar alt="User" size="sm" class="cursor-pointer" />
             </UDropdownMenu>
 
             <!-- Login button when not logged in -->
@@ -84,10 +79,9 @@ import type { DropdownMenuItem } from '@nuxt/ui'
 import AppSidebar from '~/components/layout/AppSidebar.vue'
 import AppFooter from '~/components/layout/AppFooter.vue'
 import CookieBanner from '~/components/features/cookies/CookieBanner.vue'
-import SimpleCookieBanner from '~/components/debug/SimpleCookieBanner.vue'
 import LanguageSwitcher from '~/components/features/LanguageSwitcher.vue'
 
-const { loggedIn, user, clear } = useUserSession()
+const { loggedIn, clear } = useUserSession()
 const { t } = useI18n()
 const localePath = useLocalePath()
 const { success } = useNotifications()
@@ -102,9 +96,12 @@ const toggleSidebar = () => {
 }
 
 // Close sidebar when route changes
-watch(() => route.path, () => {
-  sidebarOpen.value = false
-})
+watch(
+  () => route.path,
+  () => {
+    sidebarOpen.value = false
+  }
+)
 
 const handleLogout = async () => {
   try {
@@ -131,17 +128,11 @@ const appNameParts = computed(() => {
   return name.split(' ')
 })
 
-// Development mode check
-const isDev = import.meta.dev
-
 const items = ref<DropdownMenuItem[][]>([
   [
     {
-      label: user.value?.name || user.value?.email,
-      type: 'label',
-      avatar: {
-        src: `https://i.pravatar.cc/150?u=${user.value?.email}`
-      }
+      label: 'Benutzer',
+      type: 'label'
     }
   ],
   [

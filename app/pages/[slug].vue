@@ -7,7 +7,7 @@ const pageSlug = route.params.slug as string
 
 // Check if this is a reserved route that should not be handled
 const reservedRoutes = ['auth', 'blog', 'admin', 'api', 'cookies', 'index']
-if (reservedRoutes.some(reserved => pageSlug?.startsWith(reserved))) {
+if (reservedRoutes.some((reserved) => pageSlug?.startsWith(reserved))) {
   throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
 }
 
@@ -121,12 +121,7 @@ useSeoMeta({
                 )
               }}
             </p>
-            <UButton
-              to="/"
-              color="red"
-              variant="solid"
-              icon="i-lucide-arrow-left"
-            >
+            <UButton to="/" color="red" variant="solid" icon="i-lucide-arrow-left">
               {{ $t('page.error.backToHome', 'Back to Home') }}
             </UButton>
           </div>
@@ -175,7 +170,9 @@ useSeoMeta({
 
               <div v-if="page.author" class="flex items-center">
                 <UIcon name="i-lucide-user" class="w-4 h-4 mr-2" />
-                <span>{{ page.author.displayName || page.author.username || 'Unknown Author' }}</span>
+                <span>{{
+                  page.author.displayName || page.author.username || 'Unknown Author'
+                }}</span>
               </div>
 
               <div v-if="page.status" class="flex items-center">
@@ -196,14 +193,17 @@ useSeoMeta({
               :alt="getPageTitle(page)"
               class="w-full h-auto rounded-lg shadow-lg object-cover max-h-96"
               loading="eager"
-              @error="$event.target.style.display='none'"
+              @error="$event.target.style.display = 'none'"
             />
             <!-- Fallback placeholder if image fails to load -->
             <div
               class="absolute inset-0 bg-linear-to-br from-primary-100 to-primary-200 dark:from-primary-900 dark:to-primary-800 rounded-lg flex items-center justify-center"
               style="z-index: -1"
             >
-              <UIcon name="i-lucide-image" class="w-16 h-16 text-primary-400 dark:text-primary-600" />
+              <UIcon
+                name="i-lucide-image"
+                class="w-16 h-16 text-primary-400 dark:text-primary-600"
+              />
             </div>
           </div>
         </UCard>
@@ -217,7 +217,10 @@ useSeoMeta({
             </div>
 
             <!-- Empty content fallback -->
-            <div v-if="!getPageContent(page)" class="text-center py-12 text-gray-500 dark:text-gray-400">
+            <div
+              v-if="!getPageContent(page)"
+              class="text-center py-12 text-gray-500 dark:text-gray-400"
+            >
               <UIcon name="i-lucide-file-text" class="w-12 h-12 mx-auto mb-4" />
               <p>{{ $t('page.noContent', 'No content available for this page.') }}</p>
             </div>
@@ -227,12 +230,7 @@ useSeoMeta({
         <!-- Page Footer -->
         <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
           <div class="flex items-center justify-between">
-            <UButton
-              to="/"
-              color="primary"
-              variant="soft"
-              icon="i-lucide-arrow-left"
-            >
+            <UButton to="/" color="primary" variant="soft" icon="i-lucide-arrow-left">
               {{ $t('page.backToHome', 'Back to Home') }}
             </UButton>
 

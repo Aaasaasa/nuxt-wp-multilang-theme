@@ -886,7 +886,10 @@ async function migrateMedia() {
                 sizes = {}
                 for (const sizeName of sizeNames) {
                   const name = sizeName.match(/"([^"]+)"/)?.[1]
-                  if (name && ['thumbnail', 'medium', 'large', 'medium_large', 'full'].includes(name)) {
+                  if (
+                    name &&
+                    ['thumbnail', 'medium', 'large', 'medium_large', 'full'].includes(name)
+                  ) {
                     sizes[name] = { file: filename, width: 0, height: 0 }
                   }
                 }
@@ -1098,7 +1101,9 @@ async function linkFeaturedImages() {
     })
 
     if (!pgMedia) {
-      console.log(`  ⚠️ Featured image ${wpAttachmentId} not found for portfolio ${wpPost.post_name}`)
+      console.log(
+        `  ⚠️ Featured image ${wpAttachmentId} not found for portfolio ${wpPost.post_name}`
+      )
       continue
     }
 
@@ -1169,11 +1174,11 @@ async function main() {
   await migrateUsers()
   await migrateContent()
   await migrateProducts()
-  await migrateMedia()           // ✅ Import WordPress attachments
-  await linkFeaturedImages()     // ✅ Link featured images to content
+  await migrateMedia() // ✅ Import WordPress attachments
+  await linkFeaturedImages() // ✅ Link featured images to content
   await migrateComments()
   await migrateTerms()
-  await migrateMenus()           // ✅ Migrate WordPress menus
+  await migrateMenus() // ✅ Migrate WordPress menus
   await migrateSettings()
 
   console.log('✅ Migration completed!')

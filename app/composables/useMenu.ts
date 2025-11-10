@@ -44,13 +44,20 @@ export const getMenuIcon = (title: string): string => {
 
   if (titleLower.includes('home') || titleLower.includes('start')) return 'i-lucide-home'
   if (titleLower.includes('blog') || titleLower.includes('news')) return 'i-lucide-book-open'
-  if (titleLower.includes('portfolio') || titleLower.includes('work') || titleLower.includes('projects')) return 'i-lucide-briefcase'
+  if (
+    titleLower.includes('portfolio') ||
+    titleLower.includes('work') ||
+    titleLower.includes('projects')
+  )
+    return 'i-lucide-briefcase'
   if (titleLower.includes('service') || titleLower.includes('dienst')) return 'i-lucide-wrench'
-  if (titleLower.includes('about') || titleLower.includes('über') || titleLower.includes('vision')) return 'i-lucide-user'
+  if (titleLower.includes('about') || titleLower.includes('über') || titleLower.includes('vision'))
+    return 'i-lucide-user'
   if (titleLower.includes('contact') || titleLower.includes('kontakt')) return 'i-lucide-mail'
   if (titleLower.includes('technolog')) return 'i-lucide-cpu'
   if (titleLower.includes('impressum')) return 'i-lucide-info'
-  if (titleLower.includes('datenschutz') || titleLower.includes('privacy')) return 'i-lucide-shield-check'
+  if (titleLower.includes('datenschutz') || titleLower.includes('privacy'))
+    return 'i-lucide-shield-check'
 
   return 'i-lucide-chevron-right'
 }
@@ -105,10 +112,12 @@ export const useMenu = () => {
    */
   const fetchAllMenus = async (): Promise<MenuResponse[]> => {
     try {
-      const response = await $fetch<{ success: boolean, data: MenuResponse['data'][] }>('/api/menus')
+      const response = await $fetch<{ success: boolean; data: MenuResponse['data'][] }>(
+        '/api/menus'
+      )
 
       if (response.success && response.data) {
-        return response.data.map(menu => ({ success: true, data: menu }))
+        return response.data.map((menu) => ({ success: true, data: menu }))
       }
 
       return []

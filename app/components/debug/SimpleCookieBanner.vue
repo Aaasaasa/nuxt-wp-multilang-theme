@@ -1,5 +1,8 @@
 <template>
-  <div v-if="shouldShow" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div
+    v-if="shouldShow"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+  >
     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-md mx-4">
       <h2 class="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
         🍪 Cookie-Einstellungen (DEBUG)
@@ -35,7 +38,9 @@
       <!-- Debug Info -->
       <details class="mt-4" open>
         <summary class="text-xs text-gray-500 cursor-pointer">Debug Info</summary>
-        <pre class="text-xs bg-gray-100 dark:bg-gray-900 p-2 rounded mt-2 overflow-auto max-h-40">{{ debugData }}</pre>
+        <pre class="text-xs bg-gray-100 dark:bg-gray-900 p-2 rounded mt-2 overflow-auto max-h-40">{{
+          debugData
+        }}</pre>
       </details>
     </div>
   </div>
@@ -55,7 +60,7 @@ const updateDebug = () => {
       localStorage_content: localStorage.getItem('cookie-consent'),
       localStorage_dismissed: localStorage.getItem('cookie-banner-dismissed'),
       categories_count: cookieManager.cookieCategories.value.length,
-      categories_keys: cookieManager.cookieCategories.value.map(c => c.key),
+      categories_keys: cookieManager.cookieCategories.value.map((c) => c.key),
       isLoaded: cookieManager.isLoaded.value
     }
   }
@@ -93,10 +98,9 @@ const closeBanner = () => {
 
 // Only show if there are issues or for debugging
 const shouldShow = computed(() => {
-  return showDebugBanner.value && (
-    !cookieManager.isLoaded.value ||
-    cookieManager.showBanner.value ||
-    import.meta.dev
+  return (
+    showDebugBanner.value &&
+    (!cookieManager.isLoaded.value || cookieManager.showBanner.value || import.meta.dev)
   )
 })
 

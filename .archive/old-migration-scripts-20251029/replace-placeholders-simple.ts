@@ -24,7 +24,7 @@ async function main() {
           images.push(relativePath)
         }
       }
-    } catch(e) {}
+    } catch (e) {}
   }
 
   scanDir(uploadsPath)

@@ -54,7 +54,7 @@ export async function getAllPortfolios(): Promise<PortfolioWithAuthor[]> {
     // Map portfolios with featured images
     const portfoliosWithMedia = portfolios.map((portfolio) => {
       const translation = portfolio.translations[0] || {}
-      const featuredImageMeta = portfolio.metas?.find(m => m.key === 'featured_image')
+      const featuredImageMeta = portfolio.metas?.find((m) => m.key === 'featured_image')
 
       // Build featured image URL from Media relation (capital M)
       let featuredImage = null
@@ -122,7 +122,7 @@ export async function getPortfolioBySlug(slug: string): Promise<PortfolioWithAut
     }
 
     const translation = portfolio.translations[0] || {}
-    const featuredImageMeta = portfolio.metas?.find(m => m.key === 'featured_image')
+    const featuredImageMeta = portfolio.metas?.find((m) => m.key === 'featured_image')
 
     // Build featured image URL from Media relation (capital M)
     let featuredImage = null

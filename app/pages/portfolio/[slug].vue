@@ -60,7 +60,8 @@ const formatDate = (dateString: string) => {
 // SEO Meta
 const title = computed(() => getPortfolioTitle(portfolio.value))
 const description = computed(
-  () => getPortfolioExcerpt(portfolio.value) || getPortfolioContent(portfolio.value)?.substring(0, 160)
+  () =>
+    getPortfolioExcerpt(portfolio.value) || getPortfolioContent(portfolio.value)?.substring(0, 160)
 )
 
 useSeoMeta({
@@ -116,20 +117,10 @@ useSeoMeta({
               }}
             </p>
             <div class="flex gap-4 justify-center">
-              <UButton
-                to="/portfolio"
-                color="red"
-                variant="solid"
-                icon="i-lucide-briefcase"
-              >
+              <UButton to="/portfolio" color="red" variant="solid" icon="i-lucide-briefcase">
                 {{ $t('portfolio.error.backToPortfolio', 'Back to Portfolio') }}
               </UButton>
-              <UButton
-                to="/"
-                color="red"
-                variant="outline"
-                icon="i-lucide-arrow-left"
-              >
+              <UButton to="/" color="red" variant="outline" icon="i-lucide-arrow-left">
                 {{ $t('portfolio.error.backToHome', 'Back to Home') }}
               </UButton>
             </div>
@@ -173,7 +164,10 @@ useSeoMeta({
               {{ getPortfolioTitle(portfolio) }}
             </h1>
 
-            <div v-if="getPortfolioExcerpt(portfolio)" class="text-xl text-gray-600 dark:text-gray-400 mb-6">
+            <div
+              v-if="getPortfolioExcerpt(portfolio)"
+              class="text-xl text-gray-600 dark:text-gray-400 mb-6"
+            >
               {{ getPortfolioExcerpt(portfolio) }}
             </div>
 
@@ -187,7 +181,9 @@ useSeoMeta({
 
               <div v-if="portfolio.author" class="flex items-center">
                 <UIcon name="i-lucide-user" class="w-4 h-4 mr-2" />
-                <span>{{ portfolio.author.displayName || portfolio.author.username || 'Unknown Author' }}</span>
+                <span>{{
+                  portfolio.author.displayName || portfolio.author.username || 'Unknown Author'
+                }}</span>
               </div>
 
               <div v-if="portfolio.status" class="flex items-center">
@@ -208,14 +204,17 @@ useSeoMeta({
               :alt="getPortfolioTitle(portfolio)"
               class="w-full h-auto rounded-lg shadow-lg object-cover max-h-96"
               loading="eager"
-              @error="$event.target.style.display='none'"
+              @error="$event.target.style.display = 'none'"
             />
             <!-- Fallback placeholder if image fails to load -->
             <div
               class="absolute inset-0 bg-linear-to-br from-primary-100 to-primary-200 dark:from-primary-900 dark:to-primary-800 rounded-lg flex items-center justify-center"
               style="z-index: -1"
             >
-              <UIcon name="i-lucide-image" class="w-16 h-16 text-primary-400 dark:text-primary-600" />
+              <UIcon
+                name="i-lucide-image"
+                class="w-16 h-16 text-primary-400 dark:text-primary-600"
+              />
             </div>
           </div>
         </UCard>
@@ -229,7 +228,10 @@ useSeoMeta({
             </div>
 
             <!-- Empty content fallback -->
-            <div v-if="!getPortfolioContent(portfolio)" class="text-center py-12 text-gray-500 dark:text-gray-400">
+            <div
+              v-if="!getPortfolioContent(portfolio)"
+              class="text-center py-12 text-gray-500 dark:text-gray-400"
+            >
               <UIcon name="i-lucide-file-text" class="w-12 h-12 mx-auto mb-4" />
               <p>{{ $t('portfolio.noContent', 'No content available for this project.') }}</p>
             </div>
@@ -239,12 +241,7 @@ useSeoMeta({
         <!-- Portfolio Footer -->
         <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
           <div class="flex items-center justify-between">
-            <UButton
-              to="/portfolio"
-              color="primary"
-              variant="soft"
-              icon="i-lucide-briefcase"
-            >
+            <UButton to="/portfolio" color="primary" variant="soft" icon="i-lucide-briefcase">
               {{ $t('portfolio.backToPortfolio', 'Back to Portfolio') }}
             </UButton>
 

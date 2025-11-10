@@ -135,7 +135,10 @@ async function processImageUrl(wpImageUrl: string): Promise<string | null> {
     }
 
     // Download original image
-    const tempOriginalPath = path.join(config.targetUploadsPath, 'temp_' + path.basename(relativePath))
+    const tempOriginalPath = path.join(
+      config.targetUploadsPath,
+      'temp_' + path.basename(relativePath)
+    )
     const downloaded = await downloadImage(wpImageUrl, tempOriginalPath)
 
     if (!downloaded) {
@@ -158,7 +161,6 @@ async function processImageUrl(wpImageUrl: string): Promise<string | null> {
       console.log(`📋 Fallback: ${relativePath}`)
       return `/uploads/${relativePath}`
     }
-
   } catch (error) {
     console.warn(`❌ Process error for ${wpImageUrl}:`, error)
     return null
@@ -171,7 +173,7 @@ async function processImageUrl(wpImageUrl: string): Promise<string | null> {
 async function migrateFeaturedImages() {
   console.log('🖼️ Migriere WordPress Featured Images mit URL Download...')
 
-  const featuredImages = await mysql.$queryRawUnsafe(`
+  const featuredImages = (await mysql.$queryRawUnsafe(`
     SELECT
       CAST(pm.post_id as CHAR) as post_id,
       CAST(pm.meta_value as CHAR) as attachment_id,
@@ -190,7 +192,7 @@ async function migrateFeaturedImages() {
     AND p.post_type IN ('post', 'page', 'avada_portfolio')
     AND att.guid IS NOT NULL
     ORDER BY p.post_type, p.post_name
-  `) as any[]
+  `)) as any[]
 
   console.log(`🖼️ Gefunden: ${featuredImages.length} Featured Images`)
 
@@ -262,7 +264,6 @@ async function migrateFeaturedImages() {
           assignedCount++
         }
       }
-
     } catch (error) {
       console.warn(`⚠️ Error processing featured image for ${img.post_name}:`, error)
     }
@@ -281,7 +282,7 @@ async function migrateFeaturedImages() {
 async function migrateAdditionalAttachments() {
   console.log('\n📎 Migriere zusätzliche WordPress Attachments...')
 
-  const attachments = await mysql.$queryRawUnsafe(`
+  const attachments = (await mysql.$queryRawUnsafe(`
     SELECT
       CAST(p.ID as CHAR) as ID,
       p.post_title,
@@ -302,7 +303,7 @@ async function migrateAdditionalAttachments() {
     )
     ORDER BY p.post_date DESC
     LIMIT 50
-  `) as any[]
+  `)) as any[]
 
   console.log(`📄 Gefunden: ${attachments.length} zusätzliche Attachments`)
 
@@ -323,7 +324,6 @@ async function migrateAdditionalAttachments() {
         }
         console.log(`✅ Attachment processed: ${att.post_title}`)
       }
-
     } catch (error) {
       console.warn(`⚠️ Error processing attachment ${att.ID}:`, error)
     }
@@ -365,7 +365,6 @@ async function main() {
     console.log('   ✅ Zusätzliche Attachments verarbeitet')
     console.log('   ✅ DB-Migration-sicher implementiert')
     console.log('   ✅ URLs zu lokalen Pfaden konvertiert')
-
   } catch (error) {
     console.error('❌ Migration Fehler:', error)
     process.exit(1)

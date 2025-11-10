@@ -267,7 +267,7 @@ export async function seedRBAC() {
     }
   })
 
-  console.log(`  ✅ Created 4 custom roles`)
+  console.log('  ✅ Created 4 custom roles')
 
   // ==========================================
   // 3. ASSIGN PERMISSIONS TO ROLES
@@ -279,43 +279,43 @@ export async function seedRBAC() {
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleContentManager.id,
-        permissionId: permissions.find(p => p.slug === 'articles-create')!.id
+        permissionId: permissions.find((p) => p.slug === 'articles-create')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleContentManager.id,
-        permissionId: permissions.find(p => p.slug === 'articles-read')!.id
+        permissionId: permissions.find((p) => p.slug === 'articles-read')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleContentManager.id,
-        permissionId: permissions.find(p => p.slug === 'articles-update')!.id
+        permissionId: permissions.find((p) => p.slug === 'articles-update')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleContentManager.id,
-        permissionId: permissions.find(p => p.slug === 'articles-publish')!.id
+        permissionId: permissions.find((p) => p.slug === 'articles-publish')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleContentManager.id,
-        permissionId: permissions.find(p => p.slug === 'pages-create')!.id
+        permissionId: permissions.find((p) => p.slug === 'pages-create')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleContentManager.id,
-        permissionId: permissions.find(p => p.slug === 'pages-update')!.id
+        permissionId: permissions.find((p) => p.slug === 'pages-update')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleContentManager.id,
-        permissionId: permissions.find(p => p.slug === 'media-upload')!.id
+        permissionId: permissions.find((p) => p.slug === 'media-upload')!.id
       }
     })
   ])
@@ -325,25 +325,25 @@ export async function seedRBAC() {
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleSalesRep.id,
-        permissionId: permissions.find(p => p.slug === 'products-create')!.id
+        permissionId: permissions.find((p) => p.slug === 'products-create')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleSalesRep.id,
-        permissionId: permissions.find(p => p.slug === 'products-update')!.id
+        permissionId: permissions.find((p) => p.slug === 'products-update')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleSalesRep.id,
-        permissionId: permissions.find(p => p.slug === 'orders-read')!.id
+        permissionId: permissions.find((p) => p.slug === 'orders-read')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleSalesRep.id,
-        permissionId: permissions.find(p => p.slug === 'orders-manage')!.id
+        permissionId: permissions.find((p) => p.slug === 'orders-manage')!.id
       }
     })
   ])
@@ -353,24 +353,24 @@ export async function seedRBAC() {
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleAccountant.id,
-        permissionId: permissions.find(p => p.slug === 'orders-read')!.id
+        permissionId: permissions.find((p) => p.slug === 'orders-read')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleAccountant.id,
-        permissionId: permissions.find(p => p.slug === 'articles-read')!.id
+        permissionId: permissions.find((p) => p.slug === 'articles-read')!.id
       }
     }),
     prismaCMS.rolePermission.create({
       data: {
         roleId: roleAccountant.id,
-        permissionId: permissions.find(p => p.slug === 'reports-export')!.id
+        permissionId: permissions.find((p) => p.slug === 'reports-export')!.id
       }
     })
   ])
 
-  console.log(`  ✅ Assigned permissions to roles`)
+  console.log('  ✅ Assigned permissions to roles')
 
   // ==========================================
   // 4. CREATE DEPARTMENTS
@@ -414,7 +414,7 @@ export async function seedRBAC() {
     }
   })
 
-  console.log(`  ✅ Created 4 departments`)
+  console.log('  ✅ Created 4 departments')
 
   console.log('✅ RBAC System seeded successfully!\n')
 

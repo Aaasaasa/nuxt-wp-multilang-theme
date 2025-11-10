@@ -32,7 +32,7 @@ async function createMockImages() {
     { name: 'featured-2.webp', width: 1200, height: 800, color: '#10B981' },
     { name: 'featured-3.webp', width: 900, height: 600, color: '#F59E0B' },
     { name: 'featured-4.webp', width: 1000, height: 700, color: '#EF4444' },
-    { name: 'featured-5.webp', width: 1100, height: 750, color: '#8B5CF6' },
+    { name: 'featured-5.webp', width: 1100, height: 750, color: '#8B5CF6' }
   ]
 
   const createdImages = []
@@ -57,12 +57,11 @@ async function createMockImages() {
           background: img.color
         }
       })
-      .webp({ quality: config.webpQuality })
-      .toFile(imagePath)
+        .webp({ quality: config.webpQuality })
+        .toFile(imagePath)
 
       console.log(`🎨 Created mock image: ${img.name} (${img.width}x${img.height})`)
       createdImages.push(`/uploads/${img.name}`)
-
     } catch (error) {
       console.warn(`⚠️ Error creating mock image ${img.name}:`, error)
     }
@@ -191,7 +190,6 @@ async function main() {
     console.log('   1. Test image display in frontend')
     console.log('   2. Replace with real WordPress images when available')
     console.log('   3. Images sind jetzt DB-Migration-sicher!')
-
   } catch (error) {
     console.error('❌ Migration Fehler:', error)
     process.exit(1)

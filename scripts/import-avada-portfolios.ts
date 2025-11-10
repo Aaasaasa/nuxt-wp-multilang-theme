@@ -90,7 +90,7 @@ async function importAvadaPortfolios() {
   }
 
   console.log('✅ Avada Portfolio import completed!')
-  
+
   // Show results
   const count = await pg.portfolio.count()
   console.log(`\n📊 Total portfolios in database: ${count}`)

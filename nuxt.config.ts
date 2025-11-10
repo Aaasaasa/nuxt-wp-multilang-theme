@@ -240,10 +240,10 @@ export default defineNuxtConfig({
     }
   },
   alias: {
-      '@prisma/cms': './prisma/generated/postgres-cms/index.js',
-      '@prisma/mysql': './prisma/generated/mysql/index.js',
-      '@prisma/mongo': './prisma/generated/mongo/index.js'
-    },
+    '@prisma/cms': './prisma/generated/postgres-cms/index.js',
+    '@prisma/mysql': './prisma/generated/mysql/index.js',
+    '@prisma/mongo': './prisma/generated/mongo/index.js'
+  },
   // ========================================
   // Vite Configuration (Frontend only - no Prisma clients)
   // ========================================

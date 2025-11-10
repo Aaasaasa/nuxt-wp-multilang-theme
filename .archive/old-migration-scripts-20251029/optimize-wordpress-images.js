@@ -18,9 +18,9 @@ const config = {
 
   // 3 smarte Größen für alle Use Cases
   sizes: [
-    { name: 'small', width: 400, height: 300, quality: 80 },   // Thumbnails, Cards
-    { name: 'medium', width: 800, height: 600, quality: 85 },  // Content Images
-    { name: 'large', width: 1200, height: 900, quality: 90 }   // Featured, Hero Images
+    { name: 'small', width: 400, height: 300, quality: 80 }, // Thumbnails, Cards
+    { name: 'medium', width: 800, height: 600, quality: 85 }, // Content Images
+    { name: 'large', width: 1200, height: 900, quality: 90 } // Featured, Hero Images
   ],
 
   // Moderne Formate + JPEG Fallback
@@ -31,7 +31,7 @@ const config = {
 
   // Naming Convention: originalname-size.format
   namingPattern: '{name}-{size}.{format}'
-}/**
+} /**
  * Bildoptimierung mit Sharp
  */
 async function optimizeImage(inputPath, outputDir, originalName) {
@@ -74,9 +74,7 @@ async function optimizeImage(inputPath, outputDir, originalName) {
       const originalWebP = `${baseName}-original.webp`
       const originalPath = path.join(outputDir, originalWebP)
 
-      await image
-        .toFormat('webp', { quality: 90 })
-        .toFile(originalPath)
+      await image.toFormat('webp', { quality: 90 }).toFile(originalPath)
 
       results.push({
         size: 'original',
@@ -89,7 +87,6 @@ async function optimizeImage(inputPath, outputDir, originalName) {
 
     console.log(`✅ ${results.length} Varianten erstellt für ${originalName}`)
     return results
-
   } catch (error) {
     console.warn(`⚠️ Fehler bei ${originalName}:`, error.message)
     return []
@@ -133,7 +130,7 @@ async function processAllImages() {
   const allImages = await glob(imagePattern, { ignore: '**/optimized/**' })
 
   // WordPress Thumbnails filtern
-  const originalImages = allImages.filter(img => {
+  const originalImages = allImages.filter((img) => {
     const basename = path.basename(img)
     return !basename.match(/-\d+x\d+\.(jpg|jpeg|png|gif)$/i)
   })

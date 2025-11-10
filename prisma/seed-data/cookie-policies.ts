@@ -1,7 +1,6 @@
 // prisma/seed-data/cookie-policies.ts
 
 export async function seedCookiePolicies(prisma: any) {
-
   // Create cookie categories first
   const essentialCategory = await prisma.cookieCategory.upsert({
     where: { key: 'essential' },
@@ -9,7 +8,8 @@ export async function seedCookiePolicies(prisma: any) {
     create: {
       key: 'essential',
       name: 'Erforderliche Cookies',
-      description: 'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.',
+      description:
+        'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.',
       required: true,
       enabled: true,
       order: 1
@@ -22,7 +22,8 @@ export async function seedCookiePolicies(prisma: any) {
     create: {
       key: 'analytics',
       name: 'Analyse-Cookies',
-      description: 'Diese Cookies helfen uns dabei, die Nutzung unserer Website zu verstehen und zu verbessern.',
+      description:
+        'Diese Cookies helfen uns dabei, die Nutzung unserer Website zu verstehen und zu verbessern.',
       required: false,
       enabled: true,
       order: 2
@@ -147,7 +148,8 @@ Wir verwenden verschiedene Arten von Cookies:
 
 **Ihre Kontrolle**
 Sie können Ihre Cookie-Einstellungen jederzeit ändern oder Cookies ablehnen. Beachten Sie, dass einige Funktionen möglicherweise nicht verfügbar sind, wenn Sie bestimmte Cookies ablehnen.`,
-      bannerText: 'Diese Website verwendet Cookies, um Ihnen die bestmögliche Erfahrung zu bieten. Sie können Ihre Einstellungen anpassen oder alle Cookies akzeptieren.',
+      bannerText:
+        'Diese Website verwendet Cookies, um Ihnen die bestmögliche Erfahrung zu bieten. Sie können Ihre Einstellungen anpassen oder alle Cookies akzeptieren.',
       acceptText: 'Alle akzeptieren',
       rejectText: 'Nur erforderliche',
       settingsText: 'Einstellungen anpassen'
@@ -181,7 +183,8 @@ We use different types of cookies:
 
 **Your control**
 You can change your cookie settings at any time or reject cookies. Please note that some features may not be available if you reject certain cookies.`,
-      bannerText: 'This website uses cookies to provide you with the best possible experience. You can adjust your settings or accept all cookies.',
+      bannerText:
+        'This website uses cookies to provide you with the best possible experience. You can adjust your settings or accept all cookies.',
       acceptText: 'Accept all',
       rejectText: 'Essential only',
       settingsText: 'Customize settings'

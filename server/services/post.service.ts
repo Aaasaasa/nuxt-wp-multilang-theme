@@ -1,12 +1,7 @@
 // server/services/post.service.ts
 import prismaCms from '../utils/prismaCms'
 import { toPublicUser } from '~~/shared/models/user'
-import {
-  badRequestError,
-  serverError,
-  notFoundError,
-  forbiddenError
-} from '../utils/errors'
+import { badRequestError, serverError, notFoundError, forbiddenError } from '../utils/errors'
 import { ERROR_CODES } from '../constants/errors'
 import { PRISMA_ERRORS } from '../constants/prisma'
 

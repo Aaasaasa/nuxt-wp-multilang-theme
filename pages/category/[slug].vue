@@ -66,7 +66,9 @@
 
                   <!-- Content -->
                   <div class="md:col-span-2 p-6">
-                    <h2 class="text-2xl font-semibold mb-2 hover:text-primary-600 transition-colors">
+                    <h2
+                      class="text-2xl font-semibold mb-2 hover:text-primary-600 transition-colors"
+                    >
                       {{ article.title }}
                     </h2>
                     <p v-if="article.excerpt" class="text-gray-600 dark:text-gray-400 mb-4">
@@ -129,16 +131,13 @@ const categorySlug = computed(() => route.params.slug as string)
 const currentPage = computed(() => parseInt((route.query.page as string) || '1'))
 
 // Lade Kategorie-Daten
-const { data, pending, error, refresh } = await useFetch(
-  `/api/categories/${categorySlug.value}`,
-  {
-    query: {
-      page: currentPage,
-      limit: 10
-    },
-    watch: [currentPage]
-  }
-)
+const { data, pending, error } = await useFetch(`/api/categories/${categorySlug.value}`, {
+  query: {
+    page: currentPage,
+    limit: 10
+  },
+  watch: [currentPage]
+})
 
 // SEO Meta Tags
 useHead({

@@ -27,9 +27,9 @@ export const ERROR_CODES = {
 
 // Flatten all error codes into a union type
 export type ErrorCode =
-  | typeof ERROR_CODES.VALIDATION[keyof typeof ERROR_CODES.VALIDATION]
-  | typeof ERROR_CODES.SERVER[keyof typeof ERROR_CODES.SERVER]
-  | typeof ERROR_CODES.RESOURCE[keyof typeof ERROR_CODES.RESOURCE]
-  | typeof ERROR_CODES.AUTH[keyof typeof ERROR_CODES.AUTH]
+  | (typeof ERROR_CODES.VALIDATION)[keyof typeof ERROR_CODES.VALIDATION]
+  | (typeof ERROR_CODES.SERVER)[keyof typeof ERROR_CODES.SERVER]
+  | (typeof ERROR_CODES.RESOURCE)[keyof typeof ERROR_CODES.RESOURCE]
+  | (typeof ERROR_CODES.AUTH)[keyof typeof ERROR_CODES.AUTH]
 
 export type PrismaErrorCode = keyof typeof PRISMA_ERRORS

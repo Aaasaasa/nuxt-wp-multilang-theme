@@ -52,7 +52,7 @@ async function resetMediaDatabase(): Promise<void> {
     let sizeCount = 0
 
     for (const [baseFilename, files] of Object.entries(fileGroups)) {
-      const originalFile = files.find(f => !f.isVariant)
+      const originalFile = files.find((f) => !f.isVariant)
       if (!originalFile) continue
 
       // Get file stats
@@ -78,7 +78,7 @@ async function resetMediaDatabase(): Promise<void> {
       mediaCount++
 
       // Create size variant records
-      const variants = files.filter(f => f.isVariant)
+      const variants = files.filter((f) => f.isVariant)
       for (const variant of variants) {
         const variantFullPath = join(UPLOADS_DIR, variant.relativePath)
         if (existsSync(variantFullPath)) {
@@ -106,7 +106,6 @@ async function resetMediaDatabase(): Promise<void> {
     console.log(`   Created ${mediaCount} media records`)
     // eslint-disable-next-line no-console
     console.log(`   Created ${sizeCount} size variant records`)
-
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('❌ Error resetting media database:', error)
@@ -191,19 +190,27 @@ function groupFilesByBase(files: MediaFile[]): Record<string, MediaFile[]> {
 
 function getSizeWidth(sizeType: string): number {
   switch (sizeType.toLowerCase()) {
-    case 'thumbnail': return 300
-    case 'medium': return 768
-    case 'large': return 1200
-    default: return 0
+    case 'thumbnail':
+      return 300
+    case 'medium':
+      return 768
+    case 'large':
+      return 1200
+    default:
+      return 0
   }
 }
 
 function getSizeHeight(sizeType: string): number {
   switch (sizeType.toLowerCase()) {
-    case 'thumbnail': return 300
-    case 'medium': return 768
-    case 'large': return 1200
-    default: return 0
+    case 'thumbnail':
+      return 300
+    case 'medium':
+      return 768
+    case 'large':
+      return 1200
+    default:
+      return 0
   }
 }
 

@@ -7,7 +7,7 @@ export default defineNuxtPlugin(() => {
       try {
         const cookieManager = useCookieManager()
         await cookieManager.initialize()
-      } catch (error) {
+      } catch {
         // Fail silently if cookie manager can't initialize
       }
     })

@@ -52,11 +52,10 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   selectedCategory?: string
 }>()
 
-const { t } = useI18n()
 const { categories, loadingCategories, loadCategories } = useCategories()
 const config = useRuntimeConfig()
 

@@ -4,12 +4,7 @@ import { cookieService } from '../../services/cookie.service'
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event)
-    const {
-      consentId,
-      userId,
-      categories,
-      policyVersion
-    } = body
+    const { consentId, userId, categories, policyVersion } = body
 
     // Validierung
     if (!consentId || !categories || !policyVersion) {

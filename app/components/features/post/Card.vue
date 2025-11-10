@@ -16,7 +16,8 @@
             loading="lazy"
           />
         </NuxtLink>
-      </div>      <div class="flex justify-between items-start gap-4">
+      </div>
+      <div class="flex justify-between items-start gap-4">
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-3 mb-2">
             <div class="w-2 h-2 bg-primary-500 rounded-full" />
@@ -100,7 +101,10 @@
             class="inline-flex items-center text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium text-sm transition-colors group/link"
           >
             {{ t('blog.readMore', 'Read More') }}
-            <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" />
+            <UIcon
+              name="i-lucide-arrow-right"
+              class="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform"
+            />
           </NuxtLink>
         </div>
       </div>

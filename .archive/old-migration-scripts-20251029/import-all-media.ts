@@ -8,7 +8,7 @@ const client = new Client({
   port: 5432,
   database: 'nuxt_pg_cms_db',
   user: 'usrcms',
-  password: 'Utorak30Sep',
+  password: 'Utorak30Sep'
 })
 
 interface MediaFile {
@@ -31,7 +31,9 @@ interface WordPressAttachment {
 }
 
 // Get image dimensions (mock implementation - you could use sharp or jimp)
-async function getImageDimensions(filepath: string): Promise<{ width: number; height: number } | null> {
+async function getImageDimensions(
+  filepath: string
+): Promise<{ width: number; height: number } | null> {
   // For now, return default dimensions - you can enhance this with actual image processing
   const ext = extname(filepath).toLowerCase()
   if (['.jpg', '.jpeg', '.png', '.webp', '.gif'].includes(ext)) {
@@ -53,7 +55,7 @@ function extractAttachmentId(filename: string, filepath: string): number | null 
   let hash = 0
   for (let i = 0; i < filepath.length; i++) {
     const char = filepath.charCodeAt(i)
-    hash = ((hash << 5) - hash) + char
+    hash = (hash << 5) - hash + char
     hash = hash & hash // Convert to 32-bit integer
   }
   return Math.abs(hash) + 10000 // Ensure positive and avoid conflicts
@@ -71,7 +73,7 @@ function getMimeType(filename: string): string {
     '.svg': 'image/svg+xml',
     '.pdf': 'application/pdf',
     '.mp4': 'video/mp4',
-    '.mp3': 'audio/mpeg',
+    '.mp3': 'audio/mpeg'
   }
   return mimeMap[ext] || 'application/octet-stream'
 }
@@ -93,7 +95,17 @@ async function scanMediaFiles(): Promise<MediaFile[]> {
         } else if (entry.isFile()) {
           // Only include media files
           const ext = extname(entry.name).toLowerCase()
-          const mediaExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg', '.pdf', '.mp4', '.mp3']
+          const mediaExtensions = [
+            '.jpg',
+            '.jpeg',
+            '.png',
+            '.webp',
+            '.gif',
+            '.svg',
+            '.pdf',
+            '.mp4',
+            '.mp3'
+          ]
 
           if (mediaExtensions.includes(ext)) {
             const stats = await fs.stat(fullPath)
@@ -171,7 +183,10 @@ async function importWordPressAttachments(): Promise<Map<number, WordPressAttach
 }
 
 // Import all media into cms_media table
-async function importMediaToDatabase(mediaFiles: MediaFile[], wpAttachments: Map<number, WordPressAttachment>): Promise<void> {
+async function importMediaToDatabase(
+  mediaFiles: MediaFile[],
+  wpAttachments: Map<number, WordPressAttachment>
+): Promise<void> {
   console.log(`Importing ${mediaFiles.length} media files...`)
 
   for (const media of mediaFiles) {
@@ -192,46 +207,52 @@ async function importMediaToDatabase(mediaFiles: MediaFile[], wpAttachments: Map
       }
 
       // Insert main media record
-      const insertResult = await client.query(`
+      const insertResult = await client.query(
+        `
         INSERT INTO cms_media (
           wp_attachment_id, filename, original_filename, mime_type,
           file_size, file_path, base_path, width, height,
           upload_date, wp_meta
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
         RETURNING id
-      `, [
-        wpAttachmentId,
-        media.filename,
-        basename(media.filename, extname(media.filename)), // Original without extension
-        mimeType,
-        media.stats.size,
-        media.filepath,
-        basePath,
-        media.dimensions?.width || null,
-        media.dimensions?.height || null,
-        media.stats.mtime,
-        JSON.stringify({
-          upload_date: media.stats.mtime.toISOString(),
-          file_size: media.stats.size,
-          original_path: media.filepath
-        })
-      ])
+      `,
+        [
+          wpAttachmentId,
+          media.filename,
+          basename(media.filename, extname(media.filename)), // Original without extension
+          mimeType,
+          media.stats.size,
+          media.filepath,
+          basePath,
+          media.dimensions?.width || null,
+          media.dimensions?.height || null,
+          media.stats.mtime,
+          JSON.stringify({
+            upload_date: media.stats.mtime.toISOString(),
+            file_size: media.stats.size,
+            original_path: media.filepath
+          })
+        ]
+      )
 
       const mediaId = insertResult.rows[0].id
 
       // Insert original size
-      await client.query(`
+      await client.query(
+        `
         INSERT INTO cms_media_sizes (
           media_id, size_name, file_path, width, height, file_size
         ) VALUES ($1, $2, $3, $4, $5, $6)
-      `, [
-        mediaId,
-        'original',
-        media.filepath,
-        media.dimensions?.width || null,
-        media.dimensions?.height || null,
-        media.stats.size
-      ])
+      `,
+        [
+          mediaId,
+          'original',
+          media.filepath,
+          media.dimensions?.width || null,
+          media.dimensions?.height || null,
+          media.stats.size
+        ]
+      )
 
       // Look for other sizes (WordPress creates thumbnails)
       const baseNameWithoutExt = basename(media.filename, extname(media.filename))
@@ -248,7 +269,6 @@ async function importMediaToDatabase(mediaFiles: MediaFile[], wpAttachments: Map
       }
 
       console.log(`✓ Imported: ${media.filename} (ID: ${mediaId})`)
-
     } catch (error) {
       console.error(`Error importing ${media.filename}:`, (error as Error).message)
     }
@@ -295,7 +315,6 @@ async function main(): Promise<void> {
     for (const row of examplesResult.rows) {
       console.log(`  ${row.id}: ${row.filename} (${row.mime_type}) - ${row.file_path}`)
     }
-
   } catch (error) {
     console.error('Import failed:', error)
   } finally {

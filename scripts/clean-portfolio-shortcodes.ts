@@ -32,7 +32,8 @@ async function cleanPortfolioShortcodes() {
 
   let updatedCount = 0
   for (const p of portfolios) {
-    const hasShortcodes = (p.content && p.content.includes('[')) || (p.excerpt && p.excerpt.includes('['))
+    const hasShortcodes =
+      (p.content && p.content.includes('[')) || (p.excerpt && p.excerpt.includes('['))
 
     if (hasShortcodes) {
       const cleanContent = stripShortcodes(p.content || '')
@@ -56,10 +57,7 @@ async function cleanPortfolioShortcodes() {
   // Verify
   const remaining = await pg.portfolioTranslation.findMany({
     where: {
-      OR: [
-        { content: { contains: '[' } },
-        { excerpt: { contains: '[' } }
-      ]
+      OR: [{ content: { contains: '[' } }, { excerpt: { contains: '[' } }]
     }
   })
 

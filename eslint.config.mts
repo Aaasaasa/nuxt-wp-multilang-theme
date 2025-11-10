@@ -21,6 +21,7 @@ export default withNuxt(
   {
     ignores: [
       '**/node_modules/**',
+      '**/.archive/**',
       '**/.nuxt/**',
       '**/dist/**',
       '**/build/**',

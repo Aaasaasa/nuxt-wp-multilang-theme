@@ -3,7 +3,9 @@ import { PrismaClient } from './generated/postgres-cms'
 const prisma = new PrismaClient({
   datasources: {
     pgCMSdb: {
-      url: process.env.POSTGRES_CMS_URL || 'postgresql://usrcms:Utorak30Sep@localhost:5432/nuxt_pg_cms_db'
+      url:
+        process.env.POSTGRES_CMS_URL ||
+        'postgresql://usrcms:Utorak30Sep@localhost:5432/nuxt_pg_cms_db'
     }
   }
 })
@@ -131,7 +133,6 @@ async function seedMenus() {
     console.log('✅ Menu data seeded successfully!')
     console.log(`📋 Created sidebar menu with ${menuItems.length} items`)
     console.log(`📋 Created footer menu with ${footerItems.length} items`)
-
   } catch (error) {
     console.error('❌ Error seeding menu data:', error)
   } finally {

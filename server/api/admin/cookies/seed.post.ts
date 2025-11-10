@@ -16,12 +16,14 @@ export default defineEventHandler(async () => {
           {
             lang: 'de',
             name: 'Erforderliche Cookies',
-            description: 'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.'
+            description:
+              'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.'
           },
           {
             lang: 'en',
             name: 'Essential Cookies',
-            description: 'These cookies are necessary for the basic functions of the website and cannot be disabled.'
+            description:
+              'These cookies are necessary for the basic functions of the website and cannot be disabled.'
           }
         ]
       },
@@ -36,12 +38,14 @@ export default defineEventHandler(async () => {
           {
             lang: 'de',
             name: 'Analyse-Cookies',
-            description: 'Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren, indem sie Informationen anonym sammeln und übermitteln.'
+            description:
+              'Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren, indem sie Informationen anonym sammeln und übermitteln.'
           },
           {
             lang: 'en',
             name: 'Analytics Cookies',
-            description: 'These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously.'
+            description:
+              'These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously.'
           }
         ]
       },
@@ -56,12 +60,14 @@ export default defineEventHandler(async () => {
           {
             lang: 'de',
             name: 'Marketing-Cookies',
-            description: 'Diese Cookies werden von Werbepartnern verwendet, um ein Profil Ihrer Interessen zu erstellen und Ihnen relevante Werbung auf anderen Websites zu zeigen.'
+            description:
+              'Diese Cookies werden von Werbepartnern verwendet, um ein Profil Ihrer Interessen zu erstellen und Ihnen relevante Werbung auf anderen Websites zu zeigen.'
           },
           {
             lang: 'en',
             name: 'Marketing Cookies',
-            description: 'These cookies are used by advertising partners to build a profile of your interests and show you relevant advertisements on other websites.'
+            description:
+              'These cookies are used by advertising partners to build a profile of your interests and show you relevant advertisements on other websites.'
           }
         ]
       },
@@ -76,12 +82,14 @@ export default defineEventHandler(async () => {
           {
             lang: 'de',
             name: 'Präferenz-Cookies',
-            description: 'Diese Cookies ermöglichen es unserer Website, sich an von Ihnen getroffene Entscheidungen zu erinnern und personalisierte Features bereitzustellen.'
+            description:
+              'Diese Cookies ermöglichen es unserer Website, sich an von Ihnen getroffene Entscheidungen zu erinnern und personalisierte Features bereitzustellen.'
           },
           {
             lang: 'en',
             name: 'Preference Cookies',
-            description: 'These cookies allow our website to remember choices you have made and provide enhanced, personalized features.'
+            description:
+              'These cookies allow our website to remember choices you have made and provide enhanced, personalized features.'
           }
         ]
       }
@@ -97,7 +105,7 @@ export default defineEventHandler(async () => {
     const cookies = [
       // Essential Cookies
       {
-        categoryId: createdCategories.find(c => c.key === 'essential')?.id,
+        categoryId: createdCategories.find((c) => c.key === 'essential')?.id,
         name: 'nuxt-session',
         domain: '.example.com',
         duration: 'Session',
@@ -107,7 +115,8 @@ export default defineEventHandler(async () => {
         translations: [
           {
             lang: 'de',
-            purpose: 'Verwaltet die Benutzersitzung und Authentifizierung. Erforderlich für eingeloggte Benutzer.',
+            purpose:
+              'Verwaltet die Benutzersitzung und Authentifizierung. Erforderlich für eingeloggte Benutzer.',
             provider: 'Nuxt.js (Eigenentwicklung)'
           },
           {
@@ -118,7 +127,7 @@ export default defineEventHandler(async () => {
         ]
       },
       {
-        categoryId: createdCategories.find(c => c.key === 'essential')?.id,
+        categoryId: createdCategories.find((c) => c.key === 'essential')?.id,
         name: 'cookie-consent',
         domain: '.example.com',
         duration: '1 Jahr',
@@ -140,7 +149,7 @@ export default defineEventHandler(async () => {
       },
       // Analytics Cookies
       {
-        categoryId: createdCategories.find(c => c.key === 'analytics')?.id,
+        categoryId: createdCategories.find((c) => c.key === 'analytics')?.id,
         name: '_ga',
         domain: '.example.com',
         duration: '2 Jahre',
@@ -150,18 +159,20 @@ export default defineEventHandler(async () => {
         translations: [
           {
             lang: 'de',
-            purpose: 'Wird verwendet, um Benutzer zu unterscheiden. Sammelt anonyme Statistiken über Website-Nutzung.',
+            purpose:
+              'Wird verwendet, um Benutzer zu unterscheiden. Sammelt anonyme Statistiken über Website-Nutzung.',
             provider: 'Google LLC'
           },
           {
             lang: 'en',
-            purpose: 'Used to distinguish users. Collects anonymous statistics about website usage.',
+            purpose:
+              'Used to distinguish users. Collects anonymous statistics about website usage.',
             provider: 'Google LLC'
           }
         ]
       },
       {
-        categoryId: createdCategories.find(c => c.key === 'analytics')?.id,
+        categoryId: createdCategories.find((c) => c.key === 'analytics')?.id,
         name: '_ga_*',
         domain: '.example.com',
         duration: '2 Jahre',
@@ -171,19 +182,21 @@ export default defineEventHandler(async () => {
         translations: [
           {
             lang: 'de',
-            purpose: 'Sammelt Daten zur Anzahl der Besuche, der durchschnittlichen Verweildauer und welche Seiten geladen wurden.',
+            purpose:
+              'Sammelt Daten zur Anzahl der Besuche, der durchschnittlichen Verweildauer und welche Seiten geladen wurden.',
             provider: 'Google LLC'
           },
           {
             lang: 'en',
-            purpose: 'Collects data on the number of visits, average time spent, and which pages were loaded.',
+            purpose:
+              'Collects data on the number of visits, average time spent, and which pages were loaded.',
             provider: 'Google LLC'
           }
         ]
       },
       // Marketing Cookies
       {
-        categoryId: createdCategories.find(c => c.key === 'marketing')?.id,
+        categoryId: createdCategories.find((c) => c.key === 'marketing')?.id,
         name: '_fbp',
         domain: '.example.com',
         duration: '90 Tage',
@@ -193,19 +206,21 @@ export default defineEventHandler(async () => {
         translations: [
           {
             lang: 'de',
-            purpose: 'Wird vom Facebook Pixel verwendet, um Conversions zu verfolgen und personalisierte Werbung zu schalten.',
+            purpose:
+              'Wird vom Facebook Pixel verwendet, um Conversions zu verfolgen und personalisierte Werbung zu schalten.',
             provider: 'Meta Platforms Ireland Limited'
           },
           {
             lang: 'en',
-            purpose: 'Used by Facebook Pixel to track conversions and deliver personalized advertising.',
+            purpose:
+              'Used by Facebook Pixel to track conversions and deliver personalized advertising.',
             provider: 'Meta Platforms Ireland Limited'
           }
         ]
       },
       // Preference Cookies
       {
-        categoryId: createdCategories.find(c => c.key === 'preferences')?.id,
+        categoryId: createdCategories.find((c) => c.key === 'preferences')?.id,
         name: 'theme',
         domain: '.example.com',
         duration: '1 Jahr',
@@ -226,7 +241,7 @@ export default defineEventHandler(async () => {
         ]
       },
       {
-        categoryId: createdCategories.find(c => c.key === 'preferences')?.id,
+        categoryId: createdCategories.find((c) => c.key === 'preferences')?.id,
         name: 'language',
         domain: '.example.com',
         duration: '1 Jahr',
@@ -284,7 +299,8 @@ export default defineEventHandler(async () => {
             <h2>Kontakt</h2>
             <p>Bei Fragen zu unserer Cookie-Richtlinie kontaktieren Sie uns bitte unter: <a href="mailto:privacy@example.com">privacy@example.com</a></p>
           `,
-          bannerText: 'Diese Website verwendet Cookies, um Ihnen die bestmögliche Erfahrung zu bieten. Durch die weitere Nutzung stimmen Sie unserer Cookie-Richtlinie zu.',
+          bannerText:
+            'Diese Website verwendet Cookies, um Ihnen die bestmögliche Erfahrung zu bieten. Durch die weitere Nutzung stimmen Sie unserer Cookie-Richtlinie zu.',
           acceptText: 'Alle akzeptieren',
           rejectText: 'Nur erforderliche',
           settingsText: 'Einstellungen anpassen'
@@ -311,7 +327,8 @@ export default defineEventHandler(async () => {
             <h2>Contact</h2>
             <p>For questions about our cookie policy, please contact us at: <a href="mailto:privacy@example.com">privacy@example.com</a></p>
           `,
-          bannerText: 'This website uses cookies to provide you with the best possible experience. By continuing to use this site, you agree to our cookie policy.',
+          bannerText:
+            'This website uses cookies to provide you with the best possible experience. By continuing to use this site, you agree to our cookie policy.',
           acceptText: 'Accept All',
           rejectText: 'Essential Only',
           settingsText: 'Customize Settings'

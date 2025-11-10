@@ -74,30 +74,32 @@ const sidebarItems = computed<SidebarItem[]>(() => {
 
 // Admin items for logged in users
 const adminItems = computed<SidebarItem[]>(() =>
-  loggedIn.value ? [
-    {
-      label: t('navigation.admin', 'Admin'),
-      href: localePath('/admin'),
-      icon: 'i-lucide-settings',
-      children: [
+  loggedIn.value
+    ? [
         {
-          label: t('navigation.dashboard', 'Dashboard'),
-          href: localePath('/admin/dashboard'),
-          icon: 'i-lucide-layout-dashboard'
-        },
-        {
-          label: t('navigation.posts', 'Posts'),
-          href: localePath('/admin/posts'),
-          icon: 'i-lucide-file-text'
-        },
-        {
-          label: t('navigation.users', 'Users'),
-          href: localePath('/admin/users'),
-          icon: 'i-lucide-users'
+          label: t('navigation.admin', 'Admin'),
+          href: localePath('/admin'),
+          icon: 'i-lucide-settings',
+          children: [
+            {
+              label: t('navigation.dashboard', 'Dashboard'),
+              href: localePath('/admin/dashboard'),
+              icon: 'i-lucide-layout-dashboard'
+            },
+            {
+              label: t('navigation.posts', 'Posts'),
+              href: localePath('/admin/posts'),
+              icon: 'i-lucide-file-text'
+            },
+            {
+              label: t('navigation.users', 'Users'),
+              href: localePath('/admin/users'),
+              icon: 'i-lucide-users'
+            }
+          ]
         }
       ]
-    }
-  ] : []
+    : []
 )
 
 // Props for controlling sidebar
@@ -199,7 +201,10 @@ onMounted(() => {
               >
                 <UIcon v-if="item.icon" :name="item.icon" class="w-4 h-4 shrink-0" />
                 <span class="flex-1">{{ item.label }}</span>
-                <span v-if="item.badge" class="ml-auto text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">
+                <span
+                  v-if="item.badge"
+                  class="ml-auto text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded"
+                >
                   {{ item.badge }}
                 </span>
                 <!-- Show dropdown indicator for items with children -->
@@ -241,7 +246,10 @@ onMounted(() => {
         </div>
 
         <!-- Admin Section -->
-        <div v-if="adminItems.length > 0" class="pt-4 border-t border-gray-200 dark:border-gray-800">
+        <div
+          v-if="adminItems.length > 0"
+          class="pt-4 border-t border-gray-200 dark:border-gray-800"
+        >
           <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 px-3">
             {{ t('navigation.admin', 'Admin') }}
           </p>
@@ -276,7 +284,9 @@ onMounted(() => {
       </nav>
 
       <!-- Footer -->
-      <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800">
+      <div
+        class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800"
+      >
         <div class="text-xs text-gray-500 dark:text-gray-400 text-center">
           <p>NuxtWP Theme</p>
           <p>v{{ $config.public.version || '1.0.0' }}</p>

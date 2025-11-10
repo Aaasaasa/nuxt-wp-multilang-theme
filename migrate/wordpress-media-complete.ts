@@ -161,7 +161,7 @@ async function processMediaFile(wpFilePath: string): Promise<string | null> {
 async function migrateAttachments() {
   console.log('📸 Migriere WordPress Attachments zu Media Library...')
 
-  const attachments = await mysql.$queryRawUnsafe(`
+  const attachments = (await mysql.$queryRawUnsafe(`
     SELECT
       CAST(p.ID as CHAR) as ID,
       p.post_title,
@@ -177,7 +177,7 @@ async function migrateAttachments() {
     WHERE p.post_type = 'attachment'
     AND p.post_mime_type LIKE 'image/%'
     ORDER BY p.post_date DESC
-  `) as WPAttachment[]
+  `)) as WPAttachment[]
 
   console.log(`📄 Gefunden: ${attachments.length} Image Attachments`)
 
@@ -207,7 +207,6 @@ async function migrateAttachments() {
           webpCount++
         }
       }
-
     } catch (error) {
       console.warn(`⚠️ Error processing attachment ${att.ID}:`, error)
     }
@@ -223,7 +222,7 @@ async function migrateAttachments() {
 async function migrateFeaturedImages() {
   console.log('🖼️ Migriere Featured Images...')
 
-  const featuredImages = await mysql.$queryRawUnsafe(`
+  const featuredImages = (await mysql.$queryRawUnsafe(`
     SELECT
       CAST(pm.post_id as CHAR) as post_id,
       CAST(pm.meta_value as CHAR) as attachment_id,
@@ -239,7 +238,7 @@ async function migrateFeaturedImages() {
     AND att.post_type = 'attachment'
     AND p.post_status = 'publish'
     AND p.post_type IN ('post', 'page', 'avada_portfolio')
-  `) as FeaturedImageMapping[]
+  `)) as FeaturedImageMapping[]
 
   console.log(`🖼️ Gefunden: ${featuredImages.length} Featured Images`)
 
@@ -316,9 +315,11 @@ async function migrateFeaturedImages() {
           assignedCount++
         }
       }
-
     } catch (error) {
-      console.warn(`⚠️ Error assigning featured image for ${img.post_type} ${img.post_name}:`, error)
+      console.warn(
+        `⚠️ Error assigning featured image for ${img.post_type} ${img.post_name}:`,
+        error
+      )
     }
   }
 
@@ -382,7 +383,6 @@ async function main() {
     console.log('   ✅ Featured Images korrekt zugewiesen')
     console.log('   ✅ Alte Dateien bereinigt')
     console.log('   ✅ Media Pipeline ist DB-Migration-sicher')
-
   } catch (error) {
     console.error('❌ Migration Fehler:', error)
     process.exit(1)

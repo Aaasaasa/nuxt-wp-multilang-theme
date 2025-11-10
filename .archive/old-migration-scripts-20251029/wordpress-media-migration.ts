@@ -27,7 +27,7 @@ function getTableName(table: string): string {
 async function migrateAttachments() {
   console.log('📸 Migriere WordPress Media/Attachments...')
 
-  const attachments = await mysql.$queryRawUnsafe(`
+  const attachments = (await mysql.$queryRawUnsafe(`
     SELECT
       CAST(p.ID as CHAR) as ID,
       p.post_title,
@@ -44,7 +44,7 @@ async function migrateAttachments() {
     LEFT JOIN ${getTableName('postmeta')} pm_alt ON p.ID = pm_alt.post_id AND pm_alt.meta_key = '_wp_attachment_image_alt'
     WHERE p.post_type = 'attachment'
     ORDER BY p.post_date DESC
-  `) as any[]
+  `)) as any[]
 
   console.log(`📄 Gefunden: ${attachments.length} Attachments`)
 
@@ -87,7 +87,6 @@ async function migrateAttachments() {
       }
 
       console.log(`📎 Attachment: ${att.post_title} -> ${relativePath}`)
-
     } catch (error) {
       console.warn(`⚠️ Skipping attachment ${att.ID}:`, error)
     }
@@ -102,7 +101,7 @@ async function migrateAttachments() {
 async function migrateFeaturedImages() {
   console.log('🖼️ Migriere Featured Images...')
 
-  const featuredImages = await mysql.$queryRawUnsafe(`
+  const featuredImages = (await mysql.$queryRawUnsafe(`
     SELECT
       CAST(pm.post_id as CHAR) as post_id,
       CAST(pm.meta_value as CHAR) as attachment_id,
@@ -113,16 +112,16 @@ async function migrateFeaturedImages() {
     LEFT JOIN ${getTableName('postmeta')} att_meta ON att.ID = att_meta.post_id AND att_meta.meta_key = '_wp_attached_file'
     WHERE pm.meta_key = '_thumbnail_id'
     AND att.post_type = 'attachment'
-  `) as any[]
+  `)) as any[]
 
   console.log(`🖼️ Gefunden: ${featuredImages.length} Featured Images`)
 
   for (const img of featuredImages) {
     try {
       // WordPress Post ID zu PostgreSQL Article/Page mapping
-      const wpPost = await mysql.$queryRawUnsafe(`
+      const wpPost = (await mysql.$queryRawUnsafe(`
         SELECT post_type, post_name FROM ${getTableName('posts')} WHERE ID = '${img.post_id}'
-      `) as any[]
+      `)) as any[]
 
       if (wpPost.length === 0) continue
 
@@ -155,12 +154,12 @@ async function migrateFeaturedImages() {
         const article = await pg.article.findFirst({ where: { slug: post.post_name } })
         if (article) {
           await pg.articleMeta.create({
-          data: {
-            articleId: article.id,
-            key: 'featured_image',
-            value: relativePath
-          }
-        })
+            data: {
+              articleId: article.id,
+              key: 'featured_image',
+              value: relativePath
+            }
+          })
           console.log(`🖼️ Featured Image: Article "${post.post_name}" -> ${relativePath}`)
         }
       } else if (post.post_type === 'page') {
@@ -168,16 +167,15 @@ async function migrateFeaturedImages() {
         const page = await pg.page.findFirst({ where: { slug: post.post_name } })
         if (page) {
           await pg.pageMeta.create({
-          data: {
-            pageId: page.id,
-            key: 'featured_image',
-            value: relativePath
-          }
-        })
+            data: {
+              pageId: page.id,
+              key: 'featured_image',
+              value: relativePath
+            }
+          })
           console.log(`🖼️ Featured Image: Page "${post.post_name}" -> ${relativePath}`)
         }
       }
-
     } catch (error) {
       console.warn(`⚠️ Skipping featured image for post ${img.post_id}:`, error)
     }
@@ -200,7 +198,6 @@ async function main() {
     console.log('📝 Nächste Schritte:')
     console.log('   1. Kopiere wp-content/uploads/ nach public/uploads/')
     console.log('   2. Teste die Bilddarstellung im Frontend')
-
   } catch (error) {
     console.error('❌ Migration Fehler:', error)
     process.exit(1)

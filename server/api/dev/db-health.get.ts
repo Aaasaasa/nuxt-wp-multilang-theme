@@ -22,21 +22,15 @@ export default defineEventHandler(async () => {
     await prismaCms.$queryRaw`SELECT 1`
 
     // Count main CMS tables
-    const [
-      userCount,
-      articleCount,
-      pageCount,
-      portfolioCount,
-      mediaCount,
-      menuCount
-    ] = await Promise.all([
-      prismaCms.user.count(),
-      prismaCms.article.count(),
-      prismaCms.page.count(),
-      prismaCms.portfolio.count(),
-      prismaCms.media.count(),
-      prismaCms.menu.count()
-    ])
+    const [userCount, articleCount, pageCount, portfolioCount, mediaCount, menuCount] =
+      await Promise.all([
+        prismaCms.user.count(),
+        prismaCms.article.count(),
+        prismaCms.page.count(),
+        prismaCms.portfolio.count(),
+        prismaCms.media.count(),
+        prismaCms.menu.count()
+      ])
 
     const pgLatency = Date.now() - pgStart
 
@@ -56,8 +50,7 @@ export default defineEventHandler(async () => {
     }
 
     await prismaCms.$disconnect()
-  }
-  catch (err: any) {
+  } catch (err: any) {
     result.postgres = {
       status: 'error',
       error: err.message,
@@ -83,8 +76,7 @@ export default defineEventHandler(async () => {
         SELECT COUNT(*) as count FROM as_posts WHERE post_status = 'publish'
       `
       postCount = Number(result[0]?.count || 0)
-    }
-    catch {
+    } catch {
       // Table might not exist, ignore
     }
 
@@ -99,8 +91,7 @@ export default defineEventHandler(async () => {
         as_posts: postCount
       }
     }
-  }
-  catch (err: any) {
+  } catch (err: any) {
     result.mysql = {
       status: 'warning',
       error: err.message,
@@ -124,8 +115,7 @@ export default defineEventHandler(async () => {
     let userCount = 0
     try {
       userCount = await prismaMongo.user.count()
-    }
-    catch {
+    } catch {
       // Model might not exist yet
     }
 
@@ -140,8 +130,7 @@ export default defineEventHandler(async () => {
         users: userCount
       }
     }
-  }
-  catch (err: any) {
+  } catch (err: any) {
     result.mongo = {
       status: 'warning',
       error: err.message,

@@ -27,14 +27,20 @@ function toInt(v: any): number {
 
 function mapStatus(status: string): 'PUBLISHED' | 'DRAFT' | 'PENDING' | 'ARCHIVED' {
   switch (status) {
-    case 'publish': return 'PUBLISHED'
-    case 'draft': return 'DRAFT'
-    case 'pending': return 'PENDING'
-    default: return 'ARCHIVED'
+    case 'publish':
+      return 'PUBLISHED'
+    case 'draft':
+      return 'DRAFT'
+    case 'pending':
+      return 'PENDING'
+    default:
+      return 'ARCHIVED'
   }
 }
 
-function mapUserRole(userId: number): 'SUPERADMIN' | 'ADMIN' | 'AUTHOR' | 'CONTRIBUTOR' | 'SUBSCRIBER' {
+function mapUserRole(
+  userId: number
+): 'SUPERADMIN' | 'ADMIN' | 'AUTHOR' | 'CONTRIBUTOR' | 'SUBSCRIBER' {
   return userId === 1 ? 'SUPERADMIN' : 'AUTHOR'
 }
 
@@ -72,9 +78,9 @@ async function migrateUsers() {
   console.log('👥 Migriere WordPress Benutzer...')
 
   // Use the generated Prisma model names from your schema
-  const wpUsers = await mysql.$queryRawUnsafe(`
+  const wpUsers = (await mysql.$queryRawUnsafe(`
     SELECT * FROM ${getTableName('users')} ORDER BY ID
-  `) as any[]
+  `)) as any[]
 
   let imported = 0
 
@@ -102,9 +108,9 @@ async function migrateUsers() {
       })
 
       // User meta
-      const metas = await mysql.$queryRawUnsafe(`
+      const metas = (await mysql.$queryRawUnsafe(`
         SELECT * FROM ${getTableName('usermeta')} WHERE user_id = ${u.ID}
-      `) as any[]
+      `)) as any[]
 
       if (metas.length) {
         await pg.userMeta.createMany({
@@ -134,9 +140,9 @@ async function migrateTerms() {
   console.log('🏷️  Migriere WordPress Begriffe und Kategorien...')
 
   // 1) Terms first
-  const wpTerms = await mysql.$queryRawUnsafe(`
+  const wpTerms = (await mysql.$queryRawUnsafe(`
     SELECT * FROM ${getTableName('terms')} ORDER BY term_id
-  `) as any[]
+  `)) as any[]
 
   let imported = 0
 
@@ -161,15 +167,15 @@ async function migrateTerms() {
   }
 
   // 2) Taxonomies - first pass without parentId
-  const wpTaxonomies = await mysql.$queryRawUnsafe(`
+  const wpTaxonomies = (await mysql.$queryRawUnsafe(`
     SELECT * FROM ${getTableName('term_taxonomy')} ORDER BY term_taxonomy_id
-  `) as any[]
+  `)) as any[]
 
   for (const tx of wpTaxonomies) {
     try {
-      const termRow = await mysql.$queryRawUnsafe(`
+      const termRow = (await mysql.$queryRawUnsafe(`
         SELECT * FROM ${getTableName('terms')} WHERE term_id = ${tx.term_id} LIMIT 1
-      `) as any[]
+      `)) as any[]
 
       if (!termRow.length) continue
 
@@ -195,15 +201,15 @@ async function migrateTerms() {
     if (toInt(tx.parent) === 0) continue
 
     try {
-      const parentTx = await mysql.$queryRawUnsafe(`
+      const parentTx = (await mysql.$queryRawUnsafe(`
         SELECT * FROM ${getTableName('term_taxonomy')} WHERE term_taxonomy_id = ${tx.parent} LIMIT 1
-      `) as any[]
+      `)) as any[]
 
       if (!parentTx.length) continue
 
-      const parentTerm = await mysql.$queryRawUnsafe(`
+      const parentTerm = (await mysql.$queryRawUnsafe(`
         SELECT * FROM ${getTableName('terms')} WHERE term_id = ${parentTx[0].term_id} LIMIT 1
-      `) as any[]
+      `)) as any[]
 
       if (!parentTerm.length) continue
 
@@ -215,9 +221,9 @@ async function migrateTerms() {
       })
       if (!pgParentTx) continue
 
-      const childTerm = await mysql.$queryRawUnsafe(`
+      const childTerm = (await mysql.$queryRawUnsafe(`
         SELECT * FROM ${getTableName('terms')} WHERE term_id = ${tx.term_id} LIMIT 1
-      `) as any[]
+      `)) as any[]
 
       if (!childTerm.length) continue
 
@@ -247,11 +253,11 @@ async function migrateTerms() {
 async function migrateContent() {
   console.log('📝 Migriere WordPress Posts und Pages...')
 
-  const wpPosts = await mysql.$queryRawUnsafe(`
+  const wpPosts = (await mysql.$queryRawUnsafe(`
     SELECT * FROM ${getTableName('posts')}
     WHERE post_status IN ('publish', 'draft', 'private')
     ORDER BY post_date DESC
-  `) as any[]
+  `)) as any[]
 
   let postsImported = 0
   let pagesImported = 0
@@ -357,9 +363,9 @@ async function migrateContent() {
       }
 
       // Meta fields
-      const metas = await mysql.$queryRawUnsafe(`
+      const metas = (await mysql.$queryRawUnsafe(`
         SELECT * FROM ${getTableName('postmeta')} WHERE post_id = ${p.ID}
-      `) as any[]
+      `)) as any[]
 
       if (metas.length && p.post_type === 'post') {
         const article = await pg.article.findUnique({ where: { slug: base.slug } })
@@ -402,7 +408,6 @@ async function migrateContent() {
           })
         }
       }
-
     } catch (error) {
       console.log(`❌ Fehler beim Importieren von Post ${p.post_title}:`, error)
     }
@@ -417,11 +422,11 @@ async function migrateContent() {
 async function migrateComments() {
   console.log('💬 Migriere WordPress Kommentare...')
 
-  const wpComments = await mysql.$queryRawUnsafe(`
+  const wpComments = (await mysql.$queryRawUnsafe(`
     SELECT * FROM ${getTableName('comments')}
     WHERE comment_approved = '1'
     ORDER BY comment_date DESC
-  `) as any[]
+  `)) as any[]
 
   let imported = 0
 
@@ -430,9 +435,9 @@ async function migrateComments() {
       const targetPostId = toInt(c.comment_post_ID)
 
       // Find the target post
-      const targetPost = await mysql.$queryRawUnsafe(`
+      const targetPost = (await mysql.$queryRawUnsafe(`
         SELECT * FROM ${getTableName('posts')} WHERE ID = ${targetPostId} LIMIT 1
-      `) as any[]
+      `)) as any[]
 
       if (!targetPost.length) continue
 
@@ -487,7 +492,7 @@ async function migrateComments() {
 async function migrateTermRelationships() {
   console.log('🔗 Migriere WordPress Term Relationships (Categories/Tags)...')
 
-  const wpRelationships = await mysql.$queryRawUnsafe(`
+  const wpRelationships = (await mysql.$queryRawUnsafe(`
     SELECT
       tr.object_id,
       tr.term_taxonomy_id,
@@ -504,7 +509,7 @@ async function migrateTermRelationships() {
     WHERE p.post_type IN ('post', 'page', 'avada_portfolio')
     AND tt.taxonomy IN ('category', 'post_tag', 'portfolio_category', 'portfolio_tags')
     ORDER BY tr.object_id
-  `) as any[]
+  `)) as any[]
 
   console.log(`📄 Gefunden: ${wpRelationships.length} Relationships`)
 
@@ -549,7 +554,6 @@ async function migrateTermRelationships() {
       if (imported % 50 === 0) {
         console.log(`   Imported ${imported}/${wpRelationships.length} relationships...`)
       }
-
     } catch (error) {
       // Skip duplicates silently
       if (error instanceof Error && !error.message?.includes('Unique constraint')) {
@@ -568,13 +572,13 @@ async function migrateMenus() {
   console.log('🍽️ Migriere WordPress Menüs...')
 
   // Get WordPress menus
-  const wpMenus = await mysql.$queryRawUnsafe(`
+  const wpMenus = (await mysql.$queryRawUnsafe(`
     SELECT t.term_id, t.name, t.slug, tt.description
     FROM ${getTableName('terms')} t
     LEFT JOIN ${getTableName('term_taxonomy')} tt ON t.term_id = tt.term_id
     WHERE tt.taxonomy = 'nav_menu'
     ORDER BY t.term_id
-  `) as any[]
+  `)) as any[]
 
   console.log(`📄 Gefunden: ${wpMenus.length} WordPress Menüs`)
 
@@ -594,7 +598,7 @@ async function migrateMenus() {
       menusImported++
 
       // Get menu items with corrected meta keys
-      const wpMenuItems = await mysql.$queryRawUnsafe(`
+      const wpMenuItems = (await mysql.$queryRawUnsafe(`
         SELECT
           tr.object_id,
           p.post_title,
@@ -630,7 +634,7 @@ async function migrateMenus() {
         AND p.post_type = 'nav_menu_item'
         AND p.post_status = 'publish'
         ORDER BY p.menu_order ASC, p.ID ASC
-      `) as any[]
+      `)) as any[]
 
       console.log(`   Menu "${wpMenu.name}": ${wpMenuItems.length} Items`)
 
@@ -652,7 +656,9 @@ async function migrateMenus() {
           let cssClass = wpItem.menu_item_classes || null
           let order = parseInt(wpItem.menu_order) || 0
 
-          console.log(`     Processing menu item: "${title}" (type: ${wpItem.menu_item_type}, object: ${wpItem.menu_item_object})`)
+          console.log(
+            `     Processing menu item: "${title}" (type: ${wpItem.menu_item_type}, object: ${wpItem.menu_item_object})`
+          )
 
           // Determine URL based on menu item type
           if (wpItem.menu_item_type === 'custom') {
@@ -661,27 +667,27 @@ async function migrateMenus() {
             // Get the referenced post/page by object_id
             const objectId = parseInt(wpItem.menu_item_object_id) || 0
             if (objectId > 0) {
-              const refPost = await mysql.$queryRawUnsafe(`
+              const refPost = (await mysql.$queryRawUnsafe(`
                 SELECT post_name, post_type FROM ${getTableName('posts')}
                 WHERE ID = ${objectId} LIMIT 1
-              `) as any[]
+              `)) as any[]
 
               if (refPost.length > 0) {
                 const post = refPost[0]
                 if (post.post_type === 'post') {
                   route = `/articles/${post.post_name}`
                 } else if (post.post_type === 'page') {
-                  route = `/${post.post_name}`  // Direct URL ohne "pages" prefix
+                  route = `/${post.post_name}` // Direct URL ohne "pages" prefix
                 } else if (post.post_type === 'avada_portfolio') {
                   route = `/portfolio/${post.post_name}`
                 }
 
                 // If no title was set, use the referenced post's title
                 if (!wpItem.menu_item_attr_title && !wpItem.post_title) {
-                  const titlePost = await mysql.$queryRawUnsafe(`
+                  const titlePost = (await mysql.$queryRawUnsafe(`
                     SELECT post_title FROM ${getTableName('posts')}
                     WHERE ID = ${objectId} LIMIT 1
-                  `) as any[]
+                  `)) as any[]
                   if (titlePost.length > 0) {
                     title = titlePost[0].post_title || 'Menu Item'
                   }
@@ -692,10 +698,10 @@ async function migrateMenus() {
             // Get taxonomy term info
             const objectId = parseInt(wpItem.menu_item_object_id) || 0
             if (objectId > 0) {
-              const termInfo = await mysql.$queryRawUnsafe(`
+              const termInfo = (await mysql.$queryRawUnsafe(`
                 SELECT t.slug, t.name FROM ${getTableName('terms')} t
                 WHERE t.term_id = ${objectId} LIMIT 1
-              `) as any[]
+              `)) as any[]
 
               if (termInfo.length > 0) {
                 const term = termInfo[0]
@@ -726,9 +732,11 @@ async function migrateMenus() {
           // Map WordPress ID to PostgreSQL ID
           wpIdToPgIdMap.set(wpItem.object_id.toString(), pgItem.id)
           itemsImported++
-
         } catch (error) {
-          console.log(`⚠️  Skipping root menu item "${wpItem.post_title}":`, error instanceof Error ? error.message : error)
+          console.log(
+            `⚠️  Skipping root menu item "${wpItem.post_title}":`,
+            error instanceof Error ? error.message : error
+          )
         }
       }
 
@@ -747,7 +755,9 @@ async function migrateMenus() {
           let cssClass = wpItem.menu_item_classes || null
           let order = parseInt(wpItem.menu_order) || 0
 
-          console.log(`     Processing child menu item: "${title}" (type: ${wpItem.menu_item_type}, object: ${wpItem.menu_item_object})`)
+          console.log(
+            `     Processing child menu item: "${title}" (type: ${wpItem.menu_item_type}, object: ${wpItem.menu_item_object})`
+          )
 
           // Determine URL based on menu item type
           if (wpItem.menu_item_type === 'custom') {
@@ -756,27 +766,27 @@ async function migrateMenus() {
             // Get the referenced post/page by object_id
             const objectId = parseInt(wpItem.menu_item_object_id) || 0
             if (objectId > 0) {
-              const refPost = await mysql.$queryRawUnsafe(`
+              const refPost = (await mysql.$queryRawUnsafe(`
                 SELECT post_name, post_type FROM ${getTableName('posts')}
                 WHERE ID = ${objectId} LIMIT 1
-              `) as any[]
+              `)) as any[]
 
               if (refPost.length > 0) {
                 const post = refPost[0]
                 if (post.post_type === 'post') {
                   route = `/articles/${post.post_name}`
                 } else if (post.post_type === 'page') {
-                  route = `/${post.post_name}`  // Direct URL ohne "pages" prefix
+                  route = `/${post.post_name}` // Direct URL ohne "pages" prefix
                 } else if (post.post_type === 'avada_portfolio') {
                   route = `/portfolio/${post.post_name}`
                 }
 
                 // If no title was set, use the referenced post's title
                 if (!wpItem.menu_item_attr_title && !wpItem.post_title) {
-                  const titlePost = await mysql.$queryRawUnsafe(`
+                  const titlePost = (await mysql.$queryRawUnsafe(`
                     SELECT post_title FROM ${getTableName('posts')}
                     WHERE ID = ${objectId} LIMIT 1
-                  `) as any[]
+                  `)) as any[]
                   if (titlePost.length > 0) {
                     title = titlePost[0].post_title || 'Menu Item'
                   }
@@ -787,10 +797,10 @@ async function migrateMenus() {
             // Get taxonomy term info
             const objectId = parseInt(wpItem.menu_item_object_id) || 0
             if (objectId > 0) {
-              const termInfo = await mysql.$queryRawUnsafe(`
+              const termInfo = (await mysql.$queryRawUnsafe(`
                 SELECT t.slug, t.name FROM ${getTableName('terms')} t
                 WHERE t.term_id = ${objectId} LIMIT 1
-              `) as any[]
+              `)) as any[]
 
               if (termInfo.length > 0) {
                 const term = termInfo[0]
@@ -823,14 +833,22 @@ async function migrateMenus() {
             })
             itemsImported++
           } else {
-            console.log(`⚠️  Parent not found for menu item "${wpItem.post_title}" (parent: ${wpItem.menu_item_parent})`)
+            console.log(
+              `⚠️  Parent not found for menu item "${wpItem.post_title}" (parent: ${wpItem.menu_item_parent})`
+            )
           }
-
         } catch (error) {
-          console.log(`⚠️  Skipping child menu item "${wpItem.post_title}":`, error instanceof Error ? error.message : error)
+          console.log(
+            `⚠️  Skipping child menu item "${wpItem.post_title}":`,
+            error instanceof Error ? error.message : error
+          )
         }
-      }    } catch (error) {
-      console.log(`⚠️  Skipping menu "${wpMenu.name}":`, error instanceof Error ? error.message : error)
+      }
+    } catch (error) {
+      console.log(
+        `⚠️  Skipping menu "${wpMenu.name}":`,
+        error instanceof Error ? error.message : error
+      )
     }
   }
 
@@ -855,12 +873,12 @@ async function migrateSettings() {
   let imported = 0
   for (const optionName of importantOptions) {
     try {
-      const wpOption = await mysql.$queryRawUnsafe(`
+      const wpOption = (await mysql.$queryRawUnsafe(`
         SELECT option_value
         FROM ${getTableName('options')}
         WHERE option_name = '${optionName}'
         LIMIT 1
-      `) as any[]
+      `)) as any[]
 
       if (!wpOption || wpOption.length === 0) continue
 

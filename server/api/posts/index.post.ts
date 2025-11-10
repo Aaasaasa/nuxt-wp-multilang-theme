@@ -20,9 +20,12 @@ export default defineEventHandler(async (event) => {
     }
 
     // Slug aus Titel generieren falls nicht vorhanden
-    const slug = body.slug || body.title.toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '')
+    const slug =
+      body.slug ||
+      body.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '')
 
     const postData = {
       title: body.title,

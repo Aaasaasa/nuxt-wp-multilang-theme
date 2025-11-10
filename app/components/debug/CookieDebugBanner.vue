@@ -5,21 +5,15 @@
       <p class="text-sm mb-4">Test Cookie Banner - funktioniert es?</p>
       <div class="flex gap-2">
         <button
-          @click="testAccept"
           class="bg-green-500 hover:bg-green-600 px-3 py-1 rounded text-sm"
+          @click="testAccept"
         >
           Akzeptieren
         </button>
-        <button
-          @click="testReject"
-          class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm"
-        >
+        <button class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm" @click="testReject">
           Ablehnen
         </button>
-        <button
-          @click="testClose"
-          class="bg-gray-500 hover:bg-gray-600 px-3 py-1 rounded text-sm"
-        >
+        <button class="bg-gray-500 hover:bg-gray-600 px-3 py-1 rounded text-sm" @click="testClose">
           Schließen
         </button>
       </div>
@@ -35,13 +29,17 @@ const debugInfo = ref('')
 const cookieManager = useCookieManager()
 
 const updateDebug = () => {
-  debugInfo.value = JSON.stringify({
-    showBanner: cookieManager.showBanner.value,
-    isLoaded: cookieManager.isLoaded.value,
-    consent: cookieManager.consent.value ? 'exists' : 'null',
-    categories: cookieManager.cookieCategories.value.length,
-    policy: cookieManager.cookiePolicy.value ? 'exists' : 'null'
-  }, null, 2)
+  debugInfo.value = JSON.stringify(
+    {
+      showBanner: cookieManager.showBanner.value,
+      isLoaded: cookieManager.isLoaded.value,
+      consent: cookieManager.consent.value ? 'exists' : 'null',
+      categories: cookieManager.cookieCategories.value.length,
+      policy: cookieManager.cookiePolicy.value ? 'exists' : 'null'
+    },
+    null,
+    2
+  )
 }
 
 const testAccept = async () => {

@@ -27,12 +27,7 @@
             <p class="text-red-600 dark:text-red-400 mb-6">
               {{ $t('portfolio.error.message', 'Unable to load portfolio items at the moment.') }}
             </p>
-            <UButton
-              to="/"
-              color="red"
-              variant="solid"
-              icon="i-lucide-arrow-left"
-            >
+            <UButton to="/" color="red" variant="solid" icon="i-lucide-arrow-left">
               {{ $t('portfolio.error.backToHome', 'Back to Home') }}
             </UButton>
           </div>
@@ -49,7 +44,12 @@
             {{ $t('portfolio.title', 'Our Work') }}
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            {{ $t('portfolio.subtitle', 'Explore our portfolio of web development projects, showcasing modern technologies and innovative solutions.') }}
+            {{
+              $t(
+                'portfolio.subtitle',
+                'Explore our portfolio of web development projects, showcasing modern technologies and innovative solutions.'
+              )
+            }}
           </p>
         </div>
 
@@ -68,29 +68,39 @@
                   :alt="portfolio.title"
                   class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   loading="lazy"
-                  @error="$event.target.style.display='none'"
+                  @error="$event.target.style.display = 'none'"
                 />
                 <!-- Fallback placeholder if image fails to load -->
                 <div
                   class="absolute inset-0 bg-linear-to-br from-primary-100 to-primary-200 dark:from-primary-900 dark:to-primary-800 flex items-center justify-center"
                   style="z-index: -1"
                 >
-                  <UIcon name="i-lucide-image" class="w-12 h-12 text-primary-400 dark:text-primary-600" />
+                  <UIcon
+                    name="i-lucide-image"
+                    class="w-12 h-12 text-primary-400 dark:text-primary-600"
+                  />
                 </div>
               </div>
 
               <!-- Content -->
               <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 line-clamp-2">
+                <h3
+                  class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 line-clamp-2"
+                >
                   {{ portfolio.title }}
                 </h3>
 
-                <div v-if="portfolio.excerpt" class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                <div
+                  v-if="portfolio.excerpt"
+                  class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3"
+                >
                   {{ portfolio.excerpt }}
                 </div>
 
                 <!-- Meta Info -->
-                <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                <div
+                  class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4"
+                >
                   <div class="flex items-center">
                     <UIcon name="i-lucide-calendar" class="w-4 h-4 mr-1" />
                     <time :datetime="portfolio.createdAt">
@@ -127,7 +137,12 @@
             {{ $t('portfolio.empty.title', 'No Portfolio Items') }}
           </h3>
           <p class="text-gray-600 dark:text-gray-400">
-            {{ $t('portfolio.empty.message', 'Portfolio items will appear here once they are published.') }}
+            {{
+              $t(
+                'portfolio.empty.message',
+                'Portfolio items will appear here once they are published.'
+              )
+            }}
           </p>
         </div>
       </div>
@@ -161,9 +176,11 @@ const formatDate = (dateString: string) => {
 // SEO Meta
 useSeoMeta({
   title: 'Portfolio - Our Work',
-  description: 'Explore our portfolio of web development projects, showcasing modern technologies and innovative solutions.',
+  description:
+    'Explore our portfolio of web development projects, showcasing modern technologies and innovative solutions.',
   ogTitle: 'Portfolio - Our Work',
-  ogDescription: 'Explore our portfolio of web development projects, showcasing modern technologies and innovative solutions.',
+  ogDescription:
+    'Explore our portfolio of web development projects, showcasing modern technologies and innovative solutions.',
   ogType: 'website'
 })
 </script>

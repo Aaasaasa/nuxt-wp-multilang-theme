@@ -654,6 +654,121 @@ docker exec -i nuxt_mysql mysql \
 
 ---
 
+## Role-Based Access Control (RBAC) System
+
+### Implementierung (10. November 2025)
+
+Ein vollständiges rollenbasiertes Zugriffssystem wurde implementiert mit drei Benutzerrollen:
+
+#### 1. Layouts
+
+Drei dedizierte Layouts für unterschiedliche Benutzerrollen:
+
+- **`app/layouts/superadmin.vue`**: Purple/Indigo Theme mit Shield-Icon
+  - Vollständiger Systemzugriff
+  - Database Health Monitoring
+  - User Management
+  - System Settings
+
+- **`app/layouts/admin.vue`**: Blue/Cyan Theme mit Settings-Icon
+  - Content Management (Artikel, Seiten, Media)
+  - User Moderation
+  - Kommentarverwaltung
+
+- **`app/layouts/customer.vue`**: Green/Teal Theme mit User-Icon
+  - Profilverwaltung
+  - Bestellungen
+  - Account Settings
+
+**Wichtig**: Alle Layouts verwenden die einheitliche Struktur:
+
+- `AppSidebar`: Responsive Navigation
+- `UHeader`: Gradient-Header mit Rolle-spezifischen Farben
+- `UMain`: Content-Bereich
+- `AppFooter`: Footer-Komponente
+
+**User Type Problem**: Der `nuxt-auth-utils` User-Type enthält KEINE Properties wie `name`, `email`, `role`. Diese wurden aus allen Layouts entfernt, um TypeScript-Fehler zu vermeiden.
+
+#### 2. Middleware
+
+Drei Route-Guards für rollenbasierte Zugriffskontrolle:
+
+- **`app/middleware/role-superadmin.ts`**
+  - Prüft Login-Status
+  - TODO: Role-Check wenn User-Type erweitert ist
+
+- **`app/middleware/role-admin.ts`**
+  - Prüft Login-Status
+  - TODO: Check ADMIN oder SUPERADMIN role
+
+- **`app/middleware/role-customer.ts`**
+  - Nur Login-Check
+  - Alle authentifizierten User erlaubt
+
+**Naming Convention**: Nuxt erwartet kebab-case für Middleware Auto-Import:
+
+- ✅ `role-superadmin.ts` → `middleware: 'role-superadmin'`
+- ❌ `role.superadmin.ts` (funktioniert nicht mit Auto-Import)
+
+#### 3. Dashboard Pages
+
+Drei Dashboard-Seiten mit Role-spezifischem Content:
+
+- **`app/pages/superadmin/index.vue`**
+  - System Status, User Count, Database Statistics
+  - Schnellzugriff: DB Health Check, User Management, Settings, Logs
+  - Route: `/superadmin`
+
+- **`app/pages/admin/index.vue`**
+  - Content Stats (37 Artikel, 12 Seiten, 104 Media)
+  - Schnellzugriff: Neuer Artikel, User verwalten, Media Library, Kommentare
+  - Route: `/admin`
+
+- **`app/pages/customer/index.vue`**
+  - Profil, Bestellungen, Nachrichten
+  - Schnellzugriff: Profil bearbeiten, Passwort ändern, Bestellungen, Favoriten
+  - Route: `/customer`
+
+#### 4. TypeScript Type Generation
+
+Nach dem Erstellen neuer Layouts/Middleware **IMMER** Typen neu generieren:
+
+```bash
+yarn nuxi prepare
+```
+
+Dies aktualisiert:
+
+- `.nuxt/types/layouts.d.ts` → `LayoutKey = "admin" | "customer" | "default" | "superadmin"`
+- `.nuxt/types/middleware.d.ts` → `MiddlewareKey = "auth" | "guest" | "role-admin" | "role-customer" | "role-superadmin"`
+
+**Problem**: VSCode/ESLint cache kann alte Typen behalten → Dev-Server neu starten
+
+#### 5. Offene Aufgaben (TODOs)
+
+- [ ] **User Type Extension**: `types/auth.d.ts` mit `role: 'SUPERADMIN' | 'ADMIN' | 'EDITOR' | 'CUSTOMER' | 'GUEST'`
+- [ ] **Server-Side Role Checking**: `server/middleware/role-check.ts` für API-Level Protection
+- [ ] **Session Integration**: User role in Session speichern
+- [ ] **Role Enforcement**: Middleware mit tatsächlichem Role-Check implementieren
+- [ ] **Tests**: E2E-Tests für rollenbasierte Navigation
+
+#### 6. Session Management & Mobile Apps
+
+**Redis Discussion** (31. Oktober 2025):
+
+- User Concern: "wie ist es mit mobile App wenn ich Redis habe? Es wird ohne Net nicht funktionieren"
+- **Lösung**: JWT-basierte Sessions als Alternative für Mobile Offline-Szenarien
+- **Architektur**: Frontend (PWA/Capacitor) → Nuxt API → Databases (kein direkter DB-Zugriff)
+- **Sicherheit**: Capacitor App nutzt nur Nuxt API, nicht direkt Redis
+
+**Redis vs. JWT**:
+
+- **Redis**: Stateful sessions, server-side control, session revocation
+- **JWT**: Stateless tokens, offline-fähig, kein Backend-Call für Validation
+- **Empfehlung**: Hybrid-Ansatz möglich (Redis für Web, JWT für Mobile)
+
+---
+
 **Claude Context**: This is a production-ready Nuxt 4 theme with modern architecture, created by Aleksandar Stajic. Focus on the multi-database setup, modern layout components, and Yarn-based workflows when assisting with development.
 
 **WICHTIG**: Lies IMMER diese Problem-Lösungen BEVOR du Code änderst! Portfolios sind eigener Content-Typ mit `/our-work/*` URLs!
