@@ -125,19 +125,19 @@ const getTextExcerpt = (htmlContent: string) => {
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
     >
       <article v-for="article in displayArticles" :key="article.id" class="article-card">
-        <!-- Article Image -->
-        <div class="article-card-image">
+        <!-- Article Image (Clickable) -->
+        <NuxtLink :to="`/blog/${article.slug || article.id}`" class="article-card-image">
           <img
             v-if="article.featuredImage"
             :src="article.featuredImage"
             :alt="getArticleTitle(article)"
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
             loading="lazy"
           />
           <div v-else class="w-full h-full flex items-center justify-center bg-gray-200">
             <Icon name="i-lucide-file-text" class="w-12 h-12 text-gray-400" />
           </div>
-        </div>
+        </NuxtLink>
 
         <!-- Article Content -->
         <div class="article-card-content">
@@ -149,13 +149,17 @@ const getTextExcerpt = (htmlContent: string) => {
             <span class="mx-2">•</span>
             <Icon name="i-lucide-user" class="w-4 h-4 mr-1" />
             <span>{{
-              article.author?.username || article.author?.firstName || 'Unknown Author'
+              article.author?.displayName || article.author?.login || 'Unknown Author'
             }}</span>
           </div>
 
-          <h2 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
-            {{ getArticleTitle(article) }}
-          </h2>
+          <NuxtLink :to="`/blog/${article.slug || article.id}`">
+            <h2
+              class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors"
+            >
+              {{ getArticleTitle(article) }}
+            </h2>
+          </NuxtLink>
 
           <div
             v-if="getArticleExcerpt(article)"

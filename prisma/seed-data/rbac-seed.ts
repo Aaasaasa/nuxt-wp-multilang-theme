@@ -1,5 +1,6 @@
 // prisma/seed-data/rbac-seed.ts
 // RBAC (Role-Based Access Control) Seed Data
+/* eslint-disable no-console */
 
 import { PrismaClient as PostgresCMSClient } from '../generated/postgres-cms'
 

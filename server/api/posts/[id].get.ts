@@ -25,8 +25,7 @@ export default defineEventHandler(async (event) => {
     }
 
     return createApiResponse(post, 200, 'Post erfolgreich abgerufen')
-  } catch (error) {
-    console.error('Error fetching post:', error)
+  } catch {
     throw notFoundError('RESOURCE', 'Post nicht gefunden')
   }
 })

@@ -183,7 +183,7 @@ watchEffect(() => {
           <div v-if="article.author" class="flex items-center">
             <Icon name="i-lucide-user" class="w-4 h-4 mr-2" />
             <span>{{
-              article.author.username || article.author.firstName || 'Unknown Author'
+              article.author.displayName || article.author.login || 'Unknown Author'
             }}</span>
           </div>
 

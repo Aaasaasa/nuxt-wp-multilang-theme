@@ -417,5 +417,123 @@
   "language": {
     "title": "Langue",
     "switchTo": "Passer à {language}"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Découvrez nos derniers articles et idées",
+    "readMore": "Lire Plus",
+    "empty": {
+      "title": "Aucun article trouvé",
+      "message": "Aucun article de blog n'est disponible pour le moment.",
+      "backHome": "Retour à l'accueil"
+    },
+    "error": {
+      "title": "Erreur de chargement",
+      "message": "Impossible de charger les articles du blog.",
+      "retry": "Réessayer"
+    },
+    "status": {
+      "published": "Publié",
+      "draft": "Brouillon",
+      "archived": "Archivé"
+    }
+  },
+  "article": {
+    "updated": "Mis à jour le",
+    "backToBlog": "Retour au Blog",
+    "goBack": "Retour",
+    "readMore": "Lire Plus",
+    "error": {
+      "title": "Article non trouvé",
+      "message": "L'article demandé est introuvable.",
+      "backToBlog": "Retour au Blog"
+    },
+    "notFound": {
+      "title": "Article non trouvé",
+      "message": "L'article n'existe pas ou a été supprimé."
+    }
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "subtitle": "Découvrez nos projets et réalisations",
+    "viewProject": "Voir le Projet",
+    "backToPortfolio": "Retour au Portfolio",
+    "goBack": "Retour",
+    "noContent": "Aucun contenu disponible",
+    "empty": {
+      "title": "Aucun projet trouvé",
+      "message": "Aucun projet de portfolio n'est disponible pour le moment.",
+      "backHome": "Retour à l'accueil"
+    },
+    "error": {
+      "title": "Erreur de chargement",
+      "message": "Impossible de charger les projets du portfolio.",
+      "retry": "Réessayer",
+      "backToHome": "Retour à l'accueil",
+      "backToPortfolio": "Retour au Portfolio"
+    }
+  },
+  "breadcrumb": {
+    "home": "Accueil",
+    "blog": "Blog",
+    "portfolio": "Portfolio",
+    "shop": "Boutique"
+  },
+  "page": {
+    "backToHome": "Retour à l'accueil",
+    "goBack": "Retour",
+    "noContent": "Aucun contenu disponible pour cette page.",
+    "error": {
+      "title": "Page non trouvée",
+      "backToHome": "Retour à l'accueil"
+    }
+  },
+  "footer": {
+    "createdBy": "Créé par",
+    "allRightsReserved": "Tous droits réservés",
+    "poweredBy": "Powered by",
+    "developedBy": "Développé par",
+    "madeWith": "Fait avec",
+    "inGermany": "en Allemagne"
+  },
+  "product": {
+    "inStock": "En Stock",
+    "outOfStock": "Épuisé",
+    "stock": "Stock: {count}",
+    "vendor": "Fournisseur",
+    "created": "Créé",
+    "sku": "Référence",
+    "currency": "Devise",
+    "addToCart": "Ajouter au Panier",
+    "wishlist": "Liste de Souhaits",
+    "share": "Partager",
+    "description": "Description du Produit",
+    "moreProducts": "Découvrir Plus de Produits",
+    "backToShop": "Retour à la Boutique",
+    "error": {
+      "title": "Produit non trouvé",
+      "message": "Le produit que vous recherchez est introuvable.",
+      "backToShop": "Retour à la Boutique",
+      "backToHome": "Retour à l'accueil"
+    }
+  },
+  "shop": {
+    "title": "Boutique",
+    "productCount": "{count} produits disponibles",
+    "inStock": "En Stock",
+    "outOfStock": "Épuisé",
+    "stock": "Stock: {count}",
+    "viewProduct": "Voir",
+    "addToCart": "Ajouter au Panier",
+    "empty": {
+      "title": "Aucun produit disponible",
+      "contact": "Nous Contacter",
+      "backToHome": "Retour à l'accueil"
+    },
+    "error": {
+      "title": "Boutique non disponible",
+      "message": "Impossible de charger les produits pour le moment.",
+      "backToHome": "Retour à l'accueil"
+    }
   }
 }

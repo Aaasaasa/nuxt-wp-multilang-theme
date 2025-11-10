@@ -1,3 +1,8 @@
+import { z } from 'zod'
+import type { ForgotPasswordData } from '../../../shared/models/user'
+import { initialForgotPasswordState } from '../../../shared/models/user'
+import { TEXT_FIELD_LIMITS, VALIDATION_PATTERNS } from '../../../shared/constants/validation'
+
 export const useForgotPasswordForm = () => {
   const { t } = useI18n()
 

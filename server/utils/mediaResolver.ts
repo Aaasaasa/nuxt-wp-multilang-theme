@@ -119,8 +119,7 @@ export class MediaResolver {
       const media = result[0] as MediaRecord & { sizes: MediaSize[] }
 
       return this.formatMediaResponse(media, media.sizes || [])
-    } catch (error) {
-      console.error('Error resolving media by ID:', error)
+    } catch {
       return null
     }
   }
@@ -162,8 +161,7 @@ export class MediaResolver {
       const media = result[0] as MediaRecord & { sizes: MediaSize[] }
 
       return this.formatMediaResponse(media, media.sizes || [])
-    } catch (error) {
-      console.error('Error resolving media by path:', error)
+    } catch {
       return null
     }
   }

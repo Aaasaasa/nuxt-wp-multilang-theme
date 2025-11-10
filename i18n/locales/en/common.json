@@ -417,5 +417,122 @@
   "language": {
     "title": "Language",
     "switchTo": "Switch to {language}"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Discover our latest articles and insights",
+    "readMore": "Read More",
+    "empty": {
+      "title": "No articles found",
+      "message": "Check back later for new content",
+      "backHome": "Back to Home"
+    },
+    "error": {
+      "title": "Failed to load articles",
+      "message": "Please try again later",
+      "retry": "Retry"
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft",
+      "archived": "Archived"
+    }
+  },
+  "article": {
+    "updated": "Updated",
+    "backToBlog": "Back to Blog",
+    "goBack": "Go Back",
+    "readMore": "Read More",
+    "error": {
+      "title": "Article not found",
+      "message": "The article you are looking for does not exist or has been removed.",
+      "backToBlog": "Back to Blog"
+    },
+    "notFound": {
+      "title": "Article not found",
+      "message": "This article may have been moved or deleted.",
+      "backToBlog": "Back to Blog"
+    }
+  },
+  "portfolio": {
+    "title": "Our Work",
+    "subtitle": "Explore our portfolio of web development projects, showcasing modern technologies and innovative solutions.",
+    "viewProject": "View Project",
+    "backToPortfolio": "Back to Portfolio",
+    "goBack": "Go Back",
+    "noContent": "No content available for this project.",
+    "empty": {
+      "title": "No Portfolio Items",
+      "message": "Portfolio items will appear here once they are published."
+    },
+    "error": {
+      "title": "Portfolio not available",
+      "message": "Unable to load portfolio items at the moment.",
+      "backToHome": "Back to Home",
+      "backToPortfolio": "Back to Portfolio"
+    }
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "blog": "Blog",
+    "portfolio": "Portfolio",
+    "shop": "Shop"
+  },
+  "page": {
+    "backToHome": "Back to Home",
+    "goBack": "Go Back",
+    "noContent": "No content available for this page.",
+    "error": {
+      "title": "Page not found",
+      "backToHome": "Back to Home"
+    }
+  },
+  "footer": {
+    "createdBy": "Created by",
+    "allRightsReserved": "All rights reserved",
+    "poweredBy": "Powered by",
+    "developedBy": "Developed by",
+    "madeWith": "Made with",
+    "inGermany": "in Germany"
+  },
+  "product": {
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "stock": "Stock: {count}",
+    "vendor": "Vendor",
+    "created": "Created",
+    "sku": "SKU",
+    "currency": "Currency",
+    "addToCart": "Add to Cart",
+    "wishlist": "Wishlist",
+    "share": "Share",
+    "description": "Product Description",
+    "moreProducts": "Discover More Products",
+    "backToShop": "Back to Shop",
+    "error": {
+      "title": "Product not found",
+      "message": "The product you are looking for could not be found.",
+      "backToShop": "Back to Shop",
+      "backToHome": "Back to Home"
+    }
+  },
+  "shop": {
+    "title": "Shop",
+    "productCount": "{count} products available",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "stock": "Stock: {count}",
+    "viewProduct": "View",
+    "addToCart": "Add to Cart",
+    "empty": {
+      "title": "No products available",
+      "contact": "Contact Us",
+      "backToHome": "Back to Home"
+    },
+    "error": {
+      "title": "Shop not available",
+      "message": "Unable to load products at the moment.",
+      "backToHome": "Back to Home"
+    }
   }
 }

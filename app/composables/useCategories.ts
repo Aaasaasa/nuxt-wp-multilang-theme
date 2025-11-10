@@ -53,7 +53,6 @@ export function useCategories() {
     })
 
     if (error.value) {
-      console.error('❌ Error fetching categories:', error.value)
       throw error.value
     }
 
@@ -79,7 +78,6 @@ export function useCategories() {
     })
 
     if (error.value) {
-      console.error(`❌ Error fetching category "${slug}":`, error.value)
       throw error.value
     }
 

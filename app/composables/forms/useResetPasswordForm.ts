@@ -1,3 +1,8 @@
+import { z } from 'zod'
+import type { ResetPasswordData } from '../../../shared/models/user'
+import { initialResetPasswordState } from '../../../shared/models/user'
+import { TEXT_FIELD_LIMITS, VALIDATION_PATTERNS } from '../../../shared/constants/validation'
+
 export const useResetPasswordForm = () => {
   const { t } = useI18n()
 

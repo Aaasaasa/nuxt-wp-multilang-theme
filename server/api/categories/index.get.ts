@@ -1,6 +1,5 @@
 // server/api/categories/index.get.ts - Get all categories with Redis caching
 import { PrismaClient } from '@@/prisma/generated/postgres-cms'
-import type { Category } from '@@/prisma/generated/postgres-cms'
 import { createClient } from 'redis'
 
 const pg = new PrismaClient()
@@ -30,7 +29,6 @@ export default defineEventHandler(async (event) => {
     const cached = await redis.get(cacheKey)
 
     if (cached) {
-      console.log('✅ Categories from Redis cache')
       return {
         data: JSON.parse(cached),
         cached: true,
@@ -74,15 +72,13 @@ export default defineEventHandler(async (event) => {
 
     // 3️⃣ Cache in Redis (60 Minuten)
     await redis.setEx(cacheKey, 3600, JSON.stringify(formattedCategories))
-    console.log('💾 Categories cached in Redis for 60min')
 
     return {
       data: formattedCategories,
       cached: false,
       timestamp: new Date().toISOString()
     }
-  } catch (error) {
-    console.error('❌ Error fetching categories:', error)
+  } catch {
     throw createError({
       statusCode: 500,
       message: 'Failed to fetch categories'

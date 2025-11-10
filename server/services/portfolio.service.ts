@@ -64,10 +64,10 @@ export async function getAllPortfolios(): Promise<PortfolioWithAuthor[]> {
 
       return {
         id: portfolio.id.toString(),
-        title: translation.title || 'Untitled',
+        title: translation.title || portfolio.title || 'Untitled',
         slug: portfolio.slug,
-        content: translation.content || '',
-        excerpt: translation.excerpt || null,
+        content: translation.content || portfolio.content || '',
+        excerpt: translation.excerpt || portfolio.excerpt || null,
         featuredImage,
         status: portfolio.status,
         publishedAt: portfolio.status === 'PUBLISHED' ? portfolio.createdAt : null,
@@ -75,11 +75,16 @@ export async function getAllPortfolios(): Promise<PortfolioWithAuthor[]> {
         updatedAt: portfolio.updatedAt,
         author: {
           id: portfolio.author.id.toString(),
-          username: portfolio.author.displayName, // Show displayName instead of login
+          login: portfolio.author.login,
           email: portfolio.author.email,
-          firstName: portfolio.author.firstName || null,
-          lastName: portfolio.author.lastName || null
-        }
+          displayName: portfolio.author.displayName
+        },
+        translations: portfolio.translations.map((t) => ({
+          lang: t.lang,
+          title: t.title,
+          content: t.content,
+          excerpt: t.excerpt
+        }))
       }
     })
 
@@ -132,10 +137,10 @@ export async function getPortfolioBySlug(slug: string): Promise<PortfolioWithAut
 
     return {
       id: portfolio.id.toString(),
-      title: translation.title || 'Untitled',
+      title: translation.title || portfolio.title || 'Untitled',
       slug: portfolio.slug,
-      content: translation.content || '',
-      excerpt: translation.excerpt || null,
+      content: translation.content || portfolio.content || '',
+      excerpt: translation.excerpt || portfolio.excerpt || null,
       featuredImage,
       status: portfolio.status,
       publishedAt: portfolio.status === 'PUBLISHED' ? portfolio.createdAt : null,
@@ -143,11 +148,16 @@ export async function getPortfolioBySlug(slug: string): Promise<PortfolioWithAut
       updatedAt: portfolio.updatedAt,
       author: {
         id: portfolio.author.id.toString(),
-        username: portfolio.author.displayName, // Show displayName instead of login
+        login: portfolio.author.login,
         email: portfolio.author.email,
-        firstName: portfolio.author.firstName || null,
-        lastName: portfolio.author.lastName || null
-      }
+        displayName: portfolio.author.displayName
+      },
+      translations: portfolio.translations.map((t) => ({
+        lang: t.lang,
+        title: t.title,
+        content: t.content,
+        excerpt: t.excerpt
+      }))
     }
   } catch (error) {
     // eslint-disable-next-line no-console

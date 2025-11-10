@@ -417,5 +417,123 @@
   "language": {
     "title": "Sprache",
     "switchTo": "Wechseln zu {language}"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Entdecken Sie unsere neuesten Artikel und Einblicke",
+    "readMore": "Weiterlesen",
+    "empty": {
+      "title": "Keine Artikel gefunden",
+      "message": "Es sind momentan keine Blogartikel verfügbar.",
+      "backHome": "Zurück zur Startseite"
+    },
+    "error": {
+      "title": "Fehler beim Laden",
+      "message": "Die Blogartikel konnten nicht geladen werden.",
+      "retry": "Erneut versuchen"
+    },
+    "status": {
+      "published": "Veröffentlicht",
+      "draft": "Entwurf",
+      "archived": "Archiviert"
+    }
+  },
+  "article": {
+    "updated": "Aktualisiert am",
+    "backToBlog": "Zurück zum Blog",
+    "goBack": "Zurück",
+    "readMore": "Weiterlesen",
+    "error": {
+      "title": "Artikel nicht gefunden",
+      "message": "Der angeforderte Artikel konnte nicht gefunden werden.",
+      "backToBlog": "Zurück zum Blog"
+    },
+    "notFound": {
+      "title": "Artikel nicht gefunden",
+      "message": "Der Artikel existiert nicht oder wurde entfernt."
+    }
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "subtitle": "Entdecken Sie unsere Projekte und Arbeiten",
+    "viewProject": "Projekt ansehen",
+    "backToPortfolio": "Zurück zum Portfolio",
+    "goBack": "Zurück",
+    "noContent": "Kein Inhalt verfügbar",
+    "empty": {
+      "title": "Keine Projekte gefunden",
+      "message": "Es sind momentan keine Portfolio-Projekte verfügbar.",
+      "backHome": "Zurück zur Startseite"
+    },
+    "error": {
+      "title": "Fehler beim Laden",
+      "message": "Die Portfolio-Projekte konnten nicht geladen werden.",
+      "retry": "Erneut versuchen",
+      "backToHome": "Zurück zur Startseite",
+      "backToPortfolio": "Zurück zum Portfolio"
+    }
+  },
+  "breadcrumb": {
+    "home": "Startseite",
+    "blog": "Blog",
+    "portfolio": "Portfolio",
+    "shop": "Shop"
+  },
+  "page": {
+    "backToHome": "Zurück zur Startseite",
+    "goBack": "Zurück",
+    "noContent": "Kein Inhalt für diese Seite verfügbar.",
+    "error": {
+      "title": "Seite nicht gefunden",
+      "backToHome": "Zurück zur Startseite"
+    }
+  },
+  "footer": {
+    "createdBy": "Erstellt von",
+    "allRightsReserved": "Alle Rechte vorbehalten",
+    "poweredBy": "Powered by",
+    "developedBy": "Entwickelt von",
+    "madeWith": "Gemacht mit",
+    "inGermany": "in Deutschland"
+  },
+  "product": {
+    "inStock": "Auf Lager",
+    "outOfStock": "Ausverkauft",
+    "stock": "Lager: {count}",
+    "vendor": "Anbieter",
+    "created": "Erstellt",
+    "sku": "Artikelnummer",
+    "currency": "Währung",
+    "addToCart": "In den Warenkorb",
+    "wishlist": "Merkliste",
+    "share": "Teilen",
+    "description": "Produktbeschreibung",
+    "moreProducts": "Weitere Produkte entdecken",
+    "backToShop": "Zurück zum Shop",
+    "error": {
+      "title": "Produkt nicht gefunden",
+      "message": "Das gewünschte Produkt konnte nicht gefunden werden.",
+      "backToShop": "Zurück zum Shop",
+      "backToHome": "Zur Startseite"
+    }
+  },
+  "shop": {
+    "title": "Shop",
+    "productCount": "{count} Produkte verfügbar",
+    "inStock": "Auf Lager",
+    "outOfStock": "Ausverkauft",
+    "stock": "Lager: {count}",
+    "viewProduct": "Ansehen",
+    "addToCart": "In Warenkorb",
+    "empty": {
+      "title": "Keine Produkte verfügbar",
+      "contact": "Kontakt aufnehmen",
+      "backToHome": "Zur Startseite"
+    },
+    "error": {
+      "title": "Shop nicht verfügbar",
+      "message": "Produkte können momentan nicht geladen werden.",
+      "backToHome": "Zur Startseite"
+    }
   }
 }

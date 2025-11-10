@@ -40,7 +40,6 @@ export default defineEventHandler(async (event) => {
     const cached = await redis.get(cacheKey)
 
     if (cached) {
-      console.log(`✅ Category "${slug}" articles from Redis cache`)
       return {
         ...JSON.parse(cached),
         cached: true
@@ -135,11 +134,9 @@ export default defineEventHandler(async (event) => {
 
     // 5️⃣ Cache in Redis (30 Minuten)
     await redis.setEx(cacheKey, 1800, JSON.stringify(result))
-    console.log(`💾 Category "${slug}" cached in Redis for 30min`)
 
     return result
-  } catch (error) {
-    console.error(`❌ Error fetching category "${slug}":`, error)
+  } catch {
     throw createError({
       statusCode: 500,
       message: `Failed to fetch category "${slug}"`

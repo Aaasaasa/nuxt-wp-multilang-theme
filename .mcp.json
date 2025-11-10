@@ -14,11 +14,16 @@
     },
     "playwright": {
       "command": "pnpx",
-      "args": ["@playwright/mcp@latest"]
+      "args": [
+        "@playwright/mcp@latest"
+      ]
     },
     "sequential-thinking": {
       "command": "pnpx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
     },
     "nuxt-docs": {
       "type": "sse",

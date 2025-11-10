@@ -1,3 +1,8 @@
+import { z } from 'zod'
+import type { LoginData } from '../../../shared/models/user'
+import { initialLoginState } from '../../../shared/models/user'
+import { TEXT_FIELD_LIMITS, VALIDATION_PATTERNS } from '../../../shared/constants/validation'
+
 export const useLoginForm = () => {
   const { t } = useI18n()
 

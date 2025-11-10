@@ -170,6 +170,7 @@
       <div v-if="cookiePolicy" class="mt-12 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Cookie-Richtlinie</h2>
         <div class="prose dark:prose-invert max-w-none text-sm">
+          <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="cookiePolicy.content"></div>
         </div>
 

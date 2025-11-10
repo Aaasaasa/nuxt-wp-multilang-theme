@@ -61,8 +61,12 @@
             class="group hover:shadow-xl transition-shadow duration-300 overflow-hidden"
           >
             <div class="relative">
-              <!-- Featured Image -->
-              <div v-if="portfolio.featuredImage" class="relative h-48 overflow-hidden">
+              <!-- Featured Image (Clickable) -->
+              <NuxtLink
+                v-if="portfolio.featuredImage"
+                :to="`/portfolio/${portfolio.slug}`"
+                class="relative block h-48 overflow-hidden"
+              >
                 <img
                   :src="portfolio.featuredImage"
                   :alt="portfolio.title"
@@ -80,15 +84,17 @@
                     class="w-12 h-12 text-primary-400 dark:text-primary-600"
                   />
                 </div>
-              </div>
+              </NuxtLink>
 
               <!-- Content -->
               <div class="p-6">
-                <h3
-                  class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 line-clamp-2"
-                >
-                  {{ portfolio.title }}
-                </h3>
+                <NuxtLink :to="`/portfolio/${portfolio.slug}`">
+                  <h3
+                    class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 line-clamp-2 hover:text-primary-600 transition-colors"
+                  >
+                    {{ portfolio.title }}
+                  </h3>
+                </NuxtLink>
 
                 <div
                   v-if="portfolio.excerpt"

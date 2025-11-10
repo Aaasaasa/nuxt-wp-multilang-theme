@@ -13,13 +13,11 @@ export default defineEventHandler(async () => {
       total: articles.length,
       message: 'Articles retrieved successfully'
     }
-  } catch (error) {
-    console.error('Error fetching articles:', error)
-
+  } catch (err) {
     return {
       success: false,
       error: 'Failed to fetch articles',
-      message: (error as Error).message,
+      message: (err as Error).message,
       statusCode: 500
     }
   }

@@ -1,3 +1,8 @@
+import { z } from 'zod'
+import type { RegisterData } from '../../../shared/models/user'
+import { initialRegisterState } from '../../../shared/models/user'
+import { TEXT_FIELD_LIMITS, VALIDATION_PATTERNS } from '../../../shared/constants/validation'
+
 export const useRegisterForm = () => {
   const { t } = useI18n()
 

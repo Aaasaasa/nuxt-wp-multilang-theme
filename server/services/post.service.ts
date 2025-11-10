@@ -113,7 +113,7 @@ export async function getAllPosts(): Promise<PostWithAuthor[]> {
     // Process articles with featured images
     const processedArticles = articles.map((article) => {
       const translation = article.translations[0] || {}
-      const featuredImageMeta = article.metas?.[0]
+      const featuredImageMeta = article.metas?.find((m) => m.key === 'featured_image')
 
       // Build featured image URL from Media relation (capital M)
       let featuredImage = null
@@ -127,10 +127,10 @@ export async function getAllPosts(): Promise<PostWithAuthor[]> {
 
       return {
         id: article.id.toString(),
-        title: translation.title || 'Untitled',
+        title: translation.title || article.title || 'Untitled',
         slug: article.slug,
-        content: translation.content || '',
-        excerpt: translation.excerpt || null,
+        content: translation.content || article.content || '',
+        excerpt: translation.excerpt || article.excerpt || null,
         featuredImage,
         status: article.status,
         publishedAt: article.status === 'PUBLISHED' ? article.createdAt : null,
@@ -138,11 +138,16 @@ export async function getAllPosts(): Promise<PostWithAuthor[]> {
         updatedAt: article.updatedAt,
         author: {
           id: article.author.id.toString(),
-          username: article.author.displayName, // Show displayName instead of login
+          login: article.author.login,
           email: article.author.email,
-          firstName: article.author.firstName || null,
-          lastName: article.author.lastName || null
-        }
+          displayName: article.author.displayName
+        },
+        translations: article.translations.map((t) => ({
+          lang: t.lang,
+          title: t.title,
+          content: t.content,
+          excerpt: t.excerpt
+        }))
       }
     })
 
@@ -209,10 +214,10 @@ export async function getPostBySlug(slug: string): Promise<PostWithAuthor | null
 
     return {
       id: article.id.toString(),
-      title: translation.title || 'Untitled',
+      title: translation.title || article.title || 'Untitled',
       slug: article.slug,
-      content: translation.content || '',
-      excerpt: translation.excerpt || null,
+      content: translation.content || article.content || '',
+      excerpt: translation.excerpt || article.excerpt || null,
       featuredImage: resolvedMedia?.sizes?.original || null,
       status: article.status,
       publishedAt: article.status === 'PUBLISHED' ? article.createdAt : null,
@@ -220,11 +225,16 @@ export async function getPostBySlug(slug: string): Promise<PostWithAuthor | null
       updatedAt: article.updatedAt,
       author: {
         id: article.author.id.toString(),
-        username: article.author.displayName, // Show displayName instead of login
+        login: article.author.login,
         email: article.author.email,
-        firstName: article.author.firstName || null,
-        lastName: article.author.lastName || null
-      }
+        displayName: article.author.displayName
+      },
+      translations: article.translations.map((t) => ({
+        lang: t.lang,
+        title: t.title,
+        content: t.content,
+        excerpt: t.excerpt
+      }))
     }
   } catch {
     return null

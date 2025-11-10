@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { PrismaClient } from './generated/postgres-cms'
 
 const prisma = new PrismaClient({

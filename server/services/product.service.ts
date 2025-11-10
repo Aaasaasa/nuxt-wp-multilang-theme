@@ -74,8 +74,7 @@ export async function getAllProducts(): Promise<ProductWithVendor[]> {
         }
       }
     })
-  } catch (error) {
-    console.error('Database error in getAllProducts:', error)
+  } catch {
     throw new Error('Failed to fetch products from database')
   }
 }
@@ -130,8 +129,7 @@ export async function getProductBySlug(slug: string): Promise<ProductWithVendor 
         displayName: product.vendor.displayName
       }
     }
-  } catch (error) {
-    console.error('Database error in getProductBySlug:', error)
+  } catch {
     return null
   }
 }

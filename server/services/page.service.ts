@@ -1,8 +1,5 @@
 // server/services/page.service.ts
 import prismaCms from '../utils/prismaCms'
-import { toPublicUser } from '~~/shared/models/user'
-import { badRequestError, serverError, notFoundError, forbiddenError } from '../utils/errors'
-import { ERROR_CODES } from '../constants/errors'
 
 // Types
 interface PageWithAuthor {
