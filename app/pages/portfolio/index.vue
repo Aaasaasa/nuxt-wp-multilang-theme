@@ -1,15 +1,15 @@
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Loading State -->
-    <div v-if="pending" class="container mx-auto px-4 py-8">
-      <div class="max-w-6xl mx-auto">
+    <div v-if="pending" class="container mx-auto px-4 py-8 max-w-[1600px]">
+      <div class="mx-auto">
         <div class="animate-pulse">
           <!-- Title skeleton -->
           <div class="h-10 bg-gray-300 dark:bg-gray-700 rounded mb-8"></div>
 
           <!-- Grid skeleton -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div v-for="i in 6" :key="i" class="bg-gray-300 dark:bg-gray-700 rounded-lg h-80"></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div v-for="i in 8" :key="i" class="bg-gray-300 dark:bg-gray-700 rounded-lg" style="min-height: 300px"></div>
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
             <p class="text-red-600 dark:text-red-400 mb-6">
               {{ $t('portfolio.error.message', 'Unable to load portfolio items at the moment.') }}
             </p>
-            <UButton to="/" color="red" variant="solid" icon="i-lucide-arrow-left">
+            <UButton to="/" color="error" variant="solid" icon="i-lucide-arrow-left">
               {{ $t('portfolio.error.backToHome', 'Back to Home') }}
             </UButton>
           </div>
@@ -36,8 +36,8 @@
     </div>
 
     <!-- Portfolio Content -->
-    <div v-else class="container mx-auto px-4 py-8">
-      <div class="max-w-6xl mx-auto">
+    <div v-else class="container mx-auto px-4 py-8 max-w-[1600px]">
+      <div class="mx-auto">
         <!-- Header -->
         <div class="text-center mb-12">
           <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
@@ -54,11 +54,11 @@
         </div>
 
         <!-- Portfolio Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           <UCard
             v-for="portfolio in portfolios"
             :key="portfolio.id"
-            class="group hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+            class="group hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col h-full"
           >
             <div class="relative">
               <!-- Featured Image (Clickable) -->
@@ -115,7 +115,7 @@
                   </div>
 
                   <UBadge
-                    :color="portfolio.status === 'PUBLISHED' ? 'green' : 'yellow'"
+                    :color="portfolio.status === 'PUBLISHED' ? 'success' : 'warning'"
                     :label="portfolio.status.toLowerCase()"
                   />
                 </div>

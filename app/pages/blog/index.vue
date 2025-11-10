@@ -75,7 +75,7 @@ const getTextExcerpt = (htmlContent: string) => {
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-8 max-w-[1600px]">
     <div class="mb-8">
       <h1 class="text-4xl font-bold text-gray-900 mb-4">
         {{ $t('blog.title', 'Blog') }}
@@ -86,7 +86,7 @@ const getTextExcerpt = (htmlContent: string) => {
     </div>
 
     <!-- Loading State -->
-    <div v-if="pending" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div v-if="pending" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <div
         v-for="i in 6"
         :key="i"
@@ -122,9 +122,9 @@ const getTextExcerpt = (htmlContent: string) => {
     <!-- Articles Grid -->
     <div
       v-else-if="displayArticles.length > 0"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
     >
-      <article v-for="article in displayArticles" :key="article.id" class="article-card">
+      <article v-for="article in displayArticles" :key="article.id" class="article-card flex flex-col h-full">
         <!-- Article Image (Clickable) -->
         <NuxtLink :to="`/blog/${article.slug || article.id}`" class="article-card-image">
           <img

@@ -117,10 +117,10 @@ useSeoMeta({
               }}
             </p>
             <div class="flex gap-4 justify-center">
-              <UButton to="/portfolio" color="red" variant="solid" icon="i-lucide-briefcase">
+              <UButton to="/portfolio" color="error" variant="solid" icon="i-lucide-briefcase">
                 {{ $t('portfolio.error.backToPortfolio', 'Back to Portfolio') }}
               </UButton>
-              <UButton to="/" color="red" variant="outline" icon="i-lucide-arrow-left">
+              <UButton to="/" color="error" variant="outline" icon="i-lucide-arrow-left">
                 {{ $t('portfolio.error.backToHome', 'Back to Home') }}
               </UButton>
             </div>
@@ -131,7 +131,7 @@ useSeoMeta({
 
     <!-- Portfolio Content -->
     <div v-else class="container mx-auto px-4 py-8">
-      <div class="max-w-4xl mx-auto">
+      <div class="max-w-7xl mx-auto">
         <!-- Breadcrumb -->
         <nav class="mb-8">
           <ol class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
@@ -182,13 +182,13 @@ useSeoMeta({
               <div v-if="portfolio.author" class="flex items-center">
                 <UIcon name="i-lucide-user" class="w-4 h-4 mr-2" />
                 <span>{{
-                  portfolio.author.displayName || portfolio.author.username || 'Unknown Author'
+                  portfolio.author.displayName || portfolio.author.login || 'Unknown Author'
                 }}</span>
               </div>
 
               <div v-if="portfolio.status" class="flex items-center">
                 <UBadge
-                  :color="portfolio.status === 'PUBLISHED' ? 'green' : 'yellow'"
+                  :color="portfolio.status === 'PUBLISHED' ? 'success' : 'warning'"
                   :label="portfolio.status.toLowerCase()"
                 />
               </div>
@@ -247,7 +247,7 @@ useSeoMeta({
 
             <div class="flex items-center space-x-4">
               <UButton
-                color="gray"
+                color="neutral"
                 variant="ghost"
                 icon="i-lucide-undo"
                 :title="$t('portfolio.goBack', 'Go Back')"
