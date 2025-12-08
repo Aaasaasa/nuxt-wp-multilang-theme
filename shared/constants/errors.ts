@@ -118,3 +118,12 @@ export const ERROR_MESSAGES: Record<ErrorCode, string> = {
   [ERROR_CODES.HTTP.CONFLICT]: 'Conflict',
   [ERROR_CODES.HTTP.UNPROCESSABLE_ENTITY]: 'Unprocessable entity'
 }
+
+/**
+ * Prisma error codes
+ */
+export const PRISMA_ERRORS = {
+  UNIQUE_CONSTRAINT_FAILED: 'P2002',
+  FOREIGN_KEY_CONSTRAINT_FAILED: 'P2003',
+  RECORD_NOT_FOUND: 'P2025'
+} as const

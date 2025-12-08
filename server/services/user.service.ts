@@ -1,4 +1,8 @@
 import prisma from '~~/server/utils/prismaCms'
+import type { PublicUser, CreateUserData } from '#shared/models/user'
+import { toPublicUser } from '#shared/models/user'
+import { ERROR_CODES, PRISMA_ERRORS } from '#shared/constants/errors'
+import { conflictError, serverError, unauthorizedError } from '~~/server/utils/response'
 
 /**
  * User Service - Pure business logic without validation
@@ -10,8 +14,13 @@ import prisma from '~~/server/utils/prismaCms'
  */
 export async function createUser(userData: CreateUserData): Promise<PublicUser> {
   // Check if user already exists
-  const existingUser = await prisma.user.findUnique({
-    where: { email: userData.email }
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      OR: [
+        { email: userData.email },
+        { login: userData.email } // Allow email as login too
+      ]
+    }
   })
 
   if (existingUser) {
@@ -24,9 +33,10 @@ export async function createUser(userData: CreateUserData): Promise<PublicUser> 
   try {
     const user = await prisma.user.create({
       data: {
+        login: userData.email.split('@')[0], // Use email prefix as login
         email: userData.email,
         password: hashedPassword,
-        name: userData.name
+        displayName: userData.name
       }
     })
 
@@ -40,11 +50,17 @@ export async function createUser(userData: CreateUserData): Promise<PublicUser> 
 }
 
 /**
- * Authenticate user with email and password
+ * Authenticate user with email/username and password
  */
-export async function authenticateUser(email: string, password: string): Promise<PublicUser> {
-  const user = await prisma.user.findUnique({
-    where: { email }
+export async function authenticateUser(
+  emailOrLogin: string,
+  password: string
+): Promise<PublicUser> {
+  // Try to find user by email or login
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [{ email: emailOrLogin }, { login: emailOrLogin }]
+    }
   })
 
   if (!user) {
@@ -63,7 +79,7 @@ export async function authenticateUser(email: string, password: string): Promise
 /**
  * Get user by ID
  */
-export async function getUserById(id: string): Promise<PublicUser | null> {
+export async function getUserById(id: number): Promise<PublicUser | null> {
   const user = await prisma.user.findUnique({
     where: { id }
   })
@@ -74,8 +90,8 @@ export async function getUserById(id: string): Promise<PublicUser | null> {
 /**
  * Check if user owns a specific post
  */
-export async function userOwnsPost(userId: string, postId: string): Promise<boolean> {
-  const post = await prisma.post.findUnique({
+export async function userOwnsPost(userId: number, postId: number): Promise<boolean> {
+  const post = await prisma.article.findUnique({
     where: { id: postId },
     select: { authorId: true }
   })

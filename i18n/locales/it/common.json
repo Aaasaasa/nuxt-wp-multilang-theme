@@ -161,6 +161,19 @@
     "fromRedis": "Caricato dalla cache"
   },
   "navigation": {
+    "menu": "Menu",
+    "collapse": "Comprimi menu",
+    "expand": "Espandi menu",
+    "home": "Home",
+    "blog": "Blog",
+    "portfolio": "Portfolio",
+    "products": "Prodotti",
+    "about": "Chi siamo",
+    "contact": "Contatto",
+    "admin": "Admin",
+    "dashboard": "Dashboard",
+    "posts": "Articoli",
+    "users": "Utenti",
     "backToHome": "Torna alla Home",
     "previousPage": "Pagina Precedente",
     "nextPage": "Pagina Successiva",
@@ -173,7 +186,8 @@
   "blog": {
     "title": "Blog",
     "description": "Scopri i nostri ultimi articoli e approfondimenti",
-    "readMore": "Leggi di Più",
+    "readMore": "Leggi di più",
+    "filter": "Filtra categorie",
     "empty": {
       "title": "Nessun articolo trovato",
       "message": "Non ci sono articoli del blog disponibili al momento.",

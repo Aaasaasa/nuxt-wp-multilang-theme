@@ -136,7 +136,7 @@ watchEffect(() => {
     </div>
 
     <!-- Article Content -->
-    <article v-else-if="article" class="max-w-7xl mx-auto">
+    <article v-else-if="article" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Breadcrumb -->
       <nav class="mb-8">
         <ol class="flex items-center space-x-2 text-sm text-gray-600">

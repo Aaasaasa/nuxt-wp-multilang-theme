@@ -15,11 +15,17 @@ import { TEXT_FIELD_LIMITS, VALIDATION_PATTERNS } from '../constants/validation'
  * Public User entity (without sensitive fields)
  */
 export interface PublicUser {
-  id: string
+  id: number
+  login: string
   email: string
-  name: string
+  displayName: string
+  firstName?: string | null
+  lastName?: string | null
+  role: string
   emailVerified: boolean
-  emailVerifiedAt: string | null
+  isActive: boolean
+  registeredAt: string
+  lastLoginAt: string | null
   createdAt: string
   updatedAt: string
 }
@@ -36,10 +42,10 @@ export interface User extends PublicUser {
 // =============================================================================
 
 /**
- * Login validation schema
+ * Login validation schema - accepts either email or username (login)
  */
 export const loginSchema = z.object({
-  email: z.email('Invalid email format').max(TEXT_FIELD_LIMITS.EMAIL.MAX),
+  email: z.string().min(1, 'Email or username is required'), // Can be email OR username
   password: z.string().min(1, 'Password is required')
 })
 
@@ -132,19 +138,26 @@ export const initialResetPasswordState: ResetPasswordData = {
  * Helper function to convert Prisma User to PublicUser
  */
 export function toPublicUser(user: {
-  id: string
+  id: number
+  login: string
   email: string
   password: string
-  name: string
+  displayName: string
+  firstName?: string | null
+  lastName?: string | null
+  role: string
   emailVerified: boolean
-  emailVerifiedAt: Date | null
+  isActive: boolean
+  registeredAt: Date
+  lastLoginAt: Date | null
   createdAt: Date
   updatedAt: Date
 }): PublicUser {
   const { password, ...rest } = user
   return {
     ...rest,
-    emailVerifiedAt: rest.emailVerifiedAt?.toISOString() || null,
+    registeredAt: rest.registeredAt.toISOString(),
+    lastLoginAt: rest.lastLoginAt?.toISOString() || null,
     createdAt: rest.createdAt.toISOString(),
     updatedAt: rest.updatedAt.toISOString()
   }

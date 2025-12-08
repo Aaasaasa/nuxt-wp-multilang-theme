@@ -409,6 +409,19 @@
     "fromRedis": "Loaded from cache"
   },
   "navigation": {
+    "menu": "Menu",
+    "collapse": "Collapse menu",
+    "expand": "Expand menu",
+    "home": "Home",
+    "blog": "Blog",
+    "portfolio": "Portfolio",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact",
+    "admin": "Admin",
+    "dashboard": "Dashboard",
+    "posts": "Posts",
+    "users": "Users",
     "backToHome": "Back to Home",
     "previousPage": "Previous Page",
     "nextPage": "Next Page",
@@ -422,6 +435,7 @@
     "title": "Blog",
     "description": "Discover our latest articles and insights",
     "readMore": "Read More",
+    "filter": "Filter Categories",
     "empty": {
       "title": "No articles found",
       "message": "Check back later for new content",

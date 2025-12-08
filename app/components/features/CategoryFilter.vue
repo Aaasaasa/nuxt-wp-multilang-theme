@@ -3,17 +3,17 @@
     <h3 class="text-lg font-semibold mb-4">{{ $t('categories.title') }}</h3>
 
     <!-- Loading State -->
-    <div v-if="loadingCategories" class="space-y-2">
-      <div v-for="i in 5" :key="i" class="h-8 bg-gray-200 animate-pulse rounded"></div>
+    <div v-if="loadingCategories" class="flex flex-wrap gap-2">
+      <div v-for="i in 5" :key="i" class="h-10 w-24 bg-gray-200 animate-pulse rounded-lg"></div>
     </div>
 
     <!-- Categories List -->
-    <ul v-else class="space-y-2">
+    <ul v-else class="flex flex-wrap gap-2">
       <!-- All Articles Link -->
       <li>
         <NuxtLink
           to="/"
-          class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors whitespace-nowrap"
           :class="{ 'bg-primary-100 dark:bg-primary-900': !selectedCategory }"
         >
           <span class="font-medium">{{ $t('categories.all') }}</span>
@@ -24,7 +24,7 @@
       <li v-for="category in sortedCategories" :key="category.id">
         <NuxtLink
           :to="`/category/${category.slug}`"
-          class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors whitespace-nowrap"
           :class="{
             'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300':
               selectedCategory === category.slug
@@ -33,7 +33,7 @@
           <span>{{ category.name }}</span>
           <span
             v-if="category.articleCount > 0"
-            class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded-full"
+            class="text-xs px-2 py-0.5 bg-gray-200 dark:bg-gray-700 rounded-full"
           >
             {{ category.articleCount }}
           </span>
@@ -88,6 +88,15 @@ const formattedCacheTime = computed(() => {
 
 <style scoped>
 .category-filter {
-  @apply bg-white dark:bg-gray-900 rounded-lg shadow-md p-4;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+}
+
+:global(.dark) .category-filter {
+  background: rgb(17 24 39);
 }
 </style>

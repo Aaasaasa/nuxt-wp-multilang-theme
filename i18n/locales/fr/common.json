@@ -409,6 +409,19 @@
     "fromRedis": "Chargé depuis le cache"
   },
   "navigation": {
+    "menu": "Menu",
+    "collapse": "Réduire le menu",
+    "expand": "Développer le menu",
+    "home": "Accueil",
+    "blog": "Blog",
+    "portfolio": "Portfolio",
+    "products": "Produits",
+    "about": "À propos",
+    "contact": "Contact",
+    "admin": "Admin",
+    "dashboard": "Tableau de bord",
+    "posts": "Articles",
+    "users": "Utilisateurs",
     "backToHome": "Retour à l'Accueil",
     "previousPage": "Page Précédente",
     "nextPage": "Page Suivante",
@@ -420,16 +433,17 @@
   },
   "blog": {
     "title": "Blog",
-    "description": "Découvrez nos derniers articles et idées",
-    "readMore": "Lire Plus",
+    "description": "Découvrez nos derniers articles et perspectives",
+    "readMore": "Lire la suite",
+    "filter": "Filtrer les catégories",
     "empty": {
       "title": "Aucun article trouvé",
-      "message": "Aucun article de blog n'est disponible pour le moment.",
+      "message": "Revenez plus tard pour du nouveau contenu",
       "backHome": "Retour à l'accueil"
     },
     "error": {
-      "title": "Erreur de chargement",
-      "message": "Impossible de charger les articles du blog.",
+      "title": "Échec du chargement des articles",
+      "message": "Veuillez réessayer plus tard",
       "retry": "Réessayer"
     },
     "status": {

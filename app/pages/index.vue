@@ -124,7 +124,7 @@
             class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200/60 dark:border-gray-700/60 overflow-hidden transition-all duration-300 hover:shadow-lg"
           >
             <!-- Posts grid/list with fixed height and scroll -->
-            <div v-if="posts && posts.length > 0" class="h-[400px] overflow-y-auto p-6">
+            <div v-if="posts && posts.length > 0" class="overflow-y-auto p-6">
               <div
                 :class="[
                   'gap-6',

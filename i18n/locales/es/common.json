@@ -161,6 +161,19 @@
     "fromRedis": "Cargado desde caché"
   },
   "navigation": {
+    "menu": "Menú",
+    "collapse": "Contraer menú",
+    "expand": "Expandir menú",
+    "home": "Inicio",
+    "blog": "Blog",
+    "portfolio": "Portafolio",
+    "products": "Productos",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "admin": "Admin",
+    "dashboard": "Panel",
+    "posts": "Publicaciones",
+    "users": "Usuarios",
     "backToHome": "Volver al Inicio",
     "previousPage": "Página Anterior",
     "nextPage": "Página Siguiente",
@@ -172,8 +185,9 @@
   },
   "blog": {
     "title": "Blog",
-    "description": "Descubra nuestros últimos artículos e ideas",
-    "readMore": "Leer Más",
+    "description": "Descubre nuestros últimos artículos e ideas",
+    "readMore": "Leer más",
+    "filter": "Filtrar categorías",
     "empty": {
       "title": "No se encontraron artículos",
       "message": "No hay artículos de blog disponibles en este momento.",

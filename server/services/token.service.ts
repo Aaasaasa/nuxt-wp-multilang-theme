@@ -16,7 +16,7 @@ function generateToken(): string {
  * Create a new token for a user
  */
 export async function createToken(
-  userId: string,
+  userId: number,
   type: TokenType
 ): Promise<{ token: string; expiresAt: Date }> {
   try {
@@ -122,7 +122,7 @@ export async function validateAndDeleteToken(token: string, type: TokenType): Pr
 /**
  * Delete all tokens for a user
  */
-export async function deleteUserTokens(userId: string): Promise<void> {
+export async function deleteUserTokens(userId: number): Promise<void> {
   try {
     await prisma.token.deleteMany({
       where: { userId }
@@ -135,7 +135,7 @@ export async function deleteUserTokens(userId: string): Promise<void> {
 /**
  * Check if a user has a valid token of a specific type
  */
-export async function hasValidToken(userId: string, type: TokenType): Promise<boolean> {
+export async function hasValidToken(userId: number, type: TokenType): Promise<boolean> {
   try {
     const token = await prisma.token.findFirst({
       where: {

@@ -1,11 +1,11 @@
 <template>
   <div class="min-h-screen flex">
-    <!-- Sidebar -->
+    <!-- Sidebar (Overlay) -->
     <AppSidebar v-model="sidebarOpen" />
 
     <!-- Main Layout -->
-    <div class="flex-1 flex flex-col">
-      <UMain>
+    <div class="flex-1 flex flex-col min-h-screen">
+      <UMain class="flex-1">
         <UHeader :to="localePath('/')">
           <template #title>
             <div class="flex items-center">
@@ -85,9 +85,8 @@ const { loggedIn, clear } = useUserSession()
 const { t } = useI18n()
 const localePath = useLocalePath()
 const { success } = useNotifications()
-const route = useRoute()
 
-// Sidebar state management
+// Sidebar state management - responsive default (geschlossen auf mobil, offen auf Desktop)
 const sidebarOpen = ref(false)
 
 // Toggle sidebar function
@@ -95,13 +94,12 @@ const toggleSidebar = () => {
   sidebarOpen.value = !sidebarOpen.value
 }
 
-// Close sidebar when route changes
-watch(
-  () => route.path,
-  () => {
-    sidebarOpen.value = false
+// Set default sidebar state based on screen size
+onMounted(() => {
+  if (window.innerWidth >= 1024) {
+    sidebarOpen.value = true
   }
-)
+})
 
 const handleLogout = async () => {
   try {

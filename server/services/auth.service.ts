@@ -1,10 +1,29 @@
 import type { H3Event, EventHandlerRequest } from 'h3'
 import prisma from '~~/server/utils/prismaCms'
+import type { PublicUser } from '#shared/models/user'
+import { toPublicUser } from '#shared/models/user'
+import { ERROR_CODES } from '#shared/constants/errors'
+import {
+  badRequestError,
+  forbiddenError,
+  notFoundError,
+  serverError
+} from '~~/server/utils/response'
+import { createToken, validateAndDeleteToken } from './token.service'
+import { checkTokenRateLimit, checkLoginAttempt, recordLoginAttempt } from './rate-limit.service'
+import { authenticateUser } from './user.service'
+import { sendVerificationEmail, sendPasswordResetEmail } from '~~/server/services/email.service'
 
 /**
  * Auth Service - Pure business logic for authentication flows
  * Validation is handled in the API endpoints
  */
+
+// Token type enum
+export enum TokenType {
+  EMAIL_VERIFICATION = 'EMAIL_VERIFICATION',
+  PASSWORD_RESET = 'PASSWORD_RESET'
+}
 
 /**
  * Handle email verification process
@@ -18,26 +37,11 @@ export async function verifyUserEmail(token: string): Promise<PublicUser> {
     const verifiedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
-        emailVerified: true,
-        emailVerifiedAt: new Date()
-      },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        emailVerified: true,
-        emailVerifiedAt: true,
-        createdAt: true,
-        updatedAt: true
+        emailVerified: true
       }
     })
 
-    return {
-      ...verifiedUser,
-      emailVerifiedAt: verifiedUser.emailVerifiedAt?.toISOString() || null,
-      createdAt: verifiedUser.createdAt.toISOString(),
-      updatedAt: verifiedUser.updatedAt.toISOString()
-    }
+    return toPublicUser(verifiedUser)
   } catch (error: unknown) {
     // Re-throw business errors (with statusCode)
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
@@ -77,7 +81,7 @@ export async function resendVerificationEmail(
     const { token } = await createToken(user.id, TokenType.EMAIL_VERIFICATION)
 
     // Send verification email
-    await sendVerificationEmail(event, user.email, user.name, token, locale)
+    await sendVerificationEmail(event, user.email, user.displayName, token, locale)
 
     return {
       message: 'Verification email sent successfully',
@@ -116,7 +120,7 @@ export async function requestPasswordReset(
       const { token } = await createToken(user.id, TokenType.PASSWORD_RESET)
 
       // Send password reset email
-      await sendPasswordResetEmail(event, user.email, user.name, token, locale)
+      await sendPasswordResetEmail(event, user.email, user.displayName, token, locale)
     }
 
     // Always return the same message regardless of whether user exists
@@ -161,9 +165,10 @@ export async function resetUserPassword(
     await deleteUserTokens(user.id)
 
     // Clear any existing login attempts for this user
-    await prisma.loginAttempt.deleteMany({
-      where: { email: user.email }
-    })
+    // Note: LoginAttempt model not implemented in schema yet
+    // await prisma.loginAttempt.deleteMany({
+    //   where: { email: user.email }
+    // })
 
     return {
       message: 'Password reset successfully',
@@ -234,6 +239,10 @@ export async function loginUser(
   } catch (error: any) {
     // Re-throw business errors (with statusCode)
     if (error.statusCode) throw error
+
+    // Log the actual error for debugging
+    // eslint-disable-next-line no-console
+    console.error('Login error details:', error)
 
     // Transform system errors to 500
     throw serverError(ERROR_CODES.SERVER.DATABASE_ERROR, 'Failed to process login')

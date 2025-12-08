@@ -409,6 +409,19 @@
     "fromRedis": "Учитано из кеша"
   },
   "navigation": {
+    "menu": "Meni",
+    "collapse": "Skupi meni",
+    "expand": "Proširi meni",
+    "home": "Početna",
+    "blog": "Blog",
+    "portfolio": "Portfolio",
+    "products": "Proizvodi",
+    "about": "O nama",
+    "contact": "Kontakt",
+    "admin": "Admin",
+    "dashboard": "Kontrolna tabla",
+    "posts": "Objave",
+    "users": "Korisnici",
     "backToHome": "Назад на почетну",
     "previousPage": "Претходна страна",
     "nextPage": "Следећа страна",
@@ -419,9 +432,10 @@
     "switchTo": "Пребаци на {language}"
   },
   "blog": {
-    "title": "Блог",
-    "description": "Откријте наше најновије чланке и увиде",
-    "readMore": "Прочитај Више",
+    "title": "Blog",
+    "description": "Otkrijte naše najnovije članke i uvide",
+    "readMore": "Pročitaj više",
+    "filter": "Filtriraj kategorije",
     "empty": {
       "title": "Нема пронађених чланака",
       "message": "Тренутно нема доступних чланака на блогу.",

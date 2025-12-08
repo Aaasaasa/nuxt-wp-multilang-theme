@@ -130,8 +130,9 @@ useSeoMeta({
     </div>
 
     <!-- Portfolio Content -->
-    <div v-else class="container mx-auto px-4 py-8">
-      <div class="max-w-7xl mx-auto">
+    <div v-else class="w-full">
+      <!-- Article Content Container -->
+      <article class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Breadcrumb -->
         <nav class="mb-8">
           <ol class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
@@ -204,7 +205,7 @@ useSeoMeta({
               :alt="getPortfolioTitle(portfolio)"
               class="w-full h-auto rounded-lg shadow-lg object-cover max-h-96"
               loading="eager"
-              @error="$event.target.style.display = 'none'"
+              @error="(e) => ((e.target as HTMLImageElement).style.display = 'none')"
             />
             <!-- Fallback placeholder if image fails to load -->
             <div
@@ -258,7 +259,7 @@ useSeoMeta({
             </div>
           </div>
         </div>
-      </div>
+      </article>
     </div>
   </div>
 </template>
