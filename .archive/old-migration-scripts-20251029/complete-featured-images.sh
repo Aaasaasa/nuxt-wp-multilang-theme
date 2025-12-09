@@ -14,7 +14,7 @@ DB_IMAGE="/uploads/2024/07/2024-07-25-A-visual-representation-of-an-ERP-Enterpri
 WEB_IMAGE="/uploads/2025/02/Business-Process-Model-and-Notation-BPMN.webp"
 
 # SQL für alle fehlenden Artikel
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
   --no-align --tuples-only --quiet \
   -c "
 -- Artikel 16: TensorFlow (AI/ML)
@@ -111,21 +111,21 @@ ON CONFLICT (\"articleId\", key) DO UPDATE SET value = '\"$CODE_IMAGE\"';
 "
 
 # Zähle finale Anzahl
-count=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
+count=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
   --no-align --tuples-only --quiet \
   -c "SELECT COUNT(*) FROM cms_article_meta WHERE key = 'featured_image';" | xargs)
 
 echo "✅ Insgesamt $count Article Featured Images gesetzt"
 
 # Prüfe Portfolio Featured Images
-portfolio_count=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
+portfolio_count=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
   --no-align --tuples-only --quiet \
   -c "SELECT COUNT(*) FROM cms_portfolio_meta WHERE key = 'featured_image';" | xargs)
 
 echo "✅ Portfolio hat bereits $portfolio_count Featured Images"
 
 # Zeige fehlende Artikel
-missing=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
+missing=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
   --no-align --tuples-only --quiet \
   -c "SELECT COUNT(*) FROM cms_articles WHERE id NOT IN (SELECT \"articleId\" FROM cms_article_meta WHERE key = 'featured_image');" | xargs)
 

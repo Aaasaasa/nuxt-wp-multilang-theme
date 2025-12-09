@@ -15,14 +15,14 @@ echo "Backup location: $BACKUP_PATH"
 echo ""
 
 # PostgreSQL Backup
-echo "🐘 Backing up PostgreSQL (nuxt_pg_cms_db)..."
-PGPASSWORD=Utorak30Sep pg_dump \
-  -h localhost \
-  -p 5432 \
-  -U usrcms \
-  -d nuxt_pg_cms_db \
+echo "🐘 Backing up PostgreSQL (${POSTGRES_DB:-postgres})..."
+PGPASSWORD="${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}" pg_dump \
+  -h "${POSTGRES_HOST:-localhost}" \
+  -p "${POSTGRES_PORT:-5432}" \
+  -U "${POSTGRES_USER:?set POSTGRES_USER}" \
+  -d "${POSTGRES_DB:?set POSTGRES_DB}" \
   -F c \
-  -f "$BACKUP_PATH/postgres_nuxt_pg_cms_db.dump"
+  -f "$BACKUP_PATH/postgres_${POSTGRES_DB:-postgres}.dump"
 
 if [ $? -eq 0 ]; then
   echo "  ✓ PostgreSQL backup created: postgres_nuxt_pg_cms_db.dump"
@@ -33,12 +33,12 @@ fi
 
 # MySQL Backup
 echo ""
-echo "🐬 Backing up MySQL (sta3wp)..."
+echo "🐬 Backing up MySQL (${MYSQL_NAME:-mysql})..."
 docker exec nuxt_mysql mysqldump \
-  -u root \
-  -pFreitag0605 \
-  sta3wp \
-  > "$BACKUP_PATH/mysql_sta3wp.sql"
+  -u "${MYSQL_USER:-root}" \
+  -p"${MYSQL_PASSWORD:?set MYSQL_PASSWORD}" \
+  "${MYSQL_NAME:?set MYSQL_NAME}" \
+  > "$BACKUP_PATH/mysql_${MYSQL_NAME:-mysql}.sql"
 
 if [ $? -eq 0 ]; then
   echo "  ✓ MySQL backup created: mysql_sta3wp.sql"
@@ -57,20 +57,20 @@ Date: $(date)
 Timestamp: $TIMESTAMP
 
 Databases:
-- PostgreSQL: nuxt_pg_cms_db (localhost:5432)
-- MySQL: sta3wp (Docker container)
+- PostgreSQL: ${POSTGRES_DB:-postgres} (${POSTGRES_HOST:-localhost}:${POSTGRES_PORT:-5432})
+- MySQL: ${MYSQL_NAME:-mysql} (Docker container)
 
 Files:
-- postgres_nuxt_pg_cms_db.dump (PostgreSQL custom format)
-- mysql_sta3wp.sql (MySQL SQL dump)
+- postgres_${POSTGRES_DB:-postgres}.dump (PostgreSQL custom format)
+- mysql_${MYSQL_NAME:-mysql}.sql (MySQL SQL dump)
 
 Restore Commands:
 -----------------
 PostgreSQL:
-  PGPASSWORD=Utorak30Sep pg_restore -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c postgres_nuxt_pg_cms_db.dump
+  PGPASSWORD=${POSTGRES_PASSWORD:-<postgres_password>} pg_restore -h ${POSTGRES_HOST:-localhost} -p ${POSTGRES_PORT:-5432} -U ${POSTGRES_USER:-<postgres_user>} -d ${POSTGRES_DB:-<postgres_db>} -c postgres_${POSTGRES_DB:-postgres}.dump
 
 MySQL:
-  docker exec -i nuxt_mysql mysql -u root -pFreitag0605 sta3wp < mysql_sta3wp.sql
+  docker exec -i nuxt_mysql mysql -u ${MYSQL_USER:-root} -p${MYSQL_PASSWORD:-<mysql_password>} ${MYSQL_NAME:-<mysql_db>} < mysql_${MYSQL_NAME:-mysql}.sql
 EOF
 
 echo "  ✓ Backup info created: backup_info.txt"
@@ -85,5 +85,5 @@ echo "✅ Backup completed successfully!"
 echo "Location: $BACKUP_PATH"
 echo ""
 echo "To restore:"
-echo "  PostgreSQL: PGPASSWORD=Utorak30Sep pg_restore -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c $BACKUP_PATH/postgres_nuxt_pg_cms_db.dump"
-echo "  MySQL: docker exec -i nuxt_mysql mysql -u root -pFreitag0605 sta3wp < $BACKUP_PATH/mysql_sta3wp.sql"
+echo "  PostgreSQL: PGPASSWORD=${POSTGRES_PASSWORD:-<postgres_password>} pg_restore -h ${POSTGRES_HOST:-localhost} -p ${POSTGRES_PORT:-5432} -U ${POSTGRES_USER:-<postgres_user>} -d ${POSTGRES_DB:-<postgres_db>} -c $BACKUP_PATH/postgres_${POSTGRES_DB:-postgres}.dump"
+echo "  MySQL: docker exec -i nuxt_mysql mysql -u ${MYSQL_USER:-root} -p${MYSQL_PASSWORD:-<mysql_password>} ${MYSQL_NAME:-<mysql_db>} < $BACKUP_PATH/mysql_${MYSQL_NAME:-mysql}.sql"

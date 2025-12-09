@@ -6,7 +6,7 @@ const prisma = new PrismaClient({
     pgCMSdb: {
       url:
         process.env.POSTGRES_CMS_URL ||
-        'postgresql://usrcms:Utorak30Sep@localhost:5432/nuxt_pg_cms_db'
+        'postgresql://postgres:postgres@localhost:5432/postgres'
     }
   }
 })

@@ -348,7 +348,7 @@ export class ArticleService {
 **WICHTIG**: Immer DB-Backup vor Änderungen!
 
 ```bash
-PGPASSWORD="Utorak30Sep" pg_dump -h localhost -U usrcms -d nuxt_pg_cms_db \
+PGPASSWORD="<POSTGRES_PASSWORD>" pg_dump -h <POSTGRES_HOST> -U <POSTGRES_USER> -d <POSTGRES_DB> \
   --format=custom --file=/tmp/nuxt_cms_backup_$(date +%Y%m%d_%H%M%S).dump
 ```
 
@@ -580,20 +580,20 @@ bash /srv/proj/nuxt-wp-multilang-theme/scripts/backup-databases.sh
 **Wiederherstellung**:
 
 ```bash
-# PostgreSQL wiederherstellen
-PGPASSWORD=Utorak30Sep pg_restore \
-  -h localhost \
-  -p 5432 \
-  -U usrcms \
-  -d nuxt_pg_cms_db \
+# PostgreSQL wiederherstellen (Platzhalter ersetzen)
+PGPASSWORD=${POSTGRES_PASSWORD} pg_restore \
+  -h ${POSTGRES_HOST:-localhost} \
+  -p ${POSTGRES_PORT:-5432} \
+  -U ${POSTGRES_USER} \
+  -d ${POSTGRES_DB} \
   -c \
   /srv/proj/nuxt-wp-multilang-theme/backups/YYYYMMDD_HHMMSS/postgres_nuxt_pg_cms_db.dump
 
-# MySQL wiederherstellen
+# MySQL wiederherstellen (Platzhalter ersetzen)
 docker exec -i nuxt_mysql mysql \
-  -u root \
-  -pFreitag0605 \
-  sta3wp \
+  -u ${MYSQL_USER:-root} \
+  -p${MYSQL_PASSWORD} \
+  ${MYSQL_NAME:-sta3wp} \
   < /srv/proj/nuxt-wp-multilang-theme/backups/YYYYMMDD_HHMMSS/mysql_sta3wp.sql
 ```
 

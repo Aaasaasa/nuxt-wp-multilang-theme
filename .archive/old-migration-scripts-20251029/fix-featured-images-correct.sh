@@ -2,18 +2,18 @@
 # WordPress Featured Images korrekt basierend auf WordPress-Zuordnungen
 
 set -e
-PGPASSWORD="Utorak30Sep"
+PGPASSWORD="<POSTGRES_PASSWORD>"
 export PGPASSWORD
 
 echo "🚀 Korrigiere Featured Images basierend auf WordPress-Zuordnungen..."
 
 echo ""
 echo "📋 Aktuelle Artikel in PostgreSQL:"
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "SELECT id, slug FROM cms_articles ORDER BY id;"
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "SELECT id, slug FROM cms_articles ORDER BY id;"
 
 echo ""
 echo "🧹 Bereinige bestehende featured_image Einträge..."
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "DELETE FROM cms_article_meta WHERE key = 'featured_image';"
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "DELETE FROM cms_article_meta WHERE key = 'featured_image';"
 
 echo ""
 echo "🔄 Setze korrekte Featured Images basierend auf WordPress-Zuordnungen..."
@@ -42,12 +42,12 @@ for slug in "${!wp_mappings[@]}"; do
         echo "  ✅ Datei gefunden: $image_path"
 
         # Finde Artikel-ID in PostgreSQL
-        pg_article_id=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -c "SELECT id FROM cms_articles WHERE slug = '$slug' LIMIT 1;" | xargs)
+        pg_article_id=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -c "SELECT id FROM cms_articles WHERE slug = '$slug' LIMIT 1;" | xargs)
 
         if [[ -n "$pg_article_id" && "$pg_article_id" != "" ]]; then
             echo "  📝 Update Artikel ID $pg_article_id mit $image_path"
 
-            PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "INSERT INTO cms_article_meta (\"articleId\", key, value) VALUES ($pg_article_id, 'featured_image', '\"$image_path\"');" >/dev/null 2>&1
+            PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "INSERT INTO cms_article_meta (\"articleId\", key, value) VALUES ($pg_article_id, 'featured_image', '\"$image_path\"');" >/dev/null 2>&1
 
             echo "  ✅ Featured Image gesetzt"
         else
@@ -60,7 +60,7 @@ done
 
 echo ""
 echo "📊 Endergebnisse - Featured Images:"
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "SELECT ca.id, ca.slug, cam.value as featured_image FROM cms_articles ca LEFT JOIN cms_article_meta cam ON ca.id = cam.\"articleId\" AND cam.key = 'featured_image' ORDER BY ca.id;"
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "SELECT ca.id, ca.slug, cam.value as featured_image FROM cms_articles ca LEFT JOIN cms_article_meta cam ON ca.id = cam.\"articleId\" AND cam.key = 'featured_image' ORDER BY ca.id;"
 
 echo ""
 echo "✨ Featured Images Korrektur abgeschlossen!"

@@ -4,7 +4,7 @@
 set -e
 
 # Database connection
-PGPASSWORD="Utorak30Sep"
+PGPASSWORD="<POSTGRES_PASSWORD>"
 export PGPASSWORD
 PGHOST="localhost"
 PGPORT="5432"

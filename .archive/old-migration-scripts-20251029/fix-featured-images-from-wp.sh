@@ -3,7 +3,7 @@
 # WordPress Featured Images korrekt aus der MySQL-Datenbank lesen und in PostgreSQL aktualisieren
 set -e
 
-PGPASSWORD="Utorak30Sep"
+PGPASSWORD="<POSTGRES_PASSWORD>"
 export PGPASSWORD
 
 # MySQL connection settings
@@ -81,10 +81,10 @@ fi
 # Schritt 2: Zeige aktuelle PostgreSQL Artikel
 echo ""
 echo "📋 Aktuelle Artikel in PostgreSQL:"
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "SELECT id, slug FROM cms_articles ORDER BY id;"# Schritt 3: Bereinige alle featured_image Einträge
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "SELECT id, slug FROM cms_articles ORDER BY id;"# Schritt 3: Bereinige alle featured_image Einträge
 echo ""
 echo "🧹 Bereinige bestehende featured_image Einträge..."
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "DELETE FROM cms_article_meta WHERE key = 'featured_image';"
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "DELETE FROM cms_article_meta WHERE key = 'featured_image';"
 
 # Schritt 4: Verarbeite WordPress-Daten und setze korrekte Featured Images
 echo ""
@@ -125,13 +125,13 @@ tail -n +2 /tmp/wp_featured_results.txt | while IFS=$'\t' read -r post_id post_s
         fi
 
         # Finde Artikel in PostgreSQL basierend auf Slug
-        pg_article_id=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -c "SELECT id FROM cms_articles WHERE slug = '$post_slug' LIMIT 1;" | xargs)
+        pg_article_id=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -c "SELECT id FROM cms_articles WHERE slug = '$post_slug' LIMIT 1;" | xargs)
 
         if [[ -n "$pg_article_id" && "$pg_article_id" != "" ]]; then
             echo "  📝 Update Artikel ID $pg_article_id mit $featured_path"
 
             # Featured Image setzen
-            PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "INSERT INTO cms_article_meta (\"articleId\", key, value) VALUES ($pg_article_id, 'featured_image', '\"$featured_path\"') ON CONFLICT (\"articleId\", key) DO UPDATE SET value = '\"$featured_path\"';" >/dev/null 2>&1
+            PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "INSERT INTO cms_article_meta (\"articleId\", key, value) VALUES ($pg_article_id, 'featured_image', '\"$featured_path\"') ON CONFLICT (\"articleId\", key) DO UPDATE SET value = '\"$featured_path\"';" >/dev/null 2>&1
 
             echo "  ✅ Featured Image gesetzt"
         else
@@ -145,7 +145,7 @@ done
 # Schritt 5: Zeige Endergebnisse
 echo ""
 echo "📊 Endergebnisse - Featured Images:"
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "SELECT ca.id, ca.slug, cam.value as featured_image FROM cms_articles ca LEFT JOIN cms_article_meta cam ON ca.id = cam.\"articleId\" AND cam.key = 'featured_image' ORDER BY ca.id;"# Aufräumen
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -c "SELECT ca.id, ca.slug, cam.value as featured_image FROM cms_articles ca LEFT JOIN cms_article_meta cam ON ca.id = cam.\"articleId\" AND cam.key = 'featured_image' ORDER BY ca.id;"# Aufräumen
 rm -f /tmp/wp_featured_query.sql /tmp/wp_featured_results.txt /tmp/pg_featured_updates.sql
 
 echo ""

@@ -214,7 +214,7 @@ const SHORTCODES_TO_CLEAN = [/\[my-shortcode[^\]]*\]/g]
 
 ```bash
 # Prüfe MySQL Verbindung
-mysql -h localhost -u rooth3wp -p sta3wp
+mysql -h localhost -u <MYSQL_USER> -p <MYSQL_DB>
 
 # Teste Prisma Verbindung
 yarn prisma:studio:mysql

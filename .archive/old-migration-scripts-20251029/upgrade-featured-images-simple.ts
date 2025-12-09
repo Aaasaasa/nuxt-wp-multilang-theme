@@ -5,7 +5,7 @@ const client = new Client({
   port: 5432,
   database: 'nuxt_pg_cms_db',
   user: 'usrcms',
-  password: 'Utorak30Sep'
+  password: '<POSTGRES_PASSWORD>'
 })
 
 async function main(): Promise<void> {

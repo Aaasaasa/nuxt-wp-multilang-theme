@@ -56,7 +56,7 @@ mysql -u root -e "DROP DATABASE temp_wp_extract;" 2>/dev/null
 echo "🔄 Verarbeite Article Featured Images..."
 
 # Lösche alte falsche Zuordnungen (aber behalte die ersten 12 korrekten)
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "
 DELETE FROM cms_article_meta WHERE key = 'featured_image' AND \"articleId\" > 12;
 "
 
@@ -72,12 +72,12 @@ while IFS=$'\t' read -r slug image_url file_path; do
     # Prüfe ob Datei existiert
     if [[ -f "public$webp_path" ]]; then
         # Finde Artikel in PostgreSQL
-        article_id=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -q -c "SELECT id FROM cms_articles WHERE slug = '$slug' LIMIT 1;" | xargs)
+        article_id=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -q -c "SELECT id FROM cms_articles WHERE slug = '$slug' LIMIT 1;" | xargs)
 
         if [[ -n "$article_id" && "$article_id" != "" ]]; then
             echo "  ✅ Article '$slug' (ID: $article_id) -> $webp_path"
 
-            PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "
+            PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "
                 INSERT INTO cms_article_meta (\"articleId\", key, value)
                 VALUES ($article_id, 'featured_image', '\"$webp_path\"');
             " 2>/dev/null || true
@@ -89,7 +89,7 @@ echo ""
 echo "🎨 Verarbeite Portfolio Featured Images..."
 
 # Lösche alte Portfolio Featured Images
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "
 DELETE FROM cms_portfolio_meta WHERE key = 'featured_image';
 "
 
@@ -105,12 +105,12 @@ while IFS=$'\t' read -r slug image_url file_path; do
     # Prüfe ob Datei existiert
     if [[ -f "public$webp_path" ]]; then
         # Finde Portfolio in PostgreSQL
-        portfolio_id=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -q -c "SELECT id FROM cms_portfolios WHERE slug = '$slug' LIMIT 1;" | xargs)
+        portfolio_id=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -q -c "SELECT id FROM cms_portfolios WHERE slug = '$slug' LIMIT 1;" | xargs)
 
         if [[ -n "$portfolio_id" && "$portfolio_id" != "" ]]; then
             echo "  ✅ Portfolio '$slug' (ID: $portfolio_id) -> $webp_path"
 
-            PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "
+            PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "
                 INSERT INTO cms_portfolio_meta (\"portfolioId\", key, value)
                 VALUES ($portfolio_id, 'featured_image', '\"$webp_path\"');
             " 2>/dev/null || true
@@ -122,8 +122,8 @@ done < /tmp/portfolio_images.txt
 rm -f /tmp/article_images.txt /tmp/portfolio_images.txt
 
 # Statistik
-article_count=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -q -c "SELECT COUNT(*) FROM cms_article_meta WHERE key = 'featured_image';" | xargs)
-portfolio_count=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -q -c "SELECT COUNT(*) FROM cms_portfolio_meta WHERE key = 'featured_image';" | xargs)
+article_count=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -q -c "SELECT COUNT(*) FROM cms_article_meta WHERE key = 'featured_image';" | xargs)
+portfolio_count=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -q -c "SELECT COUNT(*) FROM cms_portfolio_meta WHERE key = 'featured_image';" | xargs)
 
 echo ""
 echo "✨ Fertig!"

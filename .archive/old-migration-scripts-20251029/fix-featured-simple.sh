@@ -6,7 +6,7 @@ set -e
 echo "🚀 Setze Featured Images schnell..."
 
 # Bereinige zuerst
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "DELETE FROM cms_article_meta WHERE key = 'featured_image';"
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "DELETE FROM cms_article_meta WHERE key = 'featured_image';"
 
 echo "🧹 Alte Einträge gelöscht"
 
@@ -14,7 +14,7 @@ echo "🧹 Alte Einträge gelöscht"
 echo "🔄 Setze neue Featured Images..."
 
 # Direkte SQL-Updates ohne Loops
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -q -c "
 -- Artikel 1: Malware
 INSERT INTO cms_article_meta (\"articleId\", key, value)
 SELECT 1, 'featured_image', '\"/uploads/2025/01/how-to-scan-and-clean-your-cloud-linux-server-from-malware.webp\"'
@@ -64,7 +64,7 @@ WHERE EXISTS (SELECT 1 FROM cms_articles WHERE id = 12);
 echo "✅ Featured Images gesetzt!"
 
 # Schnelle Überprüfung ohne Tabellen-Ausgabe
-count=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -q -c "SELECT COUNT(*) FROM cms_article_meta WHERE key = 'featured_image';" | xargs)
+count=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db -t -q -c "SELECT COUNT(*) FROM cms_article_meta WHERE key = 'featured_image';" | xargs)
 
 echo "📊 $count Featured Images erfolgreich gesetzt"
 echo "🎉 Fertig!"

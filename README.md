@@ -701,31 +701,40 @@ Building this platform **solo** required mastery of:
 3. **Configure environment variables**
 
    ```bash
-   # Essential variables (adjust to your setup):
 
-   # PostgreSQL (REQUIRED)
-   DATABASE_URL="postgresql://usrcms:Utorak30Sep@localhost:5432/nuxt_pg_cms_db"
-
-   # MySQL (only if --profile migration)
-   MYSQL_DATABASE_URL="mysql://rooth3wp:Freitag0605@localhost:3306/sta3wp"
-
-   # MongoDB (only if --profile analytics)
-   MONGODB_DATABASE_URL="mongodb://aleks:yourpassword@localhost:27017"
-
-   # Redis (recommended for caching)
-   REDIS_URL="redis://localhost:6379"
-
-   # Authentication
-   NUXT_SECRET_KEY="your-secret-key-change-in-production"
    ```
+
+# Essential variables (adjust to your setup):
+
+# PostgreSQL (REQUIRED)
+
+DATABASE_URL="postgresql://<PG_USER>:<PG_PASSWORD>@<PG_HOST>:5432/<PG_DB>"
+
+# MySQL (only if --profile migration)
+
+MYSQL_DATABASE_URL="mysql://<MYSQL_USER>:<MYSQL_PASSWORD>@<MYSQL_HOST>:3306/<MYSQL_DB>"
+
+# MongoDB (only if --profile analytics)
+
+MONGODB_DATABASE_URL="mongodb://<MONGO_USER>:<MONGO_PASSWORD>@<MONGO_HOST>:27017"
+
+# Redis (recommended for caching)
+
+REDIS_URL="redis://<REDIS_HOST>:6379"
+
+# Authentication
+
+NUXT_SECRET_KEY="your-secret-key-change-in-production"
+
+````
 
 4. **Run development server**
 
-   ```bash
-   yarn dev                          # Start on default port 3000
-   # or
-   yarn dev --port 4000              # Start on port 4000
-   ```
+```bash
+yarn dev                          # Start on default port 3000
+# or
+yarn dev --port 4000              # Start on port 4000
+````
 
 ## 🎯 Flexible Database Setup
 

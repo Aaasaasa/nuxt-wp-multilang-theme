@@ -6,7 +6,7 @@ set -e
 echo "🔄 Ergänze fehlende Featured Images..."
 
 # Non-interactive SQL updates für fehlende Artikel
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
   --no-align --tuples-only --quiet \
   -c "
 -- Artikel 4: Laravel CMS
@@ -47,7 +47,7 @@ VALUES (25, 'featured_image', '\"/uploads/2025/04/Modules-in-VueJS_ES-Modules_Co
 "
 
 # Zähle Ergebnisse
-count=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
+count=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db \
   --no-align --tuples-only --quiet \
   -c "SELECT COUNT(*) FROM cms_article_meta WHERE key = 'featured_image';" | xargs)
 

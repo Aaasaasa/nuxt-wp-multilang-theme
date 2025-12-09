@@ -3,7 +3,7 @@
 # Einfache Lösung: Update die featured images direkt in PostgreSQL
 set -e
 
-PGPASSWORD="Utorak30Sep"
+PGPASSWORD="<POSTGRES_PASSWORD>"
 export PGPASSWORD
 
 echo "🔄 Aktualisiere Featured Images in PostgreSQL CMS..."

@@ -14,7 +14,7 @@ DB="/uploads/2024/07/2024-07-25-A-visual-representation-of-an-ERP-Enterprise-Res
 WEB="/uploads/2025/02/Business-Process-Model-and-Notation-BPMN.webp"
 
 # Einfache INSERTs ohne ON CONFLICT
-PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db --no-align --tuples-only --quiet -c "
+PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db --no-align --tuples-only --quiet -c "
 INSERT INTO cms_article_meta (\"articleId\", key, value) VALUES
 (16, 'featured_image', '\"$AI\"'),
 (17, 'featured_image', '\"$WEB\"'),
@@ -37,11 +37,11 @@ INSERT INTO cms_article_meta (\"articleId\", key, value) VALUES
 (37, 'featured_image', '\"$CODE\"');
 "
 
-count=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db --no-align --tuples-only --quiet -c "SELECT COUNT(*) FROM cms_article_meta WHERE key = 'featured_image';" | xargs)
+count=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db --no-align --tuples-only --quiet -c "SELECT COUNT(*) FROM cms_article_meta WHERE key = 'featured_image';" | xargs)
 
 echo "✅ $count Article Featured Images gesetzt"
 
-missing=$(PGPASSWORD=Utorak30Sep psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db --no-align --tuples-only --quiet -c "SELECT COUNT(*) FROM cms_articles WHERE id NOT IN (SELECT \"articleId\" FROM cms_article_meta WHERE key = 'featured_image');" | xargs)
+missing=$(PGPASSWORD=<POSTGRES_PASSWORD> psql -h localhost -p 5432 -U usrcms -d nuxt_pg_cms_db --no-align --tuples-only --quiet -c "SELECT COUNT(*) FROM cms_articles WHERE id NOT IN (SELECT \"articleId\" FROM cms_article_meta WHERE key = 'featured_image');" | xargs)
 
 if [ "$missing" -eq 0 ]; then
     echo "🎉 ALLE Artikel haben Featured Images!"
